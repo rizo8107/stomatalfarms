@@ -10,7 +10,7 @@ const HeroSection = () => {
     <section className="pt-2 md:pt-16 pb-4 md:pb-6">
       <div className="container px-3 md:px-4">
         {/* Two Column Layout with Cards and Trust Badges */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 gap-3 md:gap-8">
           {/* Column 1 - Aurora */}
           <div className="space-y-6">
             {/* Card 1 - Aurora */}
