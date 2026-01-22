@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* White background */
+    --background: 0 0% 100%;
+    --foreground: 30 15% 20%;
+
+    /* Card surfaces */
+    --card: 40 30% 98%;
+    --card-foreground: 30 15% 20%;
+
+    /* Popover */
+    --popover: 40 30% 98%;
+    --popover-foreground: 30 15% 20%;
+
+    /* Sage green primary */
+    --primary: 85 25% 35%;
+    --primary-foreground: 40 30% 98%;
+
+    /* Warm terracotta secondary */
+    --secondary: 25 40% 88%;
+    --secondary-foreground: 25 30% 25%;
+
+    /* Muted sage */
+    --muted: 85 15% 90%;
+    --muted-foreground: 30 10% 45%;
+
+    /* Accent - warm amber */
+    --accent: 35 45% 85%;
+    --accent-foreground: 30 20% 25%;
+
+    /* Destructive */
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 40 30% 98%;
+
+    /* Borders */
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 85 25% 35%;
+
+    --radius: 0.5rem;
+
+    /* Custom tokens for incense brand */
+    --sage: 85 25% 35%;
+    --sage-light: 85 20% 92%;
+    --cream: 40 33% 96%;
+    --cream-dark: 35 25% 90%;
+    --terracotta: 25 45% 50%;
+    --terracotta-light: 25 40% 88%;
+    --earth: 30 20% 28%;
+    --warm-white: 40 30% 98%;
+
+    /* Sidebar tokens */
+    --sidebar-background: 40 30% 98%;
+    --sidebar-foreground: 30 15% 25%;
+    --sidebar-primary: 85 25% 35%;
+    --sidebar-primary-foreground: 40 30% 98%;
+    --sidebar-accent: 85 15% 90%;
+    --sidebar-accent-foreground: 85 25% 35%;
+    --sidebar-border: 40 20% 88%;
+    --sidebar-ring: 85 25% 35%;
+  }
+
+  .dark {
+    --background: 30 15% 12%;
+    --foreground: 40 25% 92%;
+
+    --card: 30 15% 15%;
+    --card-foreground: 40 25% 92%;
+
+    --popover: 30 15% 15%;
+    --popover-foreground: 40 25% 92%;
+
+    --primary: 85 30% 55%;
+    --primary-foreground: 30 15% 10%;
+
+    --secondary: 30 20% 22%;
+    --secondary-foreground: 40 25% 92%;
+
+    --muted: 30 15% 20%;
+    --muted-foreground: 40 15% 60%;
+
+    --accent: 35 30% 25%;
+    --accent-foreground: 40 25% 92%;
+
+    --destructive: 0 55% 45%;
+    --destructive-foreground: 40 25% 92%;
+
+    --border: 30 15% 22%;
+    --input: 30 15% 22%;
+    --ring: 85 30% 55%;
+
+    --sidebar-background: 30 15% 12%;
+    --sidebar-foreground: 40 25% 92%;
+    --sidebar-primary: 85 30% 55%;
+    --sidebar-primary-foreground: 30 15% 10%;
+    --sidebar-accent: 30 15% 20%;
+    --sidebar-accent-foreground: 40 25% 92%;
+    --sidebar-border: 30 15% 22%;
+    --sidebar-ring: 85 30% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Smooth fade-in animation */
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in-delay-1 {
+    animation: fadeIn 0.8s ease-out 0.2s forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in-delay-2 {
+    animation: fadeIn 0.8s ease-out 0.4s forwards;
+    opacity: 0;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.6s ease-out forwards;
+  }
+
+  /* Subtle hover lift */
+  .hover-lift {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-1 shadow-lg;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Subtle texture overlay */
+.texture-overlay {
+  position: relative;
+}
+
+.texture-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
+}
