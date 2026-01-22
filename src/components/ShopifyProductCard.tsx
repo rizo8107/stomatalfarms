@@ -1,10 +1,20 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { ShopifyProduct } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
 import { MessageCircle } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 
 interface ShopifyProductCardProps {
@@ -14,6 +24,12 @@ interface ShopifyProductCardProps {
 export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
   const addItem = useCartStore(state => state.addItem);
   const { node } = product;
+  const [showAddressDialog, setShowAddressDialog] = useState(false);
+  const [addressData, setAddressData] = useState({
+    name: "",
+    phone: "",
+    address: "",
+  });
   
   const firstVariant = node.variants.edges[0]?.node;
   const firstImage = node.images.edges[0]?.node;
@@ -57,11 +73,47 @@ export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
   const handleWhatsAppOrder = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
+    setShowAddressDialog(true);
+  };
+
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setAddressData({
+      ...addressData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const submitWhatsAppOrder = () => {
+    if (!addressData.name || !addressData.phone || !addressData.address) {
+      toast.error("Please fill in all fields", {
+        position: "top-center",
+      });
+      return;
+    }
+
     const productUrl = `https://stomatalfarms.com/products/${node.handle}`;
-    const message = `Hi! I want to order: ${node.title} - Rs. ${Math.round(currentPrice)}`;
-    const whatsappUrl = `https://api.whatsapp.com/send/?phone=916379033131&text=${encodeURIComponent(message + ' ' + productUrl)}&type=phone_number&app_absent=0`;
+    const message = `Hi! I want to order:
+
+Product: ${node.title}
+Price: Rs. ${Math.round(currentPrice)}
+
+Delivery Details:
+Name: ${addressData.name}
+Phone: ${addressData.phone}
+Address: ${addressData.address}
+
+Product Link: ${productUrl}`;
+
+    const whatsappUrl = `https://api.whatsapp.com/send/?phone=916379033131&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`;
     window.open(whatsappUrl, '_blank');
+    
+    setShowAddressDialog(false);
+    setAddressData({ name: "", phone: "", address: "" });
+    
+    toast.success("Opening WhatsApp...", {
+      description: "Your order details have been prepared",
+      position: "top-center",
+    });
   };
 
   return (
@@ -135,6 +187,88 @@ export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
           )}
         </div>
       </div>
+
+      {/* Address Collection Dialog for Microgreens */}
+      <Dialog open={showAddressDialog} onOpenChange={setShowAddressDialog}>
+        <DialogContent className="sm:max-w-md" onClick={(e) => e.stopPropagation()}>
+          <DialogHeader>
+            <DialogTitle>Delivery Details</DialogTitle>
+            <DialogDescription>
+              Please provide your delivery information to complete your order via WhatsApp.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div>
+              <label htmlFor="name" className="text-sm font-medium text-foreground mb-2 block">
+                Full Name *
+              </label>
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                value={addressData.name}
+                onChange={handleAddressChange}
+                placeholder="Enter your full name"
+                className="w-full"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="phone" className="text-sm font-medium text-foreground mb-2 block">
+                Phone Number *
+              </label>
+              <Input
+                id="phone"
+                name="phone"
+                type="tel"
+                value={addressData.phone}
+                onChange={handleAddressChange}
+                placeholder="+91 XXXXX XXXXX"
+                className="w-full"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="address" className="text-sm font-medium text-foreground mb-2 block">
+                Delivery Address *
+              </label>
+              <Textarea
+                id="address"
+                name="address"
+                value={addressData.address}
+                onChange={handleAddressChange}
+                placeholder="Enter your complete delivery address"
+                rows={4}
+                className="w-full resize-none"
+              />
+            </div>
+          </div>
+
+          <div className="flex gap-3">
+            <Button
+              variant="outline"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowAddressDialog(false);
+              }}
+              className="flex-1"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+                submitWhatsAppOrder();
+              }}
+              className="flex-1 bg-[#8dcc5b] hover:bg-[#8dcc5b]/90 text-white"
+            >
+              <MessageCircle className="h-4 w-4 mr-2" />
+              Send Order
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </Link>
   );
 };
