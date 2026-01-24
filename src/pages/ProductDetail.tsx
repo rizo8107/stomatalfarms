@@ -166,6 +166,13 @@ const ProductDetail = () => {
   const description = product.description || "";
   const { overview, ingredients, howToUse, details, comboIncludes } = parseDescriptionSections(description);
 
+  // Determine default expanded items
+  const defaultAccordionValue = [];
+  if (comboIncludes) defaultAccordionValue.push("combo-includes");
+  if (ingredients) defaultAccordionValue.push("ingredients");
+  if (howToUse) defaultAccordionValue.push("how-to-use");
+  if (details) defaultAccordionValue.push("details");
+
   const isMicrogreens = product.title.toLowerCase().includes('microgreen') || 
     product.title.toLowerCase().includes('leafy') ||
     product.description.toLowerCase().includes('microgreen');
@@ -320,37 +327,41 @@ Product Link: ${productUrl}`;
 
               {/* Product Details Accordion */}
               {(comboIncludes || ingredients || howToUse || details) && (
-                <Accordion type="single" collapsible className="w-full">
+                <Accordion 
+                  type="multiple" 
+                  defaultValue={defaultAccordionValue} 
+                  className="w-full space-y-3"
+                >
                   {comboIncludes && (
-                    <AccordionItem value="combo-includes" className="border-border">
-                      <AccordionTrigger className="text-sm font-medium py-3 hover:no-underline">
+                    <AccordionItem value="combo-includes" className="border border-border rounded-lg bg-card/50 px-4 data-[state=open]:bg-card transition-colors">
+                      <AccordionTrigger className="text-base font-medium py-4 hover:no-underline text-foreground">
                         This Combo Includes
                       </AccordionTrigger>
-                      <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-3">
+                      <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
                         <p className="whitespace-pre-line">{comboIncludes}</p>
                       </AccordionContent>
                     </AccordionItem>
                   )}
                   {ingredients && (
-                    <AccordionItem value="ingredients" className="border-border">
-                      <AccordionTrigger className="text-sm font-medium py-3 hover:no-underline">
+                    <AccordionItem value="ingredients" className="border border-border rounded-lg bg-card/50 px-4 data-[state=open]:bg-card transition-colors">
+                      <AccordionTrigger className="text-base font-medium py-4 hover:no-underline text-foreground">
                         Ingredients
                       </AccordionTrigger>
-                      <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-3">
+                      <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
                         <p>{ingredients}</p>
                       </AccordionContent>
                     </AccordionItem>
                   )}
                   {howToUse && (
-                    <AccordionItem value="how-to-use" className="border-border">
-                      <AccordionTrigger className="text-sm font-medium py-3 hover:no-underline">
+                    <AccordionItem value="how-to-use" className="border border-border rounded-lg bg-card/50 px-4 data-[state=open]:bg-card transition-colors">
+                      <AccordionTrigger className="text-base font-medium py-4 hover:no-underline text-foreground">
                         How to Use
                       </AccordionTrigger>
-                      <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-3">
+                      <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
                         <div className="space-y-2">
                           {howToUse.split('\n').filter(line => line.trim()).map((line, idx) => (
-                            <div key={idx} className="flex gap-2">
-                              <span className="text-[#8dcc5b] flex-shrink-0">•</span>
+                            <div key={idx} className="flex gap-3">
+                              <span className="text-[#8dcc5b] font-bold flex-shrink-0">•</span>
                               <span className="flex-1">{line.replace(/^[•-]\s*/, '').trim()}</span>
                             </div>
                           ))}
@@ -359,15 +370,15 @@ Product Link: ${productUrl}`;
                     </AccordionItem>
                   )}
                   {details && (
-                    <AccordionItem value="details" className="border-border">
-                      <AccordionTrigger className="text-sm font-medium py-3 hover:no-underline">
+                    <AccordionItem value="details" className="border border-border rounded-lg bg-card/50 px-4 data-[state=open]:bg-card transition-colors">
+                      <AccordionTrigger className="text-base font-medium py-4 hover:no-underline text-foreground">
                         Product Details
                       </AccordionTrigger>
-                      <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-3">
+                      <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
                         <div className="space-y-3">
                           {details.split('\n\n').filter(line => line.trim()).map((line, idx) => (
-                            <div key={idx} className="flex gap-2 items-start">
-                              <span className="text-[#8dcc5b] flex-shrink-0 mt-1">•</span>
+                            <div key={idx} className="flex gap-3 items-start">
+                              <span className="text-[#8dcc5b] font-bold flex-shrink-0 mt-1.5">•</span>
                               <span className="flex-1 leading-relaxed">{line.replace(/^[•\-*]\s*/, '').trim()}</span>
                             </div>
                           ))}
