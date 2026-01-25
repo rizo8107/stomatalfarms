@@ -9,19 +9,19 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ShoppingBag, Minus, Plus, Trash2, ExternalLink, Loader2 } from "lucide-react";
+import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2 } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { 
-    items, 
-    isLoading, 
-    updateQuantity, 
-    removeItem, 
-    createCheckout 
+  const {
+    items,
+    isLoading,
+    updateQuantity,
+    removeItem,
+    createCheckout
   } = useCartStore();
-  
+
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce((sum, item) => sum + (parseFloat(item.price.amount) * item.quantity), 0);
   const currencyCode = items[0]?.price.currencyCode || 'INR';
@@ -30,7 +30,7 @@ export const CartDrawer = () => {
     try {
       const checkoutUrl = await createCheckout();
       if (checkoutUrl) {
-        window.open(checkoutUrl, '_blank');
+        window.location.href = checkoutUrl;
         setIsOpen(false);
       }
     } catch (error) {
@@ -42,15 +42,15 @@ export const CartDrawer = () => {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="relative text-foreground hover:text-primary">
-          <ShoppingBag className="h-5 w-5" />
+          <ShoppingCart className="h-5 w-5" strokeWidth={1.5} />
           {totalItems > 0 && (
-            <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-[#8dcc5b] text-white">
+            <Badge className="absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 flex items-center justify-center text-[10px] bg-[#8dcc5b] text-white ring-2 ring-background">
               {totalItems}
             </Badge>
           )}
         </Button>
       </SheetTrigger>
-      
+
       <SheetContent className="w-full sm:max-w-md flex flex-col h-full bg-cream border-sage/20">
         <SheetHeader className="flex-shrink-0">
           <SheetTitle className="font-display text-2xl text-foreground">Your Cart</SheetTitle>
@@ -58,12 +58,12 @@ export const CartDrawer = () => {
             {totalItems === 0 ? "Your cart is empty" : `${totalItems} item${totalItems !== 1 ? 's' : ''} in your cart`}
           </SheetDescription>
         </SheetHeader>
-        
+
         <div className="flex flex-col flex-1 pt-6 min-h-0">
           {items.length === 0 ? (
             <div className="flex-1 flex items-center justify-center">
               <div className="text-center">
-                <ShoppingBag className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <ShoppingCart className="h-12 w-12 text-muted-foreground mx-auto mb-4" strokeWidth={1} />
                 <p className="text-muted-foreground">Your cart is empty</p>
                 <p className="text-sm text-muted-foreground mt-2">Add some incense to begin your ritual</p>
               </div>
@@ -83,7 +83,7 @@ export const CartDrawer = () => {
                           />
                         )}
                       </div>
-                      
+
                       <div className="flex-1 min-w-0">
                         <h4 className="font-medium text-foreground truncate">{item.product.node.title}</h4>
                         {item.variantTitle !== "Default Title" && (
@@ -95,7 +95,7 @@ export const CartDrawer = () => {
                           {currencyCode} {parseFloat(item.price.amount).toFixed(2)}
                         </p>
                       </div>
-                      
+
                       <div className="flex flex-col items-end gap-2 flex-shrink-0">
                         <Button
                           variant="ghost"
@@ -105,7 +105,7 @@ export const CartDrawer = () => {
                         >
                           <Trash2 className="h-3 w-3" />
                         </Button>
-                        
+
                         <div className="flex items-center gap-1">
                           <Button
                             variant="outline"
@@ -130,7 +130,7 @@ export const CartDrawer = () => {
                   ))}
                 </div>
               </div>
-              
+
               <div className="flex-shrink-0 space-y-4 pt-4 border-t border-sage/20 bg-cream mt-4">
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-medium text-foreground">Total</span>
@@ -138,10 +138,10 @@ export const CartDrawer = () => {
                     {currencyCode} {totalPrice.toFixed(2)}
                   </span>
                 </div>
-                
-                <Button 
+
+                <Button
                   onClick={handleCheckout}
-                  className="w-full bg-[#8dcc5b] hover:bg-[#8dcc5b]/90 text-white" 
+                  className="w-full bg-[#8dcc5b] hover:bg-[#8dcc5b]/90 text-white"
                   size="lg"
                   disabled={items.length === 0 || isLoading}
                 >

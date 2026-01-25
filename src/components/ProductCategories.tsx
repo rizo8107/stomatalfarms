@@ -51,7 +51,7 @@ const ProductCategories = () => {
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-4">
             Explore Our Handcrafted Products
           </h2>
-          <p className="text-muted-foreground max-w-md mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg font-light leading-relaxed">
             Lab-tested aromatic wellness products made from cow dung & traditional herbs for your family's well-being.
           </p>
         </div>
@@ -62,7 +62,7 @@ const ProductCategories = () => {
             <Link
               key={category.name}
               to={category.link}
-              className="group relative aspect-square rounded-2xl overflow-hidden animate-fade-in-up"
+              className="group relative aspect-square rounded-2xl overflow-hidden animate-fade-in-up shadow-md hover:shadow-xl transition-all duration-500"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Image */}
@@ -71,10 +71,10 @@ const ProductCategories = () => {
                 alt={category.name}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
-              
+
               {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-earth/80 via-earth/30 to-transparent transition-opacity duration-300" />
-              
+
               {/* Content */}
               <div className="absolute inset-0 flex flex-col justify-end p-4">
                 <h3 className="font-serif text-lg md:text-xl text-warm-white font-medium leading-tight">
@@ -84,7 +84,7 @@ const ProductCategories = () => {
                   {category.description}
                 </p>
               </div>
-              
+
               {/* Hover border effect */}
               <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-primary/50 transition-colors duration-300" />
             </Link>

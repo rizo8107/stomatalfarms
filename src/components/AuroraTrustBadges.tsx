@@ -1,4 +1,8 @@
-import { FlaskConical, Leaf, Flame, Clock, Package } from "lucide-react";
+import labIcon from "@/assets/icons/lab.png";
+import leafIcon from "@/assets/icons/leaf.png";
+import fireIcon from "@/assets/icons/fire.png";
+import clockIcon from "@/assets/icons/clock.png";
+import packageIcon from "@/assets/icons/package.png";
 import {
   Tooltip,
   TooltipContent,
@@ -8,27 +12,22 @@ import {
 
 const badges = [
   {
-    icon: FlaskConical,
+    image: labIcon,
     title: "Lab-Tested",
     description: "Tested to meet safety and quality standards before reaching you.",
   },
   {
-    icon: Leaf,
-    title: "Chemical-Free",
-    description: "Made without synthetic fragrances, chemical fillers, or harmful additives.",
+    image: leafIcon,
+    title: "Natural & Chemical-Free",
+    description: "Made with 100% natural ingredients, free from synthetic fragrances and harmful additives.",
   },
   {
-    icon: Flame,
-    title: "Natural Burning Ingredients",
-    description: "No artificial or chemical burning agents are used.",
-  },
-  {
-    icon: Clock,
+    image: clockIcon,
     title: "Traditionally Crafted",
     description: "Prepared using time-tested methods inspired by traditional practices.",
   },
   {
-    icon: Package,
+    image: packageIcon,
     title: "Small-Batch Made",
     description: "Produced in limited batches with close attention to every step.",
   },
@@ -39,7 +38,7 @@ const AuroraTrustBadges = () => {
     <section className="py-6 md:py-8 rounded-xl bg-sage-light/20 border border-border/30">
       <div className="px-4">
         <TooltipProvider>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {badges.map((badge, index) => (
               <Tooltip key={badge.title}>
                 <TooltipTrigger asChild>
@@ -47,8 +46,12 @@ const AuroraTrustBadges = () => {
                     className="flex flex-col items-center text-center animate-fade-in cursor-help"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#8dcc5b]/10 border-2 border-[#8dcc5b]/20 flex items-center justify-center mb-2 transition-all hover:bg-[#8dcc5b]/20 hover:border-[#8dcc5b]/40">
-                      <badge.icon className="w-4 h-4 md:w-5 md:h-5 text-[#8dcc5b]" />
+                    <div className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center mb-2 transition-transform hover:scale-110 duration-300">
+                      <img
+                        src={badge.image}
+                        alt={badge.title}
+                        className="w-full h-full object-contain drop-shadow-sm"
+                      />
                     </div>
                     <h4 className="text-[10px] md:text-xs font-medium text-foreground leading-tight">
                       {badge.title.split(' ').slice(0, 2).join(' ')}
