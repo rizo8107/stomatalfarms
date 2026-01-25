@@ -96,8 +96,9 @@ const parseDescriptionSections = (description: string) => {
   if (overviewEnd > 0) {
     overview = cleanText.substring(0, overviewEnd).trim();
   } else {
-    overview = cleanText.substring(0, 300).trim();
-    if (cleanText.length > 300) overview += "...";
+    // Determine if text is extremely long, maybe keep it all or truncate very liberally? 
+    // User complaint suggests they want to see it. Let's show full text.
+    overview = cleanText;
   }
 
   return { overview, ingredients, howToUse, details, comboIncludes };
@@ -270,7 +271,7 @@ Product Link: ${productUrl}`;
                   <img
                     src={images[selectedImage].node.url}
                     alt={images[selectedImage].node.altText || product.title}
-                    className="w-full h-full object-contain md:object-cover"
+                    className="w-full h-full object-contain"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-muted-foreground">
@@ -285,7 +286,7 @@ Product Link: ${productUrl}`;
                     <button
                       key={index}
                       onClick={() => setSelectedImage(index)}
-                      className={`w-16 h-16 md:w-20 md:h-20 rounded-lg md:rounded-xl overflow-hidden border-2 flex-shrink-0 transition-all ${selectedImage === index
+                      className={`w-16 h-16 md:w-20 md:h-20 rounded-lg md:rounded-xl overflow-hidden border-2 flex-shrink-0 transition-all bg-white ${selectedImage === index
                         ? 'border-[#8dcc5b] shadow-md'
                         : 'border-border hover:border-[#8dcc5b]/40'
                         }`}
@@ -293,7 +294,7 @@ Product Link: ${productUrl}`;
                       <img
                         src={img.node.url}
                         alt={img.node.altText || `${product.title} ${index + 1}`}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                       />
                     </button>
                   ))}
