@@ -56,6 +56,11 @@ export interface ShopifyProduct {
       name: string;
       values: string[];
     }>;
+    combo_includes?: { value: string } | null;
+    ingredients?: { value: string } | null;
+    ingredients_list?: { value: string } | null;
+    how_to_use?: { value: string } | null;
+    product_details?: { value: string } | null;
   };
 }
 
@@ -84,7 +89,7 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
   }
 
   const data = await response.json();
-  
+
   if (data.errors) {
     throw new Error(`Error calling Shopify: ${data.errors.map((e: { message: string }) => e.message).join(', ')}`);
   }
@@ -204,6 +209,21 @@ const PRODUCT_BY_HANDLE_QUERY = `
         name
         values
       }
+      combo_includes: metafield(namespace: "custom", key: "combo_includes") {
+        value
+      }
+      ingredients: metafield(namespace: "custom", key: "ingredients") {
+        value
+      }
+      ingredients_list: metafield(namespace: "custom", key: "ingredients_list") {
+        value
+      }
+      how_to_use: metafield(namespace: "custom", key: "how_to_use") {
+        value
+      }
+      product_details: metafield(namespace: "custom", key: "product_details") {
+        value
+      }
     }
   }
 `;
@@ -261,7 +281,7 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
   }
 
   const cart = cartData.data.cartCreate.cart;
-  
+
   if (!cart.checkoutUrl) {
     throw new Error('No checkout URL returned from Shopify');
   }

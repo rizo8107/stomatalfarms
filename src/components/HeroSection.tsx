@@ -14,7 +14,7 @@ const HeroSection = () => {
           {/* Column 1 - Aurora */}
           <div className="space-y-6">
             {/* Card 1 - Aurora */}
-            <div className="group relative overflow-hidden rounded-2xl aspect-[4/5] md:aspect-[5/6] lg:aspect-[6/7] animate-fade-in-up border border-border/10 shadow-xl">
+            <div className="group relative overflow-hidden rounded-2xl aspect-[1/1.1] sm:aspect-[4/5] md:aspect-[5/6] lg:aspect-[6/7] animate-fade-in-up border border-border/10 shadow-xl">
               <img
                 src={heroIncense}
                 alt="Artisan incense collection with burning sticks and natural herbs"
@@ -53,7 +53,7 @@ const HeroSection = () => {
           {/* Column 2 - Fresh Produce */}
           <div className="space-y-6">
             {/* Card 2 - Fresh Produce */}
-            <div className="group relative overflow-hidden rounded-2xl aspect-[4/5] md:aspect-[5/6] lg:aspect-[6/7] animate-fade-in-up border border-border/10 shadow-xl" style={{ animationDelay: "0.15s" }}>
+            <div className="group relative overflow-hidden rounded-2xl aspect-[1/1.1] sm:aspect-[4/5] md:aspect-[5/6] lg:aspect-[6/7] animate-fade-in-up border border-border/10 shadow-xl" style={{ animationDelay: "0.15s" }}>
               <img
                 src={heroBotanicals}
                 alt="Natural incense ingredients including lavender, sandalwood and crystals"

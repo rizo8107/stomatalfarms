@@ -13,7 +13,7 @@ import {
 const badges = [
   {
     image: leafIcon,
-    title: "Organic & Farm-Grown",
+    title: "100% Organic",
     description: "Sustainably cultivated on our own farms ensuring certified organic quality.",
   },
   {
@@ -36,7 +36,7 @@ const badges = [
 
 const FreshProduceTrustBadges = () => {
   return (
-    <section className="py-6 md:py-8 rounded-xl bg-sage-light/20 border border-border/30">
+    <section className="py-3 md:py-8 rounded-xl bg-sage-light/20 border border-border/30">
       <div className="px-4">
         <TooltipProvider>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">

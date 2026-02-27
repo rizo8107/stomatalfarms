@@ -18,7 +18,7 @@ const badges = [
   },
   {
     image: leafIcon,
-    title: "Natural & Chemical-Free",
+    title: "100% Natural",
     description: "Made with 100% natural ingredients, free from synthetic fragrances and harmful additives.",
   },
   {
@@ -35,7 +35,7 @@ const badges = [
 
 const AuroraTrustBadges = () => {
   return (
-    <section className="py-6 md:py-8 rounded-xl bg-sage-light/20 border border-border/30">
+    <section className="py-3 md:py-8 rounded-xl bg-sage-light/20 border border-border/30">
       <div className="px-4">
         <TooltipProvider>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">

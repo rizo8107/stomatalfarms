@@ -41,23 +41,24 @@ const categories = [
 
 const ProductCategories = () => {
   return (
-    <section className="py-16 md:py-24 bg-sage-light/30">
-      <div className="container">
+    <section className="py-12 md:py-16 bg-gradient-to-b from-transparent via-sage-light/20 to-sage-light/40 border-y border-border/40">
+      <div className="container px-4 max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <span className="text-primary text-xs uppercase tracking-[0.2em] mb-3 block">
+        <div className="flex flex-col items-center text-center mb-10 md:mb-14">
+          <span className="inline-flex items-center justify-center rounded-full bg-primary/10 px-4 py-1.5 text-xs md:text-sm font-semibold uppercase tracking-widest text-primary mb-4 border border-primary/20">
             Aurora Collection
           </span>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-4">
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-4 leading-tight tracking-tight">
             Explore Our Handcrafted Products
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg font-light leading-relaxed">
+          <div className="w-12 h-0.5 bg-primary/30 mb-6 rounded-full mx-auto" />
+          <p className="text-muted-foreground max-w-2xl mx-auto text-base md:text-lg font-light leading-relaxed">
             Lab-tested aromatic wellness products made from cow dung & traditional herbs for your family's well-being.
           </p>
         </div>
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 md:gap-6">
           {categories.map((category, index) => (
             <Link
               key={category.name}

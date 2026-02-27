@@ -104,6 +104,86 @@ const parseDescriptionSections = (description: string) => {
   return { overview, ingredients, howToUse, details, comboIncludes };
 };
 
+const FormatMetafieldText = ({ text, isSteps = false, isDetails = false }: { text: string; isSteps?: boolean; isDetails?: boolean }) => {
+  if (!text) return null;
+
+  // Clean up extra invisible spaces, line breaks, and narrow non-breaking spaces
+  const cleanText = text.replace(/[\u202F\u00A0]/g, ' ').trim();
+
+  // Split the text block by double newlines or single newlines, ensuring we handle multiple carriage returns smoothly
+  const lines = cleanText.split(/\n/);
+
+  // Reconstruct paragraphs, grouping consecutive non-empty lines that don't start with a bullet into logic chunks,
+  // but to keep it simple, let's just render line by line if it's not empty.
+  const validLines = lines.map(l => l.trim()).filter(l => l.length > 0);
+
+  let stepCounter = 1;
+
+  return (
+    <div className={isDetails ? "grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4" : "space-y-4"}>
+      {validLines.map((line, idx) => {
+        // Strip out existing manual "STEP 1 -" labels just in case the user hasn't removed them yet
+        const cleanLine = line.replace(/^(?:STEP|Step)\s*\d+\s*[–-]\s*/i, '').trim();
+
+        if (isDetails) {
+          // Detect key-value patterns like "Total Quantity: 45 cups"
+          const parts = cleanLine.replace(/^[•-]\s*/, '').split(':');
+
+          if (parts.length >= 2) {
+            const key = parts[0].trim();
+            const value = parts.slice(1).join(':').trim();
+            return (
+              <div key={idx} className="flex flex-col p-4 bg-card/60 backdrop-blur-sm rounded-xl border border-border shadow-sm hover:shadow-md transition-all">
+                <span className="text-xs font-bold text-[#8dcc5b] uppercase tracking-wider mb-1.5">{key}</span>
+                <span className="text-sm text-foreground font-medium leading-relaxed">{value}</span>
+              </div>
+            );
+          } else {
+            // Fallback for details without a colon
+            const rest = cleanLine.replace(/^[•-]\s*/, '').trim();
+            return (
+              <div key={idx} className="flex flex-col p-4 bg-card/60 backdrop-blur-sm rounded-xl border border-border shadow-sm hover:shadow-md transition-all col-span-1 md:col-span-2">
+                <span className="text-sm text-foreground font-medium leading-relaxed">{rest}</span>
+              </div>
+            );
+          }
+        }
+
+        if (isSteps) {
+          const currentStep = stepCounter++;
+          return (
+            <div key={idx} className="flex flex-col gap-2 bg-[#8dcc5b]/5 p-4 rounded-xl border border-[#8dcc5b]/20">
+              <span className="inline-flex items-center justify-center rounded-md bg-[#8dcc5b]/20 px-2.5 py-1 text-xs font-bold text-[#5c8a2b] uppercase tracking-wider w-fit">
+                Step {currentStep}
+              </span>
+              <span className="leading-relaxed text-sm text-foreground">{cleanLine}</span>
+            </div>
+          );
+        }
+
+        // Detect bullet points
+        const isBullet = cleanLine.startsWith('•') || cleanLine.startsWith('-') || cleanLine.startsWith('*');
+        if (isBullet) {
+          const rest = cleanLine.slice(1).trim();
+          return (
+            <div key={idx} className="flex gap-3 items-start relative before:absolute before:left-0 before:top-0">
+              <span className="text-[#8dcc5b] font-bold text-lg leading-6 flex-shrink-0 mt-0.5">•</span>
+              <span className="flex-1 leading-relaxed text-sm text-foreground">{rest}</span>
+            </div>
+          );
+        }
+
+        // Just regular text
+        return (
+          <p key={idx} className="leading-relaxed text-sm text-foreground">
+            {cleanLine}
+          </p>
+        );
+      })}
+    </div>
+  );
+};
+
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
   const [product, setProduct] = useState<ShopifyProduct['node'] | null>(null);
@@ -169,14 +249,24 @@ const ProductDetail = () => {
   const selectedVariant = product.variants.edges[selectedVariantIndex]?.node;
   const images = product.images.edges;
   const description = product.description || "";
-  const { overview, ingredients, howToUse, details, comboIncludes } = parseDescriptionSections(description);
 
-  // Determine default expanded items
-  const defaultAccordionValue = [];
-  if (comboIncludes) defaultAccordionValue.push("combo-includes");
-  if (ingredients) defaultAccordionValue.push("ingredients");
-  if (howToUse) defaultAccordionValue.push("how-to-use");
-  if (details) defaultAccordionValue.push("details");
+  // Get initial values from description splitting for backwards compatibility
+  let { overview, ingredients, howToUse, details, comboIncludes } = parseDescriptionSections(description);
+
+  // Override with actual Shopify Metafields if they exist
+  if (product.combo_includes?.value) comboIncludes = product.combo_includes.value;
+  if (product.ingredients?.value) ingredients = product.ingredients.value;
+  if (product.ingredients_list?.value) ingredients = product.ingredients_list.value;
+  if (product.how_to_use?.value) howToUse = product.how_to_use.value;
+  if (product.product_details?.value) details = product.product_details.value;
+
+  // If we have any of the specific metafields, the main description can just be the overview
+  if (product.combo_includes?.value || product.ingredients?.value || product.ingredients_list?.value || product.how_to_use?.value || product.product_details?.value) {
+    overview = description;
+  }
+
+  // Determine default expanded items (none by default)
+  const defaultAccordionValue: string[] = [];
 
   const isMicrogreens = product.title.toLowerCase().includes('microgreen') ||
     product.title.toLowerCase().includes('leafy') ||
@@ -263,10 +353,10 @@ Product Link: ${productUrl}`;
             Back to shop
           </Link>
 
-          <div className="grid md:grid-cols-2 gap-6 md:gap-12 lg:gap-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 lg:gap-16">
             {/* Images */}
-            <div className="space-y-3 md:space-y-4">
-              <div className="aspect-square rounded-xl md:rounded-2xl overflow-hidden bg-sage-light/30 border border-border shadow-sm">
+            <div className="space-y-3 md:space-y-4 min-w-0 w-full">
+              <div className="aspect-square rounded-xl md:rounded-2xl overflow-hidden bg-sage-light/30 border border-border shadow-sm p-2 md:p-4 flex items-center justify-center">
                 {images[selectedImage] ? (
                   <img
                     src={images[selectedImage].node.url}
@@ -281,12 +371,12 @@ Product Link: ${productUrl}`;
               </div>
 
               {images.length > 1 && (
-                <div className="flex gap-2 md:gap-3 overflow-x-auto pb-2 scrollbar-hide">
+                <div className="flex gap-2 md:gap-3 overflow-x-auto pb-2 scrollbar-hide w-full">
                   {images.slice(0, 6).map((img, index) => (
                     <button
                       key={index}
                       onClick={() => setSelectedImage(index)}
-                      className={`w-16 h-16 md:w-20 md:h-20 rounded-lg md:rounded-xl overflow-hidden border-2 flex-shrink-0 transition-all bg-white ${selectedImage === index
+                      className={`w-16 h-16 md:w-20 md:h-20 rounded-lg md:rounded-xl flex-shrink-0 transition-all bg-white overflow-hidden border-2 ${selectedImage === index
                         ? 'border-[#8dcc5b] shadow-md'
                         : 'border-border hover:border-[#8dcc5b]/40'
                         }`}
@@ -294,7 +384,7 @@ Product Link: ${productUrl}`;
                       <img
                         src={img.node.url}
                         alt={img.node.altText || `${product.title} ${index + 1}`}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-contain p-1"
                       />
                     </button>
                   ))}
@@ -303,19 +393,37 @@ Product Link: ${productUrl}`;
             </div>
 
             {/* Product Info */}
-            <div className="space-y-4 md:space-y-6">
-              <div>
-                <h1 className="font-serif text-xl md:text-3xl lg:text-4xl text-foreground mb-2 md:mb-3 leading-tight break-words">
-                  {product.title}
-                </h1>
-                <div className="flex items-baseline gap-3">
-                  <p className="text-2xl md:text-3xl font-bold text-[#8dcc5b]">
-                    ₹{parseFloat(selectedVariant?.price.amount || "0").toFixed(0)}
-                  </p>
+            <div className="space-y-6 md:space-y-8 min-w-0 w-full">
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    <span className="bg-[#8dcc5b]/10 text-[#8dcc5b] text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border border-[#8dcc5b]/20">
+                      Handcrafted
+                    </span>
+                    <span className="bg-sage-light/30 text-sage-dark text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border border-border">
+                      100% Natural
+                    </span>
+                  </div>
+                  <h1 className="font-serif text-2xl md:text-3xl lg:text-4xl text-foreground leading-[1.1] md:leading-tight break-words tracking-tight">
+                    {product.title}
+                  </h1>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <div className="flex flex-col">
+                    <span className="text-3xl md:text-4xl font-bold text-[#8dcc5b] tracking-tight">
+                      ₹{parseFloat(selectedVariant?.price.amount || "0").toFixed(0)}
+                    </span>
+                  </div>
                   {selectedVariant?.compareAtPrice && parseFloat(selectedVariant.compareAtPrice.amount) > parseFloat(selectedVariant.price.amount) && (
-                    <p className="text-lg text-muted-foreground line-through">
-                      ₹{parseFloat(selectedVariant.compareAtPrice.amount).toFixed(0)}
-                    </p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-base text-muted-foreground line-through decoration-muted-foreground/50 decoration-2">
+                        ₹{parseFloat(selectedVariant.compareAtPrice.amount).toFixed(0)}
+                      </span>
+                      <span className="bg-[#8dcc5b] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded shadow-sm w-fit text-center">
+                        SAVE {Math.round(((parseFloat(selectedVariant.compareAtPrice.amount) - parseFloat(selectedVariant.price.amount)) / parseFloat(selectedVariant.compareAtPrice.amount)) * 100)}%
+                      </span>
+                    </div>
                   )}
                 </div>
               </div>
@@ -323,9 +431,9 @@ Product Link: ${productUrl}`;
               {/* Product Overview */}
               {overview && (
                 <div className="prose prose-sm max-w-none">
-                  <p className="text-muted-foreground leading-relaxed">
+                  <div className="text-foreground/80 leading-[1.8] whitespace-pre-line text-[15px] font-light italic border-l-2 border-sage-light pl-4 py-1">
                     {overview}
-                  </p>
+                  </div>
                 </div>
               )}
 
@@ -342,7 +450,7 @@ Product Link: ${productUrl}`;
                         This Combo Includes
                       </AccordionTrigger>
                       <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
-                        <p className="whitespace-pre-line">{comboIncludes}</p>
+                        <FormatMetafieldText text={comboIncludes} />
                       </AccordionContent>
                     </AccordionItem>
                   )}
@@ -352,7 +460,7 @@ Product Link: ${productUrl}`;
                         Ingredients
                       </AccordionTrigger>
                       <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
-                        <p>{ingredients}</p>
+                        <FormatMetafieldText text={ingredients} />
                       </AccordionContent>
                     </AccordionItem>
                   )}
@@ -362,14 +470,7 @@ Product Link: ${productUrl}`;
                         How to Use
                       </AccordionTrigger>
                       <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
-                        <div className="space-y-2">
-                          {howToUse.split('\n').filter(line => line.trim()).map((line, idx) => (
-                            <div key={idx} className="flex gap-3">
-                              <span className="text-[#8dcc5b] font-bold flex-shrink-0">•</span>
-                              <span className="flex-1">{line.replace(/^[•-]\s*/, '').trim()}</span>
-                            </div>
-                          ))}
-                        </div>
+                        <FormatMetafieldText text={howToUse} isSteps />
                       </AccordionContent>
                     </AccordionItem>
                   )}
@@ -378,15 +479,8 @@ Product Link: ${productUrl}`;
                       <AccordionTrigger className="text-base font-medium py-4 hover:no-underline text-foreground">
                         Product Details
                       </AccordionTrigger>
-                      <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
-                        <div className="space-y-3">
-                          {details.split('\n\n').filter(line => line.trim()).map((line, idx) => (
-                            <div key={idx} className="flex gap-3 items-start">
-                              <span className="text-[#8dcc5b] font-bold flex-shrink-0 mt-1.5">•</span>
-                              <span className="flex-1 leading-relaxed">{line.replace(/^[•\-*]\s*/, '').trim()}</span>
-                            </div>
-                          ))}
-                        </div>
+                      <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4 pt-2">
+                        <FormatMetafieldText text={details} isDetails />
                       </AccordionContent>
                     </AccordionItem>
                   )}
