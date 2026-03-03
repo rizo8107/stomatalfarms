@@ -44,7 +44,7 @@ export const CartDrawer = () => {
         <Button variant="ghost" size="icon" className="relative text-foreground hover:text-primary">
           <ShoppingCart className="h-5 w-5" strokeWidth={1.5} />
           {totalItems > 0 && (
-            <Badge className="absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 flex items-center justify-center text-[10px] bg-[#8dcc5b] text-white ring-2 ring-background">
+            <Badge className="absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 flex items-center justify-center text-[10px] bg-[#5a8739] text-white ring-2 ring-background">
               {totalItems}
             </Badge>
           )}
@@ -141,7 +141,7 @@ export const CartDrawer = () => {
 
                 <Button
                   onClick={handleCheckout}
-                  className="w-full bg-[#8dcc5b] hover:bg-[#8dcc5b]/90 text-white"
+                  className="w-full bg-[#5a8739] hover:bg-[#5a8739]/90 text-white"
                   size="lg"
                   disabled={items.length === 0 || isLoading}
                 >
@@ -165,3 +165,4 @@ export const CartDrawer = () => {
     </Sheet>
   );
 };
+

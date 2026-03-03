@@ -172,7 +172,7 @@ Product Link: ${productUrl}`;
           {isMicrogreens ? (
             <Button 
               onClick={handleWhatsAppOrder}
-              className="w-full bg-[#8dcc5b] text-white hover:bg-[#8dcc5b]/90 text-xs h-9 rounded font-medium shadow-sm"
+              className="w-full bg-[#5a8739] text-white hover:bg-[#5a8739]/90 text-xs h-9 rounded font-medium shadow-sm"
             >
               <MessageCircle className="h-3 w-3 mr-1.5" />
               Buy via WhatsApp
@@ -180,7 +180,7 @@ Product Link: ${productUrl}`;
           ) : (
             <Button 
               onClick={handleAddToCart}
-              className="w-full bg-[#8dcc5b] text-white hover:bg-[#8dcc5b]/90 text-xs h-9 rounded font-medium shadow-sm"
+              className="w-full bg-[#5a8739] text-white hover:bg-[#5a8739]/90 text-xs h-9 rounded font-medium shadow-sm"
             >
               Add to Cart
             </Button>
@@ -261,7 +261,7 @@ Product Link: ${productUrl}`;
                 e.stopPropagation();
                 submitWhatsAppOrder();
               }}
-              className="flex-1 bg-[#8dcc5b] hover:bg-[#8dcc5b]/90 text-white"
+              className="flex-1 bg-[#5a8739] hover:bg-[#5a8739]/90 text-white"
             >
               <MessageCircle className="h-4 w-4 mr-2" />
               Send Order
@@ -272,3 +272,4 @@ Product Link: ${productUrl}`;
     </Link>
   );
 };
+

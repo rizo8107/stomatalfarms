@@ -90,7 +90,7 @@ export const RelatedProducts = ({ currentProductId }: RelatedProductsProps) => {
                 >
                   <div className="aspect-[4/5] overflow-hidden bg-[#f5f0e8]/80 relative">
                     {hasDiscount && (
-                      <span className="absolute top-3 left-3 z-10 bg-[#8dcc5b] text-white text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded shadow-sm">
+                      <span className="absolute top-3 left-3 z-10 bg-[#5a8739] text-white text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded shadow-sm">
                         Sale
                       </span>
                     )}
@@ -109,12 +109,12 @@ export const RelatedProducts = ({ currentProductId }: RelatedProductsProps) => {
                   </div>
 
                   <div className="p-4 md:p-5 flex flex-col gap-2">
-                    <h3 className="font-medium text-foreground text-sm leading-snug line-clamp-2 h-10 group-hover:text-[#8dcc5b] transition-colors duration-300">
+                    <h3 className="font-medium text-foreground text-sm leading-snug line-clamp-2 h-10 group-hover:text-[#5a8739] transition-colors duration-300">
                       {product.node.title}
                     </h3>
 
                     <div className="flex items-center gap-2">
-                      <span className="text-[#8dcc5b] font-bold text-base md:text-lg whitespace-nowrap">
+                      <span className="text-[#5a8739] font-bold text-base md:text-lg whitespace-nowrap">
                         ₹{Math.round(currentPrice)}
                       </span>
                       {hasDiscount && (
@@ -129,7 +129,7 @@ export const RelatedProducts = ({ currentProductId }: RelatedProductsProps) => {
                 <div className="px-4 pb-4 md:px-5 md:pb-5">
                   <Button
                     onClick={() => handleQuickAdd(product)}
-                    className="w-full bg-[#8dcc5b] text-white hover:bg-[#8dcc5b]/90 text-xs h-10 rounded-xl font-bold tracking-wide shadow-sm hover:shadow transition-all duration-300"
+                    className="w-full bg-[#5a8739] text-white hover:bg-[#5a8739]/90 text-xs h-10 rounded-xl font-bold tracking-wide shadow-sm hover:shadow transition-all duration-300"
                   >
                     <ShoppingBag className="h-3.5 w-3.5 mr-2" />
                     Quick Add
@@ -143,3 +143,4 @@ export const RelatedProducts = ({ currentProductId }: RelatedProductsProps) => {
     </section>
   );
 };
+

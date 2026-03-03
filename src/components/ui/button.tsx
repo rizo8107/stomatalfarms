@@ -9,14 +9,14 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-[#8dcc5b] text-white hover:bg-[#8dcc5b]/90 hover:-translate-y-0.5 hover:shadow-lg",
+        default: "bg-[#5a8739] text-white hover:bg-[#5a8739]/90 hover:-translate-y-0.5 hover:shadow-lg",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        hero: "bg-[#8dcc5b] text-white px-6 py-3 text-base font-medium rounded-full hover:bg-[#8dcc5b]/90 hover:-translate-y-0.5 hover:shadow-lg",
-        "hero-outline": "border-2 border-[#8dcc5b] text-[#8dcc5b] bg-transparent px-6 py-3 text-base font-medium rounded-full hover:bg-[#8dcc5b] hover:text-white",
+        hero: "bg-[#5a8739] text-white px-6 py-3 text-base font-medium rounded-full hover:bg-[#5a8739]/90 hover:-translate-y-0.5 hover:shadow-lg",
+        "hero-outline": "border-2 border-[#5a8739] text-[#5a8739] bg-transparent px-6 py-3 text-base font-medium rounded-full hover:bg-[#5a8739] hover:text-white",
         subtle: "text-muted-foreground hover:text-foreground underline-offset-4 hover:underline",
       },
       size: {
@@ -48,3 +48,4 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button";
 
 export { Button, buttonVariants };
+

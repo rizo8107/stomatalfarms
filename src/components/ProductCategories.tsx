@@ -41,8 +41,11 @@ const categories = [
 
 const ProductCategories = () => {
   return (
-    <section className="py-12 md:py-16 bg-gradient-to-b from-transparent via-sage-light/20 to-sage-light/40 border-y border-border/40">
-      <div className="container px-4 max-w-7xl mx-auto">
+    <section className="py-20 md:py-28 bg-[#faf7f2] border-t border-[#eae4da] relative shadow-[0_-20px_40px_rgba(0,0,0,0.03)] z-10 w-full rounded-t-3xl md:rounded-t-[3rem] -mt-6 md:-mt-10">
+      {/* Decorative top border */}
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#5a8739]/30 to-transparent" />
+
+      <div className="container px-4 max-w-7xl mx-auto relative">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-10 md:mb-14">
           <span className="inline-flex items-center justify-center rounded-full bg-primary/10 px-4 py-1.5 text-xs md:text-sm font-semibold uppercase tracking-widest text-primary mb-4 border border-primary/20">
@@ -97,3 +100,4 @@ const ProductCategories = () => {
 };
 
 export default ProductCategories;
+

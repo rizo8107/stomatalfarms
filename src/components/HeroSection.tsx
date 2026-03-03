@@ -7,7 +7,7 @@ import FreshProduceTrustBadges from "@/components/FreshProduceTrustBadges";
 
 const HeroSection = () => {
   return (
-    <section className="pt-2 md:pt-16 pb-4 md:pb-6">
+    <section className="pt-2 md:pt-16 pb-20 md:pb-32 bg-[#1a2316] relative">
       <div className="container px-3 md:px-4">
         {/* Two Column Layout with Cards and Trust Badges */}
         <div className="grid grid-cols-2 gap-3 md:gap-8">

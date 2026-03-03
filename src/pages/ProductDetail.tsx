@@ -8,13 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ChevronLeft, Loader2, Minus, Plus, ShoppingCart, Truck, Leaf, Shield, Award } from "lucide-react";
+import { ChevronLeft, Loader2, Minus, Plus, ShoppingCart, Truck, Leaf, Shield, Award, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
-import { MessageCircle } from "lucide-react";
-import truckIcon from "@/assets/icons/truck.png";
-import leafIcon from "@/assets/icons/leaf.png";
-import shieldIcon from "@/assets/icons/shield.png";
-import awardIcon from "@/assets/icons/award.png";
 import {
   Accordion,
   AccordionContent,
@@ -134,7 +129,7 @@ const FormatMetafieldText = ({ text, isSteps = false, isDetails = false }: { tex
             const value = parts.slice(1).join(':').trim();
             return (
               <div key={idx} className="flex flex-col p-4 bg-card/60 backdrop-blur-sm rounded-xl border border-border shadow-sm hover:shadow-md transition-all">
-                <span className="text-xs font-bold text-[#8dcc5b] uppercase tracking-wider mb-1.5">{key}</span>
+                <span className="text-xs font-bold text-[#5a8739] uppercase tracking-wider mb-1.5">{key}</span>
                 <span className="text-sm text-foreground font-medium leading-relaxed">{value}</span>
               </div>
             );
@@ -152,8 +147,8 @@ const FormatMetafieldText = ({ text, isSteps = false, isDetails = false }: { tex
         if (isSteps) {
           const currentStep = stepCounter++;
           return (
-            <div key={idx} className="flex flex-col gap-2 bg-[#8dcc5b]/5 p-4 rounded-xl border border-[#8dcc5b]/20">
-              <span className="inline-flex items-center justify-center rounded-md bg-[#8dcc5b]/20 px-2.5 py-1 text-xs font-bold text-[#5c8a2b] uppercase tracking-wider w-fit">
+            <div key={idx} className="flex flex-col gap-2 bg-[#5a8739]/5 p-4 rounded-xl border border-[#5a8739]/20">
+              <span className="inline-flex items-center justify-center rounded-md bg-[#5a8739]/20 px-2.5 py-1 text-xs font-bold text-[#5c8a2b] uppercase tracking-wider w-fit">
                 Step {currentStep}
               </span>
               <span className="leading-relaxed text-sm text-foreground">{cleanLine}</span>
@@ -167,7 +162,7 @@ const FormatMetafieldText = ({ text, isSteps = false, isDetails = false }: { tex
           const rest = cleanLine.slice(1).trim();
           return (
             <div key={idx} className="flex gap-3 items-start relative before:absolute before:left-0 before:top-0">
-              <span className="text-[#8dcc5b] font-bold text-lg leading-6 flex-shrink-0 mt-0.5">•</span>
+              <span className="text-[#5a8739] font-bold text-lg leading-6 flex-shrink-0 mt-0.5">•</span>
               <span className="flex-1 leading-relaxed text-sm text-foreground">{rest}</span>
             </div>
           );
@@ -377,8 +372,8 @@ Product Link: ${productUrl}`;
                       key={index}
                       onClick={() => setSelectedImage(index)}
                       className={`w-16 h-16 md:w-20 md:h-20 rounded-lg md:rounded-xl flex-shrink-0 transition-all bg-white overflow-hidden border-2 ${selectedImage === index
-                        ? 'border-[#8dcc5b] shadow-md'
-                        : 'border-border hover:border-[#8dcc5b]/40'
+                        ? 'border-[#5a8739] shadow-md'
+                        : 'border-border hover:border-[#5a8739]/40'
                         }`}
                     >
                       <img
@@ -397,7 +392,7 @@ Product Link: ${productUrl}`;
               <div className="space-y-4">
                 <div className="space-y-2">
                   <div className="flex flex-wrap gap-2 mb-2">
-                    <span className="bg-[#8dcc5b]/10 text-[#8dcc5b] text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border border-[#8dcc5b]/20">
+                    <span className="bg-[#5a8739]/10 text-[#5a8739] text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border border-[#5a8739]/20">
                       Handcrafted
                     </span>
                     <span className="bg-sage-light/30 text-sage-dark text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border border-border">
@@ -411,7 +406,7 @@ Product Link: ${productUrl}`;
 
                 <div className="flex items-center gap-4">
                   <div className="flex flex-col">
-                    <span className="text-3xl md:text-4xl font-bold text-[#8dcc5b] tracking-tight">
+                    <span className="text-3xl md:text-4xl font-bold text-[#5a8739] tracking-tight">
                       ₹{parseFloat(selectedVariant?.price.amount || "0").toFixed(0)}
                     </span>
                   </div>
@@ -420,7 +415,7 @@ Product Link: ${productUrl}`;
                       <span className="text-base text-muted-foreground line-through decoration-muted-foreground/50 decoration-2">
                         ₹{parseFloat(selectedVariant.compareAtPrice.amount).toFixed(0)}
                       </span>
-                      <span className="bg-[#8dcc5b] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded shadow-sm w-fit text-center">
+                      <span className="bg-[#5a8739] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded shadow-sm w-fit text-center">
                         SAVE {Math.round(((parseFloat(selectedVariant.compareAtPrice.amount) - parseFloat(selectedVariant.price.amount)) / parseFloat(selectedVariant.compareAtPrice.amount)) * 100)}%
                       </span>
                     </div>
@@ -516,8 +511,8 @@ Product Link: ${productUrl}`;
                               className={`px-5 py-2.5 rounded-lg border-2 text-sm font-medium transition-all ${selectedVariant?.selectedOptions.some(
                                 so => so.name === option.name && so.value === value
                               )
-                                ? 'border-[#8dcc5b] bg-[#8dcc5b]/10 text-[#8dcc5b] shadow-sm'
-                                : 'border-border hover:border-[#8dcc5b]/40 hover:bg-sage-light/20'
+                                ? 'border-[#5a8739] bg-[#5a8739]/10 text-[#5a8739] shadow-sm'
+                                : 'border-border hover:border-[#5a8739]/40 hover:bg-sage-light/20'
                                 }`}
                             >
                               {value}
@@ -558,7 +553,7 @@ Product Link: ${productUrl}`;
                   <Button
                     onClick={handleWhatsAppOrder}
                     size="lg"
-                    className="flex-1 bg-[#8dcc5b] hover:bg-[#8dcc5b]/90 text-white h-12 text-base font-semibold shadow-md hover:shadow-lg transition-all"
+                    className="flex-1 bg-[#5a8739] hover:bg-[#5a8739]/90 text-white h-12 text-base font-semibold shadow-md hover:shadow-lg transition-all"
                     disabled={!selectedVariant?.availableForSale}
                   >
                     <MessageCircle className="h-5 w-5 mr-2" />
@@ -568,7 +563,7 @@ Product Link: ${productUrl}`;
                   <Button
                     onClick={handleAddToCart}
                     size="lg"
-                    className="flex-1 bg-[#8dcc5b] hover:bg-[#8dcc5b]/90 text-white h-12 text-base font-semibold shadow-md hover:shadow-lg transition-all"
+                    className="flex-1 bg-[#5a8739] hover:bg-[#5a8739]/90 text-white h-12 text-base font-semibold shadow-md hover:shadow-lg transition-all"
                     disabled={!selectedVariant?.availableForSale}
                   >
                     <ShoppingCart className="h-5 w-5 mr-2" />
@@ -580,7 +575,7 @@ Product Link: ${productUrl}`;
               {/* Trust Badges / Delivery Info */}
               {isMicrogreens ? (
                 <div className="pt-6 border-t border-border">
-                  <div className="bg-[#8dcc5b]/10 border-2 border-[#8dcc5b] rounded-lg p-4">
+                  <div className="bg-[#5a8739]/10 border-2 border-[#5a8739] rounded-lg p-4">
                     <div className="flex items-start gap-3">
                       <img src={truckIcon} alt="Delivery" className="h-8 w-8 object-contain flex-shrink-0" />
                       <div>
@@ -594,20 +589,20 @@ Product Link: ${productUrl}`;
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-3 pt-6 border-t border-border">
-                  <div className="flex items-center gap-2 text-sm text-foreground bg-sage-light/20 rounded-lg p-3">
-                    <img src={truckIcon} alt="Free Shipping" className="h-8 w-8 object-contain flex-shrink-0" />
+                  <div className="flex items-center gap-3 text-sm text-foreground bg-[#5a8739]/5 rounded-xl p-4 border border-[#5a8739]/10 shadow-sm">
+                    <Truck className="h-6 w-6 text-[#5a8739] flex-shrink-0" />
                     <span className="font-medium">Free Shipping</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-foreground bg-sage-light/20 rounded-lg p-3">
-                    <img src={leafIcon} alt="Natural" className="h-8 w-8 object-contain flex-shrink-0" />
+                  <div className="flex items-center gap-3 text-sm text-foreground bg-[#5a8739]/5 rounded-xl p-4 border border-[#5a8739]/10 shadow-sm">
+                    <Leaf className="h-6 w-6 text-[#5a8739] flex-shrink-0" />
                     <span className="font-medium">100% Natural</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-foreground bg-sage-light/20 rounded-lg p-3">
-                    <img src={shieldIcon} alt="Secure" className="h-8 w-8 object-contain flex-shrink-0" />
+                  <div className="flex items-center gap-3 text-sm text-foreground bg-[#5a8739]/5 rounded-xl p-4 border border-[#5a8739]/10 shadow-sm">
+                    <Shield className="h-6 w-6 text-[#5a8739] flex-shrink-0" />
                     <span className="font-medium">Secure Payment</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-foreground bg-sage-light/20 rounded-lg p-3">
-                    <img src={awardIcon} alt="Premium" className="h-8 w-8 object-contain flex-shrink-0" />
+                  <div className="flex items-center gap-3 text-sm text-foreground bg-[#5a8739]/5 rounded-xl p-4 border border-[#5a8739]/10 shadow-sm">
+                    <Award className="h-6 w-6 text-[#5a8739] flex-shrink-0" />
                     <span className="font-medium">Premium Quality</span>
                   </div>
                 </div>
@@ -648,7 +643,7 @@ Product Link: ${productUrl}`;
           {isMicrogreens ? (
             <Button
               onClick={handleWhatsAppOrder}
-              className="flex-1 bg-[#8dcc5b] hover:bg-[#8dcc5b]/90 text-white h-10"
+              className="flex-1 bg-[#5a8739] hover:bg-[#5a8739]/90 text-white h-10"
               disabled={!selectedVariant?.availableForSale}
             >
               <MessageCircle className="h-4 w-4 mr-2" />
@@ -657,7 +652,7 @@ Product Link: ${productUrl}`;
           ) : (
             <Button
               onClick={handleAddToCart}
-              className="flex-1 bg-[#8dcc5b] hover:bg-[#8dcc5b]/90 text-white h-10"
+              className="flex-1 bg-[#5a8739] hover:bg-[#5a8739]/90 text-white h-10"
               disabled={!selectedVariant?.availableForSale}
             >
               <ShoppingCart className="h-4 w-4 mr-2" />
@@ -736,7 +731,7 @@ Product Link: ${productUrl}`;
             </Button>
             <Button
               onClick={submitWhatsAppOrder}
-              className="flex-1 bg-[#8dcc5b] hover:bg-[#8dcc5b]/90 text-white"
+              className="flex-1 bg-[#5a8739] hover:bg-[#5a8739]/90 text-white"
             >
               <MessageCircle className="h-4 w-4 mr-2" />
               Send Order
@@ -749,3 +744,4 @@ Product Link: ${productUrl}`;
 };
 
 export default ProductDetail;
+

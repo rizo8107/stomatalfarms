@@ -79,7 +79,7 @@ const DropdownMenuItem = React.forwardRef<
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50 focus:bg-[#8dcc5b]/10 focus:text-accent-foreground",
+      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50 focus:bg-[#5a8739]/10 focus:text-accent-foreground",
       inset && "pl-8",
       className,
     )}
@@ -177,3 +177,4 @@ export {
   DropdownMenuSubTrigger,
   DropdownMenuRadioGroup,
 };
+

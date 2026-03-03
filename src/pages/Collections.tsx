@@ -107,7 +107,7 @@ const Collections = () => {
                   onClick={() => handleCategoryChange(category.id)}
                   className={`whitespace-nowrap rounded-full ${
                     activeCategory === category.id 
-                      ? "bg-[#8dcc5b] text-white" 
+                      ? "bg-[#5a8739] text-white" 
                       : "border-border hover:bg-sage-light"
                   }`}
                 >
@@ -163,3 +163,4 @@ const Collections = () => {
 };
 
 export default Collections;
+

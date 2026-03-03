@@ -1,8 +1,4 @@
-import labIcon from "@/assets/icons/lab.png";
-import leafIcon from "@/assets/icons/leaf.png";
-import fireIcon from "@/assets/icons/fire.png";
-import clockIcon from "@/assets/icons/clock.png";
-import packageIcon from "@/assets/icons/package.png";
+import { FlaskConical, Leaf, Sparkles, Box } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -12,22 +8,22 @@ import {
 
 const badges = [
   {
-    image: labIcon,
+    icon: FlaskConical,
     title: "Lab-Tested",
     description: "Tested to meet safety and quality standards before reaching you.",
   },
   {
-    image: leafIcon,
+    icon: Leaf,
     title: "100% Natural",
     description: "Made with 100% natural ingredients, free from synthetic fragrances and harmful additives.",
   },
   {
-    image: clockIcon,
+    icon: Sparkles,
     title: "Traditionally Crafted",
     description: "Prepared using time-tested methods inspired by traditional practices.",
   },
   {
-    image: packageIcon,
+    icon: Box,
     title: "Small-Batch Made",
     description: "Produced in limited batches with close attention to every step.",
   },
@@ -35,7 +31,7 @@ const badges = [
 
 const AuroraTrustBadges = () => {
   return (
-    <section className="py-3 md:py-8 rounded-xl bg-sage-light/20 border border-border/30">
+    <section className="py-3 md:py-8 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm shadow-md">
       <div className="px-4">
         <TooltipProvider>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
@@ -43,17 +39,13 @@ const AuroraTrustBadges = () => {
               <Tooltip key={badge.title}>
                 <TooltipTrigger asChild>
                   <div
-                    className="flex flex-col items-center text-center animate-fade-in cursor-help"
+                    className="flex flex-col items-center text-center animate-fade-in cursor-help group"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
-                    <div className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center mb-2 transition-transform hover:scale-110 duration-300">
-                      <img
-                        src={badge.image}
-                        alt={badge.title}
-                        className="w-full h-full object-contain drop-shadow-sm"
-                      />
+                    <div className="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center mb-2 transition-transform hover:scale-110 duration-300">
+                      <badge.icon className="w-full h-full stroke-[1.2] text-[#5a8739] drop-shadow-[0_0_8px_rgba(90,135,57,0.3)] opacity-95 group-hover:opacity-100 transition-opacity" />
                     </div>
-                    <h4 className="text-[10px] md:text-xs font-medium text-foreground leading-tight">
+                    <h4 className="text-[10px] md:text-xs font-medium text-white/90 leading-tight">
                       {badge.title.split(' ').slice(0, 2).join(' ')}
                     </h4>
                   </div>

@@ -57,7 +57,7 @@ const Contact = () => {
         {/* Hero Section */}
         <section className="py-12 md:py-16 bg-sage-light/30">
           <div className="container text-center">
-            <span className="text-[#8dcc5b] text-xs uppercase tracking-[0.2em] mb-3 block">
+            <span className="text-[#5a8739] text-xs uppercase tracking-[0.2em] mb-3 block">
               Get In Touch
             </span>
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-4">
@@ -84,8 +84,8 @@ const Contact = () => {
 
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="bg-[#8dcc5b]/10 p-3 rounded-lg">
-                    <MapPin className="h-6 w-6 text-[#8dcc5b]" />
+                  <div className="bg-[#5a8739]/10 p-3 rounded-lg">
+                    <MapPin className="h-6 w-6 text-[#5a8739]" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Address</h3>
@@ -96,8 +96,8 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-[#8dcc5b]/10 p-3 rounded-lg">
-                    <Phone className="h-6 w-6 text-[#8dcc5b]" />
+                  <div className="bg-[#5a8739]/10 p-3 rounded-lg">
+                    <Phone className="h-6 w-6 text-[#5a8739]" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Phone</h3>
@@ -108,8 +108,8 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-[#8dcc5b]/10 p-3 rounded-lg">
-                    <Mail className="h-6 w-6 text-[#8dcc5b]" />
+                  <div className="bg-[#5a8739]/10 p-3 rounded-lg">
+                    <Mail className="h-6 w-6 text-[#5a8739]" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Email</h3>
@@ -120,8 +120,8 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-[#8dcc5b]/10 p-3 rounded-lg">
-                    <Clock className="h-6 w-6 text-[#8dcc5b]" />
+                  <div className="bg-[#5a8739]/10 p-3 rounded-lg">
+                    <Clock className="h-6 w-6 text-[#5a8739]" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Business Hours</h3>
@@ -223,7 +223,7 @@ const Contact = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#8dcc5b] hover:bg-[#8dcc5b]/90 text-white h-12 text-base font-semibold"
+                  className="w-full bg-[#5a8739] hover:bg-[#5a8739]/90 text-white h-12 text-base font-semibold"
                 >
                   {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
@@ -239,3 +239,4 @@ const Contact = () => {
 };
 
 export default Contact;
+
