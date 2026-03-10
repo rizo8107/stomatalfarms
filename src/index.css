@@ -6,64 +6,71 @@
 
 @layer base {
   :root {
-    /* White background */
+    /* White background for main site */
     --background: 0 0% 100%;
     --foreground: 30 15% 20%;
 
     /* Card surfaces */
-    --card: 40 30% 98%;
+    --card: 0 0% 100%;
     --card-foreground: 30 15% 20%;
 
     /* Popover */
-    --popover: 40 30% 98%;
+    --popover: 0 0% 100%;
     --popover-foreground: 30 15% 20%;
 
-    /* Sage green primary */
-    --primary: 85 25% 35%;
-    --primary-foreground: 40 30% 98%;
+    /* Stomatal Green Primary (Medium Green - Highlight Card Background) */
+    --primary: 127 24% 34%;
+    --primary-foreground: 123 30% 86%;
 
-    /* Warm terracotta secondary */
-    --secondary: 25 40% 88%;
-    --secondary-foreground: 25 30% 25%;
+    /* Stomatal Dark Green (Hero Background) */
+    --secondary: 135 30% 21%;
+    --secondary-foreground: 123 30% 86%;
 
-    /* Muted sage */
-    --muted: 85 15% 90%;
-    --muted-foreground: 30 10% 45%;
+    /* Muted tones */
+    --muted: 123 15% 94%;
+    --muted-foreground: 135 15% 45%;
 
-    /* Accent - warm amber */
-    --accent: 35 45% 85%;
-    --accent-foreground: 30 20% 25%;
+    /* Accent - Light Mint (Logo/Icon highlight) */
+    --accent: 123 30% 86%;
+    --accent-foreground: 135 30% 21%;
 
     /* Destructive */
-    --destructive: 0 65% 50%;
-    --destructive-foreground: 40 30% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
     /* Borders */
-    --border: 40 20% 88%;
-    --input: 40 20% 88%;
-    --ring: 85 25% 35%;
+    --border: 127 15% 90%;
+    --input: 127 15% 90%;
+    --ring: 127 24% 34%;
 
     --radius: 0.5rem;
 
-    /* Custom tokens for incense brand */
-    --sage: 85 25% 35%;
-    --sage-light: 85 20% 92%;
+    /* Custom tokens for Stomatal Farms */
+    --stoma-dark: 135 30% 21%;
+    /* #25452d */
+    --stoma-medium: 127 24% 34%;
+    /* #426c47 */
+    --stoma-light: 123 30% 86%;
+    /* #d1e7d2 */
+
+    --sage: 127 24% 34%;
+    --sage-light: 123 30% 86%;
     --cream: 40 33% 96%;
     --cream-dark: 35 25% 90%;
     --terracotta: 25 45% 50%;
     --terracotta-light: 25 40% 88%;
-    --earth: 30 20% 28%;
+    --earth: 135 30% 21%;
     --warm-white: 40 30% 98%;
 
     /* Sidebar tokens */
-    --sidebar-background: 40 30% 98%;
+    --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 30 15% 25%;
-    --sidebar-primary: 85 25% 35%;
-    --sidebar-primary-foreground: 40 30% 98%;
-    --sidebar-accent: 85 15% 90%;
-    --sidebar-accent-foreground: 85 25% 35%;
-    --sidebar-border: 40 20% 88%;
-    --sidebar-ring: 85 25% 35%;
+    --sidebar-primary: 127 24% 34%;
+    --sidebar-primary-foreground: 123 30% 86%;
+    --sidebar-accent: 123 30% 92%;
+    --sidebar-accent-foreground: 127 24% 34%;
+    --sidebar-border: 127 15% 90%;
+    --sidebar-ring: 127 24% 34%;
   }
 
   .dark {

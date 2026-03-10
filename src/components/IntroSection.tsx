@@ -2,7 +2,7 @@ import { Leaf } from "lucide-react";
 
 const IntroSection = () => {
   return (
-    <section className="pt-24 md:pt-32 pb-4 md:pb-12 bg-[#1a2316] relative">
+    <section className="pt-24 md:pt-32 pb-4 md:pb-12 bg-secondary relative">
       <div className="container relative z-10">
         <div className="text-center max-w-3xl mx-auto flex flex-col items-center">
           <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-white mb-4 leading-tight tracking-tight">
