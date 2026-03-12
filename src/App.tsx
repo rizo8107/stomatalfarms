@@ -9,6 +9,8 @@ import ProductDetail from "./pages/ProductDetail";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
+import AnalyticsTracker from "./components/AnalyticsTracker";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -17,6 +19,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <AnalyticsTracker />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/collections" element={<Collections />} />

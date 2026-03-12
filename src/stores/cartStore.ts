@@ -46,6 +46,31 @@ export const useCartStore = create<CartStore>()(
         const { items } = get();
         const existingItem = items.find(i => i.variantId === item.variantId);
         
+        // Track AddToCart
+        if (typeof window !== 'undefined') {
+          if (window.gtag) {
+            window.gtag('event', 'add_to_cart', {
+              currency: item.price.currencyCode,
+              value: parseFloat(item.price.amount) * item.quantity,
+              items: [{
+                item_id: item.variantId,
+                item_name: item.product.node.title,
+                quantity: item.quantity,
+                price: parseFloat(item.price.amount)
+              }]
+            });
+          }
+          if (window.fbq) {
+            window.fbq('track', 'AddToCart', {
+              content_ids: [item.variantId],
+              content_name: item.product.node.title,
+              content_type: 'product',
+              value: parseFloat(item.price.amount) * item.quantity,
+              currency: item.price.currencyCode
+            });
+          }
+        }
+
         if (existingItem) {
           set({
             items: items.map(i =>
@@ -104,6 +129,32 @@ export const useCartStore = create<CartStore>()(
           
           const updatedCheckout = await addToCheckout(checkout.id, lineItems);
           setCheckoutUrl(updatedCheckout.webUrl);
+
+          // Track InitiateCheckout
+          if (typeof window !== 'undefined') {
+            const totalValue = items.reduce((sum, item) => sum + (parseFloat(item.price.amount) * item.quantity), 0);
+            if (window.gtag) {
+              window.gtag('event', 'begin_checkout', {
+                currency: items[0]?.price.currencyCode || 'INR',
+                value: totalValue,
+                items: items.map(item => ({
+                  item_id: item.variantId,
+                  item_name: item.product.node.title,
+                  quantity: item.quantity,
+                  price: parseFloat(item.price.amount)
+                }))
+              });
+            }
+            if (window.fbq) {
+              window.fbq('track', 'InitiateCheckout', {
+                content_ids: items.map(item => item.variantId),
+                content_type: 'product',
+                value: totalValue,
+                currency: items[0]?.price.currencyCode || 'INR',
+                num_items: items.reduce((sum, item) => sum + item.quantity, 0)
+              });
+            }
+          }
           
           return updatedCheckout.webUrl;
         } catch (error) {
