@@ -49,7 +49,7 @@ export const RelatedProducts = ({ currentProductId }: RelatedProductsProps) => {
 
     toast.success("Added to cart", {
       description: product.node.title,
-      position: "top-center",
+      position: "bottom-right",
     });
   };
 

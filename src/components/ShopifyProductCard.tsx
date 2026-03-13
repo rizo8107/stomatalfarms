@@ -66,7 +66,7 @@ export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
 
     toast.success("Added to cart", {
       description: node.title,
-      position: "top-center",
+      position: "bottom-right",
     });
   };
 
@@ -86,7 +86,7 @@ export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
   const submitWhatsAppOrder = () => {
     if (!addressData.name || !addressData.phone || !addressData.address) {
       toast.error("Please fill in all fields", {
-        position: "top-center",
+        position: "bottom-right",
       });
       return;
     }
@@ -112,7 +112,7 @@ Product Link: ${productUrl}`;
 
     toast.success("Opening WhatsApp...", {
       description: "Your order details have been prepared",
-      position: "top-center",
+      position: "bottom-right",
     });
   };
 

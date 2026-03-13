@@ -36,7 +36,7 @@ const Contact = () => {
     setTimeout(() => {
       toast.success("Message sent successfully!", {
         description: "We'll get back to you soon.",
-        position: "top-center",
+        position: "bottom-right",
       });
       setFormData({
         name: "",

@@ -333,7 +333,7 @@ const ProductDetail = () => {
   const submitWhatsAppOrder = () => {
     if (!addressData.name || !addressData.phone || !addressData.doorNo || !addressData.area || !addressData.city || !addressData.pincode) {
       toast.error("Please fill in all fields", {
-        position: "top-center",
+        position: "bottom-right",
       });
       return;
     }
@@ -362,7 +362,7 @@ Product Link: ${productUrl}`;
 
     toast.success("Opening WhatsApp...", {
       description: "Your order details have been prepared",
-      position: "top-center",
+      position: "bottom-right",
     });
   };
 
