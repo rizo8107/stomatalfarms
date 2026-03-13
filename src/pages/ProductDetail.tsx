@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ChevronLeft, Loader2, Minus, Plus, ShoppingCart, Truck, Leaf, Shield, Award, MessageCircle } from "lucide-react";
+import truckIcon from "@/assets/icons/truck.png";
 import { toast } from "sonner";
 import {
   Accordion,
