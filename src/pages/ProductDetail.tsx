@@ -100,46 +100,35 @@ const parseDescriptionSections = (description: string) => {
   return { overview, ingredients, howToUse, details, comboIncludes };
 };
 
-const FormatMetafieldText = ({ text, isSteps = false, isDetails = false }: { text: string; isSteps?: boolean; isDetails?: boolean }) => {
+const FormatMetafieldText = ({ text, isSteps = false, isDetails = false, icon: IconComponent }: { text: string; isSteps?: boolean; isDetails?: boolean; icon?: any }) => {
   if (!text) return null;
 
-  // Clean up extra invisible spaces, line breaks, and narrow non-breaking spaces
   const cleanText = text.replace(/[\u202F\u00A0]/g, ' ').trim();
-
-  // Split the text block by double newlines or single newlines, ensuring we handle multiple carriage returns smoothly
   const lines = cleanText.split(/\n/);
-
-  // Reconstruct paragraphs, grouping consecutive non-empty lines that don't start with a bullet into logic chunks,
-  // but to keep it simple, let's just render line by line if it's not empty.
   const validLines = lines.map(l => l.trim()).filter(l => l.length > 0);
 
   let stepCounter = 1;
 
   return (
-    <div className={isDetails ? "grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4" : "space-y-4"}>
+    <div className={isDetails ? "grid grid-cols-1 md:grid-cols-2 gap-4" : "space-y-4"}>
       {validLines.map((line, idx) => {
-        // Strip out existing manual "STEP 1 -" labels just in case the user hasn't removed them yet
-        const cleanLine = line.replace(/^(?:STEP|Step)\s*\d+\s*[–-]\s*/i, '').trim();
+        const cleanLine = line.replace(/^(?:STEP|Step)\s*\d+\s*[–-]\s*/i, '').replace(/^[•*-]\s*/, '').trim();
 
         if (isDetails) {
-          // Detect key-value patterns like "Total Quantity: 45 cups"
-          const parts = cleanLine.replace(/^[•-]\s*/, '').split(':');
-
+          const parts = cleanLine.split(':');
           if (parts.length >= 2) {
             const key = parts[0].trim();
             const value = parts.slice(1).join(':').trim();
             return (
-              <div key={idx} className="flex flex-col p-4 bg-card/60 backdrop-blur-sm rounded-xl border border-border shadow-sm hover:shadow-md transition-all">
-                <span className="text-xs font-bold text-[#5a8739] uppercase tracking-wider mb-1.5">{key}</span>
-                <span className="text-sm text-foreground font-medium leading-relaxed">{value}</span>
+              <div key={idx} className="flex flex-col p-4 bg-muted/30 backdrop-blur-sm rounded-2xl border border-border/50 hover:bg-muted/50 transition-all duration-300 group">
+                <span className="text-[10px] font-bold text-[#5a8739] uppercase tracking-[0.15em] mb-1 group-hover:translate-x-1 transition-transform">{key}</span>
+                <span className="text-sm text-foreground font-semibold leading-relaxed">{value}</span>
               </div>
             );
           } else {
-            // Fallback for details without a colon
-            const rest = cleanLine.replace(/^[•-]\s*/, '').trim();
             return (
-              <div key={idx} className="flex flex-col p-4 bg-card/60 backdrop-blur-sm rounded-xl border border-border shadow-sm hover:shadow-md transition-all col-span-1 md:col-span-2">
-                <span className="text-sm text-foreground font-medium leading-relaxed">{rest}</span>
+              <div key={idx} className="flex flex-col p-4 bg-muted/30 backdrop-blur-sm rounded-2xl border border-border/50 hover:bg-muted/50 transition-all duration-300 col-span-1 md:col-span-2">
+                <span className="text-sm text-foreground font-medium leading-relaxed">{cleanLine}</span>
               </div>
             );
           }
@@ -148,32 +137,31 @@ const FormatMetafieldText = ({ text, isSteps = false, isDetails = false }: { tex
         if (isSteps) {
           const currentStep = stepCounter++;
           return (
-            <div key={idx} className="flex flex-col gap-2 bg-[#5a8739]/5 p-4 rounded-xl border border-[#5a8739]/20">
-              <span className="inline-flex items-center justify-center rounded-md bg-[#5a8739]/20 px-2.5 py-1 text-xs font-bold text-[#5c8a2b] uppercase tracking-wider w-fit">
-                Step {currentStep}
-              </span>
-              <span className="leading-relaxed text-sm text-foreground">{cleanLine}</span>
+            <div key={idx} className="flex gap-4 p-5 bg-[#5a8739]/5 rounded-2xl border border-[#5a8739]/10 relative overflow-hidden group">
+              <div className="absolute top-0 left-0 w-1 h-full bg-[#5a8739]/40 group-hover:bg-[#5a8739] transition-colors" />
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#5a8739] text-white flex items-center justify-center font-bold text-sm shadow-sm">
+                {currentStep}
+              </div>
+              <div className="flex-1 space-y-1">
+                <span className="text-[10px] font-bold text-[#5a8739] uppercase tracking-wider">Step {currentStep}</span>
+                <p className="leading-relaxed text-[15px] text-foreground font-medium">{cleanLine}</p>
+              </div>
             </div>
           );
         }
 
-        // Detect bullet points
-        const isBullet = cleanLine.startsWith('•') || cleanLine.startsWith('-') || cleanLine.startsWith('*');
-        if (isBullet) {
-          const rest = cleanLine.slice(1).trim();
-          return (
-            <div key={idx} className="flex gap-3 items-start relative before:absolute before:left-0 before:top-0">
-              <span className="text-[#5a8739] font-bold text-lg leading-6 flex-shrink-0 mt-0.5">•</span>
-              <span className="flex-1 leading-relaxed text-sm text-foreground">{rest}</span>
-            </div>
-          );
-        }
-
-        // Just regular text
+        // List items (Nutritional Focus, etc.)
         return (
-          <p key={idx} className="leading-relaxed text-sm text-foreground">
-            {cleanLine}
-          </p>
+          <div key={idx} className="flex gap-4 items-start group animation-slide-in">
+            <div className="flex-shrink-0 mt-1 md:mt-0.5">
+              <div className="w-6 h-6 rounded-lg bg-[#5a8739]/10 flex items-center justify-center text-[#5a8739] group-hover:bg-[#5a8739] group-hover:text-white transition-all duration-300 shadow-sm">
+                {IconComponent ? <IconComponent className="w-3.5 h-3.5" /> : <Plus className="w-3 h-3" />}
+              </div>
+            </div>
+            <p className="flex-1 leading-relaxed text-[15px] text-foreground/90 font-medium">
+              {cleanLine}
+            </p>
+          </div>
         );
       })}
     </div>
@@ -191,7 +179,10 @@ const ProductDetail = () => {
   const [addressData, setAddressData] = useState({
     name: "",
     phone: "",
-    address: "",
+    doorNo: "",
+    area: "",
+    city: "",
+    pincode: "",
   });
 
   const addItem = useCartStore(state => state.addItem);
@@ -255,6 +246,44 @@ const ProductDetail = () => {
   if (product.ingredients_list?.value) ingredients = product.ingredients_list.value;
   if (product.how_to_use?.value) howToUse = product.how_to_use.value;
   if (product.product_details?.value) details = product.product_details.value;
+  if (product.custom_description?.value) overview = product.custom_description.value;
+
+  // New metafields
+  const keyHighlights = product.key_highlights?.value;
+  const nutritionalFocus = product.nutritional_focus?.value;
+  const harvestWindow = product.harvest_window?.value;
+  const deliveryRegion = product.delivery_region?.value;
+  const premiumQuality = product.premium_quality?.value;
+  const ashUsage = product.ash_usage?.value;
+  const safetyInfo = product.safety_info?.value;
+  const burningTime = product.burning_time?.value;
+  const storage = product.storage?.value;
+  const fssaiLicense = product.fssai_license?.value;
+  const shelfLife = product.shelf_life?.value;
+  const netQuantity = product.net_quantity?.value;
+  const customShippingLabel = product.custom_shipping_label?.value;
+
+  // Build a specifications string for the "Product Details" if we have individual specs
+  const specs = [];
+  if (netQuantity) specs.push(`Net Quantity: ${netQuantity}`);
+  if (shelfLife) specs.push(`Shelf Life: ${shelfLife}`);
+  if (storage) specs.push(`Storage: ${storage}`);
+  if (fssaiLicense) specs.push(`FSSAI License: ${fssaiLicense}`);
+  if (harvestWindow) specs.push(`Harvest Window: ${harvestWindow}`);
+  if (deliveryRegion) specs.push(`Delivery Region: ${deliveryRegion}`);
+  if (premiumQuality) specs.push(`Quality: ${premiumQuality}`);
+
+  const specString = specs.join('\n');
+  if (specString) {
+    details = details ? `${details}\n${specString}` : specString;
+  }
+
+  // Build safety/care string
+  const safety = [];
+  if (safetyInfo) safety.push(`Safety Info: ${safetyInfo}`);
+  if (ashUsage) safety.push(`Ash Usage: ${ashUsage}`);
+  if (burningTime) safety.push(`Burning Time: ${burningTime}`);
+  const safetyString = safety.join('\n');
 
   // If we have any of the specific metafields, the main description can just be the overview
   if (product.combo_includes?.value || product.ingredients?.value || product.ingredients_list?.value || product.how_to_use?.value || product.product_details?.value) {
@@ -302,12 +331,14 @@ const ProductDetail = () => {
   };
 
   const submitWhatsAppOrder = () => {
-    if (!addressData.name || !addressData.phone || !addressData.address) {
+    if (!addressData.name || !addressData.phone || !addressData.doorNo || !addressData.area || !addressData.city || !addressData.pincode) {
       toast.error("Please fill in all fields", {
         position: "top-center",
       });
       return;
     }
+
+    const fullAddress = `${addressData.doorNo}, ${addressData.area}, ${addressData.city} - ${addressData.pincode}`;
 
     const price = parseFloat(selectedVariant?.price.amount || "0").toFixed(2);
     const productUrl = `https://stomatalfarms.com/products/${product.handle}`;
@@ -319,7 +350,7 @@ Price: Rs. ${price}
 Delivery Details:
 Name: ${addressData.name}
 Phone: ${addressData.phone}
-Address: ${addressData.address}
+Address: ${fullAddress}
 
 Product Link: ${productUrl}`;
 
@@ -327,7 +358,7 @@ Product Link: ${productUrl}`;
     window.open(whatsappUrl, '_blank');
 
     setShowAddressDialog(false);
-    setAddressData({ name: "", phone: "", address: "" });
+    setAddressData({ name: "", phone: "", doorNo: "", area: "", city: "", pincode: "" });
 
     toast.success("Opening WhatsApp...", {
       description: "Your order details have been prepared",
@@ -425,57 +456,127 @@ Product Link: ${productUrl}`;
               </div>
 
               {/* Product Overview */}
-              {overview && (
-                <div className="prose prose-sm max-w-none">
-                  <div className="text-foreground/80 leading-[1.8] whitespace-pre-line text-[15px] font-light italic border-l-2 border-sage-light pl-4 py-1">
-                    {overview}
-                  </div>
+              {(overview || keyHighlights) && (
+                <div className="space-y-6">
+                  {overview && (
+                    <div className="relative group">
+                      <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-[#5a8739] to-transparent opacity-40 group-hover:opacity-100 transition-opacity" />
+                      <div className="text-foreground/80 leading-[1.8] whitespace-pre-line text-[15px] font-medium italic pl-2 py-1">
+                        {overview}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
               {/* Product Details Accordion */}
-              {(comboIncludes || ingredients || howToUse || details) && (
+              {(comboIncludes || ingredients || howToUse || details || nutritionalFocus || safetyString || keyHighlights) && (
                 <Accordion
                   type="multiple"
                   defaultValue={defaultAccordionValue}
                   className="w-full space-y-3"
                 >
-                  {comboIncludes && (
-                    <AccordionItem value="combo-includes" className="border border-border rounded-lg bg-card/50 px-4 data-[state=open]:bg-card transition-colors">
-                      <AccordionTrigger className="text-base font-medium py-4 hover:no-underline text-foreground">
-                        This Combo Includes
+                  {keyHighlights && (
+                    <AccordionItem value="highlights" className="border-b border-border/60 overflow-hidden">
+                      <AccordionTrigger className="text-[17px] font-serif font-semibold py-6 hover:no-underline text-foreground group">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-2xl bg-primary/5 flex items-center justify-center group-data-[state=open]:bg-primary group-data-[state=open]:text-white transition-all duration-500">
+                            <Plus className="w-5 h-5 text-current" />
+                          </div>
+                          Key Highlights
+                        </div>
                       </AccordionTrigger>
-                      <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
-                        <FormatMetafieldText text={comboIncludes} />
+                      <AccordionContent className="pb-8 pl-14">
+                        <FormatMetafieldText text={keyHighlights} icon={Plus} />
+                      </AccordionContent>
+                    </AccordionItem>
+                  )}
+                  {comboIncludes && (
+                    <AccordionItem value="combo-includes" className="border-b border-border/60 first:border-t-0 last:border-b-0 overflow-hidden">
+                      <AccordionTrigger className="text-[17px] font-serif font-semibold py-6 hover:no-underline text-foreground group">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-2xl bg-primary/5 flex items-center justify-center group-data-[state=open]:bg-primary group-data-[state=open]:text-white transition-all duration-500">
+                            <Plus className="w-5 h-5" />
+                          </div>
+                          This Combo Includes
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="pb-8 pl-14">
+                        <FormatMetafieldText text={comboIncludes} icon={Leaf} />
                       </AccordionContent>
                     </AccordionItem>
                   )}
                   {ingredients && (
-                    <AccordionItem value="ingredients" className="border border-border rounded-lg bg-card/50 px-4 data-[state=open]:bg-card transition-colors">
-                      <AccordionTrigger className="text-base font-medium py-4 hover:no-underline text-foreground">
-                        Ingredients
+                    <AccordionItem value="ingredients" className="border-b border-border/60 overflow-hidden">
+                      <AccordionTrigger className="text-[17px] font-serif font-semibold py-6 hover:no-underline text-foreground group">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-2xl bg-primary/5 flex items-center justify-center group-data-[state=open]:bg-primary group-data-[state=open]:text-white transition-all duration-500">
+                            <Leaf className="w-5 h-5" />
+                          </div>
+                          Ingredients & Aroma
+                        </div>
                       </AccordionTrigger>
-                      <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
-                        <FormatMetafieldText text={ingredients} />
+                      <AccordionContent className="pb-8 pl-14">
+                        <FormatMetafieldText text={ingredients} icon={Shield} />
                       </AccordionContent>
                     </AccordionItem>
                   )}
                   {howToUse && (
-                    <AccordionItem value="how-to-use" className="border border-border rounded-lg bg-card/50 px-4 data-[state=open]:bg-card transition-colors">
-                      <AccordionTrigger className="text-base font-medium py-4 hover:no-underline text-foreground">
-                        How to Use
+                    <AccordionItem value="how-to-use" className="border-b border-border/60 overflow-hidden">
+                      <AccordionTrigger className="text-[17px] font-serif font-semibold py-6 hover:no-underline text-foreground group">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-2xl bg-primary/5 flex items-center justify-center group-data-[state=open]:bg-primary group-data-[state=open]:text-white transition-all duration-500">
+                            <Award className="w-5 h-5" />
+                          </div>
+                          How to Use
+                        </div>
                       </AccordionTrigger>
-                      <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">
+                      <AccordionContent className="pb-8 pl-14">
                         <FormatMetafieldText text={howToUse} isSteps />
                       </AccordionContent>
                     </AccordionItem>
                   )}
-                  {details && (
-                    <AccordionItem value="details" className="border border-border rounded-lg bg-card/50 px-4 data-[state=open]:bg-card transition-colors">
-                      <AccordionTrigger className="text-base font-medium py-4 hover:no-underline text-foreground">
-                        Product Details
+                  {nutritionalFocus && (
+                    <AccordionItem value="nutritional-focus" className="border-b border-border/60 overflow-hidden">
+                      <AccordionTrigger className="text-[17px] font-serif font-semibold py-6 hover:no-underline text-foreground group">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-2xl bg-primary/5 flex items-center justify-center group-data-[state=open]:bg-primary group-data-[state=open]:text-white transition-all duration-500">
+                            <Shield className="w-5 h-5" />
+                          </div>
+                          Nutritional Focus
+                        </div>
                       </AccordionTrigger>
-                      <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4 pt-2">
+                      <AccordionContent className="pb-8 pl-14">
+                        <FormatMetafieldText text={nutritionalFocus} icon={Leaf} />
+                      </AccordionContent>
+                    </AccordionItem>
+                  )}
+                  {safetyString && (
+                    <AccordionItem value="safety-care" className="border-b border-border/60 overflow-hidden">
+                      <AccordionTrigger className="text-[17px] font-serif font-semibold py-6 hover:no-underline text-foreground group">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-2xl bg-primary/5 flex items-center justify-center group-data-[state=open]:bg-primary group-data-[state=open]:text-white transition-all duration-500">
+                            <Shield className="w-5 h-5" />
+                          </div>
+                          Safety & Care
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="pb-8 pl-14">
+                        <FormatMetafieldText text={safetyString} isDetails />
+                      </AccordionContent>
+                    </AccordionItem>
+                  )}
+                  {details && (
+                    <AccordionItem value="details" className="border-b border-border/60 overflow-hidden">
+                      <AccordionTrigger className="text-[17px] font-serif font-semibold py-6 hover:no-underline text-foreground group">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-2xl bg-primary/5 flex items-center justify-center group-data-[state=open]:bg-primary group-data-[state=open]:text-white transition-all duration-500">
+                            <Truck className="w-5 h-5" />
+                          </div>
+                          Product Specifications
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="pb-8 pl-14">
                         <FormatMetafieldText text={details} isDetails />
                       </AccordionContent>
                     </AccordionItem>
@@ -580,7 +681,9 @@ Product Link: ${productUrl}`;
                     <div className="flex items-start gap-3">
                       <img src={truckIcon} alt="Delivery" className="h-8 w-8 object-contain flex-shrink-0" />
                       <div>
-                        <h4 className="font-semibold text-foreground mb-1 text-sm"> Fresh Harvest Delivery</h4>
+                        <h4 className="font-semibold text-foreground mb-1 text-sm">
+                          {customShippingLabel || "Fresh Harvest Delivery"}
+                        </h4>
                         <p className="text-xs text-muted-foreground leading-relaxed">
                           Microgreens require same-day harvest and doorstep delivery, so a standard delivery charge of ₹100 applies.
                         </p>
@@ -706,19 +809,66 @@ Product Link: ${productUrl}`;
               />
             </div>
 
-            <div>
-              <label htmlFor="address" className="text-sm font-medium text-foreground mb-2 block">
-                Delivery Address *
-              </label>
-              <Textarea
-                id="address"
-                name="address"
-                value={addressData.address}
-                onChange={handleAddressChange}
-                placeholder="Enter your complete delivery address"
-                rows={4}
-                className="w-full resize-none"
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div className="col-span-2 md:col-span-1">
+                <label htmlFor="doorNo" className="text-sm font-medium text-foreground mb-2 block">
+                  Door No / Street *
+                </label>
+                <Input
+                  id="doorNo"
+                  name="doorNo"
+                  type="text"
+                  value={addressData.doorNo}
+                  onChange={handleAddressChange}
+                  placeholder="e.g. 12/A, Park St"
+                  className="w-full"
+                />
+              </div>
+
+              <div className="col-span-2 md:col-span-1">
+                <label htmlFor="area" className="text-sm font-medium text-foreground mb-2 block">
+                  Area / Landmark *
+                </label>
+                <Input
+                  id="area"
+                  name="area"
+                  type="text"
+                  value={addressData.area}
+                  onChange={handleAddressChange}
+                  placeholder="e.g. Anna Nagar"
+                  className="w-full"
+                />
+              </div>
+
+              <div className="col-span-2 md:col-span-1">
+                <label htmlFor="city" className="text-sm font-medium text-foreground mb-2 block">
+                  City *
+                </label>
+                <Input
+                  id="city"
+                  name="city"
+                  type="text"
+                  value={addressData.city}
+                  onChange={handleAddressChange}
+                  placeholder="e.g. Chennai"
+                  className="w-full"
+                />
+              </div>
+
+              <div className="col-span-2 md:col-span-1">
+                <label htmlFor="pincode" className="text-sm font-medium text-foreground mb-2 block">
+                  Pincode *
+                </label>
+                <Input
+                  id="pincode"
+                  name="pincode"
+                  type="text"
+                  value={addressData.pincode}
+                  onChange={handleAddressChange}
+                  placeholder="600XXX"
+                  className="w-full"
+                />
+              </div>
             </div>
           </div>
 

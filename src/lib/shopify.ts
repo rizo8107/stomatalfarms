@@ -61,6 +61,20 @@ export interface ShopifyProduct {
     ingredients_list?: { value: string } | null;
     how_to_use?: { value: string } | null;
     product_details?: { value: string } | null;
+    nutritional_focus?: { value: string } | null;
+    harvest_window?: { value: string } | null;
+    delivery_region?: { value: string } | null;
+    premium_quality?: { value: string } | null;
+    ash_usage?: { value: string } | null;
+    safety_info?: { value: string } | null;
+    burning_time?: { value: string } | null;
+    storage?: { value: string } | null;
+    fssai_license?: { value: string } | null;
+    shelf_life?: { value: string } | null;
+    net_quantity?: { value: string } | null;
+    custom_shipping_label?: { value: string } | null;
+    custom_description?: { value: string } | null;
+    key_highlights?: { value: string } | null;
   };
 }
 
@@ -222,6 +236,48 @@ const PRODUCT_BY_HANDLE_QUERY = `
         value
       }
       product_details: metafield(namespace: "custom", key: "product_details") {
+        value
+      }
+      nutritional_focus: metafield(namespace: "custom", key: "nutritional_focus") {
+        value
+      }
+      harvest_window: metafield(namespace: "custom", key: "harvest_window") {
+        value
+      }
+      delivery_region: metafield(namespace: "custom", key: "delivery_region") {
+        value
+      }
+      premium_quality: metafield(namespace: "custom", key: "premium_quality") {
+        value
+      }
+      ash_usage: metafield(namespace: "custom", key: "ash_usage") {
+        value
+      }
+      safety_info: metafield(namespace: "custom", key: "safety_info") {
+        value
+      }
+      burning_time: metafield(namespace: "custom", key: "burning_time") {
+        value
+      }
+      storage: metafield(namespace: "custom", key: "storage") {
+        value
+      }
+      fssai_license: metafield(namespace: "custom", key: "fssai_license") {
+        value
+      }
+      shelf_life: metafield(namespace: "custom", key: "shelf_life") {
+        value
+      }
+      net_quantity: metafield(namespace: "custom", key: "net_quantity") {
+        value
+      }
+      custom_shipping_label: metafield(namespace: "custom", key: "custom_shipping_label") {
+        value
+      }
+      custom_description: metafield(namespace: "custom", key: "custom_description") {
+        value
+      }
+      key_highlights: metafield(namespace: "custom", key: "key_highlights") {
         value
       }
     }
