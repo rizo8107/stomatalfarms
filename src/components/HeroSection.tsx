@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import heroIncense from "@/assets/hero-incense.jpg";
-import heroBotanicals from "@/assets/hero-botanicals.jpg";
 import AuroraTrustBadges from "@/components/AuroraTrustBadges";
 import FreshProduceTrustBadges from "@/components/FreshProduceTrustBadges";
 
@@ -16,11 +14,11 @@ const HeroSection = () => {
             {/* Card 1 - Aurora */}
             <div className="group relative overflow-hidden rounded-2xl aspect-[1/1.1] sm:aspect-[4/5] md:aspect-[5/6] lg:aspect-[6/7] animate-fade-in-up border border-border/10 shadow-xl">
               <img
-                src={heroIncense}
-                alt="Artisan incense collection with burning sticks and natural herbs"
+                src="/aurora.jfif"
+                alt="Aurora - Aromatic Wellness"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-earth/90 via-earth/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
 
               {/* Content */}
               <div className="absolute inset-0 flex flex-col justify-end p-3 md:p-4 lg:p-5">
@@ -55,16 +53,16 @@ const HeroSection = () => {
             {/* Card 2 - Fresh Produce */}
             <div className="group relative overflow-hidden rounded-2xl aspect-[1/1.1] sm:aspect-[4/5] md:aspect-[5/6] lg:aspect-[6/7] animate-fade-in-up border border-border/10 shadow-xl" style={{ animationDelay: "0.15s" }}>
               <img
-                src={heroBotanicals}
-                alt="Natural incense ingredients including lavender, sandalwood and crystals"
+                src="/stomatal.jfif"
+                alt="Stomatal Farms - Fresh Produce"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-earth/90 via-earth/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
 
               {/* Content */}
               <div className="absolute inset-0 flex flex-col justify-end p-3 md:p-4 lg:p-5">
                 <span className="text-warm-white/70 text-[9px] md:text-[10px] uppercase tracking-[0.12em] md:tracking-[0.15em] mb-0.5 md:mb-1">
-                  Fresh Produce
+                  Stomatal
                 </span>
                 <h2 className="font-serif text-lg sm:text-xl md:text-2xl lg:text-3xl text-warm-white mb-1 md:mb-2 leading-tight">
                   By Stomatal Farms
