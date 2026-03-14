@@ -32,6 +32,12 @@ const categories = [
     link: "/collections?category=bath",
   },
   {
+    name: "Cow Dung Ash",
+    image: "https://cdn.shopify.com/s/files/1/0735/4469/5965/files/9b33a8c5-045a-4375-9e6e-21396a82772a.jpg?v=1757489345",
+    description: "Traditionally prepared purifying ash",
+    link: "/collections?category=ash",
+  },
+  {
     name: "All Products",
     image: "https://cdn.shopify.com/s/files/1/0735/4469/5965/files/aaWhatsAppImage2025-09-15at18.13.24.jpg?v=1757948321",
     description: "Browse our complete collection",

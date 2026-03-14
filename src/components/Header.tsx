@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,14 @@ import logo from "@/assets/7cc0e5_83fa66911e2a42aab710af3569d86773_mv2.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const currentPath = location.pathname + location.search;
+
+  const isActive = (href: string) => {
+    if (href === currentPath) return true;
+    if (href === '/collections' && location.pathname === '/collections' && !location.search) return true;
+    return false;
+  };
 
   const navLinks = [
     { name: "Farm Fresh Produce", href: "/collections?category=microgreens" },
@@ -26,7 +34,7 @@ const Header = () => {
     { name: "Combos", href: "/collections?category=combos" },
     { name: "Ghee Lamps", href: "/collections?category=ghee" },
     { name: "Bath Salts", href: "/collections?category=bath" },
-    { name: "Cow Dung Ash", href: "/collections?category=all" },
+    { name: "Cow Dung Ash", href: "/collections?category=ash" },
   ];
 
   return (
@@ -44,14 +52,19 @@ const Header = () => {
         <nav className="hidden md:flex items-center gap-8">
           {/* Aurora Dropdown - First */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-slate-600 hover:text-black transition-colors duration-200 outline-none">
+            <DropdownMenuTrigger className={`flex items-center gap-1 text-sm font-medium transition-colors duration-200 outline-none ${
+              auroraCategories.some(c => isActive(c.href)) ? "text-[#5a8739]" : "text-slate-600 hover:text-black"
+            }`}>
               Aurora
               <ChevronDown className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-56">
               {auroraCategories.map((category) => (
                 <DropdownMenuItem key={category.name} asChild>
-                  <Link to={category.href} className="hover:bg-[#5a8739]/10">
+                  <Link 
+                    to={category.href} 
+                    className={`hover:bg-[#5a8739]/10 ${isActive(category.href) ? "text-[#5a8739] font-semibold" : ""}`}
+                  >
                     {category.name}
                   </Link>
                 </DropdownMenuItem>
@@ -64,7 +77,9 @@ const Header = () => {
               <Link
                 key={link.name}
                 to={link.href}
-                className="text-sm font-medium text-slate-600 hover:text-black transition-colors duration-200"
+                className={`text-sm font-medium transition-colors duration-200 ${
+                  isActive(link.href) ? "text-[#5a8739]" : "text-slate-600 hover:text-black"
+                }`}
               >
                 {link.name}
               </Link>
@@ -113,7 +128,9 @@ const Header = () => {
                 <Link
                   key={category.name}
                   to={category.href}
-                  className="block text-base font-medium text-slate-800 py-2 pl-4 hover:text-[#5a8739] transition-colors"
+                  className={`block text-base font-medium py-2 pl-4 transition-colors ${
+                    isActive(category.href) ? "text-[#5a8739]" : "text-slate-800 hover:text-[#5a8739]"
+                  }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {category.name}

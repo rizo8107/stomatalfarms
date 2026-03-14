@@ -15,6 +15,7 @@ const categories = [
   { id: "combos", name: "Combo Packs", query: "combo" },
   { id: "ghee", name: "Ghee Lamps", query: "ghee OR diya" },
   { id: "bath", name: "Bath Salts", query: "bath salt" },
+  { id: "ash", name: "Cow Dung Ash", query: "bhasma OR dung ash OR vibhuti OR -diya" },
 ];
 
 const Collections = () => {
@@ -23,13 +24,13 @@ const Collections = () => {
   const [filteredProducts, setFilteredProducts] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   const activeCategory = searchParams.get("category") || "all";
 
   useEffect(() => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
-    
+
     const loadProducts = async () => {
       try {
         const data = await fetchProducts(50);
@@ -52,10 +53,20 @@ const Collections = () => {
       const category = categories.find(c => c.id === activeCategory);
       if (category && category.query) {
         const queryTerms = category.query.split(/\s+OR\s+/i).map(t => t.trim().toLowerCase());
+        const includeTerms = queryTerms.filter(t => !t.startsWith('-'));
+        const excludeTerms = queryTerms.filter(t => t.startsWith('-')).map(t => t.substring(1));
+
         const filtered = products.filter(product => {
           const title = product.node.title.toLowerCase();
           const description = (product.node.description || "").toLowerCase();
-          return queryTerms.some(term => title.includes(term) || description.includes(term));
+          const content = title + " " + description;
+
+          // Must match at least one include term
+          const matchesInclude = includeTerms.length === 0 || includeTerms.some(term => content.includes(term));
+          // Must NOT match any exclude terms
+          const matchesExclude = excludeTerms.some(term => content.includes(term));
+
+          return matchesInclude && !matchesExclude;
         });
         setFilteredProducts(filtered);
       } else {
@@ -76,7 +87,7 @@ const Collections = () => {
   return (
     <div className="min-h-screen bg-background texture-overlay">
       <Header />
-      
+
       <main className="pt-16 md:pt-20">
         {/* Hero Banner */}
         <section className="py-12 md:py-16 bg-sage-light/30">
@@ -88,7 +99,7 @@ const Collections = () => {
               {categories.find(c => c.id === activeCategory)?.name || "All Products"}
             </h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
-              {activeCategory === 'microgreens' 
+              {activeCategory === 'microgreens'
                 ? 'Fresh, nutrient-dense farm-grown microgreens and produce harvested daily and delivered to your doorstep for maximum flavor and nutrition.'
                 : 'Authentic aromatic wellness products crafted from traditional Indian herbs, essential oils, and pure cow dung. Lab-tested for your family\'s well-being.'}
             </p>
@@ -105,11 +116,10 @@ const Collections = () => {
                   variant={activeCategory === category.id ? "default" : "outline"}
                   size="sm"
                   onClick={() => handleCategoryChange(category.id)}
-                  className={`whitespace-nowrap rounded-full ${
-                    activeCategory === category.id 
-                      ? "bg-[#5a8739] text-white" 
+                  className={`whitespace-nowrap rounded-full ${activeCategory === category.id
+                      ? "bg-[#5a8739] text-white"
                       : "border-border hover:bg-sage-light"
-                  }`}
+                    }`}
                 >
                   {category.name}
                 </Button>
