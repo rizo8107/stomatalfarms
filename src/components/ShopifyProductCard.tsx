@@ -170,16 +170,9 @@ Product Link: ${productUrl}`;
 
             <Button
               onClick={isMicrogreens ? handleWhatsAppOrder : handleAddToCart}
-              className="w-full rounded-full bg-primary hover:bg-primary/90 text-white shadow-md hover:shadow-lg transition-all duration-300 h-auto py-3 md:py-4 px-2 md:px-4 font-semibold text-[13px] md:text-base inline-flex items-center justify-center"
+              className="w-full rounded-full bg-primary hover:bg-primary/90 text-white shadow-md hover:shadow-lg transition-all duration-300 h-auto py-3 md:py-4 px-1 md:px-4 font-bold text-[12px] md:text-base inline-flex items-center justify-center whitespace-nowrap"
             >
-              {isMicrogreens ? (
-                <>
-                  <MessageCircle className="h-4 w-4 mr-1.5 md:mr-2 flex-shrink-0" />
-                  <span className="truncate">Order on WhatsApp</span>
-                </>
-              ) : (
-                "Add to Cart"
-              )}
+              {isMicrogreens ? "Order on WhatsApp" : "Add to Cart"}
             </Button>
           </div>
         </div>

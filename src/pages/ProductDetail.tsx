@@ -659,8 +659,7 @@ Product Link: ${productUrl}`;
                     className="flex-1 bg-[#5a8739] hover:bg-[#5a8739]/90 text-white h-12 text-base font-semibold shadow-md hover:shadow-lg transition-all"
                     disabled={!selectedVariant?.availableForSale}
                   >
-                    <MessageCircle className="h-5 w-5 mr-2" />
-                    {selectedVariant?.availableForSale ? 'Buy via WhatsApp' : 'Out of Stock'}
+                    {selectedVariant?.availableForSale ? 'Order on WhatsApp' : 'Out of Stock'}
                   </Button>
                 ) : (
                   <Button
@@ -748,11 +747,10 @@ Product Link: ${productUrl}`;
           {isMicrogreens ? (
             <Button
               onClick={handleWhatsAppOrder}
-              className="flex-1 bg-[#5a8739] hover:bg-[#5a8739]/90 text-white h-10"
+              className="flex-1 bg-[#5a8739] hover:bg-[#5a8739]/90 text-white h-10 font-bold text-sm whitespace-nowrap"
               disabled={!selectedVariant?.availableForSale}
             >
-              <MessageCircle className="h-4 w-4 mr-2" />
-              {selectedVariant?.availableForSale ? 'Buy via WhatsApp' : 'Out of Stock'}
+              {selectedVariant?.availableForSale ? 'Order on WhatsApp' : 'Out of Stock'}
             </Button>
           ) : (
             <Button
