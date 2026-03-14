@@ -68,7 +68,7 @@ ${formData.message}`;
     <div className="min-h-screen bg-background">
       <Header />
 
-      <main className="pt-20 md:pt-28 pb-12">
+      <main className="pt-16 md:pt-20 pb-12">
         {/* Hero Section */}
         <section className="py-12 md:py-16 bg-sage-light/30">
           <div className="container text-center">

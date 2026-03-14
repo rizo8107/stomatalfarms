@@ -77,7 +77,7 @@ const Collections = () => {
     <div className="min-h-screen bg-background texture-overlay">
       <Header />
       
-      <main className="pt-24 md:pt-32">
+      <main className="pt-16 md:pt-20">
         {/* Hero Banner */}
         <section className="py-12 md:py-16 bg-sage-light/30">
           <div className="container text-center">
