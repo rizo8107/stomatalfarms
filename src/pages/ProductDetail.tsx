@@ -370,7 +370,7 @@ Product Link: ${productUrl}`;
     <div className="min-h-screen bg-background">
       <Header />
 
-      <main className="pt-16 md:pt-20 pb-24 md:pb-12">
+      <main className="pt-24 md:pt-32 pb-24 md:pb-12">
         <div className="container px-4 max-w-7xl mx-auto">
           <Link
             to="/collections"
