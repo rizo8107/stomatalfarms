@@ -41,7 +41,7 @@ const HeroSection = () => {
               </div>
             </div>
 
-            <p className="text-warm-white/60 text-[10px] md:text-xs text-center font-medium tracking-wide uppercase">
+            <p className="text-white text-[10px] md:text-xs text-center font-medium tracking-wide uppercase">
               Natural • Chemical-Free • Lab-Tested
             </p>
 
@@ -81,7 +81,7 @@ const HeroSection = () => {
               </div>
             </div>
 
-            <p className="text-warm-white/60 text-[10px] md:text-xs text-center font-medium tracking-wide uppercase">
+            <p className="text-white text-[10px] md:text-xs text-center font-medium tracking-wide uppercase">
               Fresh • Nutrient-Dense • Responsibly Grown
             </p>
 
