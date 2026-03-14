@@ -20,13 +20,15 @@ const Footer = () => {
             </p>
             <div className="flex gap-4">
               <a
-                href="#"
+                href="https://www.instagram.com/stomatalfarms/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[#5a8739] hover:border-[#5a8739] transition-all duration-300"
               >
                 <Instagram className="w-5 h-5 text-white" />
               </a>
               <a
-                href="#"
+                href="mailto:contact@stomatalfarms.com"
                 className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[#5a8739] hover:border-[#5a8739] transition-all duration-300"
               >
                 <Mail className="w-5 h-5 text-white" />
@@ -39,29 +41,29 @@ const Footer = () => {
             <h4 className="font-medium text-white tracking-wide uppercase text-sm">Aurora Products</h4>
             <ul className="space-y-4">
               <li>
-                <a href="#products" className="text-[#faf7f2]/70 hover:text-white transition-colors text-base font-light">
+                <Link to="/collections?category=sticks" className="text-[#faf7f2]/70 hover:text-white transition-colors text-base font-light">
                   Incense Sticks
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#products" className="text-[#faf7f2]/70 hover:text-white transition-colors text-base font-light">
+                <Link to="/collections?category=cups" className="text-[#faf7f2]/70 hover:text-white transition-colors text-base font-light">
                   Incense Cups
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#products" className="text-[#faf7f2]/70 hover:text-white transition-colors text-base font-light">
+                <Link to="/collections?category=combos" className="text-[#faf7f2]/70 hover:text-white transition-colors text-base font-light">
                   Combo Packs
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#products" className="text-[#faf7f2]/70 hover:text-white transition-colors text-base font-light">
+                <Link to="/collections?category=ghee" className="text-[#faf7f2]/70 hover:text-white transition-colors text-base font-light">
                   Ghee Lamps
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#products" className="text-[#faf7f2]/70 hover:text-white transition-colors text-base font-light">
+                <Link to="/collections?category=bath" className="text-[#faf7f2]/70 hover:text-white transition-colors text-base font-light">
                   Bath Salts
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

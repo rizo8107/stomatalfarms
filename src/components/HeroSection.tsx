@@ -54,7 +54,7 @@ const HeroSection = () => {
             <div className="group relative overflow-hidden rounded-2xl aspect-[1/1.1] sm:aspect-[4/5] md:aspect-[5/6] lg:aspect-[6/7] animate-fade-in-up border border-border/10 shadow-xl" style={{ animationDelay: "0.15s" }}>
               <img
                 src="/stomatal.jfif"
-                alt="Stomatal Farms - Fresh Produce"
+                alt="Stomatal Farms - Farm Fresh Produce"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
@@ -68,12 +68,12 @@ const HeroSection = () => {
                   By Stomatal Farms
                 </h2>
                 <p className="text-warm-white/80 text-[10px] md:text-xs mb-2 md:mb-3 max-w-[150px] md:max-w-[200px] leading-relaxed hidden sm:block">
-                  Browse microgreens, edible flowers, leafy greens, and nutrient-rich green powders.
+                  Freshly harvested microgreens, leafy greens, and nutrient-rich farm produce.
                 </p>
                 <div className="space-y-1.5">
                   <Link to="/collections?category=microgreens">
                     <Button variant="hero-outline" className="w-fit text-[10px] md:text-xs border-warm-white text-warm-white hover:bg-warm-white hover:text-earth px-2.5 md:px-3 py-1 md:py-1.5 h-auto">
-                      Shop Fresh Produce
+                      Shop Farm Fresh Produce
                     </Button>
                   </Link>
                   <p className="text-warm-white/70 text-[8px] md:hidden">

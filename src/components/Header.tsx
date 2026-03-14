@@ -16,7 +16,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: "Leafy Greens", href: "/collections?category=microgreens" },
+    { name: "Farm Fresh Produce", href: "/collections?category=microgreens" },
     { name: "Contact", href: "/contact" },
   ];
 

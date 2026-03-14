@@ -126,7 +126,7 @@ Product Link: ${productUrl}`;
         <div className="aspect-square p-6 pb-2 relative flex items-center justify-center">
           {/* Discount Badge - Stylized */}
           {hasDiscount && discountPercentage > 0 && (
-            <Badge className="absolute top-6 left-6 z-10 bg-terracotta hover:bg-terracotta text-white font-medium text-[10px] px-2 py-0.5 rounded-full border-none shadow-sm">
+            <Badge className="absolute top-4 left-4 z-10 bg-terracotta hover:bg-terracotta text-white font-bold text-xs md:text-sm px-3 py-1 rounded-full border-none shadow-md">
               {discountPercentage}% off
             </Badge>
           )}
@@ -170,12 +170,12 @@ Product Link: ${productUrl}`;
 
             <Button
               onClick={isMicrogreens ? handleWhatsAppOrder : handleAddToCart}
-              className="w-full rounded-full bg-primary hover:bg-primary/90 text-white shadow-md hover:shadow-lg transition-all duration-300 py-6 font-medium"
+              className="w-full rounded-full bg-primary hover:bg-primary/90 text-white shadow-md hover:shadow-lg transition-all duration-300 h-auto py-3 md:py-4 px-2 md:px-4 font-semibold text-[13px] md:text-base inline-flex items-center justify-center"
             >
               {isMicrogreens ? (
                 <>
-                  <MessageCircle className="h-4 w-4 mr-2" />
-                  Order on WhatsApp
+                  <MessageCircle className="h-4 w-4 mr-1.5 md:mr-2 flex-shrink-0" />
+                  <span className="truncate">Order on WhatsApp</span>
                 </>
               ) : (
                 "Add to Cart"

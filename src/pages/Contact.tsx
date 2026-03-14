@@ -52,7 +52,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <main className="pt-20 md:pt-28 pb-12">
         {/* Hero Section */}
         <section className="py-12 md:py-16 bg-sage-light/30">
@@ -102,7 +102,7 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Phone</h3>
                     <p className="text-muted-foreground text-sm">
-                      +91 6379033131
+                      +91 9790768502
                     </p>
                   </div>
                 </div>
@@ -137,9 +137,9 @@ const Contact = () => {
             {/* Contact Form */}
             <div className="bg-card border border-border rounded-2xl p-6 md:p-8">
               <h2 className="font-serif text-2xl text-foreground mb-6">
-                Send us a Message
+                For enquires / Bulk orders
               </h2>
-              
+
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                   <label htmlFor="name" className="text-sm font-medium text-foreground mb-2 block">

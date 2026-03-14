@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 const categories = [
   { id: "all", name: "All Products", query: "" },
-  { id: "microgreens", name: "Microgreens", query: "microgreen" },
+  { id: "microgreens", name: "Farm Fresh Produce", query: "microgreen" },
   { id: "cups", name: "Incense Cups", query: "cup" },
   { id: "sticks", name: "Incense Sticks", query: "stick" },
   { id: "combos", name: "Combo Packs", query: "combo" },
@@ -89,7 +89,7 @@ const Collections = () => {
             </h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
               {activeCategory === 'microgreens' 
-                ? 'Fresh, nutrient-dense microgreens harvested daily and delivered to your doorstep for maximum freshness and flavor.'
+                ? 'Fresh, nutrient-dense farm-grown microgreens and produce harvested daily and delivered to your doorstep for maximum flavor and nutrition.'
                 : 'Authentic aromatic wellness products crafted from traditional Indian herbs, essential oils, and pure cow dung. Lab-tested for your family\'s well-being.'}
             </p>
           </div>
