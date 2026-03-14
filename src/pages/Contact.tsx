@@ -128,9 +128,12 @@ ${formData.message}`;
                   </div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Email</h3>
-                    <p className="text-muted-foreground text-sm">
+                    <a 
+                      href="mailto:contact@stomatalfarms.com" 
+                      className="text-muted-foreground text-sm hover:text-[#5a8739] transition-colors"
+                    >
                       contact@stomatalfarms.com
-                    </p>
+                    </a>
                   </div>
                 </div>
 

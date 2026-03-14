@@ -99,7 +99,7 @@ const Footer = () => {
             <a href="#" className="text-sm text-[#faf7f2]/50 hover:text-white transition-colors font-light tracking-wide">
               Terms of Service
             </a>
-            <a href="#" className="text-sm text-[#faf7f2]/50 hover:text-white transition-colors font-light tracking-wide">
+            <a href="mailto:contact@stomatalfarms.com" className="text-sm text-[#faf7f2]/50 hover:text-white transition-colors font-light tracking-wide">
               Contact Us
             </a>
           </div>

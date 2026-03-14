@@ -467,7 +467,7 @@ Product Link: ${productUrl}`;
                       100% Natural
                     </span>
                   </div>
-                  <h1 className="font-serif text-2xl md:text-3xl lg:text-4xl text-foreground leading-[1.1] md:leading-tight break-words tracking-tight">
+                  <h1 className="font-serif text-2xl md:text-3xl lg:text-4xl text-foreground leading-[1.3] md:leading-tight break-words tracking-tight">
                     {product.title}
                   </h1>
                 </div>
@@ -483,8 +483,8 @@ Product Link: ${productUrl}`;
                       <span className="text-base text-muted-foreground line-through decoration-muted-foreground/50 decoration-2">
                         ₹{parseFloat(selectedVariant.compareAtPrice.amount).toFixed(0)}
                       </span>
-                      <span className="bg-[#5a8739] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded shadow-sm w-fit text-center">
-                        SAVE {Math.round(((parseFloat(selectedVariant.compareAtPrice.amount) - parseFloat(selectedVariant.price.amount)) / parseFloat(selectedVariant.compareAtPrice.amount)) * 100)}%
+                      <span className="bg-terracotta text-white text-[10px] font-black uppercase tracking-wider px-2 py-1 rounded-full shadow-[0_4px_12px_rgba(203,108,76,0.4)] w-fit text-center">
+                        {Math.round(((parseFloat(selectedVariant.compareAtPrice.amount) - parseFloat(selectedVariant.price.amount)) / parseFloat(selectedVariant.compareAtPrice.amount)) * 100)}% OFF
                       </span>
                     </div>
                   )}

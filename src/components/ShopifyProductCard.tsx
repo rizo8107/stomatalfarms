@@ -24,6 +24,7 @@ interface ShopifyProductCardProps {
 export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
   const addItem = useCartStore(state => state.addItem);
   const { node } = product;
+  const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [showAddressDialog, setShowAddressDialog] = useState(false);
   const [addressData, setAddressData] = useState({
     name: "",
@@ -31,14 +32,14 @@ export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
     address: "",
   });
 
-  const firstVariant = node.variants.edges[0]?.node;
+  const selectedVariant = node.variants.edges[selectedVariantIndex]?.node;
   const firstImage = node.images.edges[0]?.node;
-  const price = node.priceRange.minVariantPrice;
-  const compareAtPrice = node.compareAtPriceRange?.minVariantPrice;
+  
+  const currentPrice = parseFloat(selectedVariant?.price.amount || "0");
+  const originalPrice = (selectedVariant?.compareAtPrice?.amount) 
+    ? parseFloat(selectedVariant.compareAtPrice.amount) 
+    : 0;
 
-  // Calculate discount percentage
-  const currentPrice = parseFloat(price.amount);
-  const originalPrice = compareAtPrice ? parseFloat(compareAtPrice.amount) : 0;
   const hasDiscount = originalPrice > currentPrice;
   const discountPercentage = hasDiscount
     ? Math.round(((originalPrice - currentPrice) / originalPrice) * 100)
@@ -53,19 +54,19 @@ export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (!firstVariant) return;
+    if (!selectedVariant) return;
 
     addItem({
       product,
-      variantId: firstVariant.id,
-      variantTitle: firstVariant.title,
-      price: firstVariant.price,
+      variantId: selectedVariant.id,
+      variantTitle: selectedVariant.title,
+      price: selectedVariant.price,
       quantity: 1,
-      selectedOptions: firstVariant.selectedOptions || [],
+      selectedOptions: selectedVariant.selectedOptions || [],
     });
 
     toast.success("Added to cart", {
-      description: node.title,
+      description: `${node.title} - ${selectedVariant.title}`,
       position: "bottom-right",
     });
   };
@@ -126,8 +127,8 @@ Product Link: ${productUrl}`;
         <div className="aspect-square p-6 pb-2 relative flex items-center justify-center">
           {/* Discount Badge - Stylized */}
           {hasDiscount && discountPercentage > 0 && (
-            <Badge className="absolute top-4 left-4 z-10 bg-terracotta hover:bg-terracotta text-white font-bold text-xs md:text-sm px-3 py-1 rounded-full border-none shadow-md">
-              {discountPercentage}% off
+            <Badge className="absolute top-4 left-4 z-10 bg-terracotta hover:bg-terracotta text-white font-black text-[10px] md:text-xs px-2.5 py-1 rounded-full border-none shadow-[0_4px_12px_rgba(203,108,76,0.4)] tracking-wider">
+              {discountPercentage}% OFF
             </Badge>
           )}
 
@@ -150,9 +151,32 @@ Product Link: ${productUrl}`;
         <div className="p-6 pt-2 flex flex-col flex-grow">
           <div className="flex-grow mb-4">
             {/* Title - Clean & Bold */}
-            <h3 className="text-sm md:text-base font-semibold text-[#1a1a1a] mb-1 leading-tight group-hover:text-primary transition-colors">
+            <h3 className="text-sm md:text-base font-semibold text-[#1a1a1a] mb-2 leading-normal group-hover:text-primary transition-colors">
               {node.title}
             </h3>
+
+            {/* Variants Selector */}
+            {node.variants.edges.length > 1 && (
+              <div className="flex flex-wrap gap-1.5 mt-2">
+                {node.variants.edges.map((edge, index) => (
+                  <button
+                    key={edge.node.id}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setSelectedVariantIndex(index);
+                    }}
+                    className={`px-3 py-1 rounded-full text-[10px] md:text-xs font-medium transition-all border ${
+                      selectedVariantIndex === index
+                        ? "bg-[#5a8739] text-white border-[#5a8739] shadow-sm"
+                        : "bg-white text-muted-foreground border-border hover:bg-sage-light"
+                    }`}
+                  >
+                    {edge.node.title}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Footer: Price and Add to Cart Button */}
@@ -161,7 +185,7 @@ Product Link: ${productUrl}`;
               <span className="font-bold text-lg text-foreground">
                 ₹{Math.round(currentPrice)}
               </span>
-              {hasDiscount && (
+              {hasDiscount && originalPrice > 0 && (
                 <span className="text-xs text-muted-foreground line-through decoration-terracotta/50">
                   ₹{Math.round(originalPrice)}
                 </span>

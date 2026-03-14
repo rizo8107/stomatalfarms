@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 const categories = [
   { id: "all", name: "All Products", query: "" },
-  { id: "microgreens", name: "Farm Fresh Produce", query: "microgreen" },
+  { id: "microgreens", name: "Farm Fresh Produce", query: "microgreen OR greens OR leafy" },
   { id: "cups", name: "Incense Cups", query: "cup" },
   { id: "sticks", name: "Incense Sticks", query: "stick" },
   { id: "combos", name: "Combo Packs", query: "combo" },
@@ -51,7 +51,7 @@ const Collections = () => {
     } else {
       const category = categories.find(c => c.id === activeCategory);
       if (category && category.query) {
-        const queryTerms = category.query.toLowerCase().split(" OR ").map(t => t.trim());
+        const queryTerms = category.query.split(/\s+OR\s+/i).map(t => t.trim().toLowerCase());
         const filtered = products.filter(product => {
           const title = product.node.title.toLowerCase();
           const description = (product.node.description || "").toLowerCase();

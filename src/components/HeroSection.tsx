@@ -18,10 +18,10 @@ const HeroSection = () => {
                 alt="Aurora - Aromatic Wellness"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
 
               {/* Content */}
-              <div className="absolute inset-0 flex flex-col justify-end p-3 md:p-4 lg:p-5">
+              <div className="absolute inset-0 flex flex-col justify-start p-3 md:p-6 lg:p-7">
                 <span className="text-warm-white/70 text-[9px] md:text-[10px] uppercase tracking-[0.12em] md:tracking-[0.15em] mb-0.5 md:mb-1">
                   Aurora
                 </span>
@@ -37,12 +37,13 @@ const HeroSection = () => {
                       Shop Aurora
                     </Button>
                   </Link>
-                  <p className="text-warm-white/70 text-[8px] md:hidden">
-                    Natural • Chemical-Free • Lab-Tested
-                  </p>
                 </div>
               </div>
             </div>
+
+            <p className="text-warm-white/60 text-[10px] md:text-xs text-center font-medium tracking-wide uppercase">
+              Natural • Chemical-Free • Lab-Tested
+            </p>
 
             {/* Aurora Trust Badges */}
             <AuroraTrustBadges />
@@ -57,10 +58,10 @@ const HeroSection = () => {
                 alt="Stomatal Farms - Farm Fresh Produce"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
 
               {/* Content */}
-              <div className="absolute inset-0 flex flex-col justify-end p-3 md:p-4 lg:p-5">
+              <div className="absolute inset-0 flex flex-col justify-start p-3 md:p-6 lg:p-7">
                 <span className="text-warm-white/70 text-[9px] md:text-[10px] uppercase tracking-[0.12em] md:tracking-[0.15em] mb-0.5 md:mb-1">
                   Stomatal
                 </span>
@@ -76,12 +77,13 @@ const HeroSection = () => {
                       Shop Farm Fresh Produce
                     </Button>
                   </Link>
-                  <p className="text-warm-white/70 text-[8px] md:hidden">
-                    Fresh • Nutrient-Dense • Responsibly Grown
-                  </p>
                 </div>
               </div>
             </div>
+
+            <p className="text-warm-white/60 text-[10px] md:text-xs text-center font-medium tracking-wide uppercase">
+              Fresh • Nutrient-Dense • Responsibly Grown
+            </p>
 
             {/* Fresh Produce Trust Badges */}
             <FreshProduceTrustBadges />
