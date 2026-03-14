@@ -32,12 +32,27 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
+    const message = `*New Inquiry / Bulk Order Request*
+    
+*Name:* ${formData.name}
+*Email:* ${formData.email}
+*Phone:* ${formData.phone || "Not provided"}
+*Subject:* ${formData.subject}
+
+*Message:*
+${formData.message}`;
+
+    const whatsappUrl = `https://api.whatsapp.com/send/?phone=919790768502&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`;
+    
+    // Small delay to show "Sending..." state
     setTimeout(() => {
-      toast.success("Message sent successfully!", {
-        description: "We'll get back to you soon.",
+      window.open(whatsappUrl, '_blank');
+      
+      toast.success("Opening WhatsApp...", {
+        description: "Your message has been prepared.",
         position: "bottom-right",
       });
+
       setFormData({
         name: "",
         email: "",
@@ -46,7 +61,7 @@ const Contact = () => {
         message: "",
       });
       setIsSubmitting(false);
-    }, 1000);
+    }, 800);
   };
 
   return (

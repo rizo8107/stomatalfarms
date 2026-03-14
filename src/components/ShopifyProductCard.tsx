@@ -104,7 +104,7 @@ Address: ${addressData.address}
 
 Product Link: ${productUrl}`;
 
-    const whatsappUrl = `https://api.whatsapp.com/send/?phone=916379033131&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`;
+    const whatsappUrl = `https://api.whatsapp.com/send/?phone=919790768502&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`;
     window.open(whatsappUrl, '_blank');
 
     setShowAddressDialog(false);

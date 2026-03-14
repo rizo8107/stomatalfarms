@@ -354,7 +354,7 @@ Address: ${fullAddress}
 
 Product Link: ${productUrl}`;
 
-    const whatsappUrl = `https://api.whatsapp.com/send/?phone=916379033131&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`;
+    const whatsappUrl = `https://api.whatsapp.com/send/?phone=919790768502&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`;
     window.open(whatsappUrl, '_blank');
 
     setShowAddressDialog(false);
@@ -414,6 +414,42 @@ Product Link: ${productUrl}`;
                         className="w-full h-full object-contain p-1"
                       />
                     </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Variant Selection - Moved below image/thumbnails */}
+              {product.options.length > 0 && product.options[0].values.length > 1 && (
+                <div className="space-y-4 pt-4 border-t border-border/50">
+                  {product.options.map((option) => (
+                    <div key={option.name}>
+                      <label className="text-sm font-semibold text-foreground mb-3 block">
+                        {option.name}
+                      </label>
+                      <div className="flex flex-wrap gap-2">
+                        {option.values.map((value) => {
+                          const variantIndex = product.variants.edges.findIndex(
+                            v => v.node.selectedOptions.some(
+                              so => so.name === option.name && so.value === value
+                            )
+                          );
+                          return (
+                            <button
+                              key={value}
+                              onClick={() => setSelectedVariantIndex(variantIndex >= 0 ? variantIndex : 0)}
+                              className={`px-5 py-2.5 rounded-lg border-2 text-sm font-medium transition-all ${selectedVariant?.selectedOptions.some(
+                                so => so.name === option.name && so.value === value
+                              )
+                                ? 'border-[#5a8739] bg-[#5a8739]/10 text-[#5a8739] shadow-sm'
+                                : 'border-border hover:border-[#5a8739]/40 hover:bg-sage-light/20'
+                                }`}
+                            >
+                              {value}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
                   ))}
                 </div>
               )}
@@ -591,41 +627,6 @@ Product Link: ${productUrl}`;
                 </p>
               )}
 
-              {/* Variant Selection */}
-              {product.options.length > 0 && product.options[0].values.length > 1 && (
-                <div className="space-y-4">
-                  {product.options.map((option) => (
-                    <div key={option.name}>
-                      <label className="text-sm font-semibold text-foreground mb-3 block">
-                        {option.name}
-                      </label>
-                      <div className="flex flex-wrap gap-2">
-                        {option.values.map((value) => {
-                          const variantIndex = product.variants.edges.findIndex(
-                            v => v.node.selectedOptions.some(
-                              so => so.name === option.name && so.value === value
-                            )
-                          );
-                          return (
-                            <button
-                              key={value}
-                              onClick={() => setSelectedVariantIndex(variantIndex >= 0 ? variantIndex : 0)}
-                              className={`px-5 py-2.5 rounded-lg border-2 text-sm font-medium transition-all ${selectedVariant?.selectedOptions.some(
-                                so => so.name === option.name && so.value === value
-                              )
-                                ? 'border-[#5a8739] bg-[#5a8739]/10 text-[#5a8739] shadow-sm'
-                                : 'border-border hover:border-[#5a8739]/40 hover:bg-sage-light/20'
-                                }`}
-                            >
-                              {value}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
 
               {/* Quantity & Add to Cart/WhatsApp - Desktop */}
               <div className="hidden md:flex items-center gap-4 pt-4">
