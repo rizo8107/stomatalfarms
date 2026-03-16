@@ -254,20 +254,24 @@ Light wick, wait 2 mins for full ignition, let burn 1 min, blow out and enjoy th
 
 ---
 
-**Tittle -** Aurora’s Cow Dung Ash from Desi Cows (Pack of 2)
+**Tittle -** Aurora’s Cow Dung Ash (Vibhuti / Bhasma) – (Available in 1, 2, or 3 Packs)
 
 **Des -** 
-Traditionally prepared Gomaya Bhasma from sun-dried cow dung cakes. Rich in alkaline minerals and ritual purity. Auspicious and purifying—neutralizes negativity and enhances soil health.
+Our Pure Cow Dung Ash, also known as Gomaya Bhasma, is traditionally prepared from dried cow dung cakes of desi cows, burnt with ritual purity. Rich in alkaline minerals and deeply rooted in Vedic tradition, this ash neutralizes negativity, enhances spiritual vibrations, and is also valued for its eco-friendly, multi-purpose properties. FINEST QUALITY: FINELY SIEVED & PURE.
 
 **Product Details -** 
-• Ingredients: 100% pure ash, sieved and smoke-free.
-• Traditional | Biodegradable | Handcrafted with reverence.
+• Ingredients: 100% pure ash from sun-dried cow dung cakes (desi cows)
+• No chemicals, preservatives, or additives
+• Smoke-free and finely sieved for easy use
+• Traditional | Biodegradable | Eco-friendly
 
 **How to Use -** 
-Spiritual (forehead/room purification), Agricultural (soil fertilizer), or Home cleaning (utensil polishing).
+STEP 1 – SPIRITUAL USE: Sprinkle around the home/puja room to purify energy or apply a small pinch on the forehead as sacred vibhuti.
+STEP 2 – AGRICULTURAL USE: Use as a natural soil additive to improve fertility and pH balance for your plants.
+STEP 3 – HOUSEHOLD CLEANING: Mix with water for floor cleansing or use as an eco-friendly utensil cleaner for a chemical-free home.
 
 **Combo Includes -** 
-• 2 x Pure Cow Dung Ash Packs.
+• Choice of 1, 2, or 3 Packs of Pure Cow Dung Ash.
 
 ---
 
