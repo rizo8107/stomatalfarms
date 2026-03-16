@@ -65,10 +65,7 @@ export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
       selectedOptions: selectedVariant.selectedOptions || [],
     });
 
-    toast.success("Added to cart", {
-      description: `${node.title} - ${selectedVariant.title}`,
-      position: "bottom-right",
-    });
+    toast.success("Added to cart");
   };
 
   const handleWhatsAppOrder = (e: React.MouseEvent) => {
@@ -86,9 +83,7 @@ export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
 
   const submitWhatsAppOrder = () => {
     if (!addressData.name || !addressData.phone || !addressData.address) {
-      toast.error("Please fill in all fields", {
-        position: "bottom-right",
-      });
+      toast.error("Please fill in all fields");
       return;
     }
 
@@ -111,10 +106,7 @@ Product Link: ${productUrl}`;
     setShowAddressDialog(false);
     setAddressData({ name: "", phone: "", address: "" });
 
-    toast.success("Opening WhatsApp...", {
-      description: "Your order details have been prepared",
-      position: "bottom-right",
-    });
+    toast.success("Opening WhatsApp...");
   };
 
   return (

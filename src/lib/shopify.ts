@@ -92,9 +92,7 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
   });
 
   if (response.status === 402) {
-    toast.error("Shopify: Payment required", {
-      description: "Your store needs to be upgraded to a paid plan."
-    });
+    toast.error("Payment required on Shopify");
     return null;
   }
 

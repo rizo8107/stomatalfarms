@@ -48,10 +48,7 @@ ${formData.message}`;
     setTimeout(() => {
       window.open(whatsappUrl, '_blank');
       
-      toast.success("Opening WhatsApp...", {
-        description: "Your message has been prepared.",
-        position: "bottom-right",
-      });
+      toast.success("Opening WhatsApp...");
 
       setFormData({
         name: "",

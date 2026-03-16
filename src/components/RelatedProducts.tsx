@@ -47,10 +47,7 @@ export const RelatedProducts = ({ currentProductId }: RelatedProductsProps) => {
       selectedOptions: variant.selectedOptions || [],
     });
 
-    toast.success("Added to cart", {
-      description: product.node.title,
-      position: "bottom-right",
-    });
+    toast.success("Added to cart");
   };
 
   if (loading) {
