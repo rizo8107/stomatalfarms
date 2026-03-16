@@ -34,7 +34,9 @@ export const RelatedProducts = ({ currentProductId }: RelatedProductsProps) => {
     loadProducts();
   }, [currentProductId]);
 
-  const handleQuickAdd = (product: ShopifyProduct) => {
+  const handleQuickAdd = (e: React.MouseEvent, product: ShopifyProduct) => {
+    e.preventDefault();
+    e.stopPropagation();
     const variant = product.node.variants.edges[0]?.node;
     if (!variant) return;
 
@@ -80,59 +82,58 @@ export const RelatedProducts = ({ currentProductId }: RelatedProductsProps) => {
             const hasDiscount = originalPrice > currentPrice;
 
             return (
-              <div key={product.node.id} className="group relative flex flex-col h-full bg-card/40 backdrop-blur-sm rounded-2xl border border-border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 overflow-hidden">
-                <Link
-                  to={`/product/${product.node.handle}`}
-                  className="flex-1"
-                >
-                  <div className="aspect-[4/5] overflow-hidden bg-[#f5f0e8]/80 relative">
-                    {hasDiscount && (
-                      <span className="absolute top-3 left-3 z-10 bg-[#5a8739] text-white text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded shadow-sm">
-                        Sale
-                      </span>
-                    )}
-                    {image ? (
-                      <img
-                        src={image.url}
-                        alt={image.altText || product.node.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs uppercase tracking-widest">
-                        Preview
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
-                  </div>
-
-                  <div className="p-4 md:p-5 flex flex-col gap-2">
-                    <h3 className="font-medium text-foreground text-sm leading-snug line-clamp-2 h-10 group-hover:text-[#5a8739] transition-colors duration-300">
-                      {product.node.title}
-                    </h3>
-
-                    <div className="flex items-center gap-2">
-                      <span className="text-[#5a8739] font-bold text-base md:text-lg whitespace-nowrap">
-                        ₹{Math.round(currentPrice)}
-                      </span>
-                      {hasDiscount && (
-                        <span className="text-xs text-muted-foreground line-through opacity-70">
-                          ₹{Math.round(originalPrice)}
-                        </span>
-                      )}
+              <Link 
+                key={product.node.id} 
+                to={`/product/${product.node.handle}`}
+                className="group relative flex flex-col h-full bg-card/40 backdrop-blur-sm rounded-2xl border border-border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 overflow-hidden cursor-pointer"
+              >
+                <div className="aspect-[4/5] overflow-hidden bg-[#f5f0e8]/80 relative">
+                  {hasDiscount && (
+                    <span className="absolute top-3 left-3 z-10 bg-[#5a8739] text-white text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded shadow-sm">
+                      Sale
+                    </span>
+                  )}
+                  {image ? (
+                    <img
+                      src={image.url}
+                      alt={image.altText || product.node.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs uppercase tracking-widest">
+                      Preview
                     </div>
+                  )}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
+                </div>
+
+                <div className="p-4 md:p-5 flex flex-col gap-2 flex-grow">
+                  <h3 className="font-medium text-foreground text-sm leading-snug line-clamp-2 h-10 group-hover:text-[#5a8739] transition-colors duration-300">
+                    {product.node.title}
+                  </h3>
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#5a8739] font-bold text-base md:text-lg whitespace-nowrap">
+                      ₹{Math.round(currentPrice)}
+                    </span>
+                    {hasDiscount && (
+                      <span className="text-xs text-muted-foreground line-through opacity-70">
+                        ₹{Math.round(originalPrice)}
+                      </span>
+                    )}
                   </div>
-                </Link>
+                </div>
 
                 <div className="px-4 pb-4 md:px-5 md:pb-5">
                   <Button
-                    onClick={() => handleQuickAdd(product)}
+                    onClick={(e) => handleQuickAdd(e, product)}
                     className="w-full bg-[#5a8739] text-white hover:bg-[#5a8739]/90 text-xs h-10 rounded-xl font-bold tracking-wide shadow-sm hover:shadow transition-all duration-300"
                   >
                     <ShoppingBag className="h-3.5 w-3.5 mr-2" />
                     Quick Add
                   </Button>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

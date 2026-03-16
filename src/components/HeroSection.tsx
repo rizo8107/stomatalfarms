@@ -12,7 +12,10 @@ const HeroSection = () => {
           {/* Column 1 - Aurora */}
           <div className="space-y-6">
             {/* Card 1 - Aurora */}
-            <div className="group relative overflow-hidden rounded-2xl aspect-[1/1.1] sm:aspect-[4/5] md:aspect-[5/6] lg:aspect-[6/7] animate-fade-in-up border border-border/10 shadow-xl">
+            <Link 
+              to="/collections?category=all"
+              className="group relative block overflow-hidden rounded-2xl aspect-[1/1.1] sm:aspect-[4/5] md:aspect-[5/6] lg:aspect-[6/7] animate-fade-in-up border border-border/10 shadow-xl cursor-pointer"
+            >
               <img
                 src="/aurora.jfif"
                 alt="Aurora - Aromatic Wellness"
@@ -32,14 +35,12 @@ const HeroSection = () => {
                   A curated range of incense, bath salts, and self-care essentials.
                 </p>
                 <div className="space-y-1.5">
-                  <Link to="/collections?category=all">
-                    <Button variant="hero" className="w-fit text-[10px] md:text-xs bg-warm-white text-earth hover:bg-warm-white/90 px-2.5 md:px-3 py-1 md:py-1.5 h-auto">
-                      Shop Aurora
-                    </Button>
-                  </Link>
+                  <div className="w-fit text-[10px] md:text-xs bg-warm-white text-earth hover:bg-warm-white/90 px-3 md:px-4 py-1.5 md:py-2 h-auto rounded-full font-bold inline-flex items-center justify-center transition-colors">
+                    Shop Aurora
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
 
             <p className="text-white text-[10px] md:text-xs text-center font-medium tracking-wide uppercase">
               Natural • Chemical-Free • Lab-Tested
@@ -52,7 +53,11 @@ const HeroSection = () => {
           {/* Column 2 - Fresh Produce */}
           <div className="space-y-6">
             {/* Card 2 - Fresh Produce */}
-            <div className="group relative overflow-hidden rounded-2xl aspect-[1/1.1] sm:aspect-[4/5] md:aspect-[5/6] lg:aspect-[6/7] animate-fade-in-up border border-border/10 shadow-xl" style={{ animationDelay: "0.15s" }}>
+            <Link 
+              to="/collections?category=microgreens"
+              className="group relative block overflow-hidden rounded-2xl aspect-[1/1.1] sm:aspect-[4/5] md:aspect-[5/6] lg:aspect-[6/7] animate-fade-in-up border border-border/10 shadow-xl cursor-pointer"
+              style={{ animationDelay: "0.15s" }}
+            >
               <img
                 src="/stomatal.jfif"
                 alt="Stomatal Farms - Farm Fresh Produce"
@@ -72,14 +77,12 @@ const HeroSection = () => {
                   Freshly harvested microgreens, leafy greens, and nutrient-rich farm produce.
                 </p>
                 <div className="space-y-1.5">
-                  <Link to="/collections?category=microgreens">
-                    <Button variant="hero-outline" className="w-fit text-[10px] md:text-xs border-warm-white text-warm-white hover:bg-warm-white hover:text-earth px-2.5 md:px-3 py-1 md:py-1.5 h-auto">
-                      Shop Farm Fresh Produce
-                    </Button>
-                  </Link>
+                  <div className="w-fit text-[10px] md:text-xs border border-warm-white text-warm-white hover:bg-warm-white hover:text-earth px-3 md:px-4 py-1.5 md:py-2 h-auto rounded-full font-bold inline-flex items-center justify-center transition-colors">
+                    Shop Farm Fresh Produce
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
 
             <p className="text-white text-[10px] md:text-xs text-center font-medium tracking-wide uppercase">
               Fresh • Nutrient-Dense • Responsibly Grown
