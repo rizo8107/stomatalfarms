@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { captureUtmParams } from "@/lib/utm";
 
 declare global {
   interface Window {
@@ -12,6 +13,9 @@ const AnalyticsTracker = () => {
   const location = useLocation();
 
   useEffect(() => {
+    // Capture UTM parameters from the URL
+    captureUtmParams();
+
     // Track PageView in Google Analytics
     if (window.gtag) {
       window.gtag('config', 'GT-NBXH2XRV', {

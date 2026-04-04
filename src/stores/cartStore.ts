@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { ShopifyProduct } from '@/lib/shopify';
 import { createCheckout, addToCheckout, updateCheckoutLineItem, removeFromCheckout, fetchCheckout } from '@/lib/shopify-api';
+import { appendUtmToUrl } from '@/lib/utm';
 
 export interface CartItem {
   product: ShopifyProduct;
@@ -128,7 +129,8 @@ export const useCartStore = create<CartStore>()(
           }));
           
           const updatedCheckout = await addToCheckout(checkout.id, lineItems);
-          setCheckoutUrl(updatedCheckout.webUrl);
+          const finalCheckoutUrl = appendUtmToUrl(updatedCheckout.webUrl);
+          setCheckoutUrl(finalCheckoutUrl);
 
           // Track InitiateCheckout
           if (typeof window !== 'undefined') {
@@ -156,7 +158,7 @@ export const useCartStore = create<CartStore>()(
             }
           }
           
-          return updatedCheckout.webUrl;
+          return finalCheckoutUrl;
         } catch (error) {
           console.error('Failed to create checkout:', error);
           return null;
