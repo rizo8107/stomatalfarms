@@ -123,3 +123,18 @@ export async function searchProducts(query: string) {
     throw error;
   }
 }
+
+/**
+ * Update checkout attributes (e.g., UTM tags)
+ */
+export async function updateCheckoutAttributes(checkoutId: string, attributes: Array<{ key: string; value: string }>) {
+  try {
+    const checkout = await client.checkout.updateAttributes(checkoutId, {
+      customAttributes: attributes,
+    });
+    return checkout;
+  } catch (error) {
+    console.error('Error updating checkout attributes:', error);
+    throw error;
+  }
+}

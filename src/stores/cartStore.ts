@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { ShopifyProduct } from '@/lib/shopify';
-import { createCheckout, addToCheckout, updateCheckoutLineItem, removeFromCheckout, fetchCheckout } from '@/lib/shopify-api';
-import { appendUtmToUrl } from '@/lib/utm';
+import { createCheckout, addToCheckout, updateCheckoutLineItem, removeFromCheckout, fetchCheckout, updateCheckoutAttributes } from '@/lib/shopify-api';
+import { appendUtmToUrl, getStoredUtmParams } from '@/lib/utm';
 
 export interface CartItem {
   product: ShopifyProduct;
@@ -129,6 +129,17 @@ export const useCartStore = create<CartStore>()(
           }));
           
           const updatedCheckout = await addToCheckout(checkout.id, lineItems);
+          
+          // Add UTM parameters as checkout attributes
+          const utmParams = getStoredUtmParams();
+          if (Object.keys(utmParams).length > 0) {
+            const attributes = Object.entries(utmParams).map(([key, value]) => ({
+              key,
+              value: String(value)
+            }));
+            await updateCheckoutAttributes(checkout.id, attributes);
+          }
+          
           const finalCheckoutUrl = appendUtmToUrl(updatedCheckout.webUrl);
           setCheckoutUrl(finalCheckoutUrl);
 
