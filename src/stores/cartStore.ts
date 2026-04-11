@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { ShopifyProduct } from '@/lib/shopify';
 import { createCheckout, addToCheckout, updateCheckoutLineItem, removeFromCheckout, fetchCheckout, updateCheckoutAttributes } from '@/lib/shopify-api';
-import { appendUtmToUrl, getStoredUtmParams } from '@/lib/utm';
+import { appendUtmToUrl, getShopifyCheckoutAttributes } from '@/lib/utm';
 
 export interface CartItem {
   product: ShopifyProduct;
@@ -130,14 +130,12 @@ export const useCartStore = create<CartStore>()(
           
           const updatedCheckout = await addToCheckout(checkout.id, lineItems);
           
-          // Add UTM parameters as checkout attributes
-          const utmParams = getStoredUtmParams();
-          if (Object.keys(utmParams).length > 0) {
-            const attributes = Object.entries(utmParams).map(([key, value]) => ({
-              key,
-              value: String(value)
-            }));
-            await updateCheckoutAttributes(checkout.id, attributes);
+          // Add UTM + Shopify tracking attributes to the checkout.
+          // This populates the "Conversion Summary" panel in Shopify Admin.
+          // Keys like _landing_page, _source_url, _ref, _ga are read by Shopify to attribute the order.
+          const checkoutAttributes = getShopifyCheckoutAttributes();
+          if (checkoutAttributes.length > 0) {
+            await updateCheckoutAttributes(checkout.id, checkoutAttributes);
           }
           
           const finalCheckoutUrl = appendUtmToUrl(updatedCheckout.webUrl);
