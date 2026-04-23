@@ -684,11 +684,7 @@ Product Link: ${productUrl}`;
                   </div>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 gap-3 pt-6 border-t border-border">
-                  <div className="flex items-center gap-3 text-sm text-foreground bg-[#5a8739]/5 rounded-xl p-4 border border-[#5a8739]/10 shadow-sm">
-                    <Truck className="h-6 w-6 text-[#5a8739] flex-shrink-0" />
-                    <span className="font-medium">Free Shipping</span>
-                  </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-border">
                   <div className="flex items-center gap-3 text-sm text-foreground bg-[#5a8739]/5 rounded-xl p-4 border border-[#5a8739]/10 shadow-sm">
                     <Leaf className="h-6 w-6 text-[#5a8739] flex-shrink-0" />
                     <span className="font-medium">100% Natural</span>
