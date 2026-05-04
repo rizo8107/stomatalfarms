@@ -1,21 +1,23 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ChevronDown, HelpCircle } from "lucide-react";
 
 const faqs = [
   {
     q: "Which product should I start with?",
-    a: "Incense sticks are easiest for daily use. Cups offer a deeper, longer experience. Ghee lamps are perfect for puja corners. Combo packs are the best first order.",
+    a: "Our incense sticks are perfect for daily use, while cups offer a deeper, more therapeutic experience. If you're new, the Combo packs are our most loved starting point.",
   },
   {
     q: "Are these safe for children and elders?",
-    a: "Yes — all Aurora products use natural, chemical-free ingredients with no synthetic binders. Safe for homes with children and elderly.",
+    a: "Absolutely. Every Aurora product is crafted from 100% natural, chemical-free ingredients with no synthetic binders, making them safe for everyone in your family.",
   },
   {
     q: "How long does each product last?",
-    a: "Sticks ~45 min, cups 90–120 min, ghee lamps 4–6 hours. One pack of sticks lasts a month of daily use.",
+    a: "Our sticks burn for ~45 minutes, while cups provide a 90–120 minute experience. Ghee lamps can light up your space for 4–6 hours.",
   },
   {
     q: "Is gifting packaging available?",
-    a: "Combo packs come gift-ready. Single items can be requested with gift wrap at checkout on our store.",
+    a: "Yes, our Ritual Bundles come beautifully gift-ready. For individual items, you can request special gift wrapping at checkout.",
   },
 ];
 
@@ -23,47 +25,72 @@ const FAQ = () => {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="py-12 md:py-16 px-4 bg-[#f7f1e8]">
-      <div className="max-w-2xl mx-auto">
-        <p className="text-[10px] font-extrabold uppercase tracking-[0.1em] text-[#6a7462] text-center mb-3">
-          ✦ Quick Answers
-        </p>
-        <h2
-          className="text-center text-2xl md:text-4xl text-[#1e2519] mb-8"
-          style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}
-        >
-          Common questions.
-        </h2>
+    <section className="py-24 md:py-32 px-4 bg-[#f9f6f0] relative overflow-hidden">
+      {/* Subtle decorative background */}
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#4f7a2e]/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
+      
+      <div className="max-w-3xl mx-auto relative z-10">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full bg-[#4f7a2e]/5 border border-[#4f7a2e]/10">
+            <HelpCircle className="w-3 h-3 text-[#4f7a2e]" />
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#4f7a2e]">Common Inquiries</span>
+          </div>
+          <h2
+            className="text-4xl md:text-5xl text-[#2a3625] mb-6"
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
+          >
+            Thoughtfully answered.
+          </h2>
+          <p className="text-[#6a7462] font-light max-w-lg mx-auto">
+            Everything you need to know about our natural aromatics and how to integrate them into your daily life.
+          </p>
+        </div>
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           {faqs.map((faq, i) => (
             <div
               key={i}
-              className="rounded-xl border overflow-hidden"
-              style={{ background: "#fffbf5", borderColor: "rgba(46,63,37,0.12)" }}
+              className={`rounded-[32px] overflow-hidden transition-all duration-500 border ${
+                open === i 
+                  ? "bg-white shadow-xl border-[#2e3f25]/10" 
+                  : "bg-white/40 border-transparent hover:bg-white/60"
+              }`}
             >
               <button
-                className="w-full text-left px-5 py-4 flex items-center justify-between gap-3 font-semibold text-[#1e2519] text-sm"
+                className="w-full text-left px-8 py-6 flex items-center justify-between gap-6 outline-none group"
                 onClick={() => setOpen(open === i ? null : i)}
               >
-                <span>{faq.q}</span>
-                <span
-                  className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold transition-transform"
-                  style={{
-                    background: "linear-gradient(135deg, #2e4e18, #4f7a2e)",
-                    transform: open === i ? "rotate(45deg)" : "none",
-                  }}
-                >
-                  +
+                <span className={`text-base md:text-lg font-medium transition-colors duration-300 ${open === i ? "text-[#4f7a2e]" : "text-[#2a3625]"}`} style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  {faq.q}
                 </span>
-              </button>
-              {open === i && (
-                <div className="px-5 pb-4 text-sm text-[#6a7462] leading-relaxed font-light border-t border-[rgba(46,63,37,0.08)]">
-                  <p className="pt-3">{faq.a}</p>
+                <div 
+                  className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 ${
+                    open === i ? "bg-[#4f7a2e] text-white rotate-180" : "bg-white text-[#2a3625] shadow-sm group-hover:shadow-md"
+                  }`}
+                >
+                  <ChevronDown className="w-5 h-5" />
                 </div>
-              )}
+              </button>
+              
+              <div 
+                className={`transition-all duration-500 ease-in-out ${
+                  open === i ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="px-8 pb-8 text-sm md:text-base text-[#6a7462] leading-relaxed font-light">
+                  <div className="w-full h-[1px] bg-[#2e3f25]/5 mb-6"></div>
+                  {faq.a}
+                </div>
+              </div>
             </div>
           ))}
+        </div>
+        
+        {/* Support link */}
+        <div className="mt-16 text-center">
+          <p className="text-sm text-[#6a7462]">
+            Still have questions? <Link to="/contact" className="text-[#4f7a2e] font-bold border-b border-[#4f7a2e]/30 hover:border-[#4f7a2e] transition-all">Reach out to us</Link>
+          </p>
         </div>
       </div>
     </section>

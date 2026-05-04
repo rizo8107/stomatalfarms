@@ -14,6 +14,7 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+    dedupe: ["react", "react-dom"],
   },
   build: {
     rollupOptions: {
@@ -29,7 +30,6 @@ export default defineConfig(({ mode }) => ({
             "@radix-ui/react-select",
           ],
           "vendor-shopify": ["shopify-buy", "@shopify/hydrogen-react"],
-          "vendor-query": ["@tanstack/react-query", "zustand"],
         },
       },
     },
