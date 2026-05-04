@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,71 +6,68 @@
 
 @layer base {
   :root {
-    /* White background for main site */
-    --background: 0 0% 100%;
-    --foreground: 30 15% 20%;
+    /* Page background — warm cream */
+    --background: 36 43% 96%;
+    --foreground: 120 14% 12%;
 
     /* Card surfaces */
-    --card: 0 0% 100%;
-    --card-foreground: 30 15% 20%;
+    --card: 36 50% 99%;
+    --card-foreground: 120 14% 12%;
 
     /* Popover */
-    --popover: 0 0% 100%;
-    --popover-foreground: 30 15% 20%;
+    --popover: 36 50% 99%;
+    --popover-foreground: 120 14% 12%;
 
-    /* Stomatal Green Primary (Medium Green - Highlight Card Background) */
-    --primary: 127 24% 34%;
-    --primary-foreground: 123 30% 86%;
+    /* Brand green primary */
+    --primary: 97 47% 33%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Stomatal Dark Green (Hero Background) */
-    --secondary: 135 30% 21%;
-    --secondary-foreground: 123 30% 86%;
+    /* Deep brand green (gradient dark end) */
+    --secondary: 109 52% 20%;
+    --secondary-foreground: 0 0% 100%;
 
-    /* Muted tones */
-    --muted: 123 15% 94%;
-    --muted-foreground: 135 15% 45%;
+    /* Muted */
+    --muted: 96 18% 91%;
+    --muted-foreground: 100 13% 42%;
 
-    /* Accent - Light Mint (Logo/Icon highlight) */
-    --accent: 123 30% 86%;
-    --accent-foreground: 135 30% 21%;
+    /* Accent — terracotta for badges/savings */
+    --accent: 23 47% 47%;
+    --accent-foreground: 0 0% 100%;
 
     /* Destructive */
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     /* Borders */
-    --border: 127 15% 90%;
-    --input: 127 15% 90%;
-    --ring: 127 24% 34%;
+    --border: 100 14% 88%;
+    --input: 100 14% 88%;
+    --ring: 97 47% 33%;
 
-    --radius: 0.5rem;
+    --radius: 0.875rem;
 
-    /* Custom tokens for Stomatal Farms */
-    --stoma-dark: 135 30% 21%;
-    /* #25452d */
-    --stoma-medium: 127 24% 34%;
-    /* #426c47 */
-    --stoma-light: 123 30% 86%;
-    /* #d1e7d2 */
-
-    --sage: 127 24% 34%;
-    --sage-light: 123 30% 86%;
-    --cream: 40 33% 96%;
-    --cream-dark: 35 25% 90%;
-    --terracotta: 25 45% 50%;
-    --terracotta-light: 25 40% 88%;
-    --earth: 135 30% 21%;
-    --warm-white: 40 30% 98%;
+    /* Named tokens */
+    --brand: #4f7a2e;
+    --brand-deep: #2e4e18;
+    --cream: #f7f1e8;
+    --surface: #fffbf5;
+    --text: #1e2519;
+    --muted-text: #6a7462;
+    --gold: #c9a05a;
+    --terracotta: #b56c3d;
+    --sage: 97 47% 33%;
+    --sage-light: 96 18% 91%;
+    --warm-white: 36 50% 99%;
+    --earth: 109 52% 20%;
 
     /* Sidebar tokens */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 30 15% 25%;
-    --sidebar-primary: 127 24% 34%;
-    --sidebar-primary-foreground: 123 30% 86%;
-    --sidebar-accent: 123 30% 92%;
-    --sidebar-accent-foreground: 127 24% 34%;
-    --sidebar-border: 127 15% 90%;
-    --sidebar-ring: 127 24% 34%;
+    --sidebar-background: 36 43% 96%;
+    --sidebar-foreground: 120 14% 12%;
+    --sidebar-primary: 97 47% 33%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 96 18% 91%;
+    --sidebar-accent-foreground: 97 47% 33%;
+    --sidebar-border: 100 14% 88%;
+    --sidebar-ring: 97 47% 33%;
   }
 
   .dark {
@@ -123,16 +120,12 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Outfit', sans-serif;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-serif;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', serif;
   }
 }
 

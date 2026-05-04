@@ -1,112 +1,140 @@
 import { Link } from "react-router-dom";
-import { Instagram, Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Instagram, Mail, MessageCircle } from "lucide-react";
 
-const Footer = () => {
-  return (
-    <footer id="about" className="py-16 md:py-24 bg-[#1a2316] text-[#faf7f2] border-t border-white/5 relative z-20">
-      <div className="container px-4 max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-10 mb-16">
-          {/* Brand Column */}
-          <div className="lg:col-span-2">
-            <Link to="/" className="inline-block mb-6">
-              <span className="font-serif text-3xl font-semibold text-white tracking-tight">
-                Stomatal Farms
-              </span>
-            </Link>
-            <p className="text-[#faf7f2]/70 max-w-md mb-8 leading-relaxed font-light text-base">
-              Cultivating Freshness, Embracing Nature. We grow fresh greens and craft
-              Aurora aromatic wellness products from traditional Indian herbs.
-            </p>
-            <div className="flex gap-4">
+const Footer = () => (
+  <footer style={{ background: "#1e2519", color: "#f7f1e8" }} className="relative z-10">
+    <div className="max-w-7xl mx-auto px-4 pt-14 pb-8">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        {/* Brand */}
+        <div className="lg:col-span-2">
+          <span
+            className="block text-2xl mb-4 text-white"
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}
+          >
+            STOMATAL FARMS
+          </span>
+          <p className="text-sm font-light leading-relaxed mb-1" style={{ color: "rgba(247,241,232,0.65)" }}>
+            Aurora Aromatic Wellness
+          </p>
+          <p className="text-sm font-light leading-relaxed mb-6 max-w-xs" style={{ color: "rgba(247,241,232,0.55)" }}>
+            Cultivating freshness. Crafting rituals. From Indian farms to your home.
+          </p>
+          <div className="flex gap-3">
+            {[
+              { href: "https://www.instagram.com/stomatalfarms/", icon: <Instagram className="w-4 h-4" />, label: "Instagram" },
+              { href: "mailto:contact@stomatalfarms.com", icon: <Mail className="w-4 h-4" />, label: "Email" },
+              { href: "https://api.whatsapp.com/send/?phone=919790768502", icon: <MessageCircle className="w-4 h-4" />, label: "WhatsApp" },
+            ].map((s) => (
               <a
-                href="https://www.instagram.com/stomatalfarms/"
+                key={s.label}
+                href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[#5a8739] hover:border-[#5a8739] transition-all duration-300"
+                aria-label={s.label}
+                className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:opacity-90"
+                style={{ background: "rgba(247,241,232,0.08)", border: "1px solid rgba(247,241,232,0.12)" }}
               >
-                <Instagram className="w-5 h-5 text-white" />
+                {s.icon}
               </a>
-              <a
-                href="mailto:contact@stomatalfarms.com"
-                className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[#5a8739] hover:border-[#5a8739] transition-all duration-300"
-              >
-                <Mail className="w-5 h-5 text-white" />
-              </a>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div className="space-y-6">
-            <h4 className="font-medium text-white tracking-wide uppercase text-sm">Aurora Products</h4>
-            <ul className="space-y-4">
-              <li>
-                <Link to="/collections?category=sticks" className="text-[#faf7f2]/70 hover:text-white transition-colors text-base font-light">
-                  Incense Sticks
-                </Link>
-              </li>
-              <li>
-                <Link to="/collections?category=cups" className="text-[#faf7f2]/70 hover:text-white transition-colors text-base font-light">
-                  Incense Cups
-                </Link>
-              </li>
-              <li>
-                <Link to="/collections?category=combos" className="text-[#faf7f2]/70 hover:text-white transition-colors text-base font-light">
-                  Combo Packs
-                </Link>
-              </li>
-              <li>
-                <Link to="/collections?category=ghee" className="text-[#faf7f2]/70 hover:text-white transition-colors text-base font-light">
-                  Ghee Lamps
-                </Link>
-              </li>
-              <li>
-                <Link to="/collections?category=bath" className="text-[#faf7f2]/70 hover:text-white transition-colors text-base font-light">
-                  Bath Salts
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div className="space-y-6">
-            <h4 className="font-medium text-white tracking-wide uppercase text-sm">Stay Connected</h4>
-            <p className="text-[#faf7f2]/70 text-base font-light leading-relaxed">
-              Join our community for rituals, new releases & exclusive offers.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="flex-1 px-5 py-3 text-base rounded-full border border-white/10 bg-white/5 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#5a8739]/50 transition-all font-light"
-              />
-              <Button className="rounded-full bg-[#5a8739] hover:bg-[#4a722e] text-white px-8 py-3 h-auto font-semibold shadow-lg shadow-[#5a8739]/20 transition-all text-base border-none">
-                Join
-              </Button>
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-sm text-[#faf7f2]/50 font-light tracking-wide">
-            © 2025 Stomatal Farms. All rights reserved.
+        {/* Aurora links */}
+        <div>
+          <h4 className="text-xs font-bold uppercase tracking-widest mb-5 text-white/60">Aurora Products</h4>
+          <ul className="space-y-3">
+            {[
+              ["Incense Sticks", "/collections?category=sticks"],
+              ["Incense Cups", "/collections?category=cups"],
+              ["Combo Packs", "/collections?category=combos"],
+              ["Ghee Lamps", "/collections?category=ghee"],
+              ["Bath Salts", "/collections?category=bath"],
+            ].map(([name, href]) => (
+              <li key={name}>
+                <Link
+                  to={href}
+                  className="text-sm font-light transition-colors hover:text-white"
+                  style={{ color: "rgba(247,241,232,0.60)" }}
+                >
+                  {name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Newsletter */}
+        <div>
+          <h4 className="text-xs font-bold uppercase tracking-widest mb-5 text-white/60">Stay Connected</h4>
+          <p className="text-sm font-light leading-relaxed mb-5" style={{ color: "rgba(247,241,232,0.55)" }}>
+            Rituals, new releases &amp; exclusive offers.
           </p>
-          <div className="flex gap-8">
-            <a href="#" className="text-sm text-[#faf7f2]/50 hover:text-white transition-colors font-light tracking-wide">
-              Privacy Policy
-            </a>
-            <a href="#" className="text-sm text-[#faf7f2]/50 hover:text-white transition-colors font-light tracking-wide">
-              Terms of Service
-            </a>
-            <a href="mailto:contact@stomatalfarms.com" className="text-sm text-[#faf7f2]/50 hover:text-white transition-colors font-light tracking-wide">
-              Contact Us
-            </a>
+          <div className="flex flex-col gap-2.5">
+            <input
+              type="email"
+              placeholder="Your email address"
+              className="px-4 py-2.5 rounded-full text-sm border text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#4f7a2e]/40 transition-all font-light"
+              style={{ background: "rgba(247,241,232,0.06)", borderColor: "rgba(247,241,232,0.12)" }}
+            />
+            <button
+              className="px-6 py-2.5 rounded-full text-sm font-bold text-white transition-all hover:opacity-90"
+              style={{ background: "linear-gradient(135deg, #2e4e18, #4f7a2e)" }}
+            >
+              Join
+            </button>
           </div>
         </div>
       </div>
-    </footer>
-  );
-};
+
+      {/* Stats row */}
+      <div
+        className="grid grid-cols-4 gap-4 py-6 mb-8 rounded-2xl text-center"
+        style={{ background: "rgba(247,241,232,0.04)", border: "1px solid rgba(247,241,232,0.08)" }}
+      >
+        {[
+          ["5+", "Yrs craft"],
+          ["1200+", "Homes"],
+          ["100%", "Natural"],
+          ["4.9★", "Rating"],
+        ].map(([val, label]) => (
+          <div key={label}>
+            <p className="text-base md:text-xl font-extrabold text-white">{val}</p>
+            <p className="text-[10px] md:text-xs font-medium" style={{ color: "rgba(247,241,232,0.50)" }}>{label}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Bottom bar */}
+      <div
+        className="flex flex-col md:flex-row justify-between items-center gap-4 pt-6"
+        style={{ borderTop: "1px solid rgba(247,241,232,0.10)" }}
+      >
+        <p className="text-xs font-light" style={{ color: "rgba(247,241,232,0.40)" }}>
+          © 2025 Stomatal Farms. All rights reserved.
+        </p>
+        <div className="flex gap-6">
+          {["Privacy Policy", "Terms of Service"].map((t) => (
+            <a
+              key={t}
+              href="#"
+              className="text-xs font-light transition-colors hover:text-white"
+              style={{ color: "rgba(247,241,232,0.40)" }}
+            >
+              {t}
+            </a>
+          ))}
+          <a
+            href="mailto:contact@stomatalfarms.com"
+            className="text-xs font-light transition-colors hover:text-white"
+            style={{ color: "rgba(247,241,232,0.40)" }}
+          >
+            Contact Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+);
 
 export default Footer;

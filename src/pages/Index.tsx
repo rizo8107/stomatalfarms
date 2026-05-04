@@ -1,25 +1,34 @@
 import { useEffect } from "react";
 import Header from "@/components/Header";
-import IntroSection from "@/components/IntroSection";
 import HeroSection from "@/components/HeroSection";
-import ProductCategories from "@/components/ProductCategories";
+import SocialProofBar from "@/components/SocialProofBar";
+import FeaturedBundle from "@/components/FeaturedBundle";
 import ProductsSection from "@/components/ProductsSection";
+import HowToUse from "@/components/HowToUse";
+import WhyUs from "@/components/WhyUs";
+import Reviews from "@/components/Reviews";
+import FAQ from "@/components/FAQ";
+import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 
 const Index = () => {
   useEffect(() => {
-    // Scroll to top when component mounts
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div className="min-h-screen bg-background texture-overlay">
+    <div className="min-h-screen" style={{ background: "#f7f1e8" }}>
       <Header />
       <main>
-        <IntroSection />
         <HeroSection />
-        <ProductCategories />
+        <SocialProofBar />
+        <FeaturedBundle />
         <ProductsSection />
+        <HowToUse />
+        <WhyUs />
+        <Reviews />
+        <FAQ />
+        <FinalCTA />
       </main>
       <Footer />
     </div>
