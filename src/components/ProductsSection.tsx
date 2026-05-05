@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ShopifyProductsGrid } from "@/components/ShopifyProductsGrid";
 
 const ProductsSection = () => (
@@ -6,20 +7,30 @@ const ProductsSection = () => (
 
     <div className="max-w-7xl mx-auto relative z-10">
       {/* Header — left-aligned like the wireframe */}
-      <div className="mb-14 md:mb-18">
-        <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#4f7a2e] mb-3 flex items-center gap-2">
-          <span className="w-6 h-px bg-[#4f7a2e]/40" />
-          Aurora Collection
-        </p>
-        <h2
-          className="text-4xl md:text-6xl text-[#2a3625] leading-tight tracking-tight"
-          style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
+      <div className="mb-14 md:mb-18 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#4f7a2e] mb-3 flex items-center gap-2">
+            <span className="w-6 h-px bg-[#4f7a2e]/40" />
+            Aurora Collection
+          </p>
+          <h2
+            className="text-4xl md:text-6xl text-[#2a3625] leading-tight tracking-tight"
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
+          >
+            What would you like today?
+          </h2>
+        </div>
+
+        <Link
+          to="/collections"
+          className="w-fit px-8 py-3.5 rounded-full text-[10px] font-black uppercase tracking-[0.15em] text-white shadow-lg transition-all hover:opacity-90 active:scale-95"
+          style={{ background: "linear-gradient(135deg, #2e4e18, #4f7a2e)" }}
         >
-          What would you like today?
-        </h2>
+          Explore Products →
+        </Link>
       </div>
 
-      <ShopifyProductsGrid />
+      <ShopifyProductsGrid limit={6} />
 
       {/* Trust strip */}
       <div className="mt-16 flex flex-wrap justify-center gap-10 py-7 border-t border-[#2e3f25]/5">
