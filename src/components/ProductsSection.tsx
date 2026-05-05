@@ -2,19 +2,19 @@ import { Link } from "react-router-dom";
 import { ShopifyProductsGrid } from "@/components/ShopifyProductsGrid";
 
 const ProductsSection = () => (
-  <section id="products" className="py-20 md:py-28 px-4 bg-[#fffbf5] relative overflow-hidden">
+  <section id="products" className="py-14 md:py-20 px-4 bg-[#fffbf5] relative overflow-hidden">
     <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-[#f9f6f0] to-transparent" />
 
     <div className="max-w-7xl mx-auto relative z-10">
       {/* Header — left-aligned like the wireframe */}
-      <div className="mb-14 md:mb-18 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+      <div className="mb-10 md:mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
         <div>
-          <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#4f7a2e] mb-3 flex items-center gap-2">
+          <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#4f7a2e] mb-2.5 flex items-center gap-2">
             <span className="w-6 h-px bg-[#4f7a2e]/40" />
             Aurora Collection
           </p>
           <h2
-            className="text-4xl md:text-6xl text-[#2a3625] leading-tight tracking-tight"
+            className="text-4xl md:text-5xl text-[#2a3625] leading-tight tracking-tight"
             style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
           >
             What would you like today?
@@ -33,7 +33,7 @@ const ProductsSection = () => (
       <ShopifyProductsGrid limit={6} />
 
       {/* Trust strip */}
-      <div className="mt-16 flex flex-wrap justify-center gap-10 py-7 border-t border-[#2e3f25]/5">
+      <div className="mt-12 flex flex-wrap justify-center gap-10 py-7 border-t border-[#2e3f25]/5">
         {["Chemical-Free Formulas", "Ethically Farm-Sourced", "Ancient Vedic Methods", "Modern Lab Tested"].map(
           (point) => (
             <div key={point} className="flex items-center gap-2">

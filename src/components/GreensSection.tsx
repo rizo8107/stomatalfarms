@@ -77,33 +77,33 @@ const GreensSection = () => {
   };
 
   return (
-    <section className="py-10 md:py-16 px-4 relative overflow-hidden" style={{ background: "linear-gradient(160deg, #1a2e12 0%, #2a3f1a 40%, #1e3614 100%)" }}>
+    <section className="py-16 md:py-28 px-4 relative overflow-hidden" style={{ background: "linear-gradient(160deg, #1a2e12 0%, #2a3f1a 40%, #1e3614 100%)" }}>
       {/* Subtle texture overlay */}
       <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 20% 50%, #a8c690 0%, transparent 50%), radial-gradient(circle at 80% 20%, #7aaa55 0%, transparent 40%)" }} />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Top: headline + category cards */}
-        <div className="grid lg:grid-cols-[1fr,1.2fr] gap-10 lg:gap-16 items-center mb-12">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-start mb-20">
 
           {/* Left */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-6">
             <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#a8c690] flex items-center gap-2">
               <span className="w-6 h-px bg-[#a8c690]/40" />
               By Stomatal Farms
             </p>
             <h2
               className="leading-tight text-white"
-              style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem, 4vw, 2.8rem)", fontWeight: 500 }}
+              style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2.2rem, 5vw, 3.4rem)", fontWeight: 500 }}
             >
               <span className="italic text-[#a8c690]">Greens,</span> Microgreens<br />
               &amp; Dehydrated <span className="italic text-[#a8c690]">Green Blends</span>
             </h2>
-            <p className="text-white/60 font-light text-sm leading-relaxed max-w-sm">
-              Hydroponically grown, freshly harvested and delivered straight from our farm to your kitchen.
+            <p className="text-white/60 font-light text-base leading-relaxed max-w-sm">
+              Hydroponically grown, freshly harvested and delivered straight from our farm to your kitchen. No preservatives, no artificial colours, no compromise.
             </p>
             <Link
               to="/collections?category=greens"
-              className="group inline-flex items-center gap-2.5 w-fit px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] text-[#1a2e12] transition-all hover:-translate-y-0.5 hover:shadow-lg"
+              className="group inline-flex items-center gap-2.5 w-fit px-8 py-3 rounded-full text-xs font-black uppercase tracking-[0.2em] text-[#1a2e12] transition-all hover:-translate-y-0.5 hover:shadow-lg"
               style={{ background: "#a8c690" }}
             >
               Shop Farm Produce
@@ -111,21 +111,22 @@ const GreensSection = () => {
             </Link>
           </div>
 
-          {/* Right — compact category cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {/* Right — category cards */}
+          <div className="flex flex-col gap-3">
             {categories.map((cat) => (
               <div
                 key={cat.title}
-                className="rounded-xl border border-white/10 p-3 md:p-4 flex sm:flex-col gap-3 items-center text-center"
+                className="rounded-2xl border border-white/10 p-4 md:p-5 flex gap-4 items-center"
                 style={{ background: "rgba(255,255,255,0.06)" }}
               >
-                <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center text-lg flex-shrink-0">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white/10 flex items-center justify-center text-xl flex-shrink-0">
                   {cat.emoji}
                 </div>
                 <div>
-                  <h3 className="text-xs text-white leading-tight font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  <h3 className="text-sm md:text-base text-white leading-snug font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                     {cat.title}
                   </h3>
+                  <p className="text-xs text-white/50 font-light leading-relaxed mt-0.5">{cat.desc}</p>
                 </div>
               </div>
             ))}
