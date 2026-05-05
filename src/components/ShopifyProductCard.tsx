@@ -130,11 +130,33 @@ export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
         <div className="flex flex-col flex-1 p-4 gap-3">
           <div className="flex-1">
             <h3
-              className="text-sm md:text-base font-semibold text-[#1e2519] leading-snug group-hover:text-[#4f7a2e] transition-colors"
+              className="text-sm md:text-base font-semibold text-[#1e2519] leading-snug group-hover:text-[#4f7a2e] transition-colors mb-1"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
               {node.title}
             </h3>
+
+            {/* Rating */}
+            <div className="flex items-center gap-1 mb-2">
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map((s) => (
+                  <svg key={s} className="w-2.5 h-2.5 text-[#b56c3d] fill-current" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <span className="text-[10px] text-[#6a7462] font-bold">5.0</span>
+            </div>
+
+            {/* Features list */}
+            <div className="flex flex-wrap gap-x-2 gap-y-1 mb-2">
+              {["Natural", "Lab Tested", "Chemical Free"].map((f) => (
+                <span key={f} className="text-[9px] text-[#4f7a2e] font-bold uppercase tracking-wider flex items-center gap-1">
+                  <span className="w-1 h-1 rounded-full bg-[#4f7a2e]/40" />
+                  {f}
+                </span>
+              ))}
+            </div>
 
             {/* Variant selector */}
             {node.variants.edges.length > 1 && (
