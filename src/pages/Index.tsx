@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import SocialProofBar from "@/components/SocialProofBar";
-import { InstagramCarousel } from "@/components/InstagramCarousel";
 import { GoogleReviewsCarousel } from "@/components/GoogleReviewsCarousel";
+import AuroraComparison from "@/components/AuroraComparison";
 import ProductsSection from "@/components/ProductsSection";
+import { BestSellersCarousel } from "@/components/BestSellersCarousel";
 import GreensSection from "@/components/GreensSection";
 import { VideoCarousel } from "@/components/VideoCarousel";
 import HowToUse from "@/components/HowToUse";
@@ -23,13 +24,24 @@ const Index = () => {
     <div className="min-h-screen" style={{ background: "#f7f1e8" }}>
       <Header />
       <main>
+        {/* 1. Hero */}
         <HeroSection />
         <SocialProofBar />
+
+        {/* 2. Google Reviews */}
         <GoogleReviewsCarousel />
-        <InstagramCarousel />
-        <VideoCarousel />
+        <AuroraComparison />
+
+        {/* 3. Aurora Collection grid */}
         <ProductsSection />
+
+        {/* 4. Best Sellers carousel */}
+        <BestSellersCarousel />
+
+        {/* 5. Greens */}
         <GreensSection />
+
+        <VideoCarousel />
         <HowToUse />
         <WhyUs />
         <Reviews />

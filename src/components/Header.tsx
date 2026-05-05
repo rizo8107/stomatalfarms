@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ShoppingCart, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { CartDrawer } from "@/components/CartDrawer";
+import { useCartStore } from "@/stores/cartStore";
 import logo from "@/assets/7cc0e5_83fa66911e2a42aab710af3569d86773_mv2.png";
 
 const auroraCategories = [
@@ -17,6 +18,8 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const { items, setCartOpen } = useCartStore();
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -99,6 +102,18 @@ const Header = () => {
               Shop Now
             </Link>
             <CartDrawer />
+            {/* Mobile cart icon */}
+            <button
+              className="md:hidden relative p-2.5 rounded-full hover:bg-[#4f7a2e]/5 transition-colors"
+              onClick={() => setCartOpen(true)}
+            >
+              <ShoppingCart className="w-5 h-5 text-[#2a3625]" />
+              {totalItems > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#b56c3d] text-white text-[9px] font-black flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </button>
             <button
               className="md:hidden p-2.5 rounded-full hover:bg-[#4f7a2e]/5 transition-colors"
               onClick={() => setIsMenuOpen(!isMenuOpen)}

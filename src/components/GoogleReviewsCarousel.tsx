@@ -28,7 +28,7 @@ export const GoogleReviewsCarousel = () => {
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
   return (
-    <section className="py-10 md:py-14 px-4 bg-[#f9f6f0]">
+    <section className="pt-10 md:pt-14 pb-4 px-4 bg-[#f9f6f0]">
       <div className="max-w-7xl mx-auto">
         {/* Header row */}
         <div className="flex items-center justify-between mb-6 md:mb-8">

@@ -11,7 +11,7 @@ const stats = [
 const HeroSection = () => (
   <section
     className="relative w-full overflow-hidden bg-[#1a2416]"
-    style={{ height: "100svh", maxHeight: 720 }}
+    style={{ height: "100svh", maxHeight: 600 }}
   >
     {/* Background */}
     <div className="absolute inset-0 scale-105">
@@ -30,17 +30,17 @@ const HeroSection = () => (
     />
 
     {/* Main content */}
-    <div className="relative z-10 h-full max-w-7xl mx-auto px-6 md:px-10 flex flex-col justify-center pt-20 pb-6">
+    <div className="relative z-10 h-full max-w-7xl mx-auto px-6 md:px-10 flex flex-col justify-center pt-14 pb-4">
       {/* Top badge row */}
-      <div className="flex items-center gap-4 mb-6">
-        <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/50">
-          Aurora by Stomatal Farms
+      <div className="flex flex-wrap items-center gap-3 mb-6">
+        <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/50 whitespace-nowrap">
+          Aurora · by Stomatal Farms
         </span>
-        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm">
+        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm whitespace-nowrap">
           {[...Array(5)].map((_, i) => (
             <Star key={i} className="w-3 h-3 fill-[#f5c842] text-[#f5c842]" />
           ))}
-          <span className="text-[10px] font-bold text-white/80 ml-1">4.9 · 1,200+ verified</span>
+          <span className="text-[10px] font-bold text-white/80 ml-1">4.7 · 100+ verified</span>
         </div>
       </div>
 
@@ -78,28 +78,28 @@ const HeroSection = () => (
         the divine aroma fill every corner of your home. Trusted in 1,200+ Indian homes.
       </p>
 
-      {/* CTAs */}
-      <div className="flex flex-row flex-wrap gap-3 mb-10">
+      {/* CTAs — single row, no wrapping */}
+      <div className="flex flex-row gap-3 mb-8 flex-nowrap">
         <Link
           to="/collections"
-          className="group inline-flex items-center gap-2 px-8 py-3 rounded-full text-xs font-black uppercase tracking-[0.2em] text-white transition-all hover:-translate-y-0.5"
+          className="group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-black uppercase tracking-[0.2em] text-white transition-all hover:-translate-y-0.5 whitespace-nowrap"
           style={{ background: "#b56c3d" }}
         >
           Shop Aurora →
         </Link>
         <Link
           to="/collections?category=combos"
-          className="inline-flex items-center gap-2 px-8 py-3 rounded-full text-xs font-black uppercase tracking-[0.2em] text-white border border-white/25 backdrop-blur-md transition-all hover:bg-white/10"
+          className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-black uppercase tracking-[0.2em] text-white border border-white/25 backdrop-blur-md transition-all hover:bg-white/10 whitespace-nowrap"
         >
           View Ritual Bundle
         </Link>
       </div>
 
       {/* Stats strip */}
-      <div className="flex flex-wrap gap-x-8 gap-y-3 pb-2 border-t border-white/10 pt-6">
+      <div className="flex flex-wrap gap-x-6 gap-y-3 pb-2 border-t border-white/20 pt-5">
         {stats.map((s, i) => (
           <div key={s.label} className="flex items-start gap-4">
-            {i > 0 && <div className="hidden sm:block w-px h-8 bg-white/10 self-center" />}
+            {i > 0 && <div className="hidden sm:block w-px h-8 bg-white/20 self-center" />}
             <div>
               <p
                 className="text-white font-semibold leading-none mb-1"
@@ -107,7 +107,7 @@ const HeroSection = () => (
               >
                 {s.value}
               </p>
-              <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-white/40">
+              <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-white/60">
                 {s.label}
               </p>
             </div>

@@ -42,7 +42,7 @@ export const CartDrawer = () => {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-[420px] z-50 flex flex-col transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-[100dvh] w-full sm:w-[420px] z-50 flex flex-col transition-transform duration-300 ease-in-out ${
           isCartOpen ? "translate-x-0" : "translate-x-full"
         }`}
         style={{ background: "#fffbf5", borderLeft: "1px solid rgba(46,63,37,0.08)" }}
@@ -71,7 +71,7 @@ export const CartDrawer = () => {
         </div>
 
         {/* Items */}
-        <div className="flex-1 overflow-y-auto px-6 py-4">
+        <div className="flex-1 min-h-0 overflow-y-auto px-6 py-4">
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full gap-4 text-center">
               <ShoppingCart className="w-12 h-12 text-[#2e3f25]/20" strokeWidth={1} />
@@ -85,10 +85,10 @@ export const CartDrawer = () => {
                 return (
                   <div
                     key={item.variantId}
-                    className="flex gap-4 p-4 rounded-2xl border border-[#2e3f25]/8 bg-white"
+                    className="flex gap-3 p-3 rounded-2xl border border-[#2e3f25]/8 bg-white"
                   >
                     {/* Product image */}
-                    <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#f0ece4] flex-shrink-0">
+                    <div className="w-14 h-14 rounded-xl overflow-hidden bg-[#f0ece4] flex-shrink-0">
                       {image ? (
                         <img src={image.url} alt={item.product.node.title} className="w-full h-full object-cover" />
                       ) : (
@@ -147,9 +147,9 @@ export const CartDrawer = () => {
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="px-6 py-5 border-t border-[#2e3f25]/8 bg-[#fffbf5] space-y-4">
+          <div className="flex-shrink-0 px-6 py-5 border-t border-[#2e3f25]/8 bg-[#fffbf5] space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-[#6a7462] uppercase tracking-widest text-[10px]">Total</span>
+              <span className="text-[10px] font-bold text-[#6a7462] uppercase tracking-widest">Total</span>
               <span
                 className="text-2xl text-[#2a3625]"
                 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
@@ -169,9 +169,6 @@ export const CartDrawer = () => {
                 <>Checkout <ArrowRight className="w-3.5 h-3.5" /></>
               )}
             </button>
-            <p className="text-center text-[10px] text-[#6a7462]/50 uppercase tracking-widest">
-              Free shipping on orders ₹599+
-            </p>
           </div>
         )}
       </div>
