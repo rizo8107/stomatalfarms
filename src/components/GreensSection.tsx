@@ -8,18 +8,18 @@ import { toast } from "sonner";
 const categories = [
   {
     title: "Greens",
-    desc: "Hydroponically grown, chemical-free seasonal greens.",
-    image: "https://cdn.shopify.com/s/files/1/0735/4469/5965/files/9b33a8c5-045a-4375-9e6e-21396a82772a.jpg?v=1757489345",
+    desc: "Hydroponically grown, chemical-free seasonal greens — farm-picked, delivered fresh",
+    emoji: "🥬",
   },
   {
     title: "Microgreens",
-    desc: "Nutrient-dense, harvested at peak and delivered weekly.",
-    image: "https://cdn.shopify.com/s/files/1/0735/4469/5965/files/aaWhatsAppImage2025-09-15at18.13.24.jpg?v=1757948321",
+    desc: "Nutrient-dense, harvested at peak — delivered weekly to your door",
+    emoji: "🌱",
   },
   {
     title: "Dehydrated Green Blends",
-    desc: "100% natural moringa & curry leaf, naturally dehydrated.",
-    image: "https://cdn.shopify.com/s/files/1/0735/4469/5965/files/7b9ccf00-4df1-4412-ab72-bf3a24d59552.jpg?v=1757489157",
+    desc: "Traditional Greens Blend — Moringa & Curry Leaf, naturally dehydrated. 100% natural, no fillers, no preservatives",
+    emoji: "🍃",
   },
 ];
 
@@ -77,33 +77,33 @@ const GreensSection = () => {
   };
 
   return (
-    <section className="py-16 md:py-28 px-4 relative overflow-hidden" style={{ background: "linear-gradient(160deg, #1a2e12 0%, #2a3f1a 40%, #1e3614 100%)" }}>
+    <section className="py-10 md:py-16 px-4 relative overflow-hidden" style={{ background: "linear-gradient(160deg, #1a2e12 0%, #2a3f1a 40%, #1e3614 100%)" }}>
       {/* Subtle texture overlay */}
       <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 20% 50%, #a8c690 0%, transparent 50%), radial-gradient(circle at 80% 20%, #7aaa55 0%, transparent 40%)" }} />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Top: headline + category cards */}
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-20">
+        <div className="grid lg:grid-cols-[1fr,1.2fr] gap-10 lg:gap-16 items-center mb-12">
 
           {/* Left */}
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-4">
             <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#a8c690] flex items-center gap-2">
               <span className="w-6 h-px bg-[#a8c690]/40" />
               By Stomatal Farms
             </p>
             <h2
               className="leading-tight text-white"
-              style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2.2rem, 5vw, 3.4rem)", fontWeight: 500 }}
+              style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem, 4vw, 2.8rem)", fontWeight: 500 }}
             >
               <span className="italic text-[#a8c690]">Greens,</span> Microgreens<br />
               &amp; Dehydrated <span className="italic text-[#a8c690]">Green Blends</span>
             </h2>
-            <p className="text-white/60 font-light text-base leading-relaxed max-w-sm">
+            <p className="text-white/60 font-light text-sm leading-relaxed max-w-sm">
               Hydroponically grown, freshly harvested and delivered straight from our farm to your kitchen.
             </p>
             <Link
               to="/collections?category=greens"
-              className="group inline-flex items-center gap-2.5 w-fit px-8 py-3 rounded-full text-xs font-black uppercase tracking-[0.2em] text-[#1a2e12] transition-all hover:-translate-y-0.5 hover:shadow-lg"
+              className="group inline-flex items-center gap-2.5 w-fit px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] text-[#1a2e12] transition-all hover:-translate-y-0.5 hover:shadow-lg"
               style={{ background: "#a8c690" }}
             >
               Shop Farm Produce
@@ -111,22 +111,21 @@ const GreensSection = () => {
             </Link>
           </div>
 
-          {/* Right — category cards */}
-          <div className="flex flex-col gap-4">
+          {/* Right — compact category cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {categories.map((cat) => (
               <div
                 key={cat.title}
-                className="rounded-2xl border border-white/10 p-4 md:p-5 flex gap-5 items-center transition-all hover:bg-white/10"
+                className="rounded-xl border border-white/10 p-3 md:p-4 flex sm:flex-col gap-3 items-center text-center"
                 style={{ background: "rgba(255,255,255,0.06)" }}
               >
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-xl overflow-hidden bg-white/10 flex-shrink-0">
-                  <img src={cat.image} alt={cat.title} className="w-full h-full object-cover" />
+                <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center text-lg flex-shrink-0">
+                  {cat.emoji}
                 </div>
                 <div>
-                  <h3 className="text-base md:text-lg text-white leading-tight font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  <h3 className="text-xs text-white leading-tight font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                     {cat.title}
                   </h3>
-                  <p className="text-xs text-white/50 font-light leading-relaxed mt-1">{cat.desc}</p>
                 </div>
               </div>
             ))}
