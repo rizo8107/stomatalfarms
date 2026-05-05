@@ -8,18 +8,18 @@ import { toast } from "sonner";
 const categories = [
   {
     title: "Greens",
-    desc: "Hydroponically grown, chemical-free seasonal greens — farm-picked, delivered fresh",
-    emoji: "🥬",
+    desc: "Hydroponically grown, chemical-free seasonal greens.",
+    image: "https://cdn.shopify.com/s/files/1/0735/4469/5965/files/9b33a8c5-045a-4375-9e6e-21396a82772a.jpg?v=1757489345",
   },
   {
     title: "Microgreens",
-    desc: "Nutrient-dense, harvested at peak — delivered weekly to your door",
-    emoji: "🌱",
+    desc: "Nutrient-dense, harvested at peak and delivered weekly.",
+    image: "https://cdn.shopify.com/s/files/1/0735/4469/5965/files/aaWhatsAppImage2025-09-15at18.13.24.jpg?v=1757948321",
   },
   {
     title: "Dehydrated Green Blends",
-    desc: "Traditional Greens Blend — Moringa & Curry Leaf, naturally dehydrated. 100% natural, no fillers, no preservatives",
-    emoji: "🍃",
+    desc: "100% natural moringa & curry leaf, naturally dehydrated.",
+    image: "https://cdn.shopify.com/s/files/1/0735/4469/5965/files/7b9ccf00-4df1-4412-ab72-bf3a24d59552.jpg?v=1757489157",
   },
 ];
 
@@ -83,7 +83,7 @@ const GreensSection = () => {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Top: headline + category cards */}
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-start mb-20">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-20">
 
           {/* Left */}
           <div className="flex flex-col gap-6">
@@ -99,7 +99,7 @@ const GreensSection = () => {
               &amp; Dehydrated <span className="italic text-[#a8c690]">Green Blends</span>
             </h2>
             <p className="text-white/60 font-light text-base leading-relaxed max-w-sm">
-              Hydroponically grown, freshly harvested and delivered straight from our farm to your kitchen. No preservatives, no artificial colours, no compromise.
+              Hydroponically grown, freshly harvested and delivered straight from our farm to your kitchen.
             </p>
             <Link
               to="/collections?category=greens"
@@ -112,21 +112,21 @@ const GreensSection = () => {
           </div>
 
           {/* Right — category cards */}
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             {categories.map((cat) => (
               <div
                 key={cat.title}
-                className="rounded-2xl border border-white/10 p-4 md:p-5 flex gap-4 items-center"
+                className="rounded-2xl border border-white/10 p-4 md:p-5 flex gap-5 items-center transition-all hover:bg-white/10"
                 style={{ background: "rgba(255,255,255,0.06)" }}
               >
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white/10 flex items-center justify-center text-xl flex-shrink-0">
-                  {cat.emoji}
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-xl overflow-hidden bg-white/10 flex-shrink-0">
+                  <img src={cat.image} alt={cat.title} className="w-full h-full object-cover" />
                 </div>
                 <div>
-                  <h3 className="text-sm md:text-base text-white leading-snug font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  <h3 className="text-base md:text-lg text-white leading-tight font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                     {cat.title}
                   </h3>
-                  <p className="text-xs text-white/50 font-light leading-relaxed mt-0.5">{cat.desc}</p>
+                  <p className="text-xs text-white/50 font-light leading-relaxed mt-1">{cat.desc}</p>
                 </div>
               </div>
             ))}
