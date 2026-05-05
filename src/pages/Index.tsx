@@ -38,9 +38,8 @@ const Index = () => {
         <BestSellersCarousel />
 
         {/* 5. Greens */}
-        <GreensSection />
-
         <VideoCarousel />
+        <GreensSection />
         <WhyUs />
         <Reviews />
         <FAQ />
