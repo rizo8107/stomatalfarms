@@ -1,29 +1,31 @@
 import { Link } from "react-router-dom";
-import { Instagram, Mail, MessageCircle } from "lucide-react";
+import { Instagram, Mail, MessageCircle, ArrowUpRight } from "lucide-react";
 
 const Footer = () => (
-  <footer style={{ background: "#1e2519", color: "#f7f1e8" }} className="relative z-10">
-    <div className="max-w-7xl mx-auto px-4 pt-14 pb-8">
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-        {/* Brand */}
+  <footer className="bg-[#1a2416] text-[#f7f1e8] relative z-10 overflow-hidden">
+    {/* Subtle texture/gradient */}
+    <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: "url(\"https://www.transparenttextures.com/patterns/p6.png\")" }}></div>
+    
+    <div className="max-w-7xl mx-auto px-6 pt-24 pb-12 relative z-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
+        {/* Brand Section */}
         <div className="lg:col-span-2">
-          <span
-            className="block text-2xl mb-4 text-white"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}
-          >
-            STOMATAL FARMS
-          </span>
-          <p className="text-sm font-light leading-relaxed mb-1" style={{ color: "rgba(247,241,232,0.65)" }}>
-            Aurora Aromatic Wellness
+          <Link to="/" className="inline-block mb-8 group">
+            <span
+              className="text-3xl tracking-tight text-white group-hover:text-[#a8c690] transition-colors"
+              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
+            >
+              STOMATAL <span className="italic">FARMS</span>
+            </span>
+          </Link>
+          <p className="text-lg font-light leading-relaxed mb-10 max-w-md text-white/50">
+            Cultivating freshness, crafting rituals. We bring the pure essence of Indian farms directly to your sacred space.
           </p>
-          <p className="text-sm font-light leading-relaxed mb-6 max-w-xs" style={{ color: "rgba(247,241,232,0.55)" }}>
-            Cultivating freshness. Crafting rituals. From Indian farms to your home.
-          </p>
-          <div className="flex gap-3">
+          <div className="flex gap-4">
             {[
-              { href: "https://www.instagram.com/stomatalfarms/", icon: <Instagram className="w-4 h-4" />, label: "Instagram" },
-              { href: "mailto:contact@stomatalfarms.com", icon: <Mail className="w-4 h-4" />, label: "Email" },
-              { href: "https://api.whatsapp.com/send/?phone=919790768502", icon: <MessageCircle className="w-4 h-4" />, label: "WhatsApp" },
+              { href: "https://www.instagram.com/stomatalfarms/", icon: <Instagram className="w-5 h-5" />, label: "Instagram" },
+              { href: "mailto:contact@stomatalfarms.com", icon: <Mail className="w-5 h-5" />, label: "Email" },
+              { href: "https://api.whatsapp.com/send/?phone=919790768502", icon: <MessageCircle className="w-5 h-5" />, label: "WhatsApp" },
             ].map((s) => (
               <a
                 key={s.label}
@@ -31,8 +33,8 @@ const Footer = () => (
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={s.label}
-                className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:opacity-90"
-                style={{ background: "rgba(247,241,232,0.08)", border: "1px solid rgba(247,241,232,0.12)" }}
+                className="w-12 h-12 rounded-full flex items-center justify-center transition-all hover:bg-white hover:text-[#1a2416] transform hover:-translate-y-1"
+                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}
               >
                 {s.icon}
               </a>
@@ -40,10 +42,10 @@ const Footer = () => (
           </div>
         </div>
 
-        {/* Aurora links */}
+        {/* Quick Links Section */}
         <div>
-          <h4 className="text-xs font-bold uppercase tracking-widest mb-5 text-white/60">Aurora Products</h4>
-          <ul className="space-y-3">
+          <h4 className="text-[10px] font-black uppercase tracking-[0.3em] mb-10 text-white/30">Aurora Collections</h4>
+          <ul className="flex flex-col gap-5">
             {[
               ["Incense Sticks", "/collections?category=sticks"],
               ["Incense Cups", "/collections?category=cups"],
@@ -54,83 +56,78 @@ const Footer = () => (
               <li key={name}>
                 <Link
                   to={href}
-                  className="text-sm font-light transition-colors hover:text-white"
-                  style={{ color: "rgba(247,241,232,0.60)" }}
+                  className="group flex items-center gap-2 text-sm font-medium text-white/60 hover:text-white transition-all"
                 >
                   {name}
+                  <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
                 </Link>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* Newsletter */}
+        {/* Newsletter Section */}
         <div>
-          <h4 className="text-xs font-bold uppercase tracking-widest mb-5 text-white/60">Stay Connected</h4>
-          <p className="text-sm font-light leading-relaxed mb-5" style={{ color: "rgba(247,241,232,0.55)" }}>
-            Rituals, new releases &amp; exclusive offers.
+          <h4 className="text-[10px] font-black uppercase tracking-[0.3em] mb-10 text-white/30">The Ritual List</h4>
+          <p className="text-sm font-light leading-relaxed mb-8 text-white/50">
+            Subscribe to receive stories of traditional rituals and early access to new releases.
           </p>
-          <div className="flex flex-col gap-2.5">
+          <form className="relative group" onSubmit={(e) => e.preventDefault()}>
             <input
               type="email"
-              placeholder="Your email address"
-              className="px-4 py-2.5 rounded-full text-sm border text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#4f7a2e]/40 transition-all font-light"
-              style={{ background: "rgba(247,241,232,0.06)", borderColor: "rgba(247,241,232,0.12)" }}
+              placeholder="Email address"
+              className="w-full bg-white/5 border border-white/10 px-6 py-4 rounded-full text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#a8c690]/50 transition-all"
             />
             <button
-              className="px-6 py-2.5 rounded-full text-sm font-bold text-white transition-all hover:opacity-90"
+              type="submit"
+              className="absolute right-2 top-2 bottom-2 px-6 rounded-full text-[10px] font-black uppercase tracking-widest text-white transition-all hover:shadow-lg active:scale-95"
               style={{ background: "linear-gradient(135deg, #2e4e18, #4f7a2e)" }}
             >
               Join
             </button>
-          </div>
+          </form>
         </div>
       </div>
 
-      {/* Stats row */}
+      {/* Stats Section */}
       <div
-        className="grid grid-cols-4 gap-4 py-6 mb-8 rounded-2xl text-center"
-        style={{ background: "rgba(247,241,232,0.04)", border: "1px solid rgba(247,241,232,0.08)" }}
+        className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12 px-8 mb-20 rounded-[40px] text-center"
+        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}
       >
         {[
-          ["5+", "Yrs craft"],
-          ["1200+", "Homes"],
-          ["100%", "Natural"],
-          ["4.9★", "Rating"],
+          ["5+", "Years of Craft"],
+          ["1200+", "Homes Blessed"],
+          ["100%", "Purely Natural"],
+          ["4.9★", "Average Rating"],
         ].map(([val, label]) => (
-          <div key={label}>
-            <p className="text-base md:text-xl font-extrabold text-white">{val}</p>
-            <p className="text-[10px] md:text-xs font-medium" style={{ color: "rgba(247,241,232,0.50)" }}>{label}</p>
+          <div key={label} className="flex flex-col gap-1">
+            <p className="text-2xl md:text-3xl font-light text-white" style={{ fontFamily: "'Cormorant Garamond', serif" }}>{val}</p>
+            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">{label}</p>
           </div>
         ))}
       </div>
 
-      {/* Bottom bar */}
+      {/* Bottom Legal Bar */}
       <div
-        className="flex flex-col md:flex-row justify-between items-center gap-4 pt-6"
-        style={{ borderTop: "1px solid rgba(247,241,232,0.10)" }}
+        className="flex flex-col lg:flex-row justify-between items-center gap-8 pt-12 border-t border-white/5"
       >
-        <p className="text-xs font-light" style={{ color: "rgba(247,241,232,0.40)" }}>
-          © 2025 Stomatal Farms. All rights reserved.
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/20">
+          © 2025 Stomatal Farms. Crafted with intention.
         </p>
-        <div className="flex gap-6">
-          {["Privacy Policy", "Terms of Service"].map((t) => (
+        <div className="flex flex-wrap justify-center gap-x-12 gap-y-4">
+          {[
+            ["Privacy", "#"],
+            ["Terms", "#"],
+            ["Contact Us", "mailto:contact@stomatalfarms.com"],
+          ].map(([t, href]) => (
             <a
               key={t}
-              href="#"
-              className="text-xs font-light transition-colors hover:text-white"
-              style={{ color: "rgba(247,241,232,0.40)" }}
+              href={href}
+              className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/20 hover:text-white/60 transition-colors"
             >
               {t}
             </a>
           ))}
-          <a
-            href="mailto:contact@stomatalfarms.com"
-            className="text-xs font-light transition-colors hover:text-white"
-            style={{ color: "rgba(247,241,232,0.40)" }}
-          >
-            Contact Us
-          </a>
         </div>
       </div>
     </div>

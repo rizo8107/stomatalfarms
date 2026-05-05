@@ -1,21 +1,39 @@
 import { ShopifyProductsGrid } from "@/components/ShopifyProductsGrid";
 
 const ProductsSection = () => (
-  <section id="products" className="py-12 md:py-16 px-4 bg-[#fffbf5]">
-    <div className="max-w-7xl mx-auto">
-      <p className="text-[10px] font-extrabold uppercase tracking-[0.1em] text-[#6a7462] text-center mb-3">
-        ✦ Shop by Product
-      </p>
-      <h2
-        className="text-center text-2xl md:text-4xl text-[#1e2519] mb-2"
-        style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}
-      >
-        What would you like today?
-      </h2>
-      <p className="text-center text-sm text-[#6a7462] mb-8 font-light max-w-md mx-auto">
-        Aurora cow dung incense — lab-tested for your family's well-being. Beyond rituals, a daily touch of nature.
-      </p>
+  <section id="products" className="py-20 md:py-28 px-4 bg-[#fffbf5] relative overflow-hidden">
+    <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-[#f9f6f0] to-transparent" />
+
+    <div className="max-w-7xl mx-auto relative z-10">
+      {/* Header — left-aligned like the wireframe */}
+      <div className="mb-14 md:mb-18">
+        <p className="text-[10px] font-black uppercase tracking-[0.25em] text-[#4f7a2e] mb-3 flex items-center gap-2">
+          <span className="w-6 h-px bg-[#4f7a2e]/40" />
+          Aurora Collection
+        </p>
+        <h2
+          className="text-4xl md:text-6xl text-[#2a3625] leading-tight tracking-tight"
+          style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
+        >
+          What would you like today?
+        </h2>
+      </div>
+
       <ShopifyProductsGrid />
+
+      {/* Trust strip */}
+      <div className="mt-16 flex flex-wrap justify-center gap-10 py-7 border-t border-[#2e3f25]/5">
+        {["Chemical-Free Formulas", "Ethically Farm-Sourced", "Ancient Vedic Methods", "Modern Lab Tested"].map(
+          (point) => (
+            <div key={point} className="flex items-center gap-2">
+              <div className="w-1 h-1 rounded-full bg-[#4f7a2e]" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#5c6e58]/60">
+                {point}
+              </span>
+            </div>
+          )
+        )}
+      </div>
     </div>
   </section>
 );

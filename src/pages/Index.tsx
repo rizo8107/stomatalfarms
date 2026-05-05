@@ -2,8 +2,11 @@ import { useEffect } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import SocialProofBar from "@/components/SocialProofBar";
-import FeaturedBundle from "@/components/FeaturedBundle";
+import { InstagramCarousel } from "@/components/InstagramCarousel";
+import { GoogleReviewsCarousel } from "@/components/GoogleReviewsCarousel";
 import ProductsSection from "@/components/ProductsSection";
+import GreensSection from "@/components/GreensSection";
+import { VideoCarousel } from "@/components/VideoCarousel";
 import HowToUse from "@/components/HowToUse";
 import WhyUs from "@/components/WhyUs";
 import Reviews from "@/components/Reviews";
@@ -22,8 +25,11 @@ const Index = () => {
       <main>
         <HeroSection />
         <SocialProofBar />
-        <FeaturedBundle />
+        <GoogleReviewsCarousel />
+        <InstagramCarousel />
+        <VideoCarousel />
         <ProductsSection />
+        <GreensSection />
         <HowToUse />
         <WhyUs />
         <Reviews />

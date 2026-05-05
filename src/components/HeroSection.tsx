@@ -1,82 +1,122 @@
 import { Link } from "react-router-dom";
+import { Star } from "lucide-react";
 
-const pillBadges = [
-  "🌿 100% Natural",
-  "🚫 No Chemicals",
-  "🤲 Prayer-ready",
-  "🎁 Gift-perfect",
-  "🚚 Free Ship ₹599+",
+const stats = [
+  { value: "4.9★", label: "Avg. Rating" },
+  { value: "100+", label: "Happy Homes" },
+  { value: "100%", label: "Natural · Lab Tested" },
+  { value: "5+", label: "Yrs of Craft" },
 ];
 
-const HeroSection = () => {
-  return (
-    <section className="relative w-full overflow-hidden" style={{ minHeight: "88vw", maxHeight: 700 }}>
-      {/* Full-bleed hero image */}
+const HeroSection = () => (
+  <section
+    className="relative w-full overflow-hidden bg-[#1a2416]"
+    style={{ height: "100svh", maxHeight: 720 }}
+  >
+    {/* Background */}
+    <div className="absolute inset-0 scale-105">
       <img
         src="/aurora.jfif"
         alt="Aurora Aromatic Wellness"
-        className="absolute inset-0 w-full h-full object-cover object-center"
-        style={{ minHeight: "88vw", maxHeight: 700 }}
+        className="w-full h-full object-cover object-center opacity-65"
       />
-      {/* Gradient overlay */}
-      <div
-        className="absolute inset-0"
-        style={{ background: "linear-gradient(to bottom, rgba(20,28,15,0.10) 0%, rgba(20,28,15,0.72) 100%)" }}
-      />
+    </div>
+    <div
+      className="absolute inset-0"
+      style={{
+        background:
+          "linear-gradient(to right, rgba(15,22,10,0.92) 0%, rgba(15,22,10,0.55) 55%, rgba(15,22,10,0.15) 100%), linear-gradient(to top, rgba(15,22,10,0.7) 0%, transparent 50%)",
+      }}
+    />
 
-      {/* Content */}
-      <div className="relative z-10 flex flex-col justify-end h-full px-5 pb-8 pt-24 md:pt-32 md:pb-14 max-w-2xl mx-auto md:mx-0 md:ml-16">
-        {/* Collection badge */}
-        <span
-          className="inline-block mb-3 text-xs font-bold uppercase tracking-widest text-white/80 border border-white/25 rounded-full px-4 py-1.5 w-fit"
-          style={{ backdropFilter: "blur(4px)", background: "rgba(255,255,255,0.08)" }}
-        >
-          ✦ Aurora Collection
+    {/* Main content */}
+    <div className="relative z-10 h-full max-w-7xl mx-auto px-6 md:px-10 flex flex-col justify-center pt-20 pb-6">
+      {/* Top badge row */}
+      <div className="flex items-center gap-4 mb-6">
+        <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/50">
+          Aurora by Stomatal Farms
         </span>
-
-        <h1
-          className="text-white mb-3 leading-tight"
-          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem, 7vw, 3.25rem)", fontWeight: 600 }}
-        >
-          Calm, fragrance &amp;<br />intention — daily.
-        </h1>
-        <p className="text-white/80 text-sm md:text-base font-light mb-6 max-w-sm leading-relaxed">
-          Natural aromatic wellness for prayer, gifting &amp; everyday rituals.
-        </p>
-
-        {/* CTA buttons */}
-        <div className="flex flex-wrap gap-3 mb-7">
-          <Link
-            to="/collections"
-            className="inline-flex items-center px-7 py-3 rounded-full text-sm font-bold text-white shadow-lg transition-all hover:opacity-90 active:scale-95"
-            style={{ background: "linear-gradient(135deg, #2e4e18, #4f7a2e)" }}
-          >
-            Shop Aurora
-          </Link>
-          <Link
-            to="/collections?category=combos"
-            className="inline-flex items-center px-6 py-3 rounded-full text-sm font-bold text-white border border-white/40 transition-all hover:bg-white/10 active:scale-95"
-            style={{ backdropFilter: "blur(4px)" }}
-          >
-            View Combos ₹999
-          </Link>
-        </div>
-
-        {/* Pill badges */}
-        <div className="flex flex-wrap gap-2">
-          {pillBadges.map((b) => (
-            <span
-              key={b}
-              className="text-[11px] font-medium text-white/90 rounded-full px-3 py-1 border border-white/20"
-              style={{ background: "rgba(255,255,255,0.10)", backdropFilter: "blur(4px)" }}
-            >
-              {b}
-            </span>
+        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm">
+          {[...Array(5)].map((_, i) => (
+            <Star key={i} className="w-3 h-3 fill-[#f5c842] text-[#f5c842]" />
           ))}
+          <span className="text-[10px] font-bold text-white/80 ml-1">4.9 · 1,200+ verified</span>
         </div>
       </div>
-    </section>
-  );
-};
+
+      {/* Headline */}
+      <h1
+        className="text-white leading-[1.05] tracking-tight mb-5 max-w-2xl"
+        style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontSize: "clamp(2.8rem, 8vw, 5rem)",
+          fontWeight: 600,
+        }}
+      >
+        Natural Incense.<br />
+        <span className="italic text-[#a8c690]">No Chemicals.</span><br />
+        No Compromise.
+      </h1>
+
+      {/* Sub-headline */}
+      <p
+        className="text-white/60 mb-3 max-w-md leading-snug"
+        style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)",
+          fontStyle: "italic",
+          fontWeight: 400,
+        }}
+      >
+        Cow dung-based incense. A{" "}
+        <span className="text-[#a8c690] not-italic font-semibold">divine</span> aroma — drawn from
+        hydrodistilled botanical essence.
+      </p>
+
+      <p className="text-white/50 text-sm font-light max-w-sm mb-8 leading-relaxed">
+        Sacred Gomaya base, natural ignition — no charcoal, no synthetics. Light it once and let
+        the divine aroma fill every corner of your home. Trusted in 1,200+ Indian homes.
+      </p>
+
+      {/* CTAs */}
+      <div className="flex flex-row flex-wrap gap-3 mb-10">
+        <Link
+          to="/collections"
+          className="group inline-flex items-center gap-2 px-8 py-3 rounded-full text-xs font-black uppercase tracking-[0.2em] text-white transition-all hover:-translate-y-0.5"
+          style={{ background: "#b56c3d" }}
+        >
+          Shop Aurora →
+        </Link>
+        <Link
+          to="/collections?category=combos"
+          className="inline-flex items-center gap-2 px-8 py-3 rounded-full text-xs font-black uppercase tracking-[0.2em] text-white border border-white/25 backdrop-blur-md transition-all hover:bg-white/10"
+        >
+          View Ritual Bundle
+        </Link>
+      </div>
+
+      {/* Stats strip */}
+      <div className="flex flex-wrap gap-x-8 gap-y-3 pb-2 border-t border-white/10 pt-6">
+        {stats.map((s, i) => (
+          <div key={s.label} className="flex items-start gap-4">
+            {i > 0 && <div className="hidden sm:block w-px h-8 bg-white/10 self-center" />}
+            <div>
+              <p
+                className="text-white font-semibold leading-none mb-1"
+                style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem" }}
+              >
+                {s.value}
+              </p>
+              <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-white/40">
+                {s.label}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </section>
+);
 
 export default HeroSection;

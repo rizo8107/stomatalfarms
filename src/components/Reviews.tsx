@@ -1,3 +1,5 @@
+import { Star } from 'lucide-react';
+
 const reviews = [
   {
     name: "Priya M.",
@@ -23,55 +25,58 @@ const reviews = [
 ];
 
 const Reviews = () => (
-  <section className="py-12 md:py-16 px-4 bg-[#fffbf5]">
-    <div className="max-w-7xl mx-auto">
-      <p className="text-[10px] font-extrabold uppercase tracking-[0.1em] text-[#6a7462] text-center mb-3">
-        ✦ Customer Reviews
-      </p>
-      <h2
-        className="text-center text-2xl md:text-4xl text-[#1e2519] mb-2"
-        style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}
-      >
-        Real people. Real rituals.
-      </h2>
-      <p className="text-center text-sm text-[#6a7462] mb-8 font-light">
-        Rated 4.9 ★ by 1,200+ customers across India
-      </p>
+  <section className="py-16 md:py-24 px-4 bg-[#fcfaf7]">
+    <div className="max-w-6xl mx-auto">
+      <div className="text-center mb-16">
+        <p className="text-xs font-bold uppercase tracking-widest text-[#5c6e58] mb-4 flex items-center justify-center gap-2">
+          <span className="w-8 h-[1px] bg-[#5c6e58]/30"></span>
+          Customer Stories
+          <span className="w-8 h-[1px] bg-[#5c6e58]/30"></span>
+        </p>
+        <h2
+          className="text-3xl md:text-5xl text-[#2a3625] mb-4"
+          style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, letterSpacing: "-0.02em" }}
+        >
+          Real people. Real rituals.
+        </h2>
+        <p className="max-w-lg mx-auto text-[#6a7462] font-light md:text-lg">
+          Join our community of over 1,200+ individuals finding daily calm.
+        </p>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {reviews.map((r) => (
           <div
             key={r.name}
-            className="rounded-2xl p-5 md:p-6 flex flex-col gap-3 border"
-            style={{ background: "#f7f1e8", borderColor: "rgba(46,63,37,0.10)" }}
+            className="rounded-[32px] p-8 md:p-10 flex flex-col gap-6 bg-white shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-md border border-[#f1eae0]"
           >
             {/* Stars */}
-            <div className="flex gap-0.5">
+            <div className="flex gap-1">
               {Array.from({ length: r.stars }).map((_, i) => (
-                <span key={i} style={{ color: "#c9a05a" }}>★</span>
+                <Star key={i} className="w-4 h-4 fill-[#d4af37] text-[#d4af37]" />
               ))}
             </div>
 
             {/* Review text */}
-            <p className="text-sm text-[#1e2519] leading-relaxed font-light flex-1">
+            <p className="text-lg text-[#2a3625] leading-relaxed font-normal flex-1 italic" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
               "{r.text}"
             </p>
 
             {/* Reviewer */}
-            <div className="flex items-center gap-3 pt-2 border-t border-[rgba(46,63,37,0.10)]">
+            <div className="flex items-center gap-4 pt-4 border-t border-[#f1eae0]">
               <div
-                className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
-                style={{ background: "linear-gradient(135deg, #2e4e18, #4f7a2e)" }}
+                className="w-12 h-12 rounded-full flex items-center justify-center text-[#2a3625] text-lg font-medium flex-shrink-0 bg-[#f9f6f0] border border-[#e8e4dc]"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
               >
                 {r.initial}
               </div>
               <div>
-                <p className="text-sm font-semibold text-[#1e2519]">{r.name}</p>
-                <p className="text-xs text-[#6a7462]">{r.location}</p>
+                <p className="text-sm font-semibold text-[#2a3625]">{r.name}</p>
+                <p className="text-xs text-[#8a9284]">{r.location}</p>
               </div>
               <span
-                className="ml-auto text-[10px] font-bold text-[#4f7a2e] px-2 py-1 rounded-full"
-                style={{ background: "rgba(79,122,46,0.10)" }}
+                className="ml-auto text-[10px] font-bold text-[#5c6e58] px-3 py-1 rounded-full uppercase tracking-wider"
+                style={{ background: "rgba(92,110,88,0.08)" }}
               >
                 Verified
               </span>

@@ -10,6 +10,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ChevronLeft, Loader2, Minus, Plus, ShoppingCart, Truck, Leaf, Shield, Award, MessageCircle } from "lucide-react";
 import truckIcon from "@/assets/icons/truck.png";
+import { GoogleReviewsCarousel } from "@/components/GoogleReviewsCarousel";
 import { toast } from "sonner";
 import {
   Accordion,
@@ -475,7 +476,7 @@ Product Link: ${productUrl}`;
                       <span className="text-base text-muted-foreground line-through decoration-muted-foreground/50 decoration-2">
                         ₹{parseFloat(selectedVariant.compareAtPrice.amount).toFixed(0)}
                       </span>
-                      <span className="bg-terracotta text-white text-[10px] font-black uppercase tracking-wider px-2 py-1 rounded-full shadow-[0_4px_12px_rgba(203,108,76,0.4)] w-fit text-center">
+                      <span className="bg-[#cb6c4c] text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-[0_4px_12px_rgba(203,108,76,0.4)] whitespace-nowrap">
                         {Math.round(((parseFloat(selectedVariant.compareAtPrice.amount) - parseFloat(selectedVariant.price.amount)) / parseFloat(selectedVariant.compareAtPrice.amount)) * 100)}% OFF
                       </span>
                     </div>
@@ -702,6 +703,9 @@ Product Link: ${productUrl}`;
             </div>
           </div>
         </div>
+
+        {/* Google Reviews */}
+        <GoogleReviewsCarousel />
 
         {/* Related Products */}
         <RelatedProducts currentProductId={product.id} />
