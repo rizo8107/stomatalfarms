@@ -8,7 +8,6 @@ import ProductsSection from "@/components/ProductsSection";
 import { BestSellersCarousel } from "@/components/BestSellersCarousel";
 import GreensSection from "@/components/GreensSection";
 import { VideoCarousel } from "@/components/VideoCarousel";
-import HowToUse from "@/components/HowToUse";
 import WhyUs from "@/components/WhyUs";
 import Reviews from "@/components/Reviews";
 import FAQ from "@/components/FAQ";
@@ -42,7 +41,6 @@ const Index = () => {
         <GreensSection />
 
         <VideoCarousel />
-        <HowToUse />
         <WhyUs />
         <Reviews />
         <FAQ />
