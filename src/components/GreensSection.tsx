@@ -8,18 +8,18 @@ import { toast } from "sonner";
 const categories = [
   {
     title: "Greens",
-    desc: "Hydroponically grown, chemical-free seasonal greens — farm-picked, delivered fresh",
-    emoji: "🥬",
+    desc: "Hydroponically grown, chemical-free seasonal greens",
+    image: "https://cdn.shopify.com/s/files/1/0735/4469/5965/files/7cc0e5_f91c9dad181c449e989d6a3c6ace055d_mv2_4b260971-6fcc-4440-b5ab-a981700befde.jpg?v=1757855391",
   },
   {
     title: "Microgreens",
-    desc: "Nutrient-dense, harvested at peak — delivered weekly to your door",
-    emoji: "🌱",
+    desc: "Nutrient-dense, delivered weekly to your door",
+    image: "https://cdn.shopify.com/s/files/1/0735/4469/5965/files/7cc0e5_e3229c8e871b4bd8b19f594f1d29a4dd_mv2_7ded16d3-31b2-4285-bcf0-2c9f2f87cbc6.jpg?v=1757855508",
   },
   {
-    title: "Dehydrated Green Blends",
-    desc: "Traditional Greens Blend — Moringa & Curry Leaf, naturally dehydrated. 100% natural, no fillers, no preservatives",
-    emoji: "🍃",
+    title: "Dehydrated Blends",
+    desc: "Naturally dehydrated Moringa & Curry Leaf",
+    image: "https://cdn.shopify.com/s/files/1/0735/4469/5965/files/01.jpg?v=1773151907",
   },
 ];
 
@@ -96,10 +96,10 @@ const GreensSection = () => {
               style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2.2rem, 5vw, 3.4rem)", fontWeight: 500 }}
             >
               <span className="italic text-[#a8c690]">Greens,</span> Microgreens<br />
-              &amp; Dehydrated <span className="italic text-[#a8c690]">Green Blends</span>
+              &amp; Dehydrated <span className="italic text-[#a8c690]">Blends</span>
             </h2>
             <p className="text-white/60 font-light text-base leading-relaxed max-w-sm">
-              Hydroponically grown, freshly harvested and delivered straight from our farm to your kitchen. No preservatives, no artificial colours, no compromise.
+              Freshly harvested and delivered straight from our farm to your kitchen.
             </p>
             <Link
               to="/collections?category=greens"
@@ -116,11 +116,11 @@ const GreensSection = () => {
             {categories.map((cat) => (
               <div
                 key={cat.title}
-                className="rounded-2xl border border-white/10 p-4 md:p-5 flex gap-4 items-center"
+                className="rounded-2xl border border-white/10 p-3 md:p-4 flex gap-4 items-center"
                 style={{ background: "rgba(255,255,255,0.06)" }}
               >
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white/10 flex items-center justify-center text-xl flex-shrink-0">
-                  {cat.emoji}
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl overflow-hidden border border-white/10 flex-shrink-0">
+                  <img src={cat.image} alt={cat.title} className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <h3 className="text-sm md:text-base text-white leading-snug font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>

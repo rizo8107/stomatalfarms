@@ -85,7 +85,7 @@ const HeroSection = () => (
           className="group inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-[11px] font-black uppercase tracking-[0.2em] text-white transition-all hover:-translate-y-0.5 whitespace-nowrap"
           style={{ background: "#b56c3d" }}
         >
-          Shop Aurora →
+          Shop Aurora
         </Link>
         <Link
           to="/collections?category=combos"
