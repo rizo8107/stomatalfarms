@@ -7,6 +7,7 @@ import AuroraComparison from "@/components/AuroraComparison";
 import ProductsSection from "@/components/ProductsSection";
 import { BundleCarousel } from "@/components/BundleCarousel";
 import { VideoCarousel } from "@/components/VideoCarousel";
+import GreensSection from "@/components/GreensSection";
 import WhyUs from "@/components/WhyUs";
 import Reviews from "@/components/Reviews";
 import FAQ from "@/components/FAQ";
@@ -35,6 +36,8 @@ const Index = () => {
 
         {/* 4. Aurora Collection grid */}
         <ProductsSection />
+
+        <GreensSection />
 
         {/* 5. Video */}
         <VideoCarousel />
