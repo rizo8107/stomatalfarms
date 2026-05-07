@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { Star } from "lucide-react";
 
 const stats = [
-  { value: "4.9★", label: "Avg. Rating" },
+  { value: "4.7★", label: "Avg. Rating" },
   { value: "100+", label: "Happy Homes" },
-  { value: "100%", label: "Natural · Lab Tested" },
+  { value: "100%", label: "Natural" },
   { value: "5+", label: "Yrs of Craft" },
 ];
 
@@ -95,19 +95,19 @@ const HeroSection = () => (
         </Link>
       </div>
 
-      {/* Stats strip */}
-      <div className="flex flex-wrap gap-x-6 gap-y-3 pb-2 border-t border-white/20 pt-5">
+      {/* Stats strip — value bold on top, label below */}
+      <div className="flex items-center gap-0 pb-2 border-t border-white/15 pt-4 overflow-x-auto scrollbar-hide">
         {stats.map((s, i) => (
-          <div key={s.label} className="flex items-start gap-4">
-            {i > 0 && <div className="hidden sm:block w-px h-8 bg-white/20 self-center" />}
-            <div>
+          <div key={s.label} className="flex items-center flex-shrink-0">
+            {i > 0 && <div className="w-px h-8 bg-white/15 mx-5" />}
+            <div className="flex flex-col gap-0.5">
               <p
-                className="text-white font-semibold leading-none mb-1"
-                style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem" }}
+                className="font-bold leading-none text-[#a8c690]"
+                style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.45rem" }}
               >
                 {s.value}
               </p>
-              <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-white/60">
+              <p className="text-[8px] font-bold uppercase tracking-[0.18em] text-white/40 whitespace-nowrap">
                 {s.label}
               </p>
             </div>

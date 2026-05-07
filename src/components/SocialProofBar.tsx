@@ -28,7 +28,7 @@ const SocialProofBar = () => (
             {[...Array(5)].map((_, i) => (
               <Star key={i} className="w-3 h-3 fill-[#c9a05a] text-[#c9a05a]" />
             ))}
-            <span className="ml-1 text-xs font-black text-[#2a3625]">4.9/5</span>
+            <span className="ml-1 text-xs font-black text-[#2a3625]">4.7/5</span>
           </div>
           <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#5c6e58]/60">Verified Customer Rating</p>
         </div>

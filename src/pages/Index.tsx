@@ -5,8 +5,7 @@ import SocialProofBar from "@/components/SocialProofBar";
 import { GoogleReviewsCarousel } from "@/components/GoogleReviewsCarousel";
 import AuroraComparison from "@/components/AuroraComparison";
 import ProductsSection from "@/components/ProductsSection";
-import { BestSellersCarousel } from "@/components/BestSellersCarousel";
-import GreensSection from "@/components/GreensSection";
+import { BundleCarousel } from "@/components/BundleCarousel";
 import { VideoCarousel } from "@/components/VideoCarousel";
 import WhyUs from "@/components/WhyUs";
 import Reviews from "@/components/Reviews";
@@ -31,15 +30,15 @@ const Index = () => {
         <GoogleReviewsCarousel />
         <AuroraComparison />
 
-        {/* 3. Aurora Collection grid */}
+        {/* 3. Bundle carousel */}
+        <BundleCarousel />
+
+        {/* 4. Aurora Collection grid */}
         <ProductsSection />
 
-        {/* 4. Best Sellers carousel */}
-        <BestSellersCarousel />
-
-        {/* 5. Greens */}
+        {/* 5. Video */}
         <VideoCarousel />
-        <GreensSection />
+
         <WhyUs />
         <Reviews />
         <FAQ />

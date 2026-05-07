@@ -51,9 +51,9 @@ const FinalCTA = () => (
 
       <div className="flex flex-wrap justify-center gap-8 py-6 border-t border-white/10 max-w-lg mx-auto">
         {[
-          "Free Shipping ₹599+",
           "100% Pure Natural",
-          "Gift Packaging",
+          "Chemical-Free Formulas",
+          "Ancient Vedic Methods",
         ].map((point) => (
           <div key={point} className="flex items-center gap-2">
             <div className="w-1 h-1 rounded-full bg-[#a8c690]"></div>

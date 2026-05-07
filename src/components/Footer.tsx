@@ -96,9 +96,9 @@ const Footer = () => (
       >
         {[
           ["5+", "Years of Craft"],
-          ["1200+", "Homes Blessed"],
+          ["100+", "Homes Blessed"],
           ["100%", "Purely Natural"],
-          ["4.9★", "Average Rating"],
+          ["4.7★", "Average Rating"],
         ].map(([val, label]) => (
           <div key={label} className="flex flex-col gap-1">
             <p className="text-2xl md:text-3xl font-light text-white" style={{ fontFamily: "'Cormorant Garamond', serif" }}>{val}</p>

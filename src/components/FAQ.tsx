@@ -13,7 +13,7 @@ const faqs = [
   },
   {
     q: "How long does each product last?",
-    a: "Our sticks burn for ~45 minutes, while cups provide a 90–120 minute experience. Ghee lamps can light up your space for 4–6 hours.",
+    a: "Our sticks and cups both burn for ~45 minutes. The aroma and essence linger for hours after the burn ends, filling your space long after the flame goes out.",
   },
   {
     q: "Is gifting packaging available?",
