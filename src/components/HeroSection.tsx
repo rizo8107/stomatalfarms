@@ -82,14 +82,14 @@ const HeroSection = () => (
       <div className="flex flex-row gap-3 mb-8 flex-nowrap">
         <Link
           to="/collections"
-          className="group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-black uppercase tracking-[0.2em] text-white transition-all hover:-translate-y-0.5 whitespace-nowrap"
+          className="group inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-[11px] font-black uppercase tracking-[0.2em] text-white transition-all hover:-translate-y-0.5 whitespace-nowrap"
           style={{ background: "#b56c3d" }}
         >
           Shop Aurora →
         </Link>
         <Link
           to="/collections?category=combos"
-          className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-black uppercase tracking-[0.2em] text-white border border-white/25 backdrop-blur-md transition-all hover:bg-white/10 whitespace-nowrap"
+          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-[11px] font-black uppercase tracking-[0.2em] text-white border border-white/25 backdrop-blur-md transition-all hover:bg-white/10 whitespace-nowrap"
         >
           View Ritual Bundle
         </Link>

@@ -21,10 +21,10 @@ const RitualsSection = () => {
             ancient traditions while bringing their timeless benefits to your modern practice.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-auto">
-            <Button className="bg-[#5a8739] hover:bg-[#7abd49] text-white rounded-full px-8 py-6 text-base font-semibold tracking-wide shadow-lg shadow-[#5a8739]/20 hover:shadow-xl transition-all hover:-translate-y-1">
+            <Button className="bg-[#5a8739] hover:bg-[#7abd49] text-white rounded-full px-7 py-5 text-sm font-semibold tracking-wide shadow-lg shadow-[#5a8739]/20 hover:shadow-xl transition-all hover:-translate-y-1">
               Start Your Journey
             </Button>
-            <Button variant="outline" className="rounded-full px-8 py-6 text-base font-semibold tracking-wide border-white/20 text-white hover:bg-white hover:text-[#2a3625] transition-all hover:-translate-y-1 bg-transparent backdrop-blur-sm">
+            <Button variant="outline" className="rounded-full px-7 py-5 text-sm font-semibold tracking-wide border-white/20 text-white hover:bg-white hover:text-[#2a3625] transition-all hover:-translate-y-1 bg-transparent backdrop-blur-sm">
               Learn About Rituals →
             </Button>
           </div>

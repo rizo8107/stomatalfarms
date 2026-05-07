@@ -137,7 +137,7 @@ const AuroraComparison = () => {
           ))}
           <Link
             to="/collections"
-            className="px-5 py-3 text-[10px] font-black uppercase tracking-[0.15em] text-white whitespace-nowrap flex items-center"
+            className="px-4 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] text-white whitespace-nowrap flex items-center"
             style={{ background: "#b56c3d" }}
           >
             Shop Aurora →
