@@ -130,7 +130,7 @@ export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
         <div className="flex flex-col flex-1 p-4 gap-3">
           <div className="flex-1">
             <h3
-              className="text-sm md:text-base font-semibold text-[#1e2519] leading-snug group-hover:text-[#4f7a2e] transition-colors mb-1"
+              className="text-xl md:text-2xl font-semibold text-[#1e2519] leading-tight group-hover:text-[#4f7a2e] transition-colors mb-1.5"
               style={{ fontFamily: "'Cormorant Garamond', serif" }}
             >
               {node.title}

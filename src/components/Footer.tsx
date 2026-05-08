@@ -7,7 +7,7 @@ const Footer = () => (
     <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: "url(\"https://www.transparenttextures.com/patterns/p6.png\")" }}></div>
     
     <div className="max-w-7xl mx-auto px-6 pt-24 pb-12 relative z-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-16">
         {/* Brand Section */}
         <div className="lg:col-span-2">
           <Link to="/" className="inline-block mb-8 group">
@@ -91,8 +91,8 @@ const Footer = () => (
 
       {/* Stats Section */}
       <div
-        className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12 px-8 mb-20 rounded-[40px] text-center"
-        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}
+        className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 px-6 mb-12 rounded-3xl text-center"
+        style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.04)" }}
       >
         {[
           ["5+", "Years of Craft"],
@@ -100,9 +100,9 @@ const Footer = () => (
           ["100%", "Purely Natural"],
           ["4.7★", "Average Rating"],
         ].map(([val, label]) => (
-          <div key={label} className="flex flex-col gap-1">
-            <p className="text-2xl md:text-3xl font-light text-white" style={{ fontFamily: "'Cormorant Garamond', serif" }}>{val}</p>
-            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">{label}</p>
+          <div key={label} className="flex flex-col gap-0.5">
+            <p className="text-xl md:text-2xl font-light text-white/90" style={{ fontFamily: "'Cormorant Garamond', serif" }}>{val}</p>
+            <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/20">{label}</p>
           </div>
         ))}
       </div>

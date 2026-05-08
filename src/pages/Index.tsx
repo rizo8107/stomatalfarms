@@ -9,8 +9,8 @@ import { BundleCarousel } from "@/components/BundleCarousel";
 import { VideoCarousel } from "@/components/VideoCarousel";
 import GreensSection from "@/components/GreensSection";
 import WhyUs from "@/components/WhyUs";
-import Reviews from "@/components/Reviews";
 import FAQ from "@/components/FAQ";
+import { InstagramCarousel } from "@/components/InstagramCarousel";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 
@@ -43,8 +43,8 @@ const Index = () => {
         <VideoCarousel />
 
         <WhyUs />
-        <Reviews />
         <FAQ />
+        <InstagramCarousel />
         <FinalCTA />
       </main>
       <Footer />

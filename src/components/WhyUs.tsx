@@ -10,15 +10,11 @@ const badges = [
 const WhyUs = () => (
   <section className="py-12 md:py-16 px-4 bg-[#0e1610]">
     <div className="max-w-2xl mx-auto">
-      <div className="flex flex-wrap gap-3 justify-center">
+      <div className="grid grid-cols-2 gap-3 md:gap-4 max-w-xl mx-auto">
         {badges.map((b, i) => (
           <div
             key={b.label}
-            className={`flex items-center gap-2.5 px-4 py-2.5 rounded-full border text-sm font-semibold transition-all ${
-              i % 3 === 0
-                ? "bg-[#f5c842] border-[#f5c842] text-[#1a1a0a]"
-                : "bg-transparent border-white/20 text-white/80 hover:border-white/40"
-            }`}
+            className="flex items-center gap-2.5 px-4 py-3 rounded-full border bg-[#f5c842] border-[#f5c842] text-[#1a1a0a] text-[11px] md:text-sm font-semibold transition-all hover:-translate-y-0.5"
           >
             <span className="text-base">{b.emoji}</span>
             {b.label}

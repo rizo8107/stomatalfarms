@@ -15,10 +15,6 @@ const faqs = [
     q: "How long does each product last?",
     a: "Our sticks and cups both burn for ~45 minutes. The aroma and essence linger for hours after the burn ends, filling your space long after the flame goes out.",
   },
-  {
-    q: "Is gifting packaging available?",
-    a: "Yes, our Ritual Bundles come beautifully gift-ready. For individual items, you can request special gift wrapping at checkout.",
-  },
 ];
 
 const FAQ = () => {

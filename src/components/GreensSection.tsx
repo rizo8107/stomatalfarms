@@ -112,21 +112,21 @@ const GreensSection = () => {
           </div>
 
           {/* Right — category cards */}
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-2.5">
             {categories.map((cat) => (
               <div
                 key={cat.title}
-                className="rounded-2xl border border-white/10 p-3 md:p-4 flex gap-4 items-center"
+                className="rounded-2xl border border-white/10 p-5 md:p-6 flex gap-6 items-center"
                 style={{ background: "rgba(255,255,255,0.06)" }}
               >
-                <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl overflow-hidden border border-white/10 flex-shrink-0">
+                <div className="w-28 h-28 md:w-32 md:h-32 rounded-xl overflow-hidden border border-white/10 flex-shrink-0">
                   <img src={cat.image} alt={cat.title} className="w-full h-full object-cover" />
                 </div>
                 <div>
-                  <h3 className="text-sm md:text-base text-white leading-snug font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  <h3 className="text-2xl md:text-3xl text-white leading-tight font-semibold" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
                     {cat.title}
                   </h3>
-                  <p className="text-xs text-white/50 font-light leading-relaxed mt-0.5">{cat.desc}</p>
+                  <p className="text-base md:text-lg text-white/50 font-light leading-relaxed mt-1.5">{cat.desc}</p>
                 </div>
               </div>
             ))}

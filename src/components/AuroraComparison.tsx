@@ -49,26 +49,26 @@ const AuroraComparison = () => {
   return (
     <section className="pt-6 pb-10 md:pb-14 px-4" style={{ background: "linear-gradient(135deg, #1a2416, #2a3820)" }}>
       <div className="max-w-2xl mx-auto">
-        <p className="text-xs md:text-sm font-black uppercase tracking-[0.25em] text-[#a8c690] mb-1.5">
+        <p className="text-lg md:text-xl font-black uppercase tracking-[0.25em] text-[#b56c3d] mb-2">
           Aurora vs Regular Incense
         </p>
         <h2
-          className="text-2xl md:text-3xl text-white mb-5 leading-tight"
+          className="text-3xl md:text-4xl text-white mb-6 leading-tight"
           style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
         >
-          The difference is in <span className="italic text-[#a8c690]">every</span> detail.
+          The difference is in <span className="italic text-[#b56c3d]">every</span> detail.
         </h2>
 
         {/* Tab bar */}
-        <div className="flex border-b border-white/10 mb-6">
+        <div className="flex bg-white/5 p-1 rounded-xl mb-6">
           {tabs.map((t) => (
             <button
               key={t.id}
               onClick={() => setActiveTab(t.id)}
-              className={`flex-1 py-2.5 text-xs font-black uppercase tracking-[0.18em] transition-all duration-200 border-b-2 ${
+              className={`flex-1 py-3 text-[10px] md:text-xs font-black uppercase tracking-[0.18em] transition-all duration-300 rounded-lg ${
                 activeTab === t.id
-                  ? "border-[#a8c690] text-[#a8c690]"
-                  : "border-transparent text-white/40 hover:text-white/70"
+                  ? "bg-[#b56c3d] text-white shadow-lg"
+                  : "text-white/40 hover:bg-[#b56c3d]/20 hover:text-[#b56c3d]"
               }`}
             >
               {t.label}
@@ -87,13 +87,13 @@ const AuroraComparison = () => {
 
           <div className="grid grid-cols-2 gap-5 md:gap-8">
             <div>
-              <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[#a8c690] mb-2.5">
+              <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[#b56c3d] mb-2.5">
                 + Aurora
               </p>
               <ul className="space-y-1.5">
                 {tab.aurora.map((item) => (
                   <li key={item} className="flex items-start gap-2 text-sm text-white/90">
-                    <span className="text-[#a8c690] font-bold mt-0.5">✓</span>
+                    <span className="text-[#b56c3d] font-bold mt-0.5">✓</span>
                     {item}
                   </li>
                 ))}
