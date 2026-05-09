@@ -38,7 +38,7 @@ const tabs = [
 
 const bottomStats = [
   { value: "4.7★", label: "Rating" },
-  { value: "100+", label: "Homes" },
+  { value: "1,200+", label: "Homes" },
   { value: "100%", label: "Natural" },
 ];
 

@@ -96,7 +96,7 @@ const Footer = () => (
       >
         {[
           ["5+", "Years of Craft"],
-          ["100+", "Homes Blessed"],
+          ["1,200+", "Homes Blessed"],
           ["100%", "Purely Natural"],
           ["4.7★", "Average Rating"],
         ].map(([val, label]) => (

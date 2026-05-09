@@ -3,7 +3,7 @@ import { Star } from "lucide-react";
 
 const stats = [
   { value: "4.7★", label: "Avg. Rating" },
-  { value: "100+", label: "Happy Homes" },
+  { value: "1,200+", label: "Happy Homes" },
   { value: "100%", label: "Natural" },
   { value: "5+", label: "Yrs of Craft" },
 ];
@@ -40,7 +40,7 @@ const HeroSection = () => (
           {[...Array(5)].map((_, i) => (
             <Star key={i} className="w-3 h-3 fill-[#f5c842] text-[#f5c842]" />
           ))}
-          <span className="text-[10px] font-bold text-white/80 ml-1">4.7 · 100+ verified</span>
+          <span className="text-[10px] font-bold text-white/80 ml-1">4.7 · 1,200+ verified</span>
         </div>
       </div>
 
@@ -68,14 +68,11 @@ const HeroSection = () => (
           fontWeight: 400,
         }}
       >
-        Cow dung-based incense. A{" "}
-        <span className="text-[#a8c690] not-italic font-semibold">divine</span> aroma — drawn from
-        hydrodistilled botanical essence.
+        From cow dung to <span className="text-[#a8c690] not-italic font-semibold">divine</span> aroma — the way nature intended.
       </p>
 
       <p className="text-white/50 text-sm font-light max-w-sm mb-8 leading-relaxed">
-        Sacred Gomaya base, natural ignition — no charcoal, no synthetics. Light it once and let
-        the divine aroma fill every corner of your home. Trusted in 1,200+ Indian homes.
+        Pure. Sacred. Trusted by 1,200+ homes. No charcoal. No synthetics. Ever.
       </p>
 
       {/* CTAs — single row, no wrapping */}

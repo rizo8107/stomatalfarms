@@ -47,7 +47,7 @@ export const GoogleReviewsCarousel = () => {
                   <Star key={i} className="w-3.5 h-3.5 fill-[#f5a623] text-[#f5a623]" />
                 ))}
                 <span className="text-sm font-bold text-[#2a3625] ml-1">4.7</span>
-                <span className="text-xs text-[#6a7462] ml-1">· 100+ reviews</span>
+                <span className="text-xs text-[#6a7462] ml-1">· 1,200+ reviews</span>
               </div>
             </div>
           </div>
