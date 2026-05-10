@@ -16,16 +16,16 @@ const HeroSection = () => (
     {/* Background */}
     <div className="absolute inset-0 scale-105">
       <img
-        src="/aurora.jfif"
+        src="https://cdn.shopify.com/s/files/1/0735/4469/5965/files/banner_hero.jpg?v=1778374221"
         alt="Aurora Aromatic Wellness"
-        className="w-full h-full object-cover object-center opacity-65"
+        className="w-full h-full object-cover object-center"
       />
     </div>
     <div
       className="absolute inset-0"
       style={{
         background:
-          "linear-gradient(to right, rgba(15,22,10,0.92) 0%, rgba(15,22,10,0.55) 55%, rgba(15,22,10,0.15) 100%), linear-gradient(to top, rgba(15,22,10,0.7) 0%, transparent 50%)",
+          "linear-gradient(to right, rgba(15,22,10,0.82) 0%, rgba(15,22,10,0.40) 55%, rgba(15,22,10,0.05) 100%), linear-gradient(to top, rgba(15,22,10,0.55) 0%, transparent 50%)",
       }}
     />
 
