@@ -90,18 +90,32 @@ const Collections = () => {
 
       <main className="pt-16 md:pt-20">
         {/* Hero Banner */}
-        <section className="py-12 md:py-16 bg-sage-light/30">
-          <div className="container text-center">
-            <span className="text-primary text-xs uppercase tracking-[0.2em] mb-3 block">
+        <section
+          className="relative py-14 md:py-20 overflow-hidden"
+          style={
+            activeCategory !== 'microgreens'
+              ? {
+                  backgroundImage: "url('/banner.jpg')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }
+              : { background: "#f7f3ed" }
+          }
+        >
+          {activeCategory !== 'microgreens' && (
+            <div className="absolute inset-0 bg-[#f7f3ed]/75" />
+          )}
+          <div className="container text-center relative z-10">
+            <span className="text-primary text-xs uppercase tracking-[0.2em] mb-3 block font-semibold">
               {activeCategory === 'microgreens' ? 'Stomatal Farms' : 'Aurora Collection'}
             </span>
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-4">
               {categories.find(c => c.id === activeCategory)?.name || "All Products"}
             </h1>
-            <p className="text-muted-foreground max-w-lg mx-auto">
+            <p className="text-muted-foreground max-w-lg mx-auto text-sm md:text-base leading-relaxed">
               {activeCategory === 'microgreens'
                 ? 'Fresh, nutrient-dense farm-grown microgreens and produce harvested daily and delivered to your doorstep for maximum flavor and nutrition.'
-                : 'Authentic aromatic wellness products crafted from traditional Indian herbs, essential oils, and pure cow dung. Lab-tested for your family\'s well-being.'}
+                : "Authentic aromatic wellness products crafted from traditional Indian herbs, essential oils, and pure cow dung. Lab-tested for your family's well-being."}
             </p>
           </div>
         </section>
