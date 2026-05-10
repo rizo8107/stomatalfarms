@@ -36,7 +36,7 @@ const HeroSection = () => (
         <img
           src="/aurora-logo.png"
           alt="Aurora by Stomatal Farms"
-          className="h-8 md:h-10 w-auto object-contain"
+          className="h-24 w-30 object-contain"
         />
         <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm whitespace-nowrap">
           {[...Array(5)].map((_, i) => (
