@@ -88,7 +88,7 @@ const Collections = () => {
     <div className="min-h-screen bg-background texture-overlay">
       <Header />
 
-      <main className="pt-16 md:pt-20">
+      <main>
         {/* Hero Banner — full image, no overlay */}
         <div className="w-full">
           <img
