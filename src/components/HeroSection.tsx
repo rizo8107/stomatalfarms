@@ -34,7 +34,7 @@ const HeroSection = () => (
         <img
           src="/aurora-logo.png"
           alt="Aurora by Stomatal Farms"
-          className="h-36 w-36 md:h-52 md:w-52 object-contain flex-shrink-0"
+          className="h-44 w-44 md:h-64 md:w-64 object-contain flex-shrink-0"
         />
 
         <div className="flex flex-col gap-2">
@@ -66,14 +66,14 @@ const HeroSection = () => (
           className="text-white/60 max-w-xs md:max-w-sm leading-snug"
           style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: "clamp(0.9rem, 1.5vw, 1.2rem)",
+            fontSize: "clamp(1.1rem, 2vw, 1.5rem)",
             fontStyle: "italic",
             fontWeight: 400,
           }}
         >
           From cow dung to <span className="text-[#a8c690] not-italic font-semibold">divine</span> aroma — the way nature intended.
         </p>
-        <p className="text-white/50 text-[11px] font-light max-w-xs leading-relaxed">
+        <p className="text-white/50 text-sm font-light max-w-xs leading-relaxed">
           Pure. Sacred. Trusted by 1,200+ homes. No charcoal. No synthetics. Ever.
         </p>
       </div>
