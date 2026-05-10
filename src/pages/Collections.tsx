@@ -89,33 +89,27 @@ const Collections = () => {
       <Header />
 
       <main className="pt-16 md:pt-20">
-        {/* Hero Banner */}
-        <section
-          className="relative overflow-hidden"
-          style={
-            activeCategory !== 'microgreens'
-              ? {
-                  backgroundImage: "url('/banner.jpg')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  minHeight: "340px",
-                }
-              : { background: "#f7f3ed", minHeight: "220px" }
-          }
-        >
-          {/* dark gradient at bottom so text sits cleanly */}
-          {activeCategory !== 'microgreens' && (
-            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
-          )}
-          <div className="absolute bottom-0 left-0 right-0 pb-8 pt-12 flex flex-col items-center text-center relative z-10">
-            <span className={`text-xs uppercase tracking-[0.2em] mb-2 block font-semibold ${activeCategory !== 'microgreens' ? 'text-white/80' : 'text-primary'}`}>
-              {activeCategory === 'microgreens' ? 'Stomatal Farms' : 'Aurora Collection'}
-            </span>
-            <h1 className={`font-serif text-4xl md:text-5xl lg:text-6xl mb-0 ${activeCategory !== 'microgreens' ? 'text-white drop-shadow-md' : 'text-foreground'}`}>
-              {categories.find(c => c.id === activeCategory)?.name || "All Products"}
-            </h1>
+        {/* Hero Banner — full image, no overlay */}
+        {activeCategory !== 'microgreens' && (
+          <div className="w-full">
+            <img
+              src="/banner.jpg"
+              alt="Aurora Collection"
+              className="w-full object-cover"
+              style={{ maxHeight: "420px", objectPosition: "center" }}
+            />
           </div>
-        </section>
+        )}
+
+        {/* Dynamic title strip below banner */}
+        <div className="bg-[#f7f3ed] py-6 text-center">
+          <span className="text-primary text-xs uppercase tracking-[0.2em] mb-2 block font-semibold">
+            {activeCategory === 'microgreens' ? 'Stomatal Farms' : 'Aurora Collection'}
+          </span>
+          <h1 className="font-serif text-4xl md:text-5xl text-foreground">
+            {categories.find(c => c.id === activeCategory)?.name || "All Products"}
+          </h1>
+        </div>
 
         {/* Category Filters */}
         <section className="py-6 border-b border-border sticky top-16 md:top-20 bg-background/95 backdrop-blur-sm z-40">
