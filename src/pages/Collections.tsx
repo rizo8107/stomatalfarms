@@ -90,16 +90,14 @@ const Collections = () => {
 
       <main className="pt-16 md:pt-20">
         {/* Hero Banner — full image, no overlay */}
-        {activeCategory !== 'microgreens' && (
-          <div className="w-full">
-            <img
-              src="/banner.jpg"
-              alt="Aurora Collection"
-              className="w-full object-cover"
-              style={{ maxHeight: "420px", objectPosition: "center" }}
-            />
-          </div>
-        )}
+        <div className="w-full">
+          <img
+            src={activeCategory === 'microgreens' ? '/greenblend.jpg' : '/banner.jpg'}
+            alt={activeCategory === 'microgreens' ? 'Farm Fresh Produce' : 'Aurora Collection'}
+            className="w-full object-cover"
+            style={{ maxHeight: "420px", objectPosition: "center" }}
+          />
+        </div>
 
         {/* Dynamic title strip below banner */}
         <div className="bg-[#f7f3ed] py-6 text-center">
