@@ -34,7 +34,7 @@ const HeroSection = () => (
         <img
           src="/aurora-logo.png"
           alt="Aurora by Stomatal Farms"
-          className="h-28 w-28 md:h-40 md:w-40 object-contain flex-shrink-0"
+          className="h-36 w-36 md:h-52 md:w-52 object-contain flex-shrink-0"
         />
 
         <div className="flex flex-col gap-2">
