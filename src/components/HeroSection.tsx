@@ -33,9 +33,11 @@ const HeroSection = () => (
     <div className="relative z-10 h-full max-w-7xl mx-auto px-6 md:px-10 flex flex-col justify-center pt-14 pb-4">
       {/* Top badge row */}
       <div className="flex flex-wrap items-center gap-3 mb-6">
-        <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/50 whitespace-nowrap">
-          Aurora · by Stomatal Farms
-        </span>
+        <img
+          src="/aurora-logo.png"
+          alt="Aurora by Stomatal Farms"
+          className="h-8 md:h-10 w-auto object-contain"
+        />
         <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm whitespace-nowrap">
           {[...Array(5)].map((_, i) => (
             <Star key={i} className="w-3 h-3 fill-[#f5c842] text-[#f5c842]" />
