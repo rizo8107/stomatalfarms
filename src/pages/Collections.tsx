@@ -91,32 +91,29 @@ const Collections = () => {
       <main className="pt-16 md:pt-20">
         {/* Hero Banner */}
         <section
-          className="relative py-14 md:py-20 overflow-hidden"
+          className="relative overflow-hidden"
           style={
             activeCategory !== 'microgreens'
               ? {
                   backgroundImage: "url('/banner.jpg')",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
+                  minHeight: "340px",
                 }
-              : { background: "#f7f3ed" }
+              : { background: "#f7f3ed", minHeight: "220px" }
           }
         >
+          {/* dark gradient at bottom so text sits cleanly */}
           {activeCategory !== 'microgreens' && (
-            <div className="absolute inset-0 bg-[#f7f3ed]/75" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
           )}
-          <div className="container text-center relative z-10">
-            <span className="text-primary text-xs uppercase tracking-[0.2em] mb-3 block font-semibold">
+          <div className="absolute bottom-0 left-0 right-0 pb-8 pt-12 flex flex-col items-center text-center relative z-10">
+            <span className={`text-xs uppercase tracking-[0.2em] mb-2 block font-semibold ${activeCategory !== 'microgreens' ? 'text-white/80' : 'text-primary'}`}>
               {activeCategory === 'microgreens' ? 'Stomatal Farms' : 'Aurora Collection'}
             </span>
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-4">
+            <h1 className={`font-serif text-4xl md:text-5xl lg:text-6xl mb-0 ${activeCategory !== 'microgreens' ? 'text-white drop-shadow-md' : 'text-foreground'}`}>
               {categories.find(c => c.id === activeCategory)?.name || "All Products"}
             </h1>
-            <p className="text-muted-foreground max-w-lg mx-auto text-sm md:text-base leading-relaxed">
-              {activeCategory === 'microgreens'
-                ? 'Fresh, nutrient-dense farm-grown microgreens and produce harvested daily and delivered to your doorstep for maximum flavor and nutrition.'
-                : "Authentic aromatic wellness products crafted from traditional Indian herbs, essential oils, and pure cow dung. Lab-tested for your family's well-being."}
-            </p>
           </div>
         </section>
 
