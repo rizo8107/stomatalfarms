@@ -4,7 +4,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
 import { Link } from "react-router-dom";
 
-const MIN_ORDER = 100;
+const MIN_ORDER = 400;
 
 export const CartDrawer = () => {
   const {
