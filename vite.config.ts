@@ -9,11 +9,32 @@ function generateReviewsList() {
   const files = fs.readdirSync(reviewsDir);
   const images = files.filter((f) => /\.(png|jpe?g|webp|gif)$/i.test(f));
 
-  // Natural sorting
+  // Sort by modification date (by day) descending, then naturally by filename ascending
+  const getFileDateString = (file: string) => {
+    const filePath = path.join(reviewsDir, file);
+    try {
+      const stats = fs.statSync(filePath);
+      const date = stats.mtime;
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+    } catch (e) {
+      return "1970-01-01";
+    }
+  };
+
   const naturalSort = (a: string, b: string) => {
     return a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" });
   };
-  images.sort(naturalSort);
+
+  images.sort((a, b) => {
+    const dateA = getFileDateString(a);
+    const dateB = getFileDateString(b);
+
+    if (dateA !== dateB) {
+      return dateB.localeCompare(dateA); // Newest date first
+    }
+
+    return naturalSort(a, b); // Same day, sort naturally by filename
+  });
 
   const reviews = images.map((file) => {
     let alt = "Google Review";

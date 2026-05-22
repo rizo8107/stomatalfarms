@@ -1,6 +1,34 @@
 // This file is auto-generated. Do not edit directly.
 export const reviews = [
   {
+    "src": "/reviews/revw 22-05 (1).png",
+    "alt": "Customer Review 22-05 (1)"
+  },
+  {
+    "src": "/reviews/revw 22-05 (2).png",
+    "alt": "Customer Review 22-05 (2)"
+  },
+  {
+    "src": "/reviews/revw 22-05 (3).png",
+    "alt": "Customer Review 22-05 (3)"
+  },
+  {
+    "src": "/reviews/revw 22-05 (4).png",
+    "alt": "Customer Review 22-05 (4)"
+  },
+  {
+    "src": "/reviews/revw 22-05 (5).png",
+    "alt": "Customer Review 22-05 (5)"
+  },
+  {
+    "src": "/reviews/revw 22-05 (6).png",
+    "alt": "Customer Review 22-05 (6)"
+  },
+  {
+    "src": "/reviews/revw 22-05 (7).png",
+    "alt": "Customer Review 22-05 (7)"
+  },
+  {
     "src": "/reviews/review-1.png",
     "alt": "Google review by Nirmal PY"
   },
@@ -39,33 +67,5 @@ export const reviews = [
   {
     "src": "/reviews/review-10.png",
     "alt": "Google review by Rakesh Pandian"
-  },
-  {
-    "src": "/reviews/revw 22-05 (1).png",
-    "alt": "Customer Review 22-05 (1)"
-  },
-  {
-    "src": "/reviews/revw 22-05 (2).png",
-    "alt": "Customer Review 22-05 (2)"
-  },
-  {
-    "src": "/reviews/revw 22-05 (3).png",
-    "alt": "Customer Review 22-05 (3)"
-  },
-  {
-    "src": "/reviews/revw 22-05 (4).png",
-    "alt": "Customer Review 22-05 (4)"
-  },
-  {
-    "src": "/reviews/revw 22-05 (5).png",
-    "alt": "Customer Review 22-05 (5)"
-  },
-  {
-    "src": "/reviews/revw 22-05 (6).png",
-    "alt": "Customer Review 22-05 (6)"
-  },
-  {
-    "src": "/reviews/revw 22-05 (7).png",
-    "alt": "Customer Review 22-05 (7)"
   }
 ];
