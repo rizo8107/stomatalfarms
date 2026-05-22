@@ -1,6 +1,73 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import fs from "fs";
+
+function generateReviewsList() {
+  const reviewsDir = path.resolve(__dirname, "public/reviews");
+  if (!fs.existsSync(reviewsDir)) return;
+  const files = fs.readdirSync(reviewsDir);
+  const images = files.filter((f) => /\.(png|jpe?g|webp|gif)$/i.test(f));
+
+  // Natural sorting
+  const naturalSort = (a: string, b: string) => {
+    return a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" });
+  };
+  images.sort(naturalSort);
+
+  const reviews = images.map((file) => {
+    let alt = "Google Review";
+    if (file.startsWith("review-")) {
+      const knownAlts: Record<string, string> = {
+        "review-1.png": "Google review by Nirmal PY",
+        "review-2.png": "Google review by Partho Ghosh",
+        "review-3.png": "Google review by Pinkesh Kumar",
+        "review-4.png": "Google review by indumathi venugopal",
+        "review-5.png": "Google review by Sathya Seelan r",
+        "review-6.png": "Google review by Vennila Vidhya",
+        "review-7.png": "Google review by nithya rajsri",
+        "review-8.png": "Google review by nandhini karthikeyan",
+        "review-9.png": "Google review by Guru Venkatesan",
+        "review-10.png": "Google review by Rakesh Pandian",
+      };
+      alt = knownAlts[file] || `Google Review ${file.replace("review-", "").replace(/\.[^/.]+$/, "")}`;
+    } else if (file.startsWith("revw")) {
+      alt = `Customer Review ${file.replace("revw ", "").replace(/\.[^/.]+$/, "")}`;
+    }
+    return {
+      src: `/reviews/${file}`,
+      alt,
+    };
+  });
+
+  const content = `// This file is auto-generated. Do not edit directly.
+export const reviews = ${JSON.stringify(reviews, null, 2)};
+`;
+
+  const outputPath = path.resolve(__dirname, "src/components/reviews-list.ts");
+  const dir = path.dirname(outputPath);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  fs.writeFileSync(outputPath, content);
+}
+
+const reviewsGeneratorPlugin = () => ({
+  name: "vite-plugin-reviews-generator",
+  buildStart() {
+    generateReviewsList();
+  },
+  configureServer(server: any) {
+    const reviewsDir = path.resolve(__dirname, "public/reviews");
+    server.watcher.add(reviewsDir);
+    server.watcher.on("all", (event: string, filePath: string) => {
+      if (filePath.includes("public/reviews")) {
+        generateReviewsList();
+      }
+    });
+  },
+});
+
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
   server: {
@@ -15,7 +82,7 @@ export default defineConfig(() => ({
       port: 5173,
     },
   },
-  plugins: [react()].filter(Boolean),
+  plugins: [react(), reviewsGeneratorPlugin()].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

@@ -3,18 +3,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 
-const reviews = [
-  { src: '/reviews/review-1.png', alt: 'Google review by Nirmal PY' },
-  { src: '/reviews/review-2.png', alt: 'Google review by Partho Ghosh' },
-  { src: '/reviews/review-3.png', alt: 'Google review by Pinkesh Kumar' },
-  { src: '/reviews/review-4.png', alt: 'Google review by indumathi venugopal' },
-  { src: '/reviews/review-5.png', alt: 'Google review by Sathya Seelan r' },
-  { src: '/reviews/review-6.png', alt: 'Google review by Vennila Vidhya' },
-  { src: '/reviews/review-7.png', alt: 'Google review by nithya rajsri' },
-  { src: '/reviews/review-8.png', alt: 'Google review by nandhini karthikeyan' },
-  { src: '/reviews/review-9.png', alt: 'Google review by Guru Venkatesan' },
-  { src: '/reviews/review-10.png', alt: 'Google review by Rakesh Pandian' },
-];
+import { reviews } from './reviews-list';
 
 export const GoogleReviewsCarousel = () => {
   const autoplay = Autoplay({ delay: 2800, stopOnInteraction: false, stopOnMouseEnter: true });

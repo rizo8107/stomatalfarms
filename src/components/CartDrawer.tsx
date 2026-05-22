@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ShoppingCart, Minus, Plus, Trash2, ArrowRight, Loader2, X } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
-import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
+import { fetchProducts, fetchProductByHandle, ShopifyProduct } from "@/lib/shopify";
 import { Link } from "react-router-dom";
 
 const MIN_ORDER = 400;
@@ -19,6 +19,7 @@ export const CartDrawer = () => {
   } = useCartStore();
 
   const [suggestions, setSuggestions] = useState<ShopifyProduct[]>([]);
+  const [aarambhProduct, setAarambhProduct] = useState<ShopifyProduct | null>(null);
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce(
@@ -28,6 +29,11 @@ export const CartDrawer = () => {
 
   const belowMinimum = totalPrice < MIN_ORDER && items.length > 0;
   const remaining = Math.max(0, MIN_ORDER - totalPrice);
+  const hasAarambh = items.some(
+    (item) =>
+      item.variantId === "gid://shopify/ProductVariant/48305831411869" ||
+      item.product.node.handle === "aarambh-the-starter-collection-incense-sticks-by-aurora-stomatal-farms"
+  );
 
   // Fetch suggestions whenever cart opens and total is below minimum
   useEffect(() => {
@@ -37,6 +43,16 @@ export const CartDrawer = () => {
       setSuggestions(all.filter((p) => !cartIds.has(p.node.id)).slice(0, 4));
     });
   }, [isCartOpen, belowMinimum]);
+
+  // Fetch Aarambh product details when cart is open
+  useEffect(() => {
+    if (!isCartOpen) return;
+    fetchProductByHandle("aarambh-the-starter-collection-incense-sticks-by-aurora-stomatal-farms").then((prod) => {
+      if (prod) {
+        setAarambhProduct({ node: prod });
+      }
+    });
+  }, [isCartOpen]);
 
   const handleCheckout = async () => {
     if (belowMinimum) return;
@@ -159,6 +175,76 @@ export const CartDrawer = () => {
                   </div>
                 );
               })}
+
+              {/* Aarambh Starter Pack Suggestion */}
+              {!hasAarambh && aarambhProduct && (() => {
+                const node = aarambhProduct.node;
+                const img = node.images?.edges?.[0]?.node;
+                const variant = node.variants.edges[0]?.node;
+                if (!variant) return null;
+
+                const titleParts = node.title.split('|');
+                const displayTitle = "Aarambh — The Starter Pack";
+                const displaySubtitle = titleParts[1]?.trim() || "6 Incense Sticks";
+
+                return (
+                  <div className="p-4 rounded-2xl border border-dashed border-[#d4af37]/45 bg-[#fffdf9] shadow-sm relative overflow-hidden group/upsell mt-4">
+                    {/* Golden top indicator line */}
+                    <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-[#d4af37]/60 via-[#f5c842] to-[#d4af37]/60" />
+                    
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] font-bold text-[#b58900] bg-[#fff8ed] px-2 py-0.5 rounded-full border border-[#d4af37]/15 flex items-center gap-1">
+                        ✨ Hey! Try our starter pack
+                      </span>
+                      <span className="text-[11px] font-semibold text-[#4f7a2e]">
+                        Add for just ₹99
+                      </span>
+                    </div>
+
+                    <div className="flex gap-3">
+                      <div className="w-14 h-14 rounded-xl overflow-hidden bg-[#f0ece4] flex-shrink-0 border border-[#2e3f25]/5">
+                        {img ? (
+                          <img src={img.url} alt={displayTitle} className="w-full h-full object-cover group-hover/upsell:scale-105 transition-transform duration-500" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-xl">🕯️</div>
+                        )}
+                      </div>
+
+                      <div className="flex-1 min-w-0 flex flex-col justify-center">
+                        <h4
+                          className="text-xs font-bold text-[#2a3625] leading-snug line-clamp-1"
+                          style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                        >
+                          {displayTitle}
+                        </h4>
+                        <p className="text-[10px] text-[#6a7462] mb-1 line-clamp-1">{displaySubtitle}</p>
+                        <p className="text-[11px] italic text-[#8a9284] leading-tight line-clamp-2">
+                          Perfect to experience our pure natural aromas before ordering full packs.
+                        </p>
+                      </div>
+
+                      <div className="flex items-center justify-end flex-shrink-0 ml-1">
+                        <button
+                          onClick={() => {
+                            addItem({
+                              product: aarambhProduct,
+                              variantId: variant.id,
+                              variantTitle: variant.title,
+                              price: variant.price,
+                              quantity: 1,
+                              selectedOptions: variant.selectedOptions || [],
+                            });
+                          }}
+                          className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider text-white transition-all shadow hover:shadow-md hover:scale-[1.03]"
+                          style={{ background: "linear-gradient(135deg, #d4af37, #b58900)" }}
+                        >
+                          + Add
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
 
               {/* Below minimum — suggestions */}
               {belowMinimum && suggestions.length > 0 && (

@@ -8,6 +8,9 @@ const videos = [
   "https://cdn.shopify.com/videos/c/o/v/b4c6bb109167438ab8591eafd15eab07.mp4",
   "https://cdn.shopify.com/videos/c/o/v/4cab5995a53549b3b402e5b226451fcb.mp4",
   "https://cdn.shopify.com/videos/c/o/v/e8bf46f5f2094abe9bc7a9a7dd431e67.mp4",
+  "https://cdn.shopify.com/videos/c/o/v/1020d997526540b8b8b41fbfbbe65165.mp4",
+  "https://cdn.shopify.com/videos/c/o/v/01fecbcfa26a474b8c1914223d31b60e.mp4",
+  "https://cdn.shopify.com/videos/c/o/v/90108b258cb74d3bb3d759f5c0ed7791.mp4",
 ];
 
 // Muted preview slide — pauses when not active
