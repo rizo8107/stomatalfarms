@@ -9,8 +9,21 @@ function generateReviewsList() {
   const files = fs.readdirSync(reviewsDir);
   const images = files.filter((f) => /\.(png|jpe?g|webp|gif)$/i.test(f));
 
-  // Sort by modification date (by day) descending, then naturally by filename ascending
+  // Sort by date (by day) descending, then naturally by filename ascending
   const getFileDateString = (file: string) => {
+    // 1. Try to parse date from filename first (deterministic in CI/deployed environments where mtimes may equal checkout time)
+    const revwMatch = file.match(/revw\s+(\d{2})-(\d{2})/i);
+    if (revwMatch) {
+      const day = revwMatch[1];
+      const month = revwMatch[2];
+      return `2026-${month}-${day}`;
+    }
+
+    if (file.startsWith("review-")) {
+      return "2026-05-05"; // Original reviews date
+    }
+
+    // 2. Fallback to file modification date
     const filePath = path.join(reviewsDir, file);
     try {
       const stats = fs.statSync(filePath);
