@@ -116,18 +116,33 @@ const Footer = () => (
         </p>
         <div className="flex flex-wrap justify-center gap-x-12 gap-y-4">
           {[
-            ["Privacy", "#"],
-            ["Terms", "#"],
-            ["Contact Us", "mailto:contact@stomatalfarms.com"],
-          ].map(([t, href]) => (
-            <a
-              key={t}
-              href={href}
-              className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/20 hover:text-white/60 transition-colors"
-            >
-              {t}
-            </a>
-          ))}
+            ["Privacy", "/privacy-policy"],
+            ["Terms", "/terms-conditions"],
+            ["Returns & Refunds", "/returns-refunds"],
+            ["Contact Us", "/contact"],
+          ].map(([t, href]) => {
+            const isExternal = href.startsWith("mailto:") || href.startsWith("http") || href === "#";
+            if (isExternal) {
+              return (
+                <a
+                  key={t}
+                  href={href}
+                  className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/20 hover:text-white/60 transition-colors"
+                >
+                  {t}
+                </a>
+              );
+            }
+            return (
+              <Link
+                key={t}
+                to={href}
+                className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/20 hover:text-white/60 transition-colors"
+              >
+                {t}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>
