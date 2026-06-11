@@ -17,7 +17,7 @@ Your React app is now configured to use Shopify's Storefront API! This means you
 You need to create a Storefront API access token:
 
 1. **Go to your Shopify Admin**:
-   - Visit: https://nvhu9m-0r.myshopify.com/admin
+   - Visit: https://pay.stomatalfarms.com/admin
 
 2. **Navigate to Apps**:
    - Settings → Apps and sales channels → Develop apps
@@ -57,7 +57,7 @@ You need to create a Storefront API access token:
 
 2. **Add your credentials** to `.env`:
    ```env
-   VITE_SHOPIFY_STORE_DOMAIN=nvhu9m-0r.myshopify.com
+   VITE_SHOPIFY_STORE_DOMAIN=pay.stomatalfarms.com
    VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN=your_actual_token_here
    ```
 

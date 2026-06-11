@@ -2,7 +2,7 @@ import Client from 'shopify-buy';
 
 // Initialize Shopify Buy SDK Client
 const client = Client.buildClient({
-  domain: import.meta.env.VITE_SHOPIFY_STORE_DOMAIN || 'nvhu9m-0r.myshopify.com',
+  domain: import.meta.env.VITE_SHOPIFY_STORE_DOMAIN || 'pay.stomatalfarms.com',
   storefrontAccessToken: import.meta.env.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN || '',
 });
 

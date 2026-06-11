@@ -29,7 +29,7 @@ The Shopify theme I created has the **structure and functionality** but is missi
 ### Step 1: Upload the Theme
 
 1. Use the ZIP file I created: `stomatal-farms-clean.zip`
-2. Go to: https://nvhu9m-0r.myshopify.com/admin/themes
+2. Go to: https://pay.stomatalfarms.com/admin/themes
 3. Click **Add theme → Upload ZIP file**
 4. Upload and then click **Customize**
 
