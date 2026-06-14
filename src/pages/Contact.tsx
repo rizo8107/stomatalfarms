@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 
 const Contact = () => {
@@ -42,7 +42,7 @@ const Contact = () => {
 *Message:*
 ${formData.message}`;
 
-    const whatsappUrl = `https://api.whatsapp.com/send/?phone=919790768502&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`;
+    const whatsappUrl = `https://api.whatsapp.com/send/?phone=916379033131&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`;
     
     // Small delay to show "Sending..." state
     setTimeout(() => {
@@ -114,8 +114,25 @@ ${formData.message}`;
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Phone</h3>
                     <p className="text-muted-foreground text-sm">
-                      +91 9790768502
+                      +91 6379033131 | +91 9790768502
                     </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="bg-[#5a8739]/10 p-3 rounded-lg">
+                    <MessageCircle className="h-6 w-6 text-[#5a8739]" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">WhatsApp</h3>
+                    <a 
+                      href="https://api.whatsapp.com/send/?phone=916379033131"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-muted-foreground text-sm hover:text-[#5a8739] transition-colors"
+                    >
+                      +91 6379033131
+                    </a>
                   </div>
                 </div>
 

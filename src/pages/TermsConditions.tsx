@@ -66,7 +66,7 @@ const TermsConditions = () => {
                   4. Shipping & Delivery
                 </h2>
                 <p className="text-muted-foreground font-light leading-relaxed">
-                  We strive to dispatch orders within 24 to 48 business hours. While we use reliable shipping partners, transit times may vary depending on locations. Stomatal Farms is not responsible for delays caused by logistics companies or force majeure events.
+                  We strive to dispatch orders within 3 to 5 working days. While we use reliable shipping partners, transit times may vary depending on locations. Stomatal Farms is not responsible for delays caused by logistics companies or force majeure events.
                 </p>
               </section>
 

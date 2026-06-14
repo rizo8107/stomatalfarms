@@ -83,7 +83,7 @@ export const ShopifyProductCard = ({ product }: ShopifyProductCardProps) => {
       return;
     }
     const message = `Hi! I want to order:\n\nProduct: ${node.title}\nPrice: ₹${Math.round(currentPrice)}\n\nDelivery Details:\nName: ${addressData.name}\nPhone: ${addressData.phone}\nAddress: ${addressData.address}\n\nProduct Link: https://stomatalfarms.com/products/${node.handle}`;
-    window.open(`https://api.whatsapp.com/send/?phone=919790768502&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`, "_blank");
+    window.open(`https://api.whatsapp.com/send/?phone=916379033131&text=${encodeURIComponent(message)}&type=phone_number&app_absent=0`, "_blank");
     setShowAddressDialog(false);
     setAddressData({ name: "", phone: "", address: "" });
     toast.success("Opening WhatsApp...");

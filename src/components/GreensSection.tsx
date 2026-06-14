@@ -58,7 +58,7 @@ const GreensSection = () => {
     const price = p.node.variants.edges[0]?.node.price.amount;
     const msg = `Hi! I want to order: ${p.node.title}${price ? ` (₹${Math.round(parseFloat(price))})` : ""}. Please share availability and delivery details.`;
     window.open(
-      `https://api.whatsapp.com/send/?phone=919790768502&text=${encodeURIComponent(msg)}&type=phone_number&app_absent=0`,
+      `https://api.whatsapp.com/send/?phone=916379033131&text=${encodeURIComponent(msg)}&type=phone_number&app_absent=0`,
       "_blank"
     );
   };

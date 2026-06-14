@@ -25,7 +25,7 @@ const Footer = () => (
             {[
               { href: "https://www.instagram.com/stomatalfarms/", icon: <Instagram className="w-5 h-5" />, label: "Instagram" },
               { href: "mailto:contact@stomatalfarms.com", icon: <Mail className="w-5 h-5" />, label: "Email" },
-              { href: "https://api.whatsapp.com/send/?phone=919790768502", icon: <MessageCircle className="w-5 h-5" />, label: "WhatsApp" },
+              { href: "https://api.whatsapp.com/send/?phone=916379033131", icon: <MessageCircle className="w-5 h-5" />, label: "WhatsApp" },
             ].map((s) => (
               <a
                 key={s.label}
