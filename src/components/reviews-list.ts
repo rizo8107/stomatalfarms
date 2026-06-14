@@ -1,6 +1,14 @@
 // This file is auto-generated. Do not edit directly.
 export const reviews = [
   {
+    "src": "/reviews/review-11.png",
+    "alt": "Google review by Sankaran Anantharaman"
+  },
+  {
+    "src": "/reviews/review-12.png",
+    "alt": "Google review by Narayanee S"
+  },
+  {
     "src": "/reviews/revw 22-05 (1).png",
     "alt": "Customer Review 22-05 (1)"
   },
