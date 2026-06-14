@@ -103,7 +103,26 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
   const data = await response.json();
 
   if (data.errors) {
-    throw new Error(`Error calling Shopify: ${data.errors.map((e: { message: string }) => e.message).join(', ')}`);
+    // Check if ALL errors are metafield access errors — if so, return partial data instead of crashing
+    const metafieldErrors = data.errors.filter((e: { message: string }) =>
+      e.message.includes('unauthenticated_read_metafields')
+    );
+    const otherErrors = data.errors.filter((e: { message: string }) =>
+      !e.message.includes('unauthenticated_read_metafields')
+    );
+
+    if (otherErrors.length > 0) {
+      // Real errors — throw as before
+      throw new Error(`Error calling Shopify: ${otherErrors.map((e: { message: string }) => e.message).join(', ')}`);
+    }
+
+    if (metafieldErrors.length > 0) {
+      // Metafield scope not enabled yet — log warning, return whatever data we got
+      console.warn(
+        `Shopify metafields not accessible yet. Enable "Storefront access" for each metafield in Shopify Admin → Settings → Custom data → Metafields → Products.`
+      );
+      return data; // partial data still has the product, just null metafields
+    }
   }
 
   return data;
@@ -288,10 +307,75 @@ export async function fetchProducts(first: number = 20): Promise<ShopifyProduct[
   return data.data.products.edges || [];
 }
 
+// Lightweight query without metafields — used as fallback when metafield scope is not enabled
+const PRODUCT_BY_HANDLE_QUERY_NO_METAFIELDS = `
+  query GetProductByHandle($handle: String!) {
+    product(handle: $handle) {
+      id
+      title
+      description
+      handle
+      priceRange {
+        minVariantPrice {
+          amount
+          currencyCode
+        }
+      }
+      compareAtPriceRange {
+        minVariantPrice {
+          amount
+          currencyCode
+        }
+      }
+      images(first: 10) {
+        edges {
+          node {
+            url
+            altText
+          }
+        }
+      }
+      variants(first: 20) {
+        edges {
+          node {
+            id
+            title
+            price {
+              amount
+              currencyCode
+            }
+            compareAtPrice {
+              amount
+              currencyCode
+            }
+            availableForSale
+            selectedOptions {
+              name
+              value
+            }
+          }
+        }
+      }
+      options {
+        name
+        values
+      }
+    }
+  }
+`;
+
 export async function fetchProductByHandle(handle: string): Promise<ShopifyProduct['node'] | null> {
-  const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
-  if (!data) return null;
-  return data.data.product || null;
+  try {
+    const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
+    if (!data) return null;
+    return data.data.product || null;
+  } catch (err) {
+    // If metafield query failed with a real error, fall back to query without metafields
+    console.warn('Falling back to product query without metafields:', err);
+    const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY_NO_METAFIELDS, { handle });
+    if (!data) return null;
+    return data.data.product || null;
+  }
 }
 
 const CART_CREATE_MUTATION = `

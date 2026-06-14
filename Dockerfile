@@ -21,8 +21,10 @@ RUN npm ci
 # Copy the rest of the application
 COPY . .
 
-# Build the app (VITE_ vars are now baked into the JS bundle)
-RUN npm run build
+# Cache-busting: forces Docker to re-run npm run build on every deploy
+# so VITE_ env vars are always baked in fresh (not served from cache)
+ARG CACHEBUST=1
+RUN echo "Cache bust: $CACHEBUST" && npm run build
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:alpine
