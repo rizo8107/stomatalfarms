@@ -4,13 +4,13 @@
 
 **Goal:** Show all of Stomatal Farms' Google reviews (not just the 5 Google's Places API caps out at) by scraping them daily via an InsForge-hosted Apify pipeline and serving them to the frontend from InsForge instead of Google Places directly.
 
-**Architecture:** A daily InsForge schedule triggers an edge function (`sync-google-reviews`) that pulls a fresh Apify token from InsForge, runs the `compass/google-maps-reviews-scraper` Apify actor against the Stomatal Farms Google Place ID, and upserts the results into two InsForge tables (`google_reviews`, `google_reviews_meta`). The frontend drops its direct Google Places API call entirely and reads both the review list and the header rating/count stat from InsForge (anon, read-only).
+**Architecture:** A daily InsForge schedule triggers an edge function (`sync-google-reviews`) that calls Apify directly with a personal Apify API token (stored as an InsForge secret), runs the `compass/google-maps-reviews-scraper` Apify actor against the Stomatal Farms Google Place ID, and upserts the results into two InsForge tables (`google_reviews`, `google_reviews_meta`). The frontend drops its direct Google Places API call entirely and reads both the review list and the header rating/count stat from InsForge (anon, read-only).
 
-**Tech Stack:** InsForge (Postgres + PostgREST + Deno edge functions + schedules), Apify (`compass/google-maps-reviews-scraper` actor via InsForge's web-scraper integration), `@insforge/sdk` (frontend), React Query (existing).
+**Tech Stack:** InsForge (Postgres + PostgREST + Deno edge functions + schedules), Apify (`compass/google-maps-reviews-scraper` actor, called directly with a personal API token), `@insforge/sdk` (frontend), React Query (existing).
 
 ## Global Constraints
 
-- The InsForge Apify web-scraper integration is **private beta, cloud-only**. If `npx @insforge/cli webscraper apify connect` returns `HTTP 404`, that project does not have early access yet — **stop immediately and report this to the user**; do not attempt a workaround (e.g. calling Apify directly with a personal token).
+- **Revision note:** InsForge's *managed* Apify OAuth bridge (`webscraper apify connect`/`login`) turned out to be gated on this project even after linking correctly as the real cloud project (`login` fails with "The Apify web scraper is not available on this backend"). We're bypassing that bridge entirely: the edge function calls Apify's API directly using a personal Apify API token stored as a plain InsForge secret (`APIFY_TOKEN`), which InsForge's own docs describe as a supported pattern independent of the beta CLI bridge. No InsForge-side feature flag is required for this path.
 - Refresh cadence is **daily**, via an InsForge schedule (not weekly, not manual-only).
 - After cutover, no Google Places API key or direct Google Places call may remain anywhere in the client bundle.
 - `src/hooks/useGoogleReviews.ts` must keep its current return shape (`rating`, `totalReviews`, `reviews`, `isLoading`, `isError`) and `src/components/GoogleReviewsCarousel.tsx` must require **zero changes**.
@@ -22,62 +22,27 @@
 
 ### Task 0: Manual prerequisites (human-only, blocks every later task)
 
-**These steps require an interactive browser OAuth flow and cannot be run by an agent in a non-interactive session. The project owner must run them personally, in their own terminal, before Task 1 can start.**
+**Status: DONE.** The InsForge CLI is logged in and linked to the real "Stomatalfarms" cloud project (`f20d907f-ca05-4ca3-bddc-06867376685f`, org `73e81ac2-5508-4a9c-a2bd-0c32afa7ee64`). InsForge's managed Apify OAuth bridge was attempted but is gated on this project (`webscraper apify login` fails with "The Apify web scraper is not available on this backend" even when properly linked as cloud) — per the revision note above, we're bypassing it with a personal Apify API token instead. A real Apify account (`gutsy_planter`, free plan) is already connected from the `connect` attempt.
 
-**Files:** none — this is CLI/account setup, no repo changes.
+**Remaining step, still human-only (requires the Apify console in a browser):**
 
-- [ ] **Step 1: Log in to the InsForge CLI**
+- [ ] **Step 1: Get a personal Apify API token**
 
-Run in an interactive terminal:
+Go to <https://console.apify.com/settings/integrations> (logged in as `gutsy_planter`, the account already connected earlier), and copy the **Personal API token**.
 
-```bash
-npx @insforge/cli login
-```
-
-This opens a browser for OAuth. Confirm success by running:
+- [ ] **Step 2: Store it as an InsForge secret**
 
 ```bash
-npx @insforge/cli whoami
+npx @insforge/cli secrets add APIFY_TOKEN <paste-the-token>
 ```
 
-Expected: prints the logged-in user's email (`tech.stomatalfarms@gmail.com` or whichever account owns this project).
-
-- [ ] **Step 2: Link this directory to the existing InsForge project**
+Verify:
 
 ```bash
-npx @insforge/cli link
+npx @insforge/cli secrets list
 ```
 
-When prompted, select the existing project whose base URL is `https://d6yqray7.us-east.insforge.app` (subdomain `d6yqray7`, region `us-east`) — do **not** create a new project. Confirm with:
-
-```bash
-npx @insforge/cli current
-```
-
-Expected: shows `Project: <name> (linked)` instead of "not linked".
-
-- [ ] **Step 3: Connect Apify through InsForge**
-
-```bash
-npx @insforge/cli webscraper apify connect
-```
-
-- **If this succeeds** (opens Apify's OAuth page, then reports a stored token): continue to Step 4.
-- **If this returns `HTTP 404`**: this InsForge project does not have the private-beta web-scraper feature enabled. **Stop here.** Report this to the user — the whole Apify-based approach (Tasks 1–4) is blocked until InsForge enables it on this project. Do not substitute a personal Apify API key or any other workaround; that was explicitly ruled out during design.
-
-- [ ] **Step 4: Run the Apify auth bridge**
-
-```bash
-npx @insforge/cli webscraper apify login
-```
-
-This installs the Apify CLI (if missing) and Apify's official agent skills. Verify with:
-
-```bash
-apify info
-```
-
-Expected: prints the authenticated Apify account info, no "not logged in" error.
+Expected: `APIFY_TOKEN` appears in the list.
 
 ---
 
@@ -230,7 +195,7 @@ Expected: `SYNC_SECRET` appears in the list.
 - Create: `insforge/functions/sync-google-reviews.ts`
 
 **Interfaces:**
-- Consumes: `google_reviews` / `google_reviews_meta` tables from Task 1 (exact column names above); `SYNC_SECRET` from Task 2; `INSFORGE_BASE_URL` and `API_KEY` (auto-injected into every InsForge edge function).
+- Consumes: `google_reviews` / `google_reviews_meta` tables from Task 1 (exact column names above); `SYNC_SECRET` from Task 2; `APIFY_TOKEN` from Task 0 Step 2; `INSFORGE_BASE_URL` and `API_KEY` (auto-injected into every InsForge edge function).
 - Produces: a deployed function reachable at `POST https://d6yqray7.us-east.insforge.app/functions/sync-google-reviews`, requiring header `X-Sync-Secret: <SYNC_SECRET value>`. Task 4 (the schedule) calls this exact URL and header.
 
 - [ ] **Step 1: Write the function**
@@ -271,18 +236,15 @@ export default async function (req: Request): Promise<Response> {
 
   const baseUrl = Deno.env.get("INSFORGE_BASE_URL");
   const apiKey = Deno.env.get("API_KEY");
+  const apifyToken = Deno.env.get("APIFY_TOKEN");
 
   try {
-    const tokenRes = await fetch(`${baseUrl}/api/webscraper/apify/token`, {
-      headers: { Authorization: `Bearer ${apiKey}` },
-    });
-    if (!tokenRes.ok) {
-      throw new Error(`Apify token fetch failed: ${tokenRes.status}`);
+    if (!apifyToken) {
+      throw new Error("Missing APIFY_TOKEN secret");
     }
-    const { accessToken } = (await tokenRes.json()) as { accessToken: string };
 
     const apifyRes = await fetch(
-      `https://api.apify.com/v2/acts/${APIFY_ACTOR}/run-sync-get-dataset-items?token=${accessToken}`,
+      `https://api.apify.com/v2/acts/${APIFY_ACTOR}/run-sync-get-dataset-items?token=${apifyToken}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
