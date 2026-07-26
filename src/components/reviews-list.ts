@@ -1,6 +1,34 @@
 // This file is auto-generated. Do not edit directly.
 export const reviews = [
   {
+    "src": "/reviews/revw 26-07 (1).png",
+    "alt": "Customer Review 26-07 (1)"
+  },
+  {
+    "src": "/reviews/revw 26-07 (2).png",
+    "alt": "Customer Review 26-07 (2)"
+  },
+  {
+    "src": "/reviews/revw 26-07 (3).png",
+    "alt": "Customer Review 26-07 (3)"
+  },
+  {
+    "src": "/reviews/revw 26-07 (4).png",
+    "alt": "Customer Review 26-07 (4)"
+  },
+  {
+    "src": "/reviews/revw 26-07 (5).png",
+    "alt": "Customer Review 26-07 (5)"
+  },
+  {
+    "src": "/reviews/revw 26-07 (6).png",
+    "alt": "Customer Review 26-07 (6)"
+  },
+  {
+    "src": "/reviews/revw 26-07 (7).png",
+    "alt": "Customer Review 26-07 (7)"
+  },
+  {
     "src": "/reviews/revw 22-05 (1).png",
     "alt": "Customer Review 22-05 (1)"
   },

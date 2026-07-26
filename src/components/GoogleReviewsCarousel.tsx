@@ -9,7 +9,7 @@ export const GoogleReviewsCarousel = () => {
   const autoplay = Autoplay({ delay: 2800, stopOnInteraction: false, stopOnMouseEnter: true });
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, align: 'start', dragFree: true },
+    { loop: true, align: 'start', skipSnaps: false, duration: 25 },
     [autoplay]
   );
 
