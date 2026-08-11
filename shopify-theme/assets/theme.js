@@ -64,3 +64,19 @@ class NavDropdown extends HTMLElement {
 
 customElements.define("sticky-header", StickyHeader);
 customElements.define("nav-dropdown", NavDropdown);
+
+import EmblaCarousel from "./embla-carousel.esm.js";
+
+class EmblaCarouselBase extends HTMLElement {
+  connectedCallback() {
+    const container = this.querySelector(".embla__container");
+    if (!container) return;
+    this.emblaApi = EmblaCarousel(this, { loop: true, align: "start", skipSnaps: false, duration: 25 });
+  }
+
+  disconnectedCallback() {
+    this.emblaApi?.destroy();
+  }
+}
+
+customElements.define("embla-carousel-base", EmblaCarouselBase);
