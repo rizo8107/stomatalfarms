@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="format-detection" content="telephone=no">
-    <title>{{ page_title }}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+    <title>{% if page_title == blank or page_title == shop.name %}Stomatal Farms | Aurora Aromatic Wellness Products{% else %}{{ page_title }}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}{% endif %}</title>
     <meta name="description" content="{{ page_description | default: 'Authentic aromatic wellness products crafted from traditional Indian herbs and essential oils. Incense sticks, cups, ghee lamps & more from Stomatal Farms.' | escape }}">
     <meta name="author" content="Stomatal Farms">
 
