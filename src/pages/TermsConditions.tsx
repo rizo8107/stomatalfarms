@@ -66,7 +66,10 @@ const TermsConditions = () => {
                   4. Shipping & Delivery
                 </h2>
                 <p className="text-muted-foreground font-light leading-relaxed">
-                  We strive to dispatch orders within 3 to 5 working days. While we use reliable shipping partners, transit times may vary depending on locations. Stomatal Farms is not responsible for delays caused by logistics companies or force majeure events.
+                  There is <strong>no minimum order value</strong> required — you are welcome to order even a single item. We provide <strong>Free Shipping on all orders over ₹999</strong> across India. For orders below ₹999, a flat shipping fee of <strong>₹60</strong> applies.
+                </p>
+                <p className="text-muted-foreground font-light leading-relaxed">
+                  We strive to dispatch orders within 3 to 5 working days. While we partner with reliable logistics providers, transit times may vary by destination. Stomatal Farms is not liable for unexpected delays caused by courier partners or force majeure events.
                 </p>
               </section>
 

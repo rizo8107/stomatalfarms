@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { ShoppingCart, Minus, Plus, Trash2, ArrowRight, Loader2, X } from "lucide-react";
+import { ShoppingCart, Minus, Plus, Trash2, ArrowRight, Loader2, X, Truck, CheckCircle2, Sparkles, AlertCircle } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { fetchProducts, fetchProductByHandle, ShopifyProduct } from "@/lib/shopify";
-import { Link } from "react-router-dom";
 
-const MIN_ORDER = 400;
+const FREE_SHIPPING_THRESHOLD = 999;
+const FLAT_SHIPPING_FEE = 60;
+const AARAMBH_HANDLE = "aarambh-the-starter-collection-incense-sticks-by-aurora-stomatal-farms";
+const AARAMBH_VARIANT_ID = "gid://shopify/ProductVariant/48305831411869";
 
 export const CartDrawer = () => {
   const {
@@ -22,32 +24,45 @@ export const CartDrawer = () => {
   const [aarambhProduct, setAarambhProduct] = useState<ShopifyProduct | null>(null);
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = items.reduce(
+  const subtotal = items.reduce(
     (sum, item) => sum + parseFloat(item.price.amount) * item.quantity,
     0
   );
 
-  const belowMinimum = totalPrice < MIN_ORDER && items.length > 0;
-  const remaining = Math.max(0, MIN_ORDER - totalPrice);
-  const hasAarambh = items.some(
-    (item) =>
-      item.variantId === "gid://shopify/ProductVariant/48305831411869" ||
-      item.product.node.handle === "aarambh-the-starter-collection-incense-sticks-by-aurora-stomatal-farms"
-  );
+  const isFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
+  const amountAway = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
+  const shippingFee = isFreeShipping ? 0 : FLAT_SHIPPING_FEE;
+  const estimatedTotal = subtotal + shippingFee;
+  const progressPercent = Math.min(100, Math.round((subtotal / FREE_SHIPPING_THRESHOLD) * 100));
 
-  // Fetch suggestions whenever cart opens and total is below minimum
+  const isAarambhItem = (item: typeof items[0]) =>
+    item.variantId === AARAMBH_VARIANT_ID ||
+    item.product.node.handle === AARAMBH_HANDLE;
+
+  const hasAarambh = items.some(isAarambhItem);
+  const hasOnlyAarambh = items.length > 0 && items.every(isAarambhItem);
+  const hasQualifyingItem = items.some((item) => !isAarambhItem(item));
+
+  // Fetch suggestions when cart opens (prioritize combos & best-sellers)
   useEffect(() => {
-    if (!isCartOpen || !belowMinimum) return;
-    fetchProducts(8).then((all) => {
+    if (!isCartOpen || items.length === 0) return;
+    fetchProducts(12).then((all) => {
       const cartIds = new Set(items.map((i) => i.product.node.id));
-      setSuggestions(all.filter((p) => !cartIds.has(p.node.id)).slice(0, 4));
+      const nonCart = all.filter((p) => !cartIds.has(p.node.id) && p.node.handle !== AARAMBH_HANDLE);
+      // Prioritize combos first, then other products
+      const sorted = nonCart.sort((a, b) => {
+        const aCombo = a.node.title.toLowerCase().includes("combo") ? -1 : 1;
+        const bCombo = b.node.title.toLowerCase().includes("combo") ? -1 : 1;
+        return aCombo - bCombo;
+      });
+      setSuggestions(sorted.slice(0, 3));
     });
-  }, [isCartOpen, belowMinimum]);
+  }, [isCartOpen, items.length]);
 
   // Fetch Aarambh product details when cart is open
   useEffect(() => {
     if (!isCartOpen) return;
-    fetchProductByHandle("aarambh-the-starter-collection-incense-sticks-by-aurora-stomatal-farms").then((prod) => {
+    fetchProductByHandle(AARAMBH_HANDLE).then((prod) => {
       if (prod) {
         setAarambhProduct({ node: prod });
       }
@@ -55,7 +70,7 @@ export const CartDrawer = () => {
   }, [isCartOpen]);
 
   const handleCheckout = async () => {
-    if (belowMinimum) return;
+    if (items.length === 0 || hasOnlyAarambh) return;
     try {
       const url = await createCheckout();
       if (url) {
@@ -102,10 +117,63 @@ export const CartDrawer = () => {
           <button
             onClick={() => setCartOpen(false)}
             className="w-9 h-9 rounded-full border border-[#2e3f25]/10 flex items-center justify-center text-[#6a7462] hover:bg-[#2e3f25]/5 transition-colors"
+            aria-label="Close Cart"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
+
+        {/* Free Shipping Progress Nudge */}
+        {items.length > 0 && (
+          <div className="px-6 py-3.5 border-b border-[#2e3f25]/8 bg-[#fbf7ee]">
+            {isFreeShipping ? (
+              <div className="flex items-center gap-2.5 text-xs font-semibold text-[#2e4e18] bg-[#4f7a2e]/10 px-3.5 py-2.5 rounded-xl border border-[#4f7a2e]/20 animate-fade-in">
+                <div className="w-5 h-5 rounded-full bg-[#4f7a2e] flex items-center justify-center text-white flex-shrink-0 shadow-sm">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                </div>
+                <span>
+                  🎉 You've unlocked <strong className="font-bold text-[#2e4e18]">FREE Shipping</strong>!
+                </span>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-[#2a3625] font-medium flex items-center gap-1.5">
+                    <Truck className="w-3.5 h-3.5 text-[#b56c3d]" />
+                    You're <span className="font-bold text-[#b56c3d]">₹{Math.ceil(amountAway)}</span> away from <span className="font-bold text-[#4f7a2e]">Free Shipping</span>
+                  </span>
+                  <span className="text-[10px] font-bold text-[#6a7462]">{progressPercent}%</span>
+                </div>
+                <div className="w-full h-2 rounded-full bg-[#2e3f25]/10 overflow-hidden relative">
+                  <div
+                    className="h-full rounded-full transition-all duration-500 ease-out"
+                    style={{
+                      width: `${progressPercent}%`,
+                      background: "linear-gradient(90deg, #b56c3d 0%, #d4af37 60%, #4f7a2e 100%)",
+                    }}
+                  />
+                </div>
+                <p className="text-[10px] text-[#6a7462] flex items-center justify-between">
+                  <span>₹60 flat shipping below ₹999</span>
+                  <span className="font-semibold text-[#4f7a2e]">Free shipping over ₹999</span>
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Aarambh Standalone Notice (when Aarambh is the only item in cart) */}
+        {hasOnlyAarambh && (
+          <div className="mx-6 mt-4 p-3.5 rounded-2xl bg-[#fff8ed] border border-[#d4af37]/35 flex items-start gap-2.5 text-xs text-[#7a5c00] animate-fade-in">
+            <AlertCircle className="w-4 h-4 text-[#b58900] flex-shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <p className="font-bold text-[#2a3625]">Aarambh is an Order Add-on</p>
+              <p className="text-[11px] leading-relaxed text-[#6a7462]">
+                The Aarambh Starter Set (₹99) rides alongside any full-sized pack or combo. Please add any full-sized product below to proceed to checkout!
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Items */}
         <div className="flex-1 min-h-0 overflow-y-auto px-6 py-4">
@@ -151,6 +219,7 @@ export const CartDrawer = () => {
                       <button
                         onClick={() => removeItem(item.variantId)}
                         className="text-[#6a7462]/50 hover:text-red-400 transition-colors"
+                        aria-label="Remove item"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -158,6 +227,7 @@ export const CartDrawer = () => {
                         <button
                           onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
                           className="w-5 h-5 flex items-center justify-center text-[#6a7462] hover:text-[#2a3625] transition-colors"
+                          aria-label="Decrease quantity"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
@@ -167,6 +237,7 @@ export const CartDrawer = () => {
                         <button
                           onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
                           className="w-5 h-5 flex items-center justify-center text-[#6a7462] hover:text-[#2a3625] transition-colors"
+                          aria-label="Increase quantity"
                         >
                           <Plus className="w-3 h-3" />
                         </button>
@@ -176,35 +247,31 @@ export const CartDrawer = () => {
                 );
               })}
 
-              {/* Aarambh Starter Pack Suggestion */}
-              {!hasAarambh && aarambhProduct && (() => {
+              {/* Aarambh Checkout Order-Bump (on qualifying carts) */}
+              {hasQualifyingItem && !hasAarambh && aarambhProduct && (() => {
                 const node = aarambhProduct.node;
                 const img = node.images?.edges?.[0]?.node;
                 const variant = node.variants.edges[0]?.node;
                 if (!variant) return null;
 
-                const titleParts = node.title.split('|');
-                const displayTitle = "Aarambh — The Starter Pack";
-                const displaySubtitle = titleParts[1]?.trim() || "6 Incense Sticks";
-
                 return (
-                  <div className="p-4 rounded-2xl border border-dashed border-[#d4af37]/45 bg-[#fffdf9] shadow-sm relative overflow-hidden group/upsell mt-4">
+                  <div className="p-4 rounded-2xl border border-dashed border-[#d4af37]/50 bg-[#fffdf8] shadow-sm relative overflow-hidden group/upsell mt-4">
                     {/* Golden top indicator line */}
                     <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-[#d4af37]/60 via-[#f5c842] to-[#d4af37]/60" />
                     
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] font-bold text-[#b58900] bg-[#fff8ed] px-2 py-0.5 rounded-full border border-[#d4af37]/15 flex items-center gap-1">
-                        ✨ Hey! Try our starter pack
+                      <span className="text-[10px] font-bold text-[#b58900] bg-[#fff8ed] px-2 py-0.5 rounded-full border border-[#d4af37]/20 flex items-center gap-1">
+                        <Sparkles className="w-3 h-3 text-[#d4af37]" /> Exclusive Order-Bump
                       </span>
-                      <span className="text-[11px] font-semibold text-[#4f7a2e]">
-                        Add for just ₹99
+                      <span className="text-[11px] font-black text-[#4f7a2e]">
+                        Only ₹99
                       </span>
                     </div>
 
                     <div className="flex gap-3">
                       <div className="w-14 h-14 rounded-xl overflow-hidden bg-[#f0ece4] flex-shrink-0 border border-[#2e3f25]/5">
                         {img ? (
-                          <img src={img.url} alt={displayTitle} className="w-full h-full object-cover group-hover/upsell:scale-105 transition-transform duration-500" />
+                          <img src={img.url} alt="Aarambh Starter Set" className="w-full h-full object-cover group-hover/upsell:scale-105 transition-transform duration-500" />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-xl">🕯️</div>
                         )}
@@ -212,14 +279,13 @@ export const CartDrawer = () => {
 
                       <div className="flex-1 min-w-0 flex flex-col justify-center">
                         <h4
-                          className="text-xs font-bold text-[#2a3625] leading-snug line-clamp-1"
+                          className="text-xs font-bold text-[#2a3625] leading-snug line-clamp-2"
                           style={{ fontFamily: "'Cormorant Garamond', serif" }}
                         >
-                          {displayTitle}
+                          Add the Aarambh Starter Set — 3 sacred scents — for ₹99
                         </h4>
-                        <p className="text-[10px] text-[#6a7462] mb-1 line-clamp-1">{displaySubtitle}</p>
-                        <p className="text-[11px] italic text-[#8a9284] leading-tight line-clamp-2">
-                          Perfect to experience our pure natural aromas before ordering full packs.
+                        <p className="text-[10px] text-[#6a7462] mt-0.5 line-clamp-2 leading-tight">
+                          Experience all 3 signature aromas (Dasangam, Floral, Lemongrass) alongside your order.
                         </p>
                       </div>
 
@@ -235,10 +301,10 @@ export const CartDrawer = () => {
                               selectedOptions: variant.selectedOptions || [],
                             });
                           }}
-                          className="px-3.5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider text-white transition-all shadow hover:shadow-md hover:scale-[1.03]"
+                          className="px-3.5 py-2 rounded-full text-[10px] font-black uppercase tracking-wider text-white transition-all shadow hover:shadow-md hover:scale-[1.03]"
                           style={{ background: "linear-gradient(135deg, #d4af37, #b58900)" }}
                         >
-                          + Add
+                          + Add ₹99
                         </button>
                       </div>
                     </div>
@@ -246,21 +312,25 @@ export const CartDrawer = () => {
                 );
               })()}
 
-              {/* Below minimum — suggestions */}
-              {belowMinimum && suggestions.length > 0 && (
-                <div className="mt-4">
-                  <p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#6a7462] mb-3">
-                    You might also like
+              {/* Suggestions Section */}
+              {suggestions.length > 0 && (
+                <div className="mt-4 pt-3 border-t border-[#2e3f25]/5">
+                  <p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#6a7462] mb-3 flex items-center justify-between">
+                    <span>{hasOnlyAarambh ? "Add a Pack or Combo to Proceed" : isFreeShipping ? "You might also like" : "Add to reach Free Shipping"}</span>
+                    {!isFreeShipping && !hasOnlyAarambh && (
+                      <span className="text-[#b56c3d] font-bold">₹{Math.ceil(amountAway)} to go</span>
+                    )}
                   </p>
                   <div className="space-y-2">
                     {suggestions.map((product) => {
                       const img = product.node.images?.edges?.[0]?.node;
                       const variant = product.node.variants.edges[0]?.node;
                       if (!variant) return null;
+                      const isCombo = product.node.title.toLowerCase().includes("combo");
                       return (
                         <div
                           key={product.node.id}
-                          className="flex items-center gap-3 p-2.5 rounded-xl border border-[#2e3f25]/8 bg-white"
+                          className="flex items-center gap-3 p-2.5 rounded-xl border border-[#2e3f25]/8 bg-white hover:border-[#4f7a2e]/30 transition-colors"
                         >
                           <div className="w-11 h-11 rounded-lg overflow-hidden bg-[#f0ece4] flex-shrink-0">
                             {img ? (
@@ -270,12 +340,19 @@ export const CartDrawer = () => {
                             )}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p
-                              className="text-xs text-[#2a3625] leading-snug line-clamp-1"
-                              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}
-                            >
-                              {product.node.title}
-                            </p>
+                            <div className="flex items-center gap-1.5">
+                              <p
+                                className="text-xs text-[#2a3625] leading-snug line-clamp-1"
+                                style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}
+                              >
+                                {product.node.title}
+                              </p>
+                              {isCombo && (
+                                <span className="text-[8px] font-black bg-[#4f7a2e]/10 text-[#4f7a2e] px-1.5 py-0.2 rounded-full uppercase tracking-wider">
+                                  Combo
+                                </span>
+                              )}
+                            </div>
                             <p className="text-xs font-bold text-[#4f7a2e]">
                               ₹{Math.round(parseFloat(variant.price.amount))}
                             </p>
@@ -291,7 +368,7 @@ export const CartDrawer = () => {
                                 selectedOptions: variant.selectedOptions || [],
                               });
                             }}
-                            className="flex-shrink-0 px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-wider text-white"
+                            className="flex-shrink-0 px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-wider text-white transition-transform hover:scale-105"
                             style={{ background: "#4f7a2e" }}
                           >
                             + Add
@@ -309,48 +386,65 @@ export const CartDrawer = () => {
         {/* Footer */}
         {items.length > 0 && (
           <div className="flex-shrink-0 px-6 py-5 border-t border-[#2e3f25]/8 bg-[#fffbf5] space-y-3">
-            {/* Minimum order progress bar */}
-            {belowMinimum && (
-              <div className="rounded-2xl bg-[#fff8ed] border border-[#f5c842]/40 px-4 py-3 space-y-2">
-                <p className="text-[11px] text-[#7a5c00] font-semibold leading-snug">
-                  Add <span className="font-black text-[#b56c3d]">₹{Math.ceil(remaining)}</span> more to unlock checkout
-                  <span className="text-[#6a7462] font-normal"> (min. order ₹{MIN_ORDER})</span>
-                </p>
-                <div className="w-full h-1.5 rounded-full bg-[#f5c842]/20 overflow-hidden">
-                  <div
-                    className="h-full rounded-full bg-[#f5c842] transition-all duration-500"
-                    style={{ width: `${Math.min(100, (totalPrice / MIN_ORDER) * 100)}%` }}
-                  />
-                </div>
+            {/* Price Breakdown */}
+            <div className="space-y-2 pb-2 border-b border-[#2e3f25]/8 text-xs">
+              <div className="flex items-center justify-between text-[#6a7462]">
+                <span>Subtotal</span>
+                <span className="font-semibold text-[#2a3625]">₹{Math.round(subtotal)}</span>
               </div>
-            )}
+              <div className="flex items-center justify-between">
+                <span className="text-[#6a7462] flex items-center gap-1.5">
+                  <Truck className="w-3.5 h-3.5 text-[#6a7462]" /> Shipping
+                </span>
+                {isFreeShipping ? (
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[11px] text-[#6a7462] line-through">₹{FLAT_SHIPPING_FEE}</span>
+                    <span className="text-[11px] font-bold text-[#4f7a2e] uppercase tracking-wider bg-[#4f7a2e]/10 px-2 py-0.5 rounded-full">
+                      FREE
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-semibold text-[#2a3625]">₹{FLAT_SHIPPING_FEE}</span>
+                    <span className="text-[10px] text-[#6a7462]">(Flat rate)</span>
+                  </div>
+                )}
+              </div>
+            </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold text-[#6a7462] uppercase tracking-widest">Total</span>
+              <div>
+                <span className="text-[10px] font-bold text-[#6a7462] uppercase tracking-widest block">Estimated Total</span>
+                <span className="text-[10px] text-[#6a7462]/70 font-light">Taxes & shipping confirmed at checkout</span>
+              </div>
               <span
                 className="text-2xl text-[#2a3625]"
-                style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
+                style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}
               >
-                ₹{Math.round(totalPrice)}
+                ₹{Math.round(estimatedTotal)}
               </span>
             </div>
 
             <button
               onClick={handleCheckout}
-              disabled={isLoading || belowMinimum}
+              disabled={isLoading || items.length === 0 || hasOnlyAarambh}
               className={`w-full flex items-center justify-center gap-2 py-4 rounded-full text-xs font-black uppercase tracking-[0.2em] text-white transition-all ${
-                belowMinimum
-                  ? "opacity-40 cursor-not-allowed"
-                  : "hover:-translate-y-0.5 hover:shadow-lg"
+                isLoading || items.length === 0 || hasOnlyAarambh
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
               }`}
-              style={{ background: "linear-gradient(135deg, #2e4e18, #4f7a2e)" }}
+              style={{
+                background: hasOnlyAarambh
+                  ? "#8a9284"
+                  : "linear-gradient(135deg, #2e4e18, #4f7a2e)",
+              }}
             >
               {isLoading ? (
                 <><Loader2 className="w-4 h-4 animate-spin" /> Processing…</>
-              ) : belowMinimum ? (
-                <>Add ₹{Math.ceil(remaining)} more to checkout</>
+              ) : hasOnlyAarambh ? (
+                <>Add a pack or combo to checkout</>
               ) : (
-                <>Checkout <ArrowRight className="w-3.5 h-3.5" /></>
+                <>Checkout • ₹{Math.round(estimatedTotal)} <ArrowRight className="w-3.5 h-3.5" /></>
               )}
             </button>
           </div>

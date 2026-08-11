@@ -15,6 +15,10 @@ const faqs = [
     q: "How long does each product last?",
     a: "Our sticks and cups both burn for ~45 minutes. The aroma and essence linger for hours after the burn ends, filling your space long after the flame goes out.",
   },
+  {
+    q: "What are your shipping rates and is there a minimum order?",
+    a: "We have no minimum order value — you can purchase even a single item! We provide FREE shipping on all orders over ₹999 across India. For orders under ₹999, a flat shipping fee of ₹60 applies.",
+  },
 ];
 
 const FAQ = () => {

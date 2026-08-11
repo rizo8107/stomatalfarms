@@ -34,12 +34,16 @@ const Header = () => {
 
   return (
     <>
-      {/* Top trust bar */}
+      {/* Top announcement & shipping trust bar */}
       <div
-        className="w-full text-white text-center py-2.5 px-4 text-[10px] md:text-xs font-semibold tracking-[0.15em] uppercase"
+        className="w-full text-white text-center py-2 px-4 text-[10px] md:text-xs font-semibold tracking-[0.12em] uppercase flex items-center justify-center gap-2 md:gap-4 flex-wrap"
         style={{ background: "linear-gradient(135deg, #1e3612, #2e4e18)" }}
       >
-        🌿 100% Natural &nbsp;·&nbsp; Ritual Ready
+        <span>🚚 FREE SHIPPING OVER ₹999</span>
+        <span className="opacity-40 hidden sm:inline">·</span>
+        <span className="hidden sm:inline">₹60 FLAT SHIPPING BELOW ₹999</span>
+        <span className="opacity-40">·</span>
+        <span>NO MINIMUM ORDER</span>
       </div>
 
       <header 

@@ -196,7 +196,7 @@ Expected: `SYNC_SECRET` appears in the list.
 
 **Interfaces:**
 - Consumes: `google_reviews` / `google_reviews_meta` tables from Task 1 (exact column names above); `SYNC_SECRET` from Task 2; `APIFY_TOKEN` from Task 0 Step 2; `INSFORGE_BASE_URL` and `API_KEY` (auto-injected into every InsForge edge function).
-- Produces: a deployed function reachable at `POST https://d6yqray7.us-east.insforge.app/functions/sync-google-reviews`, requiring header `X-Sync-Secret: <SYNC_SECRET value>`. Task 4 (the schedule) calls this exact URL and header.
+- Produces: a deployed function reachable at `POST https://d6yqray7.function2.insforge.app/sync-google-reviews`, requiring header `X-Sync-Secret: <SYNC_SECRET value>`. Task 4 (the schedule) calls this exact URL and header.
 
 - [ ] **Step 1: Write the function**
 
@@ -338,7 +338,7 @@ Expected: `sync-google-reviews` listed with `status: active`.
 - [ ] **Step 4: Invoke it once manually and verify data lands**
 
 ```bash
-curl -s -X POST "https://d6yqray7.us-east.insforge.app/functions/sync-google-reviews" \
+curl -s -X POST "https://d6yqray7.function2.insforge.app/sync-google-reviews" \
   -H "X-Sync-Secret: <the SYNC_SECRET value from Task 2>"
 ```
 
@@ -375,7 +375,7 @@ git commit -m "feat: add sync-google-reviews edge function (Apify -> InsForge)"
 npx @insforge/cli schedules create \
   --name "Sync Google Reviews" \
   --cron "0 3 * * *" \
-  --url "https://d6yqray7.us-east.insforge.app/functions/sync-google-reviews" \
+  --url "https://d6yqray7.function2.insforge.app/sync-google-reviews" \
   --method POST \
   --headers '{"X-Sync-Secret": "${{secrets.SYNC_SECRET}}"}'
 ```

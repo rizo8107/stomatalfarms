@@ -482,6 +482,19 @@ Product Link: ${productUrl}`;
                     </div>
                   )}
                 </div>
+
+                {/* Aarambh Exclusive Add-On Callout */}
+                {product.handle === "aarambh-the-starter-collection-incense-sticks-by-aurora-stomatal-farms" && (
+                  <div className="p-4 rounded-2xl bg-[#fff8ed] border border-[#d4af37]/40 space-y-1.5 animate-fade-in mt-3">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-[#b58900]">
+                      <Sparkles className="w-4 h-4 text-[#d4af37]" />
+                      <span>Exclusive Order Add-On — ₹99 (3 Sacred Scents)</span>
+                    </div>
+                    <p className="text-xs text-[#6a7462] leading-relaxed">
+                      The Aarambh Starter Set features 3 sacred scents (Dasangam, Floral, Lemongrass) and is crafted as an add-on to ride alongside any full-sized pack or combo order.
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Product Overview */}
@@ -685,18 +698,31 @@ Product Link: ${productUrl}`;
                   </div>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-border">
-                  <div className="flex items-center gap-3 text-sm text-foreground bg-[#5a8739]/5 rounded-xl p-4 border border-[#5a8739]/10 shadow-sm">
-                    <Leaf className="h-6 w-6 text-[#5a8739] flex-shrink-0" />
-                    <span className="font-medium">100% Natural</span>
+                <div className="space-y-3 pt-6 border-t border-border">
+                  {/* Shipping Assurance Banner */}
+                  <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#fffbf5] border border-[#2e3f25]/10 text-xs text-[#2a3625]">
+                    <div className="w-8 h-8 rounded-lg bg-[#4f7a2e]/10 flex items-center justify-center text-[#4f7a2e] flex-shrink-0">
+                      <Truck className="w-4 h-4" />
+                    </div>
+                    <div className="leading-snug">
+                      <span className="font-bold text-[#2e4e18]">Free Shipping over ₹999</span>
+                      <span className="text-[#6a7462]"> · ₹60 flat shipping below ₹999 · No minimum order</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3 text-sm text-foreground bg-[#5a8739]/5 rounded-xl p-4 border border-[#5a8739]/10 shadow-sm">
-                    <Shield className="h-6 w-6 text-[#5a8739] flex-shrink-0" />
-                    <span className="font-medium">Secure Payment</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-foreground bg-[#5a8739]/5 rounded-xl p-4 border border-[#5a8739]/10 shadow-sm">
-                    <Award className="h-6 w-6 text-[#5a8739] flex-shrink-0" />
-                    <span className="font-medium">Premium Quality</span>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div className="flex items-center gap-3 text-sm text-foreground bg-[#5a8739]/5 rounded-xl p-4 border border-[#5a8739]/10 shadow-sm">
+                      <Leaf className="h-6 w-6 text-[#5a8739] flex-shrink-0" />
+                      <span className="font-medium">100% Natural</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-sm text-foreground bg-[#5a8739]/5 rounded-xl p-4 border border-[#5a8739]/10 shadow-sm">
+                      <Shield className="h-6 w-6 text-[#5a8739] flex-shrink-0" />
+                      <span className="font-medium">Secure Payment</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-sm text-foreground bg-[#5a8739]/5 rounded-xl p-4 border border-[#5a8739]/10 shadow-sm">
+                      <Award className="h-6 w-6 text-[#5a8739] flex-shrink-0" />
+                      <span className="font-medium">Premium Quality</span>
+                    </div>
                   </div>
                 </div>
               )}
