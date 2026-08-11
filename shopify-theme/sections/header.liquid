@@ -2,7 +2,7 @@
   class="w-full text-white text-center py-2.5 px-4 text-[10px] md:text-xs font-semibold tracking-[0.15em] uppercase"
   style="background: linear-gradient(135deg, #1e3612, #2e4e18);"
 >
-  🌿 100% Natural &nbsp;&middot;&nbsp; Ritual Ready
+  {{ section.settings.trust_bar_text }}
 </div>
 
 <sticky-header>
@@ -18,12 +18,12 @@
       </a>
 
       <nav class="flex items-center gap-4 md:gap-8">
-        <nav-dropdown class="relative">
+        <nav-dropdown class="relative group">
           <button data-dropdown-trigger class="flex items-center gap-1.5 text-[10px] md:text-xs font-bold uppercase tracking-widest text-[#2a3625] hover:text-[#4f7a2e] transition-colors outline-none">
             Aurora
             <svg class="w-3 h-3 opacity-40 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
           </button>
-          <div data-dropdown-menu class="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-56 bg-white/95 backdrop-blur-lg border border-[#2e3f25]/10 rounded-[20px] shadow-2xl py-3 opacity-0 invisible transition-all duration-300 z-50 translate-y-2">
+          <div data-dropdown-menu class="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-56 bg-white/95 backdrop-blur-lg border border-[#2e3f25]/10 rounded-[20px] shadow-2xl py-3 opacity-0 invisible transition-all duration-300 z-50 translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
             {% for block in section.blocks %}
               <a
                 href="{{ block.settings.link }}"
@@ -72,7 +72,7 @@
       "type": "text",
       "id": "trust_bar_text",
       "label": "Trust bar text",
-      "default": "100% Natural · Ritual Ready"
+      "default": "🌿 100% Natural &nbsp;&middot;&nbsp; Ritual Ready"
     }
   ],
   "blocks": [

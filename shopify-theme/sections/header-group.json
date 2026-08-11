@@ -13,6 +13,15 @@
   "sections": {
     "header": {
       "type": "header",
+      "blocks": {
+        "aurora_category_1": { "type": "aurora_category", "settings": { "text": "Incense Sticks", "link": "/collections?category=sticks" } },
+        "aurora_category_2": { "type": "aurora_category", "settings": { "text": "Incense Cups", "link": "/collections?category=cups" } },
+        "aurora_category_3": { "type": "aurora_category", "settings": { "text": "Combos", "link": "/collections?category=combos" } },
+        "aurora_category_4": { "type": "aurora_category", "settings": { "text": "Ghee Lamps", "link": "/collections?category=ghee" } },
+        "aurora_category_5": { "type": "aurora_category", "settings": { "text": "Bath Salts", "link": "/collections?category=bath" } },
+        "aurora_category_6": { "type": "aurora_category", "settings": { "text": "Cow Dung Ash", "link": "/collections?category=ash" } }
+      },
+      "block_order": ["aurora_category_1", "aurora_category_2", "aurora_category_3", "aurora_category_4", "aurora_category_5", "aurora_category_6"],
       "settings": {}
     }
   },

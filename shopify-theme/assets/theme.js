@@ -35,10 +35,17 @@ class NavDropdown extends HTMLElement {
   connectedCallback() {
     this.trigger = this.querySelector("[data-dropdown-trigger]");
     this.menu = this.querySelector("[data-dropdown-menu]");
+    this.onDocumentClick = this.onDocumentClick.bind(this);
     this.trigger.addEventListener("click", () => this.toggle());
-    document.addEventListener("click", (e) => {
-      if (!this.contains(e.target)) this.close();
-    });
+    document.addEventListener("click", this.onDocumentClick);
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener("click", this.onDocumentClick);
+  }
+
+  onDocumentClick(e) {
+    if (!this.contains(e.target)) this.close();
   }
 
   toggle() {
