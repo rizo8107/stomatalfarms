@@ -23,7 +23,7 @@
             Aurora
             <svg class="w-3 h-3 opacity-40 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
           </button>
-          <div data-dropdown-menu class="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-56 bg-white/95 backdrop-blur-lg border border-[#2e3f25]/10 rounded-[20px] shadow-2xl py-3 opacity-0 invisible transition-all duration-300 z-50 translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
+          <div data-dropdown-menu class="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-56 bg-white/95 backdrop-blur-lg border border-[#2e3f25]/10 rounded-[20px] shadow-2xl py-3 opacity-0 invisible transition-all duration-300 z-50 translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 data-[open]:opacity-100 data-[open]:visible data-[open]:translate-y-0">
             {% for block in section.blocks %}
               <a
                 href="{{ block.settings.link }}"

@@ -49,18 +49,16 @@ class NavDropdown extends HTMLElement {
   }
 
   toggle() {
-    const isOpen = this.menu.classList.contains("opacity-100");
+    const isOpen = this.menu.hasAttribute("data-open");
     isOpen ? this.close() : this.open();
   }
 
   open() {
-    this.menu.classList.add("opacity-100", "visible", "translate-y-0");
-    this.menu.classList.remove("opacity-0", "invisible", "translate-y-2");
+    this.menu.setAttribute("data-open", "");
   }
 
   close() {
-    this.menu.classList.remove("opacity-100", "visible", "translate-y-0");
-    this.menu.classList.add("opacity-0", "invisible", "translate-y-2");
+    this.menu.removeAttribute("data-open");
   }
 }
 
