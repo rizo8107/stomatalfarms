@@ -1,77 +1,99 @@
-<header>
-  <h2 class="header__title">
-    {{ shop.name | link_to: routes.root_url }}
-  </h2>
+<div
+  class="w-full text-white text-center py-2.5 px-4 text-[10px] md:text-xs font-semibold tracking-[0.15em] uppercase"
+  style="background: linear-gradient(135deg, #1e3612, #2e4e18);"
+>
+  🌿 100% Natural &nbsp;&middot;&nbsp; Ritual Ready
+</div>
 
-  <div class="header__menu">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
+<sticky-header>
+  <header class="sticky top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#fffbf5] border-b border-transparent py-4">
+    <div class="container flex items-center justify-between px-4 max-w-7xl mx-auto">
+      <a href="{{ routes.root_url }}" class="flex items-center gap-2 flex-shrink-0 transition-transform duration-300 hover:scale-[1.02]">
+        <img
+          data-header-logo
+          src="{{ 'logo.png' | asset_url }}"
+          alt="Stomatal Farms"
+          class="transition-all duration-300 h-10 md:h-12 w-auto object-contain"
+        >
+      </a>
 
-  <div class="header__icons">
-    {% if shop.customer_accounts_enabled %}
-      <shopify-account menu="{{ section.settings.customer_account_menu }}">
-        {{ 'icon-account.svg' | inline_asset_content }}
-      </shopify-account>
-    {% endif %}
+      <nav class="flex items-center gap-4 md:gap-8">
+        <nav-dropdown class="relative">
+          <button data-dropdown-trigger class="flex items-center gap-1.5 text-[10px] md:text-xs font-bold uppercase tracking-widest text-[#2a3625] hover:text-[#4f7a2e] transition-colors outline-none">
+            Aurora
+            <svg class="w-3 h-3 opacity-40 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div data-dropdown-menu class="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-56 bg-white/95 backdrop-blur-lg border border-[#2e3f25]/10 rounded-[20px] shadow-2xl py-3 opacity-0 invisible transition-all duration-300 z-50 translate-y-2">
+            {% for block in section.blocks %}
+              <a
+                href="{{ block.settings.link }}"
+                class="block px-5 py-2.5 text-xs font-bold uppercase tracking-widest transition-colors text-[#2a3625] hover:text-[#4f7a2e] hover:bg-[#4f7a2e]/5"
+              >
+                {{ block.settings.text }}
+              </a>
+            {% endfor %}
+          </div>
+        </nav-dropdown>
 
-    <a href="{{ routes.cart_url }}">
-      {% if cart.item_count > 0 %}
-        <sup>{{ cart.item_count }}</sup>
-      {% endif %}
+        <a href="{{ routes.root_url }}collections?category=microgreens" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-[#2a3625] hover:text-[#4f7a2e] transition-colors whitespace-nowrap">
+          Farm Fresh
+        </a>
+        <a href="{{ routes.root_url }}pages/contact" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-[#2a3625] hover:text-[#4f7a2e] transition-colors">
+          Contact
+        </a>
+      </nav>
 
-      {{ 'icon-cart.svg' | inline_asset_content }}
-    </a>
-  </div>
-</header>
-
-{% stylesheet %}
-  header {
-    height: 5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  header a {
-    position: relative;
-    text-decoration: none;
-    color: var(--color-foreground);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  header a sup {
-    position: absolute;
-    left: 100%;
-    overflow: hidden;
-    max-width: var(--page-margin);
-  }
-  header svg {
-    width: 2rem;
-  }
-  header .header__menu,
-  header .header__icons {
-    display: flex;
-    gap: 1rem;
-  }
-{% endstylesheet %}
+      <div class="flex items-center gap-2 md:gap-4">
+        <a
+          href="{{ routes.root_url }}collections"
+          class="hidden md:inline-flex items-center px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-[0_4px_12px_rgba(46,78,24,0.3)] transition-all hover:shadow-[0_6px_16px_rgba(46,78,24,0.4)] hover:-translate-y-0.5 active:translate-y-0"
+          style="background: linear-gradient(135deg, #2e4e18, #4f7a2e);"
+        >
+          Shop Now
+        </a>
+        <a href="{{ routes.cart_url }}" class="relative p-2 rounded-full hover:bg-[#4f7a2e]/5 transition-colors">
+          <svg class="w-5 h-5 text-[#2a3625]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          {% if cart.item_count > 0 %}
+            <span class="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#b56c3d] text-white text-[9px] font-black flex items-center justify-center">
+              {{ cart.item_count }}
+            </span>
+          {% endif %}
+        </a>
+      </div>
+    </div>
+  </header>
+</sticky-header>
 
 {% schema %}
 {
-  "name": "t:general.header",
+  "name": "Header",
   "settings": [
     {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
-    },
-    {
-      "type": "link_list",
-      "id": "customer_account_menu",
-      "label": "t:labels.customer_account_menu",
-      "default": "customer-account-main-menu"
+      "type": "text",
+      "id": "trust_bar_text",
+      "label": "Trust bar text",
+      "default": "100% Natural · Ritual Ready"
     }
-  ]
+  ],
+  "blocks": [
+    {
+      "type": "aurora_category",
+      "name": "Aurora category",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Label" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "aurora_category", "settings": { "text": "Incense Sticks", "link": "/collections?category=sticks" } },
+      { "type": "aurora_category", "settings": { "text": "Incense Cups", "link": "/collections?category=cups" } },
+      { "type": "aurora_category", "settings": { "text": "Combos", "link": "/collections?category=combos" } },
+      { "type": "aurora_category", "settings": { "text": "Ghee Lamps", "link": "/collections?category=ghee" } },
+      { "type": "aurora_category", "settings": { "text": "Bath Salts", "link": "/collections?category=bath" } },
+      { "type": "aurora_category", "settings": { "text": "Cow Dung Ash", "link": "/collections?category=ash" } }
+    ]
+  }
 }
 {% endschema %}
