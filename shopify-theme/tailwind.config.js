@@ -1,7 +1,8 @@
 /** @type {import('tailwindcss').Config} */
+const path = require("path");
 module.exports = {
   darkMode: ["class"],
-  content: ["./shopify-theme/**/*.liquid"],
+  content: [path.join(__dirname, "**/*.liquid")],
   prefix: "",
   theme: {
     container: {

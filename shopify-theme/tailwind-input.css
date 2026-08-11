@@ -51,6 +51,15 @@
     scroll-behavior: smooth;
   }
 
+  .shopify-section-group-header-group,
+  sticky-header {
+    display: contents;
+  }
+
+  embla-carousel-base {
+    display: block;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Outfit', sans-serif;

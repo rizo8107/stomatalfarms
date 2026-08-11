@@ -11,6 +11,7 @@ class StickyHeader extends HTMLElement {
   }
 
   onScroll() {
+    if (!this.header) return;
     const isScrolled = window.scrollY > 20;
     this.header.classList.toggle("bg-white/80", isScrolled);
     this.header.classList.toggle("backdrop-blur-md", isScrolled);
@@ -35,6 +36,7 @@ class NavDropdown extends HTMLElement {
   connectedCallback() {
     this.trigger = this.querySelector("[data-dropdown-trigger]");
     this.menu = this.querySelector("[data-dropdown-menu]");
+    if (!this.trigger || !this.menu) return;
     this.onDocumentClick = this.onDocumentClick.bind(this);
     this.trigger.addEventListener("click", () => this.toggle());
     document.addEventListener("click", this.onDocumentClick);
@@ -55,22 +57,23 @@ class NavDropdown extends HTMLElement {
 
   open() {
     this.menu.setAttribute("data-open", "");
+    this.setAttribute("data-open", "");
   }
 
   close() {
     this.menu.removeAttribute("data-open");
+    this.removeAttribute("data-open");
   }
 }
 
 customElements.define("sticky-header", StickyHeader);
 customElements.define("nav-dropdown", NavDropdown);
 
-import EmblaCarousel from "./embla-carousel.esm.js";
-
 class EmblaCarouselBase extends HTMLElement {
-  connectedCallback() {
+  async connectedCallback() {
     const container = this.querySelector(".embla__container");
     if (!container) return;
+    const { default: EmblaCarousel } = await import("./embla-carousel.esm.js");
     this.emblaApi = EmblaCarousel(this, { loop: true, align: "start", skipSnaps: false, duration: 25 });
   }
 
