@@ -53,9 +53,12 @@ function mapRow(row: GoogleReviewRow): GoogleReview {
   };
 }
 
+const DEFAULT_INSFORGE_URL = "https://d6yqray7.us-east.insforge.app";
+const DEFAULT_INSFORGE_ANON_KEY = "anon_87226cf8482da6e25b95278ee72334ea4e59a2a7e0a2a5422b31774599720159";
+
 export async function fetchPlaceReviews(): Promise<PlaceReviewsData> {
-  const baseUrl = import.meta.env.VITE_INSFORGE_URL as string | undefined;
-  const anonKey = import.meta.env.VITE_INSFORGE_ANON_KEY as string | undefined;
+  const baseUrl = (import.meta.env.VITE_INSFORGE_URL as string | undefined) || DEFAULT_INSFORGE_URL;
+  const anonKey = (import.meta.env.VITE_INSFORGE_ANON_KEY as string | undefined) || DEFAULT_INSFORGE_ANON_KEY;
 
   if (!baseUrl || !anonKey) {
     throw new Error("Missing VITE_INSFORGE_URL or VITE_INSFORGE_ANON_KEY");

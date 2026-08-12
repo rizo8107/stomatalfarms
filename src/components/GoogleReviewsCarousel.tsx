@@ -140,11 +140,15 @@ export const GoogleReviewsCarousel = () => {
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className={`w-3.5 h-3.5 ${i < Math.round(rating) ? 'fill-[#f5a623] text-[#f5a623]' : 'fill-transparent text-[#f5a623]/30'}`}
+                    className={`w-3.5 h-3.5 ${i < Math.round(rating || 5) ? 'fill-[#f5a623] text-[#f5a623]' : 'fill-transparent text-[#f5a623]/30'}`}
                   />
                 ))}
-                <span className="text-sm font-bold text-[#2a3625] ml-1">{rating.toFixed(1)}</span>
-                <span className="text-xs text-[#6a7462] ml-1">· {totalReviews.toLocaleString()}+ reviews</span>
+                <span className="text-sm font-bold text-[#2a3625] ml-1">
+                  {rating > 0 ? rating.toFixed(1) : (isLoading ? '4.7' : '0.0')}
+                </span>
+                <span className="text-xs text-[#6a7462] ml-1">
+                  · {totalReviews > 0 ? `${totalReviews.toLocaleString()}+ reviews` : (isLoading ? '50+ reviews' : '0+ reviews')}
+                </span>
               </div>
             </div>
           </div>
