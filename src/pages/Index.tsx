@@ -13,6 +13,7 @@ import FAQ from "@/components/FAQ";
 import { InstagramCarousel } from "@/components/InstagramCarousel";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
+import OfferPopup from "@/components/OfferPopup";
 
 const Index = () => {
   useEffect(() => {
@@ -48,6 +49,7 @@ const Index = () => {
         <FinalCTA />
       </main>
       <Footer />
+      <OfferPopup />
     </div>
   );
 };

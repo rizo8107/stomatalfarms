@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ChevronLeft, Loader2, Minus, Plus, ShoppingCart, Truck, Leaf, Shield, Award, MessageCircle } from "lucide-react";
+import { ChevronLeft, Loader2, Minus, Plus, ShoppingCart, Truck, Leaf, Shield, Award, MessageCircle, Sparkles } from "lucide-react";
 import truckIcon from "@/assets/icons/truck.png";
 import { GoogleReviewsCarousel } from "@/components/GoogleReviewsCarousel";
 import { toast } from "sonner";
