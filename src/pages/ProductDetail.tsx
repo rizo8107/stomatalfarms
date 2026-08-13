@@ -237,9 +237,12 @@ const ProductDetail = () => {
   const selectedVariant = product.variants.edges[selectedVariantIndex]?.node;
   const images = product.images.edges;
   const description = product.description || "";
+  const descriptionHtml = product.descriptionHtml || "";
 
   // Get initial values from description splitting for backwards compatibility
   let { overview, ingredients, howToUse, details, comboIncludes } = parseDescriptionSections(description);
+  let overviewUsesProductHtml = Boolean(descriptionHtml) &&
+    !/Ingredients|How to Use|Product Details|This combo includes|Individual Characteristics/i.test(description);
 
   // Override with actual Shopify Metafields if they exist
   if (product.combo_includes?.value) comboIncludes = product.combo_includes.value;
@@ -247,7 +250,10 @@ const ProductDetail = () => {
   if (product.ingredients_list?.value) ingredients = product.ingredients_list.value;
   if (product.how_to_use?.value) howToUse = product.how_to_use.value;
   if (product.product_details?.value) details = product.product_details.value;
-  if (product.custom_description?.value) overview = product.custom_description.value;
+  if (product.custom_description?.value) {
+    overview = product.custom_description.value;
+    overviewUsesProductHtml = false;
+  }
 
   // New metafields
   const keyHighlights = product.key_highlights?.value;
@@ -289,6 +295,7 @@ const ProductDetail = () => {
   // If we have any of the specific metafields, the main description can just be the overview
   if (product.combo_includes?.value || product.ingredients?.value || product.ingredients_list?.value || product.how_to_use?.value || product.product_details?.value) {
     overview = description;
+    overviewUsesProductHtml = Boolean(descriptionHtml);
   }
 
   // Determine default expanded items (none by default)
@@ -503,9 +510,16 @@ Product Link: ${productUrl}`;
                   {overview && (
                     <div className="relative group">
                       <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-[#5a8739] to-transparent opacity-40 group-hover:opacity-100 transition-opacity" />
-                      <div className="text-foreground/80 leading-[1.8] whitespace-pre-line text-[15px] font-medium italic pl-2 py-1">
-                        {overview}
-                      </div>
+                      {overviewUsesProductHtml ? (
+                        <div
+                          className="text-foreground/80 leading-[1.8] text-[15px] font-medium italic pl-2 py-1 [&_p]:mb-5 [&_p:last-child]:mb-0"
+                          dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+                        />
+                      ) : (
+                        <div className="text-foreground/80 leading-[1.8] whitespace-pre-line text-[15px] font-medium italic pl-2 py-1">
+                          {overview}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
