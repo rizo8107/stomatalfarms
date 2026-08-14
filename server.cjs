@@ -35,7 +35,10 @@ if (fs.existsSync(dotenvPath)) {
 }
 console.log('APIFY_TOKEN in process.env:', process.env.APIFY_TOKEN ? 'EXISTS (length ' + process.env.APIFY_TOKEN.length + ')' : 'NOT SET');
 
+const compression = require('compression');
+
 const app = express();
+app.use(compression());
 app.use(express.json());
 
 // Database connection
@@ -224,7 +227,10 @@ app.post('/api/sync', async (req, res) => {
 if (require.main === module) {
   // Serve frontend build static files
   const distPath = path.join(__dirname, 'dist');
-  app.use(express.static(distPath));
+  app.use(express.static(distPath, {
+    maxAge: '1y',
+    immutable: true
+  }));
 
   // For Single Page App client-side routing, fallback to index.html
   app.get('*', (req, res) => {

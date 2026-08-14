@@ -32,6 +32,7 @@ const FeaturedBundle = () => (
             src="https://cdn.shopify.com/s/files/1/0735/4469/5965/files/7b9ccf00-4df1-4412-ab72-bf3a24d59552.jpg?v=1757489157"
             alt="Aurora Ritual Bundle"
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
           />
           {/* Save badge */}
           <div

@@ -16,6 +16,7 @@ const HeroSection = () => (
         src="https://cdn.shopify.com/s/files/1/0735/4469/5965/files/banner_hero.jpg?v=1778374221"
         alt="Aurora Aromatic Wellness"
         className="w-full h-full object-cover object-center scale-105"
+        fetchPriority="high"
       />
     </div>
     <div
@@ -35,6 +36,7 @@ const HeroSection = () => (
           src="/aurora-logo.png"
           alt="Aurora by Stomatal Farms"
           className="h-44 w-44 md:h-64 md:w-64 object-contain flex-shrink-0"
+          fetchPriority="high"
         />
 
         <div className="flex flex-col gap-2">

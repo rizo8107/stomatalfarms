@@ -53,6 +53,7 @@ export const InstagramCarousel = () => {
                         src={media.url}
                         alt={`Instagram post ${index + 1}`}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover/item:scale-110"
+                        loading="lazy"
                       />
                     ) : (
                       <video

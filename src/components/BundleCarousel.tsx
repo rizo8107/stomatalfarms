@@ -94,6 +94,7 @@ const BundleCard = ({ product, active }: { product: ShopifyProduct; active: bool
               src={image.url}
               alt={image.altText || node.title}
               className="w-full h-auto block"
+              loading="lazy"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-white/20 text-xs">No image</div>
