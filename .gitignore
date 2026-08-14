@@ -46,3 +46,7 @@ antigravity-skills/
 .roo
 .trae
 .windsurf
+
+# Environment Secrets
+.env
+.env.local

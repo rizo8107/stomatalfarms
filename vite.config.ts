@@ -1,4 +1,7 @@
 import { defineConfig } from "vite";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+// Trigger dev server reload to load updated server.cjs (run 2)
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import fs from "fs";
@@ -99,6 +102,14 @@ const reviewsGeneratorPlugin = () => ({
         generateReviewsList();
       }
     });
+
+    // Mount Express server as middleware in Vite development server
+    try {
+      const app = require("./server.cjs");
+      server.middlewares.use(app);
+    } catch (e) {
+      console.error("Failed to load server.cjs into Vite server:", e);
+    }
   },
 });
 

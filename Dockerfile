@@ -30,17 +30,24 @@ COPY . .
 ARG CACHEBUST=1
 RUN echo "Cache bust: $CACHEBUST" && npm run build
 
-# Stage 2: Serve the application with Nginx
-FROM nginx:alpine
+# Stage 2: Serve the application with Node.js
+FROM node:20-alpine AS runner
 
-# Copy custom Nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+WORKDIR /app
 
-# Copy the built assets from the builder stage
-COPY --from=builder /app/dist /usr/share/nginx/html
+# Copy package files
+COPY package.json package-lock.json ./
 
-# Expose port 80
+# Install production dependencies
+RUN npm ci --omit=dev
+
+# Copy server.cjs and the built assets from builder stage
+COPY server.cjs ./
+COPY --from=builder /app/dist ./dist
+
+# Expose port 80 (or process.env.PORT)
+ENV PORT=80
 EXPOSE 80
 
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start Node server
+CMD ["npm", "run", "start"]

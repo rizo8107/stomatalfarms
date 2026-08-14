@@ -1,4 +1,3 @@
-import { createClient } from "@insforge/sdk";
 
 export interface GoogleReview {
   id: string;
@@ -53,36 +52,21 @@ function mapRow(row: GoogleReviewRow): GoogleReview {
   };
 }
 
-const DEFAULT_INSFORGE_URL = "https://d6yqray7.us-east.insforge.app";
-const DEFAULT_INSFORGE_ANON_KEY = "anon_87226cf8482da6e25b95278ee72334ea4e59a2a7e0a2a5422b31774599720159";
-
 export async function fetchPlaceReviews(): Promise<PlaceReviewsData> {
-  const baseUrl = (import.meta.env.VITE_INSFORGE_URL as string | undefined) || DEFAULT_INSFORGE_URL;
-  const anonKey = (import.meta.env.VITE_INSFORGE_ANON_KEY as string | undefined) || DEFAULT_INSFORGE_ANON_KEY;
-
-  if (!baseUrl || !anonKey) {
-    throw new Error("Missing VITE_INSFORGE_URL or VITE_INSFORGE_ANON_KEY");
+  const response = await fetch("/api/reviews");
+  if (!response.ok) {
+    throw new Error(`Failed to fetch place reviews: ${response.statusText}`);
   }
 
-  const client = createClient({ baseUrl, anonKey });
-
-  const [reviewsResult, metaResult] = await Promise.all([
-    client.database
-      .from("google_reviews")
-      .select("external_review_id, author_name, author_photo_url, rating, review_text, published_at")
-      .neq("review_text", "")
-      .order("published_at", { ascending: false }),
-    client.database.from("google_reviews_meta").select("rating, total_review_count").eq("id", 1),
-  ]);
-
-  if (reviewsResult.error) throw reviewsResult.error;
-  if (metaResult.error) throw metaResult.error;
-
-  const meta = (metaResult.data as GoogleReviewsMetaRow[] | null)?.[0];
+  const data = await response.json() as {
+    rating: number;
+    totalReviews: number;
+    reviews: GoogleReviewRow[];
+  };
 
   return {
-    rating: meta?.rating ?? 0,
-    totalReviews: meta?.total_review_count ?? 0,
-    reviews: ((reviewsResult.data as GoogleReviewRow[] | null) ?? []).map(mapRow),
+    rating: data.rating,
+    totalReviews: data.totalReviews,
+    reviews: (data.reviews ?? []).map(mapRow),
   };
 }
