@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ChevronLeft, Loader2, Minus, Plus, ShoppingCart, Truck, Leaf, Shield, Award, MessageCircle, Sparkles } from "lucide-react";
+import { ChevronLeft, Loader2, Minus, Plus, ShoppingCart, Truck, Leaf, Shield, Award, MessageCircle, Sparkles, FileText, Package, HelpCircle, Info } from "lucide-react";
 import truckIcon from "@/assets/icons/truck.png";
 import { GoogleReviewsCarousel } from "@/components/GoogleReviewsCarousel";
 import { toast } from "sonner";
@@ -49,9 +49,11 @@ const parseDescriptionSections = (description: string) => {
   let details = "";
   let comboIncludes = "";
 
+  const sectionDelimiters = "(?:Ingredients|How to [Uu]se|Directions|Product [Dd]etails|Product [Ss]pecifications|Specifications|Individual Characteristics|Combo [Ii]ncludes|This [Cc]ombo [Ii]ncludes|What'?s [Ii]nside|Delivery Details|Safety|$)";
+
   // Try to find "This combo includes:" section
-  const comboMatch = cleanText.match(/This combo includes[:\s]*(.*?)(?=Ingredients|How to Use|Product Details|Individual Characteristics|$)/is);
-  if (comboMatch) {
+  const comboMatch = cleanText.match(new RegExp(`(?:This combo includes|Combo includes|What'?s inside|Box contains|Package includes|Includes|Items included)[:\\s]*(.*?)(?=${sectionDelimiters})`, "is"));
+  if (comboMatch && comboMatch[1].trim().length > 3) {
     comboIncludes = comboMatch[1].trim()
       .split(/\n/)
       .filter(line => line.trim() && !line.match(/^[•\-*]\s*$/))
@@ -59,11 +61,10 @@ const parseDescriptionSections = (description: string) => {
       .join('\n');
   }
 
-  // Try to find "Individual Characteristics" or "Product Details" section
-  const detailsMatch = cleanText.match(/(?:Individual Characteristics|Product Details)[:\s]*(.*?)(?=How to Use|Ingredients|This combo includes|Delivery Details|$)/is);
-  if (detailsMatch) {
+  // Try to find "Individual Characteristics" or "Product Details / Specifications" section
+  const detailsMatch = cleanText.match(new RegExp(`(?:Individual Characteristics|Product Details|Product Specifications|Specifications|Key Specifications|Specs|Features)[:\\s]*(.*?)(?=${sectionDelimiters})`, "is"));
+  if (detailsMatch && detailsMatch[1].trim().length > 3) {
     const rawDetails = detailsMatch[1].trim();
-    // Split by bullet points or line breaks, preserving structure
     details = rawDetails
       .split(/(?=[•\-*]|\n[A-Z])/g)
       .map(line => line.trim())
@@ -72,16 +73,16 @@ const parseDescriptionSections = (description: string) => {
   }
 
   // Try to find ingredients section
-  const ingredientsMatch = cleanText.match(/Ingredients[:\s]*(.*?)(?=How to Use|Product Details|Individual Characteristics|$)/is);
-  if (ingredientsMatch) {
+  const ingredientsMatch = cleanText.match(new RegExp(`(?:Ingredients|Ingredients & Aroma|Aroma|Sacred Ingredients|Composition)[:\\s]*(.*?)(?=${sectionDelimiters})`, "is"));
+  if (ingredientsMatch && ingredientsMatch[1].trim().length > 3) {
     ingredients = ingredientsMatch[1].trim();
   }
 
   // Try to find How to Use section
-  const howToUseMatch = cleanText.match(/How to Use[:\s]*(.*?)(?=Ingredients|Product Details|Individual Characteristics|This combo includes|$)/is);
-  if (howToUseMatch) {
+  const howToUseMatch = cleanText.match(new RegExp(`(?:How to [Uu]se|Directions for [Uu]se|Directions|Usage|How to [Ll]ight)[:\\s]*(.*?)(?=${sectionDelimiters})`, "is"));
+  if (howToUseMatch && howToUseMatch[1].trim().length > 3) {
     howToUse = howToUseMatch[1].trim()
-      .replace(/STEP\s*(\d+)\s*[-–—]?\s*/gi, '\nStep $1: ')
+      .replace(/STEP\s*(\d+)\s*[-–—:]?\s*/gi, '\nStep $1: ')
       .split(/\n/)
       .filter(line => line.trim())
       .map(line => line.trim())
@@ -89,12 +90,12 @@ const parseDescriptionSections = (description: string) => {
   }
 
   // Overview is the first part before any sections
-  const overviewEnd = cleanText.search(/Ingredients|How to Use|Product Details|This combo includes|Individual Characteristics/i);
+  const overviewEnd = cleanText.search(/(?:Ingredients|How to [Uu]se|Directions|Product [Dd]etails|Product [Ss]pecifications|Specifications|This [Cc]ombo [Ii]ncludes|Combo [Ii]ncludes|What'?s [Ii]nside|Individual Characteristics)/i);
   if (overviewEnd > 0) {
     overview = cleanText.substring(0, overviewEnd).trim();
+  } else if (overviewEnd === 0) {
+    overview = "";
   } else {
-    // Determine if text is extremely long, maybe keep it all or truncate very liberally? 
-    // User complaint suggests they want to see it. Let's show full text.
     overview = cleanText;
   }
 
@@ -177,6 +178,7 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const [showAddressDialog, setShowAddressDialog] = useState(false);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [addressData, setAddressData] = useState({
     name: "",
     phone: "",
@@ -187,6 +189,7 @@ const ProductDetail = () => {
   });
 
   const addItem = useCartStore(state => state.addItem);
+  const createCheckout = useCartStore(state => state.createCheckout);
 
   useEffect(() => {
     // Scroll to top when component mounts or handle changes
@@ -298,20 +301,188 @@ const ProductDetail = () => {
     overviewUsesProductHtml = Boolean(descriptionHtml);
   }
 
+  const t = product.title.toLowerCase();
+  const h = product.handle.toLowerCase();
+  const isCombo = t.includes('combo') || h.includes('combo');
+  const isCup = t.includes('cup') || h.includes('cup') || t.includes('dhoop') || h.includes('dhoop') || t.includes('arka') || h.includes('arka');
+  const isStick = t.includes('stick') || h.includes('stick') || t.includes('aarambh') || h.includes('aarambh') || t.includes('incense') || h.includes('incense');
+  const isMicrogreens = t.includes('microgreen') || h.includes('microgreen') || product.description.toLowerCase().includes('microgreen');
+
+  // Fallback for comboIncludes / What's inside
+  if (!comboIncludes || comboIncludes.trim().length === 0) {
+    if (isCombo && isCup) {
+      comboIncludes = "15 Dasangam Sacred Incense Cups\n15 Floral Harmony Incense Cups\n15 Lemongrass Calming Incense Cups\n3 Handcrafted Natural Holders\n45g Herbal Dhoop Powder";
+    } else if (isCombo && isStick) {
+      comboIncludes = "30 Dasangam Sacred Incense Sticks\n30 Floral Harmony Incense Sticks\n30 Lemongrass Calming Incense Sticks\n3 Handcrafted Incense Stands";
+    } else if (h.includes('arka') || t.includes('arka')) {
+      comboIncludes = "30 Handcrafted Arka Incense Cups\n30g Sacred Herbal Powder\n1 Natural Clay/Ceramic Burner Holder";
+    } else if (h.includes('aarambh') || t.includes('aarambh')) {
+      comboIncludes = "30 Bamboo-less Sacred Incense Sticks (Dasangam, Floral, Lemongrass)\n1 Handcrafted Wooden Stand";
+    } else if (isCup) {
+      comboIncludes = "30 Handcrafted Sacred Incense Cups\n30g Herbal Dhoop Powder\n1 Natural Burner Holder";
+    } else if (isMicrogreens) {
+      comboIncludes = "1 Live Tray of Nutrient-Dense Fresh Microgreens\nHarvest & Freshness Guide";
+    } else if (netQuantity) {
+      comboIncludes = netQuantity;
+    } else {
+      comboIncludes = "Handcrafted Authentic Natural Pack\n100% Organic & Chemical-Free";
+    }
+  }
+
+  // Fallback for howToUse
+  if (!howToUse || howToUse.trim().length === 0) {
+    if (isCup) {
+      howToUse = "Step 1: Hold the incense cup by its base and tilt it at a 45-degree angle.\nStep 2: Light the top outer rim until a consistent flame appears (approx. 10–15 seconds).\nStep 3: Gently blow out the flame and let the sacred herbal blend smolder.\nStep 4: Place the cup onto the provided heat-resistant holder in a well-ventilated area.";
+    } else if (isStick) {
+      howToUse = "Step 1: Light the tip of the incense stick until it catches a gentle flame.\nStep 2: Gently blow out the flame to reveal a glowing red ember.\nStep 3: Place securely into the incense holder away from flammable materials.";
+    } else if (isMicrogreens) {
+      howToUse = "Step 1: Snip the greens just above the root line using clean scissors.\nStep 2: Gently rinse in cold water and pat dry.\nStep 3: Garnish salads, wraps, curries, or blend into morning smoothies.";
+    } else {
+      howToUse = "Step 1: Light in a safe, well-ventilated space.\nStep 2: Allow the sacred aroma to disperse gently.\nStep 3: Keep away from flammable surfaces and direct reach of children.";
+    }
+  }
+
+  // Fallback for details / product specifications
+  if (!details || details.trim().length === 0) {
+    if (isCombo && isCup) {
+      details = "Net Quantity: 45 Incense Cups (3 Packs) + 3 Holders\nBurn Time: 35–45 minutes per cup\nAroma: Dasangam, Floral & Lemongrass\nShelf Life: 24 Months\nQuality: 100% Charcoal-Free & Desi Cow Dung Based\nStorage: Store in a cool, dry place away from moisture\nCountry of Origin: India";
+    } else if (h.includes('arka') || t.includes('arka')) {
+      details = "Net Quantity: 30 Incense Cups + 1 Holder\nBurn Time: 35–40 minutes per cup\nPrimary Material: Native Desi Cow Dung & Sacred Herbs\nShelf Life: 24 Months\nTesting: Lab Tested · No Synthetic Fragrances\nStorage: Store in a cool, dry place\nCountry of Origin: India";
+    } else if (isCup) {
+      details = "Net Quantity: 30 Incense Cups + 1 Holder\nBurn Time: 35–40 minutes per cup\nShelf Life: 24 Months\nQuality: 100% Charcoal-Free & Pure Natural\nStorage: Store in a cool, dry place\nCountry of Origin: India";
+    } else if (isStick) {
+      details = "Net Quantity: 30 Incense Sticks + 1 Stand\nBurn Time: 40–45 minutes per stick\nMaterial: Bamboo-less Natural Herb & Essential Oil Blend\nShelf Life: 24 Months\nCountry of Origin: India";
+    } else if (isMicrogreens) {
+      details = "Net Quantity: 1 Fresh Living Tray (~120g)\nShelf Life: 5–7 Days Refrigerated\nFarming Method: 100% Organic Soil Cultivation · Pesticide-Free\nHarvest Window: Harvested on the morning of delivery";
+    } else {
+      details = "Quality: 100% Natural & Handcrafted\nShelf Life: 24 Months\nStorage: Store in a cool, dry place\nCountry of Origin: India";
+    }
+  }
+
   // Determine default expanded items (none by default)
   const defaultAccordionValue: string[] = [];
 
-  const isMicrogreens = product.title.toLowerCase().includes('microgreen') ||
-    product.title.toLowerCase().includes('leafy') ||
-    product.description.toLowerCase().includes('microgreen');
+  const handleBuyNow = async () => {
+    if (!selectedVariant) return;
+    if (isMicrogreens) {
+      handleWhatsAppOrder();
+      return;
+    }
+
+    setIsCheckingOut(true);
+    try {
+      const shopifyProduct: ShopifyProduct = {
+        node: product
+      };
+
+      addItem({
+        product: shopifyProduct,
+        variantId: selectedVariant.id,
+        variantTitle: selectedVariant.title,
+        price: selectedVariant.price,
+        quantity,
+        selectedOptions: selectedVariant.selectedOptions || [],
+      });
+
+      const checkoutUrl = await createCheckout();
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Checkout failed. Please try adding to cart.");
+    } finally {
+      setIsCheckingOut(false);
+    }
+  };
+
+  // Dynamic Box Items for the 3 Metric Cards
+  const boxItems = (() => {
+    const rawText = comboIncludes || netQuantity || "";
+    const lines = rawText.split(/\n|·|,/).map(s => s.replace(/^[•\-*]\s*/, '').trim()).filter(Boolean);
+    
+    if (lines.length >= 3) {
+      return lines.slice(0, 3).map(item => {
+        const match = item.match(/^(\d+(?:\s*[a-zA-Z]+)?|\d+)\s+(.*)$/);
+        if (match) {
+          return { value: match[1], label: match[2] };
+        }
+        return { value: "1", label: item };
+      });
+    }
+
+    if (h.includes('arka') || t.includes('arka')) {
+      return [
+        { value: "30", label: "incense cups" },
+        { value: "30g", label: "herbal powder" },
+        { value: "1", label: "holder" }
+      ];
+    }
+
+    if (isCombo && isCup) {
+      return [
+        { value: "45", label: "incense cups" },
+        { value: "45g", label: "herbal powder" },
+        { value: "3", label: "holders" }
+      ];
+    }
+
+    if (isStick || h.includes('aarambh') || t.includes('aarambh')) {
+      return [
+        { value: "30", label: "incense sticks" },
+        { value: "3", label: "sacred scents" },
+        { value: "1", label: "holder" }
+      ];
+    }
+
+    if (isMicrogreens) {
+      return [
+        { value: "1", label: "living tray" },
+        { value: "120g", label: "fresh harvest" },
+        { value: "1", label: "care guide" }
+      ];
+    }
+
+    if (isCup) {
+      return [
+        { value: "30", label: "incense cups" },
+        { value: "30g", label: "herbal powder" },
+        { value: "1", label: "holder" }
+      ];
+    }
+
+    return [
+      { value: "1", label: "pure pack" },
+      { value: "100%", label: "natural herbs" },
+      { value: "1", label: "artisan blend" }
+    ];
+  })();
+
+  // Dynamic pill tags
+  const pillTags = (() => {
+    const tags: string[] = [];
+    const desc = (product.description || "").toLowerCase();
+    
+    if (desc.includes('cow dung') || t.includes('cow dung') || h.includes('arka') || h.includes('aurora') || isCup) {
+      tags.push("Cow dung based");
+    }
+    tags.push("Lab tested");
+    tags.push("No synthetic fragrance");
+    tags.push("No charcoal");
+    
+    if (product.ash_usage?.value || desc.includes('ash') || isCup || h.includes('arka')) {
+      tags.push("Zero-waste ash");
+    } else if (isMicrogreens) {
+      tags.push("100% Organically grown");
+    } else {
+      tags.push("Zero-waste ash");
+    }
+    return tags;
+  })();
 
   const handleAddToCart = () => {
     if (!selectedVariant) return;
-
-    const shopifyProduct: ShopifyProduct = {
-      node: product
-    };
-
+    const shopifyProduct: ShopifyProduct = { node: product };
     addItem({
       product: shopifyProduct,
       variantId: selectedVariant.id,
@@ -320,7 +491,6 @@ const ProductDetail = () => {
       quantity,
       selectedOptions: selectedVariant.selectedOptions || [],
     });
-
     toast.success("Added to cart");
   };
 
@@ -455,45 +625,238 @@ Product Link: ${productUrl}`;
               )}
             </div>
 
-            {/* Product Info */}
-            <div className="space-y-6 md:space-y-8 min-w-0 w-full">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    <span className="bg-[#5a8739]/10 text-[#5a8739] text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border border-[#5a8739]/20">
-                      Handcrafted
-                    </span>
-                    <span className="bg-sage-light/30 text-sage-dark text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full border border-border">
-                      100% Natural
-                    </span>
-                  </div>
-                  <h1 className="font-serif text-2xl md:text-3xl lg:text-4xl text-foreground leading-[1.3] md:leading-tight break-words tracking-tight">
-                    {product.title}
-                  </h1>
+            {/* Product Info - Minimal & Premium Design */}
+            <div className="space-y-6 min-w-0 w-full">
+              {/* Main Premium White Card */}
+              <div className="bg-white rounded-[28px] border border-[#e2e7db] p-6 sm:p-8 md:p-9 shadow-[0_4px_24px_rgba(0,0,0,0.03)] space-y-6">
+                
+                {/* Top Badges */}
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#e6ede0] text-[#4d6630] border border-[#d6e3cb]">
+                    HANDCRAFTED
+                  </span>
+                  <span className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#f6eee3] text-[#86663f] border border-[#ebd8c4]">
+                    100% NATURAL
+                  </span>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <div className="flex flex-col">
-                    <span className="text-3xl md:text-4xl font-bold text-[#5a8739] tracking-tight">
+                {/* Title & Subtitle */}
+                <div className="space-y-1">
+                  <h1 className="font-serif text-3xl sm:text-4xl md:text-[40px] font-normal text-[#222a1c] leading-tight tracking-tight">
+                    {(() => {
+                      const t = product.title;
+                      if (t.toLowerCase().includes('arka')) {
+                        return 'ARKA — Cow Dung Incense Cups';
+                      }
+                      if (t.includes(' - ')) {
+                        return t.replace(' - ', ' — ');
+                      }
+                      return t;
+                    })()}
+                  </h1>
+                  <p className="font-serif italic text-[15px] sm:text-base text-[#6f6e5b]">
+                    {(() => {
+                      if (product.title.toLowerCase().includes('arka')) {
+                        return 'The Original Blend · Camphor, Frankincense & Herbs';
+                      }
+                      if (product.ingredients_list?.value) return product.ingredients_list.value;
+                      if (product.ingredients?.value) return product.ingredients.value;
+                      const parts = product.title.split(/[-–—:]/);
+                      if (parts.length > 1) return parts.slice(1).join(' · ').trim();
+                      return 'The Original Blend · 100% Pure Botanical Herbs';
+                    })()}
+                  </p>
+                </div>
+
+                {/* Poetic Tagline Hook */}
+                <div className="font-serif italic text-lg sm:text-xl text-[#4e652f] leading-snug">
+                  {(() => {
+                    if (h.includes('arka') || t.includes('arka')) {
+                      return "One cup a day. Thirty days of calm.";
+                    }
+                    if (h.includes('aarambh') || t.includes('aarambh')) {
+                      return "Pure sacred aroma. Three divine scents for daily calm.";
+                    }
+                    if (isMicrogreens) {
+                      return "Harvested fresh on order. Pure vibrant wellness.";
+                    }
+                    return "One cup a day. Thirty days of calm.";
+                  })()}
+                </div>
+
+                {/* Pricing Block */}
+                <div>
+                  <div className="flex flex-wrap items-baseline gap-2.5 sm:gap-3">
+                    <span className="text-3xl sm:text-4xl font-bold text-[#445b27] tracking-tight font-sans">
                       ₹{parseFloat(selectedVariant?.price.amount || "0").toFixed(0)}
                     </span>
+                    {selectedVariant?.compareAtPrice && parseFloat(selectedVariant.compareAtPrice.amount) > parseFloat(selectedVariant.price.amount) && (
+                      <>
+                        <span className="text-lg sm:text-xl text-[#959d8c] line-through font-normal decoration-1 decoration-[#959d8c]">
+                          ₹{parseFloat(selectedVariant.compareAtPrice.amount).toFixed(0)}
+                        </span>
+                        <span className="bg-[#b95738] text-white text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full">
+                          {Math.round(((parseFloat(selectedVariant.compareAtPrice.amount) - parseFloat(selectedVariant.price.amount)) / parseFloat(selectedVariant.compareAtPrice.amount)) * 100)}% OFF
+                        </span>
+                        <span className="text-xs sm:text-sm font-semibold text-[#5c4a3b]">
+                          Save ₹{Math.round(parseFloat(selectedVariant.compareAtPrice.amount) - parseFloat(selectedVariant.price.amount))}
+                        </span>
+                      </>
+                    )}
                   </div>
-                  {selectedVariant?.compareAtPrice && parseFloat(selectedVariant.compareAtPrice.amount) > parseFloat(selectedVariant.price.amount) && (
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-base text-muted-foreground line-through decoration-muted-foreground/50 decoration-2">
-                        ₹{parseFloat(selectedVariant.compareAtPrice.amount).toFixed(0)}
-                      </span>
-                      <span className="bg-[#cb6c4c] text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-[0_4px_12px_rgba(203,108,76,0.4)] whitespace-nowrap">
-                        {Math.round(((parseFloat(selectedVariant.compareAtPrice.amount) - parseFloat(selectedVariant.price.amount)) / parseFloat(selectedVariant.compareAtPrice.amount)) * 100)}% OFF
-                      </span>
-                    </div>
-                  )}
+                  <p className="text-xs text-[#7e8874] font-normal mt-1.5">
+                    MRP incl. all taxes · {parseFloat(selectedVariant?.price.amount || "0") >= 999 ? 'Free Delivery' : 'Delivery ₹60'} · Ships in 2–3 days
+                  </p>
                 </div>
 
-                {/* Aarambh Exclusive Add-On Callout */}
+                {/* Variant Options Selection (if applicable) */}
+                {product.options.length > 0 && product.options[0].values.length > 1 && (
+                  <div className="space-y-2 pt-2 border-t border-[#edf1e7]">
+                    {product.options.map((option) => (
+                      <div key={option.name}>
+                        <label className="text-xs font-semibold text-[#48533e] mb-2 block uppercase tracking-wider">
+                          {option.name}
+                        </label>
+                        <div className="flex flex-wrap gap-2">
+                          {option.values.map((value) => {
+                            const variantIndex = product.variants.edges.findIndex(
+                              v => v.node.selectedOptions.some(
+                                so => so.name === option.name && so.value === value
+                              )
+                            );
+                            const isSelected = selectedVariant?.selectedOptions.some(
+                              so => so.name === option.name && so.value === value
+                            );
+                            return (
+                              <button
+                                key={value}
+                                onClick={() => setSelectedVariantIndex(variantIndex >= 0 ? variantIndex : 0)}
+                                className={`px-4 py-2 rounded-xl border text-xs font-semibold transition-all ${
+                                  isSelected
+                                    ? 'border-[#4e6231] bg-[#4e6231]/10 text-[#4e6231] shadow-sm'
+                                    : 'border-[#d8e0ce] text-[#4f5945] hover:border-[#4e6231]/50 bg-[#fafcf7]'
+                                }`}
+                              >
+                                {value}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* WHAT'S IN THE BOX Metric Grid */}
+                <div className="space-y-2 pt-1">
+                  <span className="text-[11px] font-bold uppercase tracking-widest text-[#776856] block">
+                    WHAT'S IN THE BOX
+                  </span>
+                  <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
+                    {boxItems.map((item, idx) => (
+                      <div
+                        key={idx}
+                        className="bg-[#fcfbf7] rounded-2xl border border-[#ebe6dc] p-3 sm:p-4 text-center shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex flex-col items-center justify-center min-h-[85px]"
+                      >
+                        <span className="text-2xl sm:text-3xl font-serif font-bold text-[#232a1c] leading-none">
+                          {item.value}
+                        </span>
+                        <span className="text-xs text-[#6e7764] font-medium mt-1.5 leading-tight text-center">
+                          {item.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Pill Tags Row */}
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {pillTags.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3.5 py-1.5 rounded-full bg-[#f2efe9] text-[#4d5743] border border-[#e5e0d5] text-xs font-medium"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Quantity adjustment & Dual CTA Buttons Section */}
+                <div className="space-y-3 pt-2">
+                  {!isMicrogreens && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-semibold text-[#546048] uppercase tracking-wider">Quantity</span>
+                      <div className="flex items-center border border-[#d8e0ce] rounded-xl overflow-hidden bg-[#fafcf7]">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 rounded-none hover:bg-[#edf2e6] text-[#333d2a]"
+                          onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                        >
+                          <Minus className="h-3.5 w-3.5" />
+                        </Button>
+                        <span className="w-8 text-center text-sm font-bold text-[#27321e]">{quantity}</span>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 rounded-none hover:bg-[#edf2e6] text-[#333d2a]"
+                          onClick={() => setQuantity(quantity + 1)}
+                        >
+                          <Plus className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Dual CTA Buttons */}
+                  {isMicrogreens ? (
+                    <Button
+                      onClick={handleWhatsAppOrder}
+                      className="w-full bg-[#4e6231] hover:bg-[#405227] text-white h-13 text-base font-semibold rounded-2xl shadow-sm hover:shadow transition-all duration-200"
+                      disabled={!selectedVariant?.availableForSale}
+                    >
+                      {selectedVariant?.availableForSale
+                        ? `Order on WhatsApp — ₹${(parseFloat(selectedVariant?.price.amount || "0") * quantity).toFixed(0)}`
+                        : 'Out of Stock'}
+                    </Button>
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <Button
+                        onClick={handleAddToCart}
+                        className="w-full bg-[#4e6231] hover:bg-[#405227] text-white h-13 text-base font-semibold rounded-2xl shadow-sm hover:shadow transition-all duration-200"
+                        disabled={!selectedVariant?.availableForSale}
+                      >
+                        {selectedVariant?.availableForSale ? 'Add to Cart' : 'Out of Stock'}
+                      </Button>
+                      <Button
+                        onClick={handleBuyNow}
+                        variant="outline"
+                        className="w-full border-2 border-[#4e6231] text-[#4e6231] hover:bg-[#4e6231]/10 h-13 text-base font-semibold rounded-2xl transition-all duration-200"
+                        disabled={!selectedVariant?.availableForSale || isCheckingOut}
+                      >
+                        {isCheckingOut ? (
+                          <div className="flex items-center gap-2">
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                            <span>Processing...</span>
+                          </div>
+                        ) : (
+                          'Buy Now'
+                        )}
+                      </Button>
+                    </div>
+                  )}
+
+                  {/* Micro Trust Line Under Buttons */}
+                  <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-xs text-[#707c65] font-normal text-center pt-1">
+                    <span>✓ Secure checkout</span>
+                    <span>✓ Supports cow rescue</span>
+                  </div>
+                </div>
+
+                {/* Aarambh Exclusive Add-On Callout if relevant */}
                 {product.handle === "aarambh-the-starter-collection-incense-sticks-by-aurora-stomatal-farms" && (
-                  <div className="p-4 rounded-2xl bg-[#fff8ed] border border-[#d4af37]/40 space-y-1.5 animate-fade-in mt-3">
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-[#b58900]">
+                  <div className="p-4 rounded-2xl bg-[#fff9ed] border border-[#d4af37]/30 space-y-1.5 mt-2">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-[#9e7600]">
                       <Sparkles className="w-4 h-4 text-[#d4af37]" />
                       <span>Exclusive Order Add-On — ₹99 (3 Sacred Scents)</span>
                     </div>
@@ -502,244 +865,145 @@ Product Link: ${productUrl}`;
                     </p>
                   </div>
                 )}
-              </div>
 
-              {/* Product Overview */}
-              {(overview || keyHighlights) && (
-                <div className="space-y-6">
-                  {overview && (
-                    <div className="relative group">
-                      <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-[#5a8739] to-transparent opacity-40 group-hover:opacity-100 transition-opacity" />
-                      {overviewUsesProductHtml ? (
-                        <div
-                          className="text-foreground/80 leading-[1.8] text-[15px] font-medium italic pl-2 py-1 [&_p]:mb-5 [&_p:last-child]:mb-0"
-                          dangerouslySetInnerHTML={{ __html: descriptionHtml }}
-                        />
-                      ) : (
-                        <div className="text-foreground/80 leading-[1.8] whitespace-pre-line text-[15px] font-medium italic pl-2 py-1">
-                          {overview}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Product Details Accordion */}
-              {(comboIncludes || ingredients || howToUse || details || nutritionalFocus || safetyString || keyHighlights) && (
-                <Accordion
-                  type="multiple"
-                  defaultValue={defaultAccordionValue}
-                  className="w-full space-y-3"
-                >
-                  {keyHighlights && (
-                    <AccordionItem value="highlights" className="border-b border-border/60 overflow-hidden">
-                      <AccordionTrigger className="text-[17px] font-serif font-semibold py-6 hover:no-underline text-foreground group">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-2xl bg-primary/5 flex items-center justify-center group-data-[state=open]:bg-primary group-data-[state=open]:text-white transition-all duration-500">
-                            <Plus className="w-5 h-5 text-current" />
-                          </div>
-                          Key Highlights
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="pb-8 pl-14">
-                        <FormatMetafieldText text={keyHighlights} icon={Plus} />
-                      </AccordionContent>
-                    </AccordionItem>
-                  )}
-                  {comboIncludes && (
-                    <AccordionItem value="combo-includes" className="border-b border-border/60 first:border-t-0 last:border-b-0 overflow-hidden">
-                      <AccordionTrigger className="text-[17px] font-serif font-semibold py-6 hover:no-underline text-foreground group">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-2xl bg-primary/5 flex items-center justify-center group-data-[state=open]:bg-primary group-data-[state=open]:text-white transition-all duration-500">
-                            <Plus className="w-5 h-5" />
-                          </div>
-                          This Combo Includes
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="pb-8 pl-14">
-                        <FormatMetafieldText text={comboIncludes} icon={Leaf} />
-                      </AccordionContent>
-                    </AccordionItem>
-                  )}
-                  {ingredients && (
-                    <AccordionItem value="ingredients" className="border-b border-border/60 overflow-hidden">
-                      <AccordionTrigger className="text-[17px] font-serif font-semibold py-6 hover:no-underline text-foreground group">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-2xl bg-primary/5 flex items-center justify-center group-data-[state=open]:bg-primary group-data-[state=open]:text-white transition-all duration-500">
-                            <Leaf className="w-5 h-5" />
-                          </div>
-                          Ingredients & Aroma
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="pb-8 pl-14">
-                        <FormatMetafieldText text={ingredients} icon={Shield} />
-                      </AccordionContent>
-                    </AccordionItem>
-                  )}
-                  {howToUse && (
-                    <AccordionItem value="how-to-use" className="border-b border-border/60 overflow-hidden">
-                      <AccordionTrigger className="text-[17px] font-serif font-semibold py-6 hover:no-underline text-foreground group">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-2xl bg-primary/5 flex items-center justify-center group-data-[state=open]:bg-primary group-data-[state=open]:text-white transition-all duration-500">
-                            <Award className="w-5 h-5" />
-                          </div>
-                          How to Use
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="pb-8 pl-14">
-                        <FormatMetafieldText text={howToUse} isSteps />
-                      </AccordionContent>
-                    </AccordionItem>
-                  )}
-                  {nutritionalFocus && (
-                    <AccordionItem value="nutritional-focus" className="border-b border-border/60 overflow-hidden">
-                      <AccordionTrigger className="text-[17px] font-serif font-semibold py-6 hover:no-underline text-foreground group">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-2xl bg-primary/5 flex items-center justify-center group-data-[state=open]:bg-primary group-data-[state=open]:text-white transition-all duration-500">
-                            <Shield className="w-5 h-5" />
-                          </div>
-                          Nutritional Focus
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="pb-8 pl-14">
-                        <FormatMetafieldText text={nutritionalFocus} icon={Leaf} />
-                      </AccordionContent>
-                    </AccordionItem>
-                  )}
-                  {safetyString && (
-                    <AccordionItem value="safety-care" className="border-b border-border/60 overflow-hidden">
-                      <AccordionTrigger className="text-[17px] font-serif font-semibold py-6 hover:no-underline text-foreground group">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-2xl bg-primary/5 flex items-center justify-center group-data-[state=open]:bg-primary group-data-[state=open]:text-white transition-all duration-500">
-                            <Shield className="w-5 h-5" />
-                          </div>
-                          Safety & Care
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="pb-8 pl-14">
-                        <FormatMetafieldText text={safetyString} isDetails />
-                      </AccordionContent>
-                    </AccordionItem>
-                  )}
-                  {details && (
-                    <AccordionItem value="details" className="border-b border-border/60 overflow-hidden">
-                      <AccordionTrigger className="text-[17px] font-serif font-semibold py-6 hover:no-underline text-foreground group">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-2xl bg-primary/5 flex items-center justify-center group-data-[state=open]:bg-primary group-data-[state=open]:text-white transition-all duration-500">
-                            <Truck className="w-5 h-5" />
-                          </div>
-                          Product Specifications
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="pb-8 pl-14">
-                        <FormatMetafieldText text={details} isDetails />
-                      </AccordionContent>
-                    </AccordionItem>
-                  )}
-                </Accordion>
-              )}
-
-              {/* Fallback if no structured content */}
-              {!overview && !ingredients && !howToUse && !details && (
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Premium handcrafted aromatic product made with natural ingredients and traditional herbs.
-                </p>
-              )}
-
-
-              {/* Quantity & Add to Cart/WhatsApp - Desktop */}
-              <div className="hidden md:flex items-center gap-4 pt-4">
-                {!isMicrogreens && (
-                  <div className="flex items-center border-2 border-border rounded-lg overflow-hidden">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-12 w-12 rounded-none hover:bg-sage-light/30"
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    >
-                      <Minus className="h-4 w-4" />
-                    </Button>
-                    <span className="w-12 text-center font-semibold border-x-2 border-border h-12 flex items-center justify-center">{quantity}</span>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-12 w-12 rounded-none hover:bg-sage-light/30"
-                      onClick={() => setQuantity(quantity + 1)}
-                    >
-                      <Plus className="h-4 w-4" />
-                    </Button>
-                  </div>
-                )}
-
-                {isMicrogreens ? (
-                  <Button
-                    onClick={handleWhatsAppOrder}
-                    size="lg"
-                    className="flex-1 bg-[#5a8739] hover:bg-[#5a8739]/90 text-white h-12 text-base font-semibold shadow-md hover:shadow-lg transition-all"
-                    disabled={!selectedVariant?.availableForSale}
+                {/* Dropdowns / Collapsible Details Section */}
+                <div className="pt-4 border-t border-[#edf1e7] space-y-1">
+                  <Accordion
+                    type="multiple"
+                    defaultValue={["description", "combo-includes"]}
+                    className="w-full"
                   >
-                    {selectedVariant?.availableForSale ? 'Order on WhatsApp' : 'Out of Stock'}
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={handleAddToCart}
-                    size="lg"
-                    className="flex-1 bg-[#5a8739] hover:bg-[#5a8739]/90 text-white h-12 text-base font-semibold shadow-md hover:shadow-lg transition-all"
-                    disabled={!selectedVariant?.availableForSale}
-                  >
-                    <ShoppingCart className="h-5 w-5 mr-2" />
-                    {selectedVariant?.availableForSale ? 'Add to Cart' : 'Out of Stock'}
-                  </Button>
-                )}
+                    {/* 1. Product Description Dropdown */}
+                    {(overview || description) && (
+                      <AccordionItem value="description" className="border-b border-[#edf1e7]">
+                        <AccordionTrigger className="text-[15px] font-semibold text-[#27321e] hover:no-underline py-3.5 group">
+                          <div className="flex items-center gap-2.5">
+                            <FileText className="w-4 h-4 text-[#4e6231]" />
+                            <span>Product Description</span>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-4 pt-1 text-[#434e3a]">
+                          {overviewUsesProductHtml && descriptionHtml ? (
+                            <div
+                              className="leading-relaxed text-sm space-y-2.5 [&_p]:mb-2 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-1"
+                              dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+                            />
+                          ) : (
+                            <div className="leading-relaxed text-sm whitespace-pre-line">
+                              {overview || description}
+                            </div>
+                          )}
+                        </AccordionContent>
+                      </AccordionItem>
+                    )}
+
+                    {/* 2. What's Inside / This Combo Includes */}
+                    {comboIncludes && (
+                      <AccordionItem value="combo-includes" className="border-b border-[#edf1e7]">
+                        <AccordionTrigger className="text-[15px] font-semibold text-[#27321e] hover:no-underline py-3.5 group">
+                          <div className="flex items-center gap-2.5">
+                            <Package className="w-4 h-4 text-[#4e6231]" />
+                            <span>{isCombo ? "This Combo Includes" : "What's Inside"}</span>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-4 pt-1">
+                          <FormatMetafieldText text={comboIncludes} icon={Package} />
+                        </AccordionContent>
+                      </AccordionItem>
+                    )}
+
+                    {/* 3. Key Highlights */}
+                    {keyHighlights && (
+                      <AccordionItem value="highlights" className="border-b border-[#edf1e7]">
+                        <AccordionTrigger className="text-[15px] font-semibold text-[#27321e] hover:no-underline py-3.5 group">
+                          <div className="flex items-center gap-2.5">
+                            <Sparkles className="w-4 h-4 text-[#4e6231]" />
+                            <span>Key Highlights</span>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-4 pt-1">
+                          <FormatMetafieldText text={keyHighlights} icon={Sparkles} />
+                        </AccordionContent>
+                      </AccordionItem>
+                    )}
+
+                    {/* 4. Ingredients & Aroma */}
+                    {ingredients && (
+                      <AccordionItem value="ingredients" className="border-b border-[#edf1e7]">
+                        <AccordionTrigger className="text-[15px] font-semibold text-[#27321e] hover:no-underline py-3.5 group">
+                          <div className="flex items-center gap-2.5">
+                            <Leaf className="w-4 h-4 text-[#4e6231]" />
+                            <span>Ingredients & Aroma</span>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-4 pt-1">
+                          <FormatMetafieldText text={ingredients} icon={Leaf} />
+                        </AccordionContent>
+                      </AccordionItem>
+                    )}
+
+                    {/* 5. How to Use */}
+                    {howToUse && (
+                      <AccordionItem value="how-to-use" className="border-b border-[#edf1e7]">
+                        <AccordionTrigger className="text-[15px] font-semibold text-[#27321e] hover:no-underline py-3.5 group">
+                          <div className="flex items-center gap-2.5">
+                            <HelpCircle className="w-4 h-4 text-[#4e6231]" />
+                            <span>How to Use</span>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-4 pt-1">
+                          <FormatMetafieldText text={howToUse} isSteps />
+                        </AccordionContent>
+                      </AccordionItem>
+                    )}
+
+                    {/* 6. Nutritional Focus */}
+                    {nutritionalFocus && (
+                      <AccordionItem value="nutritional-focus" className="border-b border-[#edf1e7]">
+                        <AccordionTrigger className="text-[15px] font-semibold text-[#27321e] hover:no-underline py-3.5 group">
+                          <div className="flex items-center gap-2.5">
+                            <Shield className="w-4 h-4 text-[#4e6231]" />
+                            <span>Nutritional Focus</span>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-4 pt-1">
+                          <FormatMetafieldText text={nutritionalFocus} icon={Leaf} />
+                        </AccordionContent>
+                      </AccordionItem>
+                    )}
+
+                    {/* 7. Safety & Care */}
+                    {safetyString && (
+                      <AccordionItem value="safety-care" className="border-b border-[#edf1e7]">
+                        <AccordionTrigger className="text-[15px] font-semibold text-[#27321e] hover:no-underline py-3.5 group">
+                          <div className="flex items-center gap-2.5">
+                            <Shield className="w-4 h-4 text-[#4e6231]" />
+                            <span>Safety & Care</span>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-4 pt-1">
+                          <FormatMetafieldText text={safetyString} isDetails />
+                        </AccordionContent>
+                      </AccordionItem>
+                    )}
+
+                    {/* 8. Product Specifications */}
+                    {details && (
+                      <AccordionItem value="details" className="border-b border-[#edf1e7]">
+                        <AccordionTrigger className="text-[15px] font-semibold text-[#27321e] hover:no-underline py-3.5 group">
+                          <div className="flex items-center gap-2.5">
+                            <Info className="w-4 h-4 text-[#4e6231]" />
+                            <span>Product Specifications</span>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-4 pt-1">
+                          <FormatMetafieldText text={details} isDetails />
+                        </AccordionContent>
+                      </AccordionItem>
+                    )}
+                  </Accordion>
+                </div>
               </div>
-
-              {/* Trust Badges / Delivery Info */}
-              {isMicrogreens ? (
-                <div className="pt-6 border-t border-border">
-                  <div className="bg-[#5a8739]/10 border-2 border-[#5a8739] rounded-lg p-4">
-                    <div className="flex items-start gap-3">
-                      <img src={truckIcon} alt="Delivery" className="h-8 w-8 object-contain flex-shrink-0" />
-                      <div>
-                        <h4 className="font-semibold text-foreground mb-1 text-sm">
-                          {customShippingLabel || "Fresh Harvest Delivery"}
-                        </h4>
-                        <p className="text-xs text-muted-foreground leading-relaxed">
-                          Microgreens require same-day harvest and doorstep delivery, so a standard delivery charge of ₹100 applies.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-3 pt-6 border-t border-border">
-                  {/* Shipping Assurance Banner */}
-                  <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#fffbf5] border border-[#2e3f25]/10 text-xs text-[#2a3625]">
-                    <div className="w-8 h-8 rounded-lg bg-[#4f7a2e]/10 flex items-center justify-center text-[#4f7a2e] flex-shrink-0">
-                      <Truck className="w-4 h-4" />
-                    </div>
-                    <div className="leading-snug">
-                      <span className="font-bold text-[#2e4e18]">Free Shipping over ₹999</span>
-                      <span className="text-[#6a7462]"> · ₹60 flat shipping below ₹999 · No minimum order</span>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div className="flex items-center gap-3 text-sm text-foreground bg-[#5a8739]/5 rounded-xl p-4 border border-[#5a8739]/10 shadow-sm">
-                      <Leaf className="h-6 w-6 text-[#5a8739] flex-shrink-0" />
-                      <span className="font-medium">100% Natural</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-sm text-foreground bg-[#5a8739]/5 rounded-xl p-4 border border-[#5a8739]/10 shadow-sm">
-                      <Shield className="h-6 w-6 text-[#5a8739] flex-shrink-0" />
-                      <span className="font-medium">Secure Payment</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-sm text-foreground bg-[#5a8739]/5 rounded-xl p-4 border border-[#5a8739]/10 shadow-sm">
-                      <Award className="h-6 w-6 text-[#5a8739] flex-shrink-0" />
-                      <span className="font-medium">Premium Quality</span>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
