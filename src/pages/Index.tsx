@@ -14,6 +14,7 @@ import { InstagramCarousel } from "@/components/InstagramCarousel";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 import OfferPopup from "@/components/OfferPopup";
+import SEO from "@/components/SEO";
 
 const Index = () => {
   useEffect(() => {
@@ -22,6 +23,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen" style={{ background: "#f7f1e8" }}>
+      <SEO
+        title="Stomatal Farms | Aurora Aromatic Wellness Products"
+        description="Authentic aromatic wellness products crafted from traditional Indian herbs, pure cow dung, and essential oils. Natural incense sticks, cups, and ghee lamps."
+        url="/"
+      />
       <Header />
       <main>
         {/* 1. Hero */}

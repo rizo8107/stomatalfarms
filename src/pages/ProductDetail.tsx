@@ -12,6 +12,8 @@ import { ChevronLeft, Loader2, Minus, Plus, ShoppingCart, Truck, Leaf, Shield, A
 import truckIcon from "@/assets/icons/truck.png";
 import { GoogleReviewsCarousel } from "@/components/GoogleReviewsCarousel";
 import { toast } from "sonner";
+import SEO from "@/components/SEO";
+import { trackViewContent, trackContact } from "@/lib/tracking";
 import {
   Accordion,
   AccordionContent,
@@ -197,6 +199,16 @@ const ProductDetail = () => {
       try {
         const data = await fetchProductByHandle(handle);
         setProduct(data);
+        if (data) {
+          const firstVariant = data.variants?.edges?.[0]?.node;
+          trackViewContent({
+            id: data.id,
+            variantId: firstVariant?.id,
+            title: data.title,
+            price: firstVariant?.price?.amount || 0,
+            currency: firstVariant?.price?.currencyCode || 'INR',
+          });
+        }
       } catch (err) {
         console.error(err);
       } finally {
@@ -364,10 +376,35 @@ Product Link: ${productUrl}`;
     setAddressData({ name: "", phone: "", doorNo: "", area: "", city: "", pincode: "" });
 
     toast.success("Opening WhatsApp...");
+    trackContact();
   };
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title={product.title}
+        description={overview || product.description?.slice(0, 160)}
+        image={images[0]?.node?.url}
+        url={`/product/${product.handle}`}
+        type="product"
+        product={{
+          name: product.title,
+          description: overview || product.description,
+          image: images[0]?.node?.url,
+          price: selectedVariant?.price?.amount || "0",
+          currency: selectedVariant?.price?.currencyCode || "INR",
+          sku: selectedVariant?.id,
+          inStock: selectedVariant?.availableForSale !== false,
+          brand: "Aurora by Stomatal Farms",
+          ratingValue: 4.9,
+          reviewCount: 65,
+        }}
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Shop", url: "/collections" },
+          { name: product.title, url: `/product/${product.handle}` },
+        ]}
+      />
       <Header />
 
       <main className="pt-24 md:pt-32 pb-24 md:pb-12">

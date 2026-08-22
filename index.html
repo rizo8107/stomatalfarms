@@ -5,17 +5,78 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="format-detection" content="telephone=no" />
+    
+    <!-- Primary Meta Tags -->
     <title>Stomatal Farms | Aurora Aromatic Wellness Products</title>
-    <meta name="description" content="Authentic aromatic wellness products crafted from traditional Indian herbs and essential oils. Incense sticks, cups, ghee lamps & more from Stomatal Farms." />
+    <meta name="description" content="Authentic aromatic wellness products crafted from traditional Indian herbs, cow dung, and pure essential oils. Natural incense sticks, cups, ghee lamps & more from Stomatal Farms." />
     <meta name="author" content="Stomatal Farms" />
-
-    <meta property="og:title" content="Stomatal Farms | Aurora Aromatic Wellness" />
-    <meta property="og:description" content="Authentic aromatic wellness products crafted from traditional Indian herbs and essential oils. Incense sticks, cups, ghee lamps & more." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://stomatalfarms.com/og-image.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://stomatalfarms.com/og-image.png" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="https://stomatalfarms.com/" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://stomatalfarms.com/" />
+    <meta property="og:title" content="Stomatal Farms | Aurora Aromatic Wellness" />
+    <meta property="og:description" content="Authentic aromatic wellness products crafted from traditional Indian herbs and essential oils. Natural incense sticks, cups, ghee lamps & more." />
+    <meta property="og:image" content="https://stomatalfarms.com/og-image.png" />
+    <meta property="og:site_name" content="Stomatal Farms" />
+    <meta property="og:locale" content="en_IN" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Stomatal Farms | Aurora Aromatic Wellness" />
+    <meta name="twitter:description" content="Authentic aromatic wellness products crafted from traditional Indian herbs and essential oils. Natural incense sticks, cups, ghee lamps & more." />
+    <meta name="twitter:image" content="https://stomatalfarms.com/og-image.png" />
+
+    <!-- Performance Preconnects & DNS Prefetching -->
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.shopify.com" />
+    <link rel="preconnect" href="https://connect.facebook.net" crossorigin />
+    <link rel="dns-prefetch" href="https://connect.facebook.net" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Organization & WebSite JSON-LD Schema (Crawlable without JS) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://stomatalfarms.com/#organization",
+            "name": "Stomatal Farms",
+            "url": "https://stomatalfarms.com",
+            "logo": "https://stomatalfarms.com/aurora-logo.png",
+            "sameAs": [
+              "https://www.instagram.com/aurora_wellness_official",
+              "https://www.facebook.com/stomatalfarms"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+91-9940822606",
+              "contactType": "customer service",
+              "areaServed": "IN",
+              "availableLanguage": ["en", "ta", "hi"]
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://stomatalfarms.com/#website",
+            "url": "https://stomatalfarms.com",
+            "name": "Stomatal Farms",
+            "publisher": { "@id": "https://stomatalfarms.com/#organization" },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://stomatalfarms.com/collections?search={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          }
+        ]
+      }
+    </script>
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=GT-NBXH2XRV"></script>
@@ -24,7 +85,9 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', 'GT-NBXH2XRV');
+      gtag('config', 'GT-NBXH2XRV', {
+        send_page_view: false // Managed via React Router AnalyticsTracker
+      });
     </script>
 
     <!-- Meta Pixel Code -->
@@ -37,7 +100,6 @@
       t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
       fbq('init', '1487848962411967');
-      fbq('track', 'PageView');
     </script>
     <!-- End Meta Pixel Code -->
     

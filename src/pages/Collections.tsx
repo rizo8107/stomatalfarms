@@ -6,6 +6,7 @@ import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
 import { ShopifyProductCard } from "@/components/ShopifyProductCard";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import SEO from "@/components/SEO";
 
 const categories = [
   { id: "all", name: "All Products", query: "" },
@@ -86,6 +87,15 @@ const Collections = () => {
 
   return (
     <div className="min-h-screen bg-background texture-overlay">
+      <SEO
+        title={`${categories.find(c => c.id === activeCategory)?.name || "All Products"} | Stomatal Farms`}
+        description="Explore our range of traditional Indian incense cups, incense sticks, ghee lamps, and pure aromatic wellness products from Stomatal Farms."
+        url={`/collections${activeCategory !== 'all' ? `?category=${activeCategory}` : ''}`}
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Shop", url: "/collections" },
+        ]}
+      />
       <Header />
 
       <main>

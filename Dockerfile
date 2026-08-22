@@ -6,7 +6,7 @@ WORKDIR /app
 # Declare build-time arguments for Vite env vars
 # Set these in Dokploy: App > Build > Build Arguments
 ARG VITE_SHOPIFY_STORE_DOMAIN=pay.stomatalfarms.com
-ARG VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN=f530389d7d4160a046bd5b3f736a2121
+ARG VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN=0d6c6f5ce24cc19ab5fc0b18697ee149
 ARG VITE_INSFORGE_URL=https://d6yqray7.us-east.insforge.app
 ARG VITE_INSFORGE_ANON_KEY=anon_87226cf8482da6e25b95278ee72334ea4e59a2a7e0a2a5422b31774599720159
 

@@ -1,14 +1,27 @@
 User-agent: Googlebot
 Allow: /
 
-User-agent: Bingbot
+User-agent: Googlebot-Image
 Allow: /
 
-User-agent: Twitterbot
+User-agent: Bingbot
 Allow: /
 
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: Facebot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: Pinterestbot
+Allow: /
+
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /checkout/
+
+Sitemap: https://stomatalfarms.com/sitemap.xml

@@ -223,17 +223,44 @@ app.post('/api/sync', async (req, res) => {
   }
 });
 
+const distPath = path.join(__dirname, 'dist');
+
+// Explicit route for sitemap.xml with XML Content-Type
+app.get('/sitemap.xml', (req, res) => {
+  res.setHeader('Content-Type', 'application/xml');
+  res.setHeader('Cache-Control', 'public, max-age=86400');
+  res.sendFile(path.join(distPath, 'sitemap.xml'));
+});
+
+// Explicit route for robots.txt
+app.get('/robots.txt', (req, res) => {
+  res.setHeader('Content-Type', 'text/plain');
+  res.setHeader('Cache-Control', 'public, max-age=86400');
+  res.sendFile(path.join(distPath, 'robots.txt'));
+});
+
+// Serve hashed assets with immutable long-term caching
+app.use('/assets', express.static(path.join(distPath, 'assets'), {
+  maxAge: '1y',
+  immutable: true,
+}));
+
+// Serve other static files with 1-day caching and stale-while-revalidate
+app.use(express.static(distPath, {
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.html')) {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    } else {
+      res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
+    }
+  }
+}));
+
 // Start server if executed directly
 if (require.main === module) {
-  // Serve frontend build static files
-  const distPath = path.join(__dirname, 'dist');
-  app.use(express.static(distPath, {
-    maxAge: '1y',
-    immutable: true
-  }));
-
-  // For Single Page App client-side routing, fallback to index.html
+  // For Single Page App client-side routing, fallback to index.html with no-cache
   app.get('*', (req, res) => {
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.sendFile(path.join(distPath, 'index.html'));
   });
 

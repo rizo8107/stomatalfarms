@@ -1,32 +1,17 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { captureUtmParams } from "@/lib/utm";
-
-declare global {
-  interface Window {
-    gtag?: (...args: any[]) => void;
-    fbq?: (...args: any[]) => void;
-  }
-}
+import { trackPageView } from "@/lib/tracking";
 
 const AnalyticsTracker = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Capture UTM parameters from the URL
+    // 1. Capture and refresh UTM & Ad click IDs (gclid, fbclid, wbraid, gbraid, etc.)
     captureUtmParams();
 
-    // Track PageView in Google Analytics
-    if (window.gtag) {
-      window.gtag('config', 'GT-NBXH2XRV', {
-        page_path: location.pathname + location.search,
-      });
-    }
-
-    // Track PageView in Meta Pixel
-    if (window.fbq) {
-      window.fbq('track', 'PageView');
-    }
+    // 2. Track unified PageView across Google Analytics & Meta Pixel
+    trackPageView(location.pathname + location.search);
   }, [location]);
 
   return null;

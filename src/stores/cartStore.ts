@@ -3,6 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import { ShopifyProduct } from '@/lib/shopify';
 import { createCheckout, addToCheckout, updateCheckoutLineItem, removeFromCheckout, fetchCheckout, updateCheckoutAttributes } from '@/lib/shopify-api';
 import { appendUtmToUrl, getShopifyCheckoutAttributes } from '@/lib/utm';
+import { trackAddToCart, trackInitiateCheckout } from '@/lib/tracking';
 
 export interface CartItem {
   product: ShopifyProduct;
@@ -52,30 +53,15 @@ export const useCartStore = create<CartStore>()(
         const { items } = get();
         const existingItem = items.find(i => i.variantId === item.variantId);
         
-        // Track AddToCart
-        if (typeof window !== 'undefined') {
-          if (window.gtag) {
-            window.gtag('event', 'add_to_cart', {
-              currency: item.price.currencyCode,
-              value: parseFloat(item.price.amount) * item.quantity,
-              items: [{
-                item_id: item.variantId,
-                item_name: item.product.node.title,
-                quantity: item.quantity,
-                price: parseFloat(item.price.amount)
-              }]
-            });
-          }
-          if (window.fbq) {
-            window.fbq('track', 'AddToCart', {
-              content_ids: [item.variantId],
-              content_name: item.product.node.title,
-              content_type: 'product',
-              value: parseFloat(item.price.amount) * item.quantity,
-              currency: item.price.currencyCode
-            });
-          }
-        }
+        // Track AddToCart across Meta Pixel & Google Analytics/Ads
+        trackAddToCart({
+          id: item.product.node.id,
+          variantId: item.variantId,
+          title: item.product.node.title,
+          price: item.price.amount,
+          quantity: item.quantity,
+          currency: item.price.currencyCode,
+        });
 
         if (existingItem) {
           set({
@@ -138,7 +124,7 @@ export const useCartStore = create<CartStore>()(
           
           // Add UTM + Shopify tracking attributes to the checkout.
           // This populates the "Conversion Summary" panel in Shopify Admin.
-          // Keys like _landing_page, _source_url, _ref, _ga are read by Shopify to attribute the order.
+          // Keys like _landing_page, _source_url, _ref, _ga, _fbc, _fbp are read by Shopify to attribute the order.
           const checkoutAttributes = getShopifyCheckoutAttributes();
           if (checkoutAttributes.length > 0) {
             await updateCheckoutAttributes(checkout.id, checkoutAttributes);
@@ -147,31 +133,19 @@ export const useCartStore = create<CartStore>()(
           const finalCheckoutUrl = appendUtmToUrl(updatedCheckout.webUrl);
           setCheckoutUrl(finalCheckoutUrl);
 
-          // Track InitiateCheckout
-          if (typeof window !== 'undefined') {
-            const totalValue = items.reduce((sum, item) => sum + (parseFloat(item.price.amount) * item.quantity), 0);
-            if (window.gtag) {
-              window.gtag('event', 'begin_checkout', {
-                currency: items[0]?.price.currencyCode || 'INR',
-                value: totalValue,
-                items: items.map(item => ({
-                  item_id: item.variantId,
-                  item_name: item.product.node.title,
-                  quantity: item.quantity,
-                  price: parseFloat(item.price.amount)
-                }))
-              });
-            }
-            if (window.fbq) {
-              window.fbq('track', 'InitiateCheckout', {
-                content_ids: items.map(item => item.variantId),
-                content_type: 'product',
-                value: totalValue,
-                currency: items[0]?.price.currencyCode || 'INR',
-                num_items: items.reduce((sum, item) => sum + item.quantity, 0)
-              });
-            }
-          }
+          // Track InitiateCheckout / begin_checkout
+          const totalValue = items.reduce((sum, item) => sum + (parseFloat(item.price.amount) * item.quantity), 0);
+          trackInitiateCheckout(
+            items.map(item => ({
+              id: item.product.node.id,
+              variantId: item.variantId,
+              title: item.product.node.title,
+              price: item.price.amount,
+              quantity: item.quantity,
+            })),
+            totalValue,
+            items[0]?.price.currencyCode || 'INR'
+          );
           
           return finalCheckoutUrl;
         } catch (error) {
