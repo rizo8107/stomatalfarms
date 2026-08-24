@@ -1,0 +1,107 @@
+{%- liquid
+  assign active_tab_class = 'bg-[#b56c3d] text-white shadow-lg'
+  assign idle_tab_class = 'text-white/40 hover:bg-[#b56c3d]/20 hover:text-[#b56c3d]'
+-%}
+
+<section class="pt-6 pb-10 md:pb-14 px-4" style="background: linear-gradient(135deg, #1a2416, #2a3820);">
+  <div class="max-w-2xl mx-auto">
+    <p class="text-lg md:text-xl font-black uppercase tracking-[0.25em] text-[#b56c3d] mb-2">
+      Aurora vs Regular Incense
+    </p>
+    <h2 class="text-3xl md:text-4xl text-white mb-6 leading-tight" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">
+      The difference is in <span class="italic text-[#b56c3d]">every</span> detail.
+    </h2>
+
+    <comparison-tabs data-active-class="{{ active_tab_class }}" data-idle-class="{{ idle_tab_class }}">
+      <div class="flex bg-white/5 p-1 rounded-xl mb-6" role="tablist">
+        <button type="button" role="tab" data-tab-trigger="inside" aria-selected="true" aria-controls="aurora-panel-inside" class="flex-1 py-3 text-[10px] md:text-xs font-black uppercase tracking-[0.18em] transition-all duration-300 rounded-lg {{ active_tab_class }}">Inside</button>
+        <button type="button" role="tab" data-tab-trigger="burns" aria-selected="false" aria-controls="aurora-panel-burns" class="flex-1 py-3 text-[10px] md:text-xs font-black uppercase tracking-[0.18em] transition-all duration-300 rounded-lg {{ idle_tab_class }}">Burns</button>
+        <button type="button" role="tab" data-tab-trigger="safety" aria-selected="false" aria-controls="aurora-panel-safety" class="flex-1 py-3 text-[10px] md:text-xs font-black uppercase tracking-[0.18em] transition-all duration-300 rounded-lg {{ idle_tab_class }}">Safety</button>
+        <button type="button" role="tab" data-tab-trigger="after" aria-selected="false" aria-controls="aurora-panel-after" class="flex-1 py-3 text-[10px] md:text-xs font-black uppercase tracking-[0.18em] transition-all duration-300 rounded-lg {{ idle_tab_class }}">After</button>
+      </div>
+
+      {%- comment -%}
+        Every panel is server-rendered and all but the active one is hidden, so the
+        rendered output matches React's single-panel render exactly.
+      {%- endcomment -%}
+      {%- assign panels = 'inside;🌿;Cow dung base.
+Not charcoal.;Gomaya base|Sourced herbs|Natural binders|Family safe;Charcoal core|Synthetic aroma|Chemical binders|No safety data~burns;🔥;20 sec to light.
+Proof of purity.;Clove-activated|No chemical rush|45 min clean burn;1 sec — chemicals|Harsh smoke|Gone mid-puja~safety;🔬;Lab tested.
+Nothing hidden.;Independently tested|Safe for kids & pets|Report on request;No testing done|Chemical smoke daily|No one talks about it~after;🪷;Ash becomes
+vibhoothi.;Solar dried|Handcrafted|Ash → vibhoothi|Zero waste;Machine processed|Ash is waste|Nothing reusable' | split: '~' -%}
+
+      {%- for entry in panels -%}
+        {%- assign panel = entry | split: ';' -%}
+        <div
+          id="aurora-panel-{{ panel[0] }}"
+          role="tabpanel"
+          data-tab-panel="{{ panel[0] }}"
+          class="bg-white/8 backdrop-blur-sm rounded-[24px] p-6 md:p-8 border border-white/10"
+          {% unless forloop.first %}hidden{% endunless %}
+        >
+          <p class="text-xl md:text-2xl text-white mb-5 leading-snug whitespace-pre-line" style="font-family: 'Cormorant Garamond', serif; font-weight: 600;">{{ panel[1] }}  {{ panel[2] }}</p>
+
+          <div class="grid grid-cols-2 gap-5 md:gap-8">
+            <div>
+              <p class="text-[9px] font-black uppercase tracking-[0.2em] text-[#b56c3d] mb-2.5">
+                + Aurora
+              </p>
+              <ul class="space-y-1.5">
+                {%- assign aurora_items = panel[3] | split: '|' -%}
+                {%- for item in aurora_items -%}
+                  <li class="flex items-start gap-2 text-sm text-white/90">
+                    <span class="text-[#b56c3d] font-bold mt-0.5">✓</span>
+                    {{ item }}
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+            <div>
+              <p class="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 mb-2.5">
+                ✕ Regular
+              </p>
+              <ul class="space-y-1.5">
+                {%- assign regular_items = panel[4] | split: '|' -%}
+                {%- for item in regular_items -%}
+                  <li class="flex items-start gap-2 text-sm text-white/40">
+                    <span class="text-red-400/60 font-bold mt-0.5">✕</span>
+                    {{ item }}
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </comparison-tabs>
+
+    <div class="mt-4 flex items-stretch rounded-[16px] overflow-hidden border border-white/10 bg-white/5">
+      {%- assign bottom_stats = '4.7★|Rating,1,200+|Homes,100%|Natural' | split: ',' -%}
+      {%- for entry in bottom_stats -%}
+        {%- assign stat = entry | split: '|' -%}
+        <div class="flex-1 flex flex-col items-center justify-center py-3 {% unless forloop.last %}border-r border-white/10{% endunless %}">
+          <p class="text-lg text-white font-semibold leading-none mb-1" style="font-family: 'Cormorant Garamond', serif;">
+            {{ stat[0] }}
+          </p>
+          <p class="text-[9px] font-bold uppercase tracking-[0.18em] text-white/40">
+            {{ stat[1] }}
+          </p>
+        </div>
+      {%- endfor -%}
+      <a
+        href="{{ routes.collections_url }}"
+        class="px-4 py-2.5 text-[10px] font-black uppercase tracking-[0.15em] text-white whitespace-nowrap flex items-center"
+        style="background: #b56c3d;"
+      >
+        Shop Aurora →
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Aurora comparison",
+  "presets": [{ "name": "Aurora comparison" }]
+}
+{% endschema %}

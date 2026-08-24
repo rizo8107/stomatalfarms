@@ -1,0 +1,206 @@
+{%- liquid
+  assign bundle_collection = collections[section.settings.collection]
+  assign bundle_count = bundle_collection.products.size
+-%}
+
+{%- comment -%}
+  Bundle source: the chosen collection, or — when none is set — combo/bundle
+  products matched by title, so the section is not silently blank out of the box.
+{%- endcomment -%}
+{%- liquid
+  assign bundle_collection = collections[section.settings.collection]
+  assign use_fallback = false
+  if bundle_collection.products.size == 0
+    assign bundle_collection = collections.all
+    assign use_fallback = true
+  endif
+
+  assign bundle_count = 0
+  for candidate in bundle_collection.products limit: 50
+    assign candidate_title = candidate.title | downcase
+    if use_fallback == false
+      assign bundle_count = bundle_count | plus: 1
+    elsif candidate_title contains 'combo' or candidate_title contains 'bundle' or candidate_title contains 'collection'
+      assign bundle_count = bundle_count | plus: 1
+    endif
+  endfor
+-%}
+
+{%- if bundle_count > 0 -%}
+  <section class="py-10 md:py-16 px-4 bg-[#0d0d08] relative overflow-hidden">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#f5c842]/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto relative z-10">
+      <bundle-carousel>
+        <div class="flex items-end justify-between mb-6">
+          <div>
+            <h2 class="text-3xl md:text-5xl text-white leading-tight" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">
+              The <span class="italic text-[#f5c842]">Aurora Bundle</span>
+            </h2>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              data-carousel-prev
+              class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white hover:bg-white/10 transition-all"
+              aria-label="Previous bundle"
+            >
+              {% render 'icon', name: 'chevron-left', class: 'w-4 h-4' %}
+            </button>
+            <button
+              type="button"
+              data-carousel-next
+              class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white hover:bg-white/10 transition-all"
+              aria-label="Next bundle"
+            >
+              {% render 'icon', name: 'chevron-right', class: 'w-4 h-4' %}
+            </button>
+          </div>
+        </div>
+
+        <div data-carousel-viewport class="overflow-hidden -mx-4 px-4">
+          <div class="flex">
+            {%- assign card_index = 0 -%}
+            {%- for product in bundle_collection.products limit: 50 -%}
+              {%- assign product_title = product.title | downcase -%}
+              {%- assign include_bundle = true -%}
+              {%- if use_fallback -%}
+                {%- assign include_bundle = false -%}
+                {%- if product_title contains 'combo' or product_title contains 'bundle' or product_title contains 'collection' -%}
+                  {%- assign include_bundle = true -%}
+                {%- endif -%}
+              {%- endif -%}
+              {%- if include_bundle -%}
+              {%- assign card_index = card_index | plus: 1 -%}
+              {%- liquid
+                assign variant = product.variants.first
+                assign current_price = variant.price | divided_by: 100.0 | round
+                assign has_discount = false
+                if variant.compare_at_price > variant.price
+                  assign has_discount = true
+                  assign original_price = variant.compare_at_price | divided_by: 100.0 | round
+                  assign saving = variant.compare_at_price | minus: variant.price | divided_by: 100.0 | round
+                endif
+              -%}
+              <div class="pl-3 md:pl-4 flex-[0_0_88%] sm:flex-[0_0_72%] md:flex-[0_0_62%] lg:flex-[0_0_52%] min-w-0">
+                <div class="w-full min-w-0">
+                  <div
+                    data-bundle-card
+                    class="flex flex-col rounded-2xl overflow-hidden transition-all duration-500 border {% if card_index == 1 %}border-[#f5c842]/30 shadow-xl shadow-black/50{% else %}border-white/5{% endif %}"
+                    style="background: linear-gradient(135deg, #1c1408, #2a1e08);"
+                  >
+                    <div class="w-full relative">
+                      {%- if product.featured_image -%}
+                        <img
+                          src="{{ product.featured_image | image_url: width: 1000 }}"
+                          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                          width="{{ product.featured_image.width }}"
+                          height="{{ product.featured_image.height }}"
+                          class="w-full h-auto block"
+                          loading="lazy"
+                        >
+                      {%- else -%}
+                        <div class="w-full h-full flex items-center justify-center text-white/20 text-xs">No image</div>
+                      {%- endif -%}
+                      <div class="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#1c1408] to-transparent"></div>
+                    </div>
+
+                    <div class="p-6 md:p-8 flex flex-col gap-5 min-w-0">
+                      <span class="w-fit px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-[#f5c842]/40 text-[#f5c842]">
+                        Most Popular
+                      </span>
+
+                      <div>
+                        <h3 class="text-2xl md:text-3xl text-white leading-tight mb-3" style="font-family: 'Cormorant Garamond', serif; font-weight: 600;">
+                          {{ product.title }}
+                        </h3>
+                        {%- comment -%} Written out rather than split on ',' — the last bullet contains a comma. {%- endcomment -%}
+                        <ul class="space-y-1.5">
+                          <li class="flex items-start gap-2 text-xs md:text-sm text-white/60 leading-snug"><span class="text-[#f5c842] mt-0.5 flex-shrink-0">›</span>100% natural cow dung base</li>
+                          <li class="flex items-start gap-2 text-xs md:text-sm text-white/60 leading-snug"><span class="text-[#f5c842] mt-0.5 flex-shrink-0">›</span>Hydrodistilled botanical essence</li>
+                          <li class="flex items-start gap-2 text-xs md:text-sm text-white/60 leading-snug"><span class="text-[#f5c842] mt-0.5 flex-shrink-0">›</span>No charcoal · No synthetics</li>
+                          <li class="flex items-start gap-2 text-xs md:text-sm text-white/60 leading-snug"><span class="text-[#f5c842] mt-0.5 flex-shrink-0">›</span>Burns ~45 min, aroma lingers for hours</li>
+                        </ul>
+                      </div>
+
+                      <div class="flex items-center gap-3 flex-wrap">
+                        <span class="text-3xl md:text-4xl font-light text-white" style="font-family: 'Cormorant Garamond', serif;">
+                          ₹{{ current_price }}
+                        </span>
+                        {%- if has_discount -%}
+                          <span class="text-base text-white/30 line-through">₹{{ original_price }}</span>
+                          <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-[#f5c842] text-[#1a1000]">
+                            Save ₹{{ saving }}
+                          </span>
+                        {%- endif -%}
+                      </div>
+
+                      <div class="flex gap-3">
+                        {%- comment -%} Inert in Phase 1 — the native Ajax cart lands in Phase 2. {%- endcomment -%}
+                        <button
+                          type="button"
+                          class="flex items-center gap-2 px-6 py-3 rounded-full text-[11px] font-black uppercase tracking-[0.15em] text-[#1a1000] transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#f5c842]/20"
+                          style="background: #f5c842;"
+                        >
+                          {% render 'icon', name: 'shopping-cart', class: 'w-4 h-4' %}
+                          Add to Cart
+                        </button>
+                        <a
+                          href="{{ product.url }}"
+                          class="flex items-center px-6 py-3 rounded-full text-[11px] font-black uppercase tracking-[0.15em] text-white/60 border border-white/15 transition-all hover:border-white/30 hover:text-white"
+                        >
+                          Details
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <div class="flex justify-center gap-2 mt-8">
+          {%- assign dot_index = 0 -%}
+          {%- for product in bundle_collection.products limit: 50 -%}
+              {%- assign product_title = product.title | downcase -%}
+              {%- assign include_bundle = true -%}
+              {%- if use_fallback -%}
+                {%- assign include_bundle = false -%}
+                {%- if product_title contains 'combo' or product_title contains 'bundle' or product_title contains 'collection' -%}
+                  {%- assign include_bundle = true -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- if include_bundle -%}
+              <button
+                type="button"
+                data-carousel-dot
+                data-index="{{ dot_index }}"
+                class="rounded-full transition-all duration-300 {% if dot_index == 0 %}w-6 h-1.5 bg-[#f5c842]{% else %}w-1.5 h-1.5 bg-white/20 hover:bg-white/40{% endif %}"
+                aria-label="Go to bundle {{ dot_index | plus: 1 }}"
+              ></button>
+              {%- assign dot_index = dot_index | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </bundle-carousel>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Bundle carousel",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Bundle collection",
+      "info": "The React site pinned four product IDs: 8792608112797, 8711416709277, 8711408386205, 8711399866525. Put those products in a collection and select it here. The section hides itself when the collection is empty."
+    }
+  ],
+  "presets": [{ "name": "Bundle carousel" }]
+}
+{% endschema %}

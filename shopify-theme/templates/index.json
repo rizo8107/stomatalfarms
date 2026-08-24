@@ -1,20 +1,99 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
+    "hero": {
+      "type": "hero",
+      "settings": {}
+    },
+    "social_proof_bar": {
+      "type": "social-proof-bar",
+      "settings": {}
+    },
+    "google_reviews_carousel": {
+      "type": "google-reviews-carousel",
+      "settings": {}
+    },
+    "aurora_comparison": {
+      "type": "aurora-comparison",
+      "settings": {}
+    },
+    "bundle_carousel": {
+      "type": "bundle-carousel",
+      "settings": {}
+    },
+    "products_section": {
+      "type": "products-section",
+      "settings": {
+        "products_to_show": 6
+      }
+    },
+    "greens_section": {
+      "type": "greens-section",
+      "settings": {}
+    },
+    "video_carousel": {
+      "type": "video-carousel",
+      "settings": {}
+    },
+    "why_us": {
+      "type": "why-us",
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Which product should I start with?",
+            "answer": "Our incense sticks are perfect for daily use, while cups offer a deeper, more therapeutic experience. If you're new, the Combo packs are our most loved starting point."
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Are these safe for children and elders?",
+            "answer": "Absolutely. Every Aurora product is crafted from 100% natural, chemical-free ingredients with no synthetic binders, making them safe for everyone in your family."
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does each product last?",
+            "answer": "Our sticks and cups both burn for ~45 minutes. The aroma and essence linger for hours after the burn ends, filling your space long after the flame goes out."
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "What are your shipping rates and is there a minimum order?",
+            "answer": "We have no minimum order value — you can purchase even a single item! We provide FREE shipping on all orders over ₹999 across India. For orders under ₹999, a flat shipping fee of ₹60 applies."
+          }
+        }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4"],
+      "settings": {}
+    },
+    "instagram_carousel": {
+      "type": "instagram-carousel",
+      "settings": {}
+    },
+    "final_cta": {
+      "type": "final-cta",
       "settings": {}
     }
   },
   "order": [
-    "main"
+    "hero",
+    "social_proof_bar",
+    "google_reviews_carousel",
+    "aurora_comparison",
+    "bundle_carousel",
+    "products_section",
+    "greens_section",
+    "video_carousel",
+    "why_us",
+    "faq",
+    "instagram_carousel",
+    "final_cta"
   ]
 }

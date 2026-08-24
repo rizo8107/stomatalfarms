@@ -1,0 +1,137 @@
+{%- assign video_urls = section.settings.video_urls | split: ',' -%}
+
+<video-carousel>
+  <section class="py-16 md:py-24 px-4 bg-[#1a2416] relative overflow-hidden">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex items-end justify-between mb-8 md:mb-10">
+        <div>
+          <p class="text-[10px] font-black uppercase tracking-[0.25em] text-[#a8c690] flex items-center gap-2 mb-2">
+            <span class="w-6 h-px bg-[#a8c690]/40"></span>
+            {{ section.settings.eyebrow }}
+          </p>
+          <h2 class="text-2xl md:text-4xl text-white" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">
+            See it in <span class="italic text-[#a8c690]">real life.</span>
+          </h2>
+        </div>
+
+        <div class="hidden md:flex items-center gap-2">
+          <button
+            type="button"
+            data-carousel-prev
+            class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white hover:bg-white/10 transition-all"
+            aria-label="Previous video"
+          >
+            {% render 'icon', name: 'chevron-left', class: 'w-4 h-4' %}
+          </button>
+          <button
+            type="button"
+            data-carousel-next
+            class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-white hover:bg-white/10 transition-all"
+            aria-label="Next video"
+          >
+            {% render 'icon', name: 'chevron-right', class: 'w-4 h-4' %}
+          </button>
+        </div>
+      </div>
+
+      <div class="relative">
+        <div data-carousel-viewport class="overflow-hidden">
+          <div class="flex gap-3 md:gap-4">
+            {%- for url in video_urls -%}
+              {%- assign video_src = url | strip -%}
+              <div class="flex-[0_0_72%] sm:flex-[0_0_50%] md:flex-[0_0_36%] lg:flex-[0_0_28%] min-w-0">
+                <div class="relative aspect-[9/16] rounded-2xl overflow-hidden bg-black shadow-2xl border border-white/5">
+                  <div data-video-slide data-src="{{ video_src }}" class="relative w-full h-full cursor-pointer group/slide">
+                    <video
+                      data-preview
+                      src="{{ video_src }}"
+                      class="w-full h-full object-cover"
+                      muted
+                      loop
+                      playsinline
+                      preload="metadata"
+                    ></video>
+                    <div class="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover/slide:opacity-100 transition-opacity duration-300">
+                      <div class="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-xl">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#1a2416" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play w-6 h-6 text-[#1a2416] ml-1" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                      </div>
+                    </div>
+                    <div class="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-black/50 to-transparent pointer-events-none"></div>
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <button
+          type="button"
+          data-carousel-prev
+          class="md:hidden absolute top-1/2 left-2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white z-10"
+          aria-label="Previous video"
+        >
+          {% render 'icon', name: 'chevron-left', class: 'w-4 h-4' %}
+        </button>
+        <button
+          type="button"
+          data-carousel-next
+          class="md:hidden absolute top-1/2 right-2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white z-10"
+          aria-label="Next video"
+        >
+          {% render 'icon', name: 'chevron-right', class: 'w-4 h-4' %}
+        </button>
+      </div>
+
+      <div class="flex justify-center gap-2 mt-6">
+        {%- for url in video_urls -%}
+          <button
+            type="button"
+            data-carousel-dot
+            data-index="{{ forloop.index0 }}"
+            class="rounded-full transition-all duration-300 {% if forloop.first %}w-6 h-1.5 bg-[#a8c690]{% else %}w-1.5 h-1.5 bg-white/20 hover:bg-white/40{% endif %}"
+            aria-label="Go to video {{ forloop.index }}"
+          ></button>
+        {%- endfor -%}
+      </div>
+
+      <p class="text-center text-xs text-white/30 mt-4">Tap a video to watch with sound</p>
+    </div>
+  </section>
+
+  {%- comment -%} Full-screen player with sound, opened on slide click. {%- endcomment -%}
+  <div data-video-popup class="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm" hidden>
+    <div data-video-popup-inner class="relative w-full max-w-sm md:max-w-md mx-4">
+      <video data-popup-video class="w-full rounded-2xl shadow-2xl" controls playsinline></video>
+      <button
+        type="button"
+        data-video-popup-close
+        class="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors"
+        aria-label="Close video"
+      >
+        {% render 'icon', name: 'x', class: 'w-5 h-5 text-[#1a2416]' %}
+      </button>
+    </div>
+  </div>
+</video-carousel>
+
+{% schema %}
+{
+  "name": "Video carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "From Aurora"
+    },
+    {
+      "type": "textarea",
+      "id": "video_urls",
+      "label": "Video URLs",
+      "info": "Comma-separated MP4 URLs, in display order.",
+      "default": "https://cdn.shopify.com/videos/c/o/v/b7cb1c7e761146b396382bfca162dedd.mp4,https://cdn.shopify.com/videos/c/o/v/b4c6bb109167438ab8591eafd15eab07.mp4,https://cdn.shopify.com/videos/c/o/v/4cab5995a53549b3b402e5b226451fcb.mp4,https://cdn.shopify.com/videos/c/o/v/e8bf46f5f2094abe9bc7a9a7dd431e67.mp4,https://cdn.shopify.com/videos/c/o/v/1020d997526540b8b8b41fbfbbe65165.mp4,https://cdn.shopify.com/videos/c/o/v/01fecbcfa26a474b8c1914223d31b60e.mp4,https://cdn.shopify.com/videos/c/o/v/90108b258cb74d3bb3d759f5c0ed7791.mp4"
+    }
+  ],
+  "presets": [{ "name": "Video carousel" }]
+}
+{% endschema %}

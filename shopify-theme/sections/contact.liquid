@@ -1,0 +1,256 @@
+{%- comment -%}
+  Contact page, matching src/pages/Contact.tsx.
+
+  The form hands off to WhatsApp exactly as the React version does — it never
+  posted anywhere, it composed a message and opened wa.me — so this is a plain
+  client-side handoff rather than a Shopify contact form.
+{%- endcomment -%}
+
+<main class="pt-16 md:pt-20 pb-12">
+  <section class="py-12 md:py-16 bg-sage-light/30">
+    <div class="container text-center">
+      <span class="text-[#5a8739] text-xs uppercase tracking-[0.2em] mb-3 block">
+        {{ section.settings.eyebrow }}
+      </span>
+      <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-4">
+        {{ section.settings.heading }}
+      </h1>
+      <p class="text-muted-foreground max-w-2xl mx-auto">
+        {{ section.settings.subheading }}
+      </p>
+    </div>
+  </section>
+
+  <div class="container py-12 md:py-16">
+    <div class="grid md:grid-cols-2 gap-12 lg:gap-16 max-w-6xl mx-auto">
+      <div class="space-y-8">
+        <div>
+          <h2 class="font-serif text-2xl md:text-3xl text-foreground mb-6">
+            Contact Information
+          </h2>
+          <p class="text-muted-foreground mb-8">
+            Reach out to us through any of these channels. We're here to help with your wellness journey.
+          </p>
+        </div>
+
+        <div class="space-y-6">
+          <div class="flex items-start gap-4">
+            <div class="bg-[#5a8739]/10 p-3 rounded-lg">
+              {% render 'icon', name: 'map-pin', class: 'h-6 w-6 text-[#5a8739]' %}
+            </div>
+            <div>
+              <h3 class="font-semibold text-foreground mb-1">Address</h3>
+              <p class="text-muted-foreground text-sm">
+                {{ section.settings.address }}
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="bg-[#5a8739]/10 p-3 rounded-lg">
+              {% render 'icon', name: 'phone', class: 'h-6 w-6 text-[#5a8739]' %}
+            </div>
+            <div>
+              <h3 class="font-semibold text-foreground mb-1">Phone</h3>
+              <p class="text-muted-foreground text-sm">
+                {{ section.settings.phone_numbers }}
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="bg-[#5a8739]/10 p-3 rounded-lg">
+              {% render 'icon', name: 'message-circle', class: 'h-6 w-6 text-[#5a8739]' %}
+            </div>
+            <div>
+              <h3 class="font-semibold text-foreground mb-1">WhatsApp</h3>
+              <a
+                href="https://api.whatsapp.com/send/?phone={{ section.settings.whatsapp_number }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-muted-foreground text-sm hover:text-[#5a8739] transition-colors"
+              >
+                {{ section.settings.whatsapp_display }}
+              </a>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="bg-[#5a8739]/10 p-3 rounded-lg">
+              {% render 'icon', name: 'mail', class: 'h-6 w-6 text-[#5a8739]' %}
+            </div>
+            <div>
+              <h3 class="font-semibold text-foreground mb-1">Email</h3>
+              <a
+                href="mailto:{{ section.settings.email }}"
+                class="text-muted-foreground text-sm hover:text-[#5a8739] transition-colors"
+              >
+                {{ section.settings.email }}
+              </a>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="bg-[#5a8739]/10 p-3 rounded-lg">
+              {% render 'icon', name: 'clock', class: 'h-6 w-6 text-[#5a8739]' %}
+            </div>
+            <div>
+              <h3 class="font-semibold text-foreground mb-1">Business Hours</h3>
+              <p class="text-muted-foreground text-sm">
+                Monday - Saturday: 9:00 AM - 6:00 PM<br>
+                Sunday: Closed
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-card border border-border rounded-2xl p-6 md:p-8">
+        <h2 class="font-serif text-2xl text-foreground mb-6">
+          For enquires / Bulk orders
+        </h2>
+
+        <whatsapp-contact-form data-phone="{{ section.settings.whatsapp_number }}">
+          <form class="space-y-5" novalidate="false">
+            <div>
+              <label for="contact-name" class="text-sm font-medium text-foreground mb-2 block">
+                Name *
+              </label>
+              <input
+                id="contact-name"
+                name="name"
+                type="text"
+                required
+                placeholder="Your full name"
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+              >
+            </div>
+
+            <div>
+              <label for="contact-email" class="text-sm font-medium text-foreground mb-2 block">
+                Email *
+              </label>
+              <input
+                id="contact-email"
+                name="email"
+                type="email"
+                required
+                placeholder="your.email@example.com"
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+              >
+            </div>
+
+            <div>
+              <label for="contact-phone" class="text-sm font-medium text-foreground mb-2 block">
+                Phone
+              </label>
+              <input
+                id="contact-phone"
+                name="phone"
+                type="tel"
+                placeholder="+91 XXXXX XXXXX"
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+              >
+            </div>
+
+            <div>
+              <label for="contact-subject" class="text-sm font-medium text-foreground mb-2 block">
+                Subject *
+              </label>
+              <input
+                id="contact-subject"
+                name="subject"
+                type="text"
+                required
+                placeholder="How can we help?"
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+              >
+            </div>
+
+            <div>
+              <label for="contact-message" class="text-sm font-medium text-foreground mb-2 block">
+                Message *
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                required
+                placeholder="Tell us more about your inquiry..."
+                rows="5"
+                class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              data-submit
+              data-idle-label="Send Message"
+              data-busy-label="Sending..."
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#5a8739] text-white hover:bg-[#5a8739]/90 hover:-translate-y-0.5 hover:shadow-lg w-full h-12 text-base font-semibold"
+            >
+              Send Message
+            </button>
+          </form>
+        </whatsapp-contact-form>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "Contact",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Get In Touch"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Contact Us"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Have questions about our products? We'd love to hear from you. Send us a message and we'll respond as soon as possible."
+    },
+    {
+      "type": "text",
+      "id": "address",
+      "label": "Address",
+      "default": "Chennai, Tamil Nadu, India"
+    },
+    {
+      "type": "text",
+      "id": "phone_numbers",
+      "label": "Phone numbers",
+      "default": "+91 6379033131 | +91 9790768502"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "WhatsApp number",
+      "info": "Country code and number, digits only.",
+      "default": "916379033131"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_display",
+      "label": "WhatsApp number (displayed)",
+      "default": "+91 6379033131"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email",
+      "default": "contact@stomatalfarms.com"
+    }
+  ],
+  "presets": [{ "name": "Contact" }]
+}
+{% endschema %}

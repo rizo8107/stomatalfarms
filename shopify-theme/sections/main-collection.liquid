@@ -1,0 +1,106 @@
+{%- comment -%}
+  A real Shopify collection page (/collections/<handle>). The React SPA had no
+  equivalent — it filtered everything through /collections?category= — so this
+  reuses the same banner/title/grid treatment for merchant-made collections.
+{%- endcomment -%}
+
+<main>
+  <div class="w-full">
+    {%- if collection.image -%}
+      <img
+        src="{{ collection.image | image_url: width: 1600 }}"
+        alt="{{ collection.title | escape }}"
+        width="{{ collection.image.width }}"
+        height="{{ collection.image.height }}"
+        class="w-full object-cover"
+        style="max-height: 420px; object-position: center;"
+      >
+    {%- else -%}
+      <img
+        src="{{ 'banner.jpg' | asset_url }}"
+        alt="{{ collection.title | escape }}"
+        width="1344"
+        height="576"
+        class="w-full object-cover"
+        style="max-height: 420px; object-position: center;"
+      >
+    {%- endif -%}
+  </div>
+
+  <div class="bg-[#f7f3ed] py-6 text-center">
+    <span class="text-primary text-xs uppercase tracking-[0.2em] mb-2 block font-semibold">
+      Aurora Collection
+    </span>
+    <h1 class="font-serif text-4xl md:text-5xl text-foreground">
+      {{ collection.title }}
+    </h1>
+  </div>
+
+  {%- if collection.description != blank -%}
+    <div class="container pt-8 text-center">
+      <div class="text-muted-foreground font-light max-w-2xl mx-auto leading-relaxed">
+        {{ collection.description }}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <section class="py-12 md:py-20">
+    <div class="container">
+      {%- paginate collection.products by 24 -%}
+        <p class="text-muted-foreground text-sm mb-6">
+          Showing {{ collection.products_count }} product{% unless collection.products_count == 1 %}s{% endunless %}
+        </p>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+          {%- for product in collection.products -%}
+            {% render 'product-card', product: product %}
+          {%- else -%}
+            <div class="col-span-full text-center py-20 px-4">
+              <div class="max-w-md mx-auto">
+                <h3 class="font-serif text-2xl text-foreground mb-3">No products found</h3>
+                <p class="text-muted-foreground mb-6">
+                  This collection is empty right now. Try browsing all products instead.
+                </p>
+                <a
+                  href="{{ routes.collections_url }}"
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all duration-300 h-10 px-4 py-2 bg-[#5a8739] text-white hover:bg-[#5a8739]/90 hover:-translate-y-0.5 hover:shadow-lg"
+                >
+                  View All Products
+                </a>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <nav class="flex items-center justify-center gap-2 mt-12" aria-label="Pagination">
+            {%- if paginate.previous -%}
+              <a href="{{ paginate.previous.url }}" class="inline-flex items-center justify-center h-10 px-4 rounded-full border border-border text-sm font-medium text-foreground hover:bg-sage-light transition-colors">
+                Previous
+              </a>
+            {%- endif -%}
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}
+                <a href="{{ part.url }}" class="inline-flex items-center justify-center h-10 w-10 rounded-full border border-border text-sm font-medium text-foreground hover:bg-sage-light transition-colors">{{ part.title }}</a>
+              {%- else -%}
+                <span class="inline-flex items-center justify-center h-10 w-10 rounded-full text-sm font-medium bg-[#5a8739] text-white">{{ part.title }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if paginate.next -%}
+              <a href="{{ paginate.next.url }}" class="inline-flex items-center justify-center h-10 px-4 rounded-full border border-border text-sm font-medium text-foreground hover:bg-sage-light transition-colors">
+                Next
+              </a>
+            {%- endif -%}
+          </nav>
+        {%- endif -%}
+      {%- endpaginate -%}
+    </div>
+  </section>
+</main>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": []
+}
+{% endschema %}

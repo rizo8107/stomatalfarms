@@ -1,0 +1,59 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-legal",
+      "settings": {
+        "eyebrow": "Legal & Governance",
+        "heading": "Privacy Policy",
+        "intro": "Your trust and privacy are fundamental to us. Here is how we handle, protect, and respect your personal information."
+      },
+      "blocks": {
+        "s1": {
+          "type": "clause",
+          "settings": {
+            "heading": "1. Information We Collect",
+            "body": "<p>When you purchase from Stomatal Farms or sign up for our Ritual List, we collect the personal information you give us (such as name, email address, physical address, and phone number). We also collect diagnostic info via cookies and tracking tools to optimize your website experience.</p>"
+          }
+        },
+        "s2": {
+          "type": "clause",
+          "settings": {
+            "heading": "2. Consent & Consent Withdrawal",
+            "body": "<p>When you provide details to complete a transaction, verify your credit card, or place an order, we imply that you consent to our collecting it and using it for that specific reason only. If we ask for your information for marketing purposes, we will ask you directly or give you an option to opt out.</p>"
+          }
+        },
+        "s3": {
+          "type": "clause",
+          "settings": {
+            "heading": "3. Cookies and Analytics",
+            "body": "<p>We use cookies and third-party tools (such as Google Analytics, Microsoft Clarity, and Meta Pixels) to analyze website traffic, run ads, and tailor user journeys. You can modify your browser settings to decline cookies if you prefer.</p>"
+          }
+        },
+        "s4": {
+          "type": "clause",
+          "settings": {
+            "heading": "4. Third-Party Services",
+            "body": "<p>In general, the third-party providers used by us will only collect, use, and disclose your information to the extent necessary to allow them to perform the services they provide to us. However, certain payment gateways and transaction processors have their own privacy policies. We recommend reading their policies to understand how your data is handled.</p>"
+          }
+        },
+        "s5": {
+          "type": "clause",
+          "settings": {
+            "heading": "5. Security",
+            "body": "<p>To protect your personal information, we take reasonable precautions and follow industry best practices to make sure it is not inappropriately lost, misused, accessed, disclosed, altered, or destroyed.</p><p>Last Updated: May 2026. For privacy concerns or data requests, contact us at contact@stomatalfarms.com.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

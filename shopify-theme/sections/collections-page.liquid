@@ -1,0 +1,129 @@
+{%- comment -%}
+  Shop / collections listing, matching src/pages/Collections.tsx.
+
+  The React page filtered by a `?category=` query parameter, and the header and
+  footer already link that way. Liquid can't read query parameters, so every
+  product is rendered server-side and <collections-filter> applies the same
+  include/exclude term matching client-side, keeping the existing URLs working.
+{%- endcomment -%}
+
+{%- liquid
+  assign shop_collection = collections[section.settings.collection]
+  if shop_collection == blank
+    assign shop_collection = collections.all
+  endif
+-%}
+
+{%- comment -%}
+  id|label|banner asset|eyebrow|query — `OR` separates alternatives, a leading
+  `-` marks an exclude term, exactly as in the React `categories` array.
+{%- endcomment -%}
+{%- assign category_defs = 'all|All Products|banner.jpg|Aurora Collection|~microgreens|Farm Fresh Produce|greenblend.jpg|Stomatal Farms|microgreen OR greens OR leafy~cups|Incense Cups|banner.jpg|Aurora Collection|cup~sticks|Incense Sticks|banner.jpg|Aurora Collection|stick~combos|Combo Packs|banner.jpg|Aurora Collection|combo~ghee|Ghee Lamps|banner.jpg|Aurora Collection|ghee OR diya~bath|Bath Salts|banner.jpg|Aurora Collection|bath salt~ash|Cow Dung Ash|banner.jpg|Aurora Collection|bhasma OR dung ash OR vibhuti OR -diya' | split: '~' -%}
+
+<collections-filter>
+  <main>
+    <div class="w-full">
+      <img
+        data-category-banner
+        src="{{ 'banner.jpg' | asset_url }}"
+        data-banner-default="{{ 'banner.jpg' | asset_url }}"
+        data-banner-microgreens="{{ 'greenblend.jpg' | asset_url }}"
+        alt="Aurora Collection"
+        width="1344"
+        height="576"
+        class="w-full object-cover"
+        style="max-height: 420px; object-position: center;"
+      >
+    </div>
+
+    <div class="bg-[#f7f3ed] py-6 text-center">
+      <span data-category-eyebrow class="text-primary text-xs uppercase tracking-[0.2em] mb-2 block font-semibold">
+        Aurora Collection
+      </span>
+      <h1 data-category-title class="font-serif text-4xl md:text-5xl text-foreground">
+        All Products
+      </h1>
+    </div>
+
+    <section class="py-6 border-b border-border sticky top-16 md:top-20 bg-background/95 backdrop-blur-sm z-40">
+      <div class="container">
+        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+          {%- for entry in category_defs -%}
+            {%- assign category = entry | split: '|' -%}
+            <button
+              type="button"
+              data-category-button
+              data-category-id="{{ category[0] }}"
+              data-label="{{ category[1] | escape }}"
+              data-eyebrow="{{ category[3] | escape }}"
+              data-query="{{ category[4] | escape }}"
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 h-9 px-3 {% if forloop.first %}bg-[#5a8739] text-white{% else %}border border-input bg-background border-border hover:bg-sage-light{% endif %}"
+              aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+            >
+              {{ category[1] }}
+            </button>
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+
+    <section class="py-12 md:py-20">
+      <div class="container">
+        <p data-result-count class="text-muted-foreground text-sm mb-6">
+          Showing {{ shop_collection.products.size }} product{% unless shop_collection.products.size == 1 %}s{% endunless %}
+        </p>
+
+        <div data-product-grid class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+          {%- for product in shop_collection.products limit: section.settings.max_products -%}
+            <div
+              data-product-item
+              data-haystack="{{ product.title | append: ' ' | append: product.description | strip_html | downcase | escape }}"
+            >
+              {% render 'product-card', product: product %}
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div data-empty-state class="text-center py-20 px-4" hidden>
+          <div class="max-w-md mx-auto">
+            <h3 class="font-serif text-2xl text-foreground mb-3">No products found</h3>
+            <p class="text-muted-foreground mb-6">
+              No products match this category. Try browsing all products instead.
+            </p>
+            <button
+              type="button"
+              data-view-all
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 h-10 px-4 py-2 bg-[#5a8739] text-white hover:bg-[#5a8739]/90 hover:-translate-y-0.5 hover:shadow-lg"
+            >
+              View All Products
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</collections-filter>
+
+{% schema %}
+{
+  "name": "Collections page",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Leave empty to list all products, the way the React page did."
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Maximum products",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "default": 50
+    }
+  ],
+  "presets": [{ "name": "Collections page" }]
+}
+{% endschema %}

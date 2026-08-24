@@ -1,0 +1,181 @@
+{%- comment -%}
+  Cart page. The React SPA used a custom Storefront-API cart drawer; per the
+  approved design this is Shopify's native Ajax/form cart instead, styled to
+  match the rest of the theme. Quantity and remove post to /cart, so the page
+  works with JavaScript disabled.
+{%- endcomment -%}
+
+<main class="pt-24 md:pt-32 pb-24">
+  <div class="container px-4 max-w-5xl mx-auto">
+    <a
+      href="{{ routes.collections_url }}"
+      class="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 md:mb-8 transition-colors text-sm"
+    >
+      {% render 'icon', name: 'chevron-left', class: 'h-4 w-4 mr-1' %}
+      Continue shopping
+    </a>
+
+    <h1 class="font-serif text-3xl md:text-5xl text-foreground mb-8 md:mb-10 tracking-tight">
+      Your Cart
+    </h1>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="text-center py-20 px-4 rounded-2xl border border-border bg-card">
+        <div class="max-w-md mx-auto">
+          <div class="w-14 h-14 rounded-full bg-[#5a8739]/10 text-[#5a8739] flex items-center justify-center mx-auto mb-5">
+            {% render 'icon', name: 'shopping-cart', class: 'h-6 w-6' %}
+          </div>
+          <h2 class="font-serif text-2xl text-foreground mb-3">Your cart is empty</h2>
+          <p class="text-muted-foreground mb-6">
+            Explore the Aurora collection and bring a little calm home.
+          </p>
+          <a
+            href="{{ routes.collections_url }}"
+            class="inline-flex items-center justify-center gap-2 rounded-full h-11 px-8 text-[11px] font-black uppercase tracking-[0.2em] text-white shadow-lg transition-all hover:opacity-90 active:scale-95"
+            style="background: linear-gradient(135deg, #2e4e18, #4f7a2e);"
+          >
+            Shop Aurora
+          </a>
+        </div>
+      </div>
+    {%- else -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+        <div class="lg:col-span-2 space-y-4">
+          {%- for item in cart.items -%}
+            <div class="flex gap-4 p-4 rounded-2xl border border-border bg-card">
+              <a href="{{ item.url }}" class="w-24 h-24 md:w-28 md:h-28 rounded-xl overflow-hidden bg-[#f7f1e8] flex-shrink-0">
+                {%- if item.image -%}
+                  <img
+                    src="{{ item.image | image_url: width: 300 }}"
+                    alt="{{ item.image.alt | default: item.product.title | escape }}"
+                    width="112"
+                    height="112"
+                    loading="lazy"
+                    class="w-full h-full object-cover"
+                  >
+                {%- endif -%}
+              </a>
+
+              <div class="flex flex-col flex-1 min-w-0 gap-2">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="min-w-0">
+                    <a href="{{ item.url }}" class="font-serif text-lg md:text-xl text-foreground hover:text-[#4f7a2e] transition-colors leading-tight block">
+                      {{ item.product.title }}
+                    </a>
+                    {%- unless item.product.has_only_default_variant -%}
+                      <p class="text-xs text-muted-foreground mt-0.5">{{ item.variant.title }}</p>
+                    {%- endunless -%}
+                  </div>
+                  <a
+                    href="{{ item.url_to_remove }}"
+                    class="text-muted-foreground hover:text-destructive transition-colors flex-shrink-0 p-1"
+                    aria-label="Remove {{ item.product.title | escape }}"
+                  >
+                    {% render 'icon', name: 'x', class: 'h-4 w-4' %}
+                  </a>
+                </div>
+
+                <div class="flex items-center justify-between gap-3 mt-auto flex-wrap">
+                  <div class="flex items-center border-2 border-border rounded-lg overflow-hidden">
+                    <a
+                      href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ item.quantity | minus: 1 }}"
+                      class="inline-flex items-center justify-center h-9 w-9 hover:bg-sage-light/30 transition-colors"
+                      aria-label="Decrease quantity"
+                    >
+                      {% render 'icon', name: 'minus', class: 'h-3 w-3' %}
+                    </a>
+                    <input
+                      type="number"
+                      name="updates[]"
+                      value="{{ item.quantity }}"
+                      min="0"
+                      class="w-12 text-center text-sm font-semibold border-x-2 border-border h-9 bg-transparent focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      aria-label="Quantity for {{ item.product.title | escape }}"
+                    >
+                    <a
+                      href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ item.quantity | plus: 1 }}"
+                      class="inline-flex items-center justify-center h-9 w-9 hover:bg-sage-light/30 transition-colors"
+                      aria-label="Increase quantity"
+                    >
+                      {% render 'icon', name: 'plus', class: 'h-3 w-3' %}
+                    </a>
+                  </div>
+
+                  <div class="flex items-baseline gap-2">
+                    {%- if item.original_line_price > item.final_line_price -%}
+                      <span class="text-xs text-muted-foreground line-through">{{ item.original_line_price | money }}</span>
+                    {%- endif -%}
+                    <span class="text-lg font-extrabold text-[#1e2519]">{{ item.final_line_price | money }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+
+          <button
+            type="submit"
+            name="update"
+            class="inline-flex items-center justify-center gap-2 rounded-full h-10 px-6 text-xs font-bold uppercase tracking-widest border border-border text-foreground hover:bg-sage-light/30 transition-colors"
+          >
+            Update cart
+          </button>
+        </div>
+
+        <aside class="lg:col-span-1">
+          <div class="rounded-2xl border border-border bg-card p-6 space-y-5 lg:sticky lg:top-28">
+            <h2 class="font-serif text-2xl text-foreground">Order Summary</h2>
+
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center justify-between">
+                <span class="text-muted-foreground">Subtotal</span>
+                <span class="font-semibold text-foreground">{{ cart.items_subtotal_price | money }}</span>
+              </div>
+              {%- if cart.cart_level_discount_applications.size > 0 -%}
+                {%- for discount in cart.cart_level_discount_applications -%}
+                  <div class="flex items-center justify-between text-[#4f7a2e]">
+                    <span>{{ discount.title }}</span>
+                    <span>-{{ discount.total_allocated_amount | money }}</span>
+                  </div>
+                {%- endfor -%}
+              {%- endif -%}
+              <div class="flex items-center justify-between pt-2 border-t border-border">
+                <span class="font-bold text-foreground">Total</span>
+                <span class="text-xl font-extrabold text-[#5a8739]">{{ cart.total_price | money }}</span>
+              </div>
+            </div>
+
+            <p class="text-xs text-muted-foreground leading-relaxed">
+              Taxes and shipping calculated at checkout.
+            </p>
+
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-[#fffbf5] border border-[#2e3f25]/10 text-xs text-[#2a3625]">
+              <div class="w-8 h-8 rounded-lg bg-[#4f7a2e]/10 flex items-center justify-center text-[#4f7a2e] flex-shrink-0">
+                {% render 'icon', name: 'truck', class: 'w-4 h-4' %}
+              </div>
+              <div class="leading-snug">
+                <span class="font-bold text-[#2e4e18]">Free Shipping over ₹999</span>
+                <span class="text-[#6a7462]"> · ₹60 flat below ₹999</span>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              name="checkout"
+              class="w-full inline-flex items-center justify-center gap-2 rounded-full h-12 text-[11px] font-black uppercase tracking-[0.2em] text-white shadow-lg transition-all hover:opacity-90 active:scale-95"
+              style="background: linear-gradient(135deg, #2e4e18, #4f7a2e);"
+            >
+              Checkout
+            </button>
+          </div>
+        </aside>
+      </form>
+    {%- endif -%}
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": []
+}
+{% endschema %}

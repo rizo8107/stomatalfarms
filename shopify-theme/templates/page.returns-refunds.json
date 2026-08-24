@@ -1,0 +1,51 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-legal",
+      "settings": {
+        "eyebrow": "Customer Care & Commitments",
+        "heading": "Returns & Refunds",
+        "intro": "At Aurora, every product is handcrafted in small batches with care and intention. Learn more about our policies and how we guarantee the quality of our creations."
+      },
+      "blocks": {
+        "s1": {
+          "type": "clause",
+          "settings": {
+            "heading": "Handcrafted with Care",
+            "body": "<p>Because our products are consumables made for personal wellness, we are unable to accept returns on opened or used items. That said, we stand fully behind the quality of what we make.</p>"
+          }
+        },
+        "s2": {
+          "type": "clause",
+          "settings": {
+            "heading": "We’ll Make It Right If:",
+            "body": "<ul><li><strong>Transit Damage</strong> — Your order arrived damaged in transit.</li><li><strong>Incorrect Order</strong> — You received the wrong product.</li><li><strong>Manufacturing Defect</strong> — Your product has a manufacturing defect (e.g. a broken diya).</li></ul><p>How to claim: Simply write to us at contact@stomatalfarms.com within 48 hours of delivery with your order number and a clear photo of the issue. We’ll arrange a replacement or store credit promptly.</p>"
+          }
+        },
+        "s3": {
+          "type": "clause",
+          "settings": {
+            "heading": "Not happy for any other reason?",
+            "body": "<p>If something felt off about your experience, we’d genuinely like to hear from you. Write to us and we’ll do our best to help. Aurora is built on trust, and your satisfaction matters to us.</p>"
+          }
+        },
+        "s_note": {
+          "type": "clause",
+          "settings": {
+            "heading": "Please Note",
+            "body": "<ul><li>Claims raised after 48 hours of delivery cannot be processed.</li><li>We do not offer cash refunds — replacements or store credit only.</li><li>Products that have been opened, used, or partially consumed are not eligible for return.</li><li>Return shipping costs are borne by the customer unless the error was ours.</li><li>Sampler packs and discounted items are non-refundable.</li></ul>"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s_note",
+        "s3"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

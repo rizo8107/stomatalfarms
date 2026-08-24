@@ -56,8 +56,32 @@
     display: contents;
   }
 
-  embla-carousel-base {
+  /*
+   * Tailwind's preflight wraps this rule in :where(), zeroing its specificity, so
+   * any display utility on the same element (e.g. a modal overlay's `flex`) ties
+   * on specificity and wins on source order — leaving [hidden] elements visible.
+   * Make the attribute authoritative instead.
+   */
+  [hidden] {
+    display: none !important;
+  }
+
+  embla-carousel-base,
+  bundle-carousel,
+  comparison-tabs,
+  faq-accordion,
+  google-reviews-carousel,
+  instagram-carousel,
+  collections-filter,
+  product-detail,
+  video-carousel,
+  whatsapp-contact-form {
     display: block;
+  }
+
+  product-card,
+  cart-drawer {
+    display: contents;
   }
 
   body {

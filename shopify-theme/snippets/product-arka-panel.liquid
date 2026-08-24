@@ -1,0 +1,233 @@
+{% doc %}
+  The bespoke product panel for ARKA Cow Dung Incense Cups, matching the
+  `isArkaCups` branch of src/pages/ProductDetail.tsx.
+
+  Rendered instead of the standard panel when the product handle matches the
+  section's "Bespoke layout handle" setting. Everything outside this panel
+  (gallery, thumbnails, variant data) is shared with the standard layout.
+
+  @param {object} product - The Shopify product object
+  @param {object} current_variant - The selected or first available variant
+  @param {string} [overview] - Product overview copy
+  @param {string} [combo_includes] - "What's Inside" metafield
+  @param {string} [key_highlights] - Key highlights metafield
+  @param {string} [ingredients] - Ingredients metafield
+  @param {string} [how_to_use] - How to use metafield
+  @param {string} [safety_string] - Assembled safety/care string
+  @param {string} [details] - Assembled specifications string
+
+  @example
+  {% render 'product-arka-panel', product: product, current_variant: current_variant %}
+{% enddoc %}
+
+{%- liquid
+  assign price_value = current_variant.price | divided_by: 100.0 | round
+  assign has_discount = false
+  if current_variant.compare_at_price > current_variant.price
+    assign has_discount = true
+    assign compare_value = current_variant.compare_at_price | divided_by: 100.0 | round
+    assign discount_pct = current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round
+    assign saving = current_variant.compare_at_price | minus: current_variant.price | divided_by: 100.0 | round
+  endif
+-%}
+
+<div class="space-y-6 min-w-0 w-full">
+  <div class="bg-white rounded-[28px] border border-[#e2e7db] p-6 sm:p-8 md:p-9 shadow-[0_4px_24px_rgba(0,0,0,0.03)] space-y-6">
+
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#e6ede0] text-[#4d6630] border border-[#d6e3cb]">
+        HANDCRAFTED
+      </span>
+      <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#f6eee3] text-[#86663f] border border-[#ebd8c4]">
+        100% NATURAL
+      </span>
+    </div>
+
+    <div class="space-y-1">
+      <h1 class="font-serif text-3xl sm:text-4xl md:text-[40px] font-normal text-[#222a1c] leading-tight tracking-tight">
+        ARKA — Cow Dung Incense Cups
+      </h1>
+      <p class="font-serif italic text-[15px] sm:text-base text-[#6f6e5b]">
+        The Original Blend · Camphor, Frankincense &amp; Herbs
+      </p>
+    </div>
+
+    <div class="font-serif italic text-lg sm:text-xl text-[#4e652f] leading-snug">
+      One cup a day. Thirty days of calm.
+    </div>
+
+    <div>
+      <div class="flex flex-wrap items-baseline gap-2.5 sm:gap-3">
+        <span data-arka-price class="text-3xl sm:text-4xl font-bold text-[#445b27] tracking-tight font-sans">
+          ₹{{ price_value }}
+        </span>
+        <span data-arka-compare-wrap class="contents" {% unless has_discount %}hidden{% endunless %}>
+          <span data-arka-compare class="text-lg sm:text-xl text-[#959d8c] line-through font-normal decoration-1 decoration-[#959d8c]">
+            ₹{{ compare_value }}
+          </span>
+          <span data-arka-discount class="bg-[#b95738] text-white text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full">
+            {{ discount_pct }}% OFF
+          </span>
+          <span data-arka-saving class="text-xs sm:text-sm font-semibold text-[#5c4a3b]">
+            Save ₹{{ saving }}
+          </span>
+        </span>
+      </div>
+      <p class="text-xs text-[#7e8874] font-normal mt-1.5">
+        MRP incl. all taxes · <span data-arka-delivery>{% if price_value >= 999 %}Free Delivery{% else %}Delivery ₹60{% endif %}</span>
+      </p>
+    </div>
+
+    <div class="space-y-2 pt-1">
+      <span class="text-[11px] font-bold uppercase tracking-widest text-[#776856] block">
+        WHAT'S IN THE BOX
+      </span>
+      <div class="grid grid-cols-3 gap-2.5 sm:gap-3">
+        <div class="bg-[#fcfbf7] rounded-2xl border border-[#ebe6dc] p-3 sm:p-4 text-center shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex flex-col items-center justify-center min-h-[95px]">
+          <span class="text-2xl sm:text-3xl font-serif font-bold text-[#232a1c] leading-none">30</span>
+          <span class="text-sm font-serif font-bold text-[#232a1c] mt-1 leading-tight">incense</span>
+          <span class="text-[11px] text-[#6e7764] font-normal mt-1 leading-tight text-center">cups — one for every day of the month</span>
+        </div>
+        <div class="bg-[#fcfbf7] rounded-2xl border border-[#ebe6dc] p-3 sm:p-4 text-center shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex flex-col items-center justify-center min-h-[95px]">
+          <span class="text-2xl sm:text-3xl font-serif font-bold text-[#232a1c] leading-none">30 g</span>
+          <span class="text-xs text-[#6e7764] font-medium mt-2 leading-tight text-center">herbal incense powder</span>
+        </div>
+        <div class="bg-[#fcfbf7] rounded-2xl border border-[#ebe6dc] p-3 sm:p-4 text-center shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex flex-col items-center justify-center min-h-[95px]">
+          <span class="text-2xl sm:text-3xl font-serif font-bold text-[#232a1c] leading-none">1</span>
+          <span class="text-xs text-[#6e7764] font-medium mt-2 leading-tight text-center">incense holder</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-2 pt-1">
+      {%- assign arka_tags = 'Cow dung based,Lab tested,No synthetic fragrance,No charcoal,Zero-waste ash' | split: ',' -%}
+      {%- for tag in arka_tags -%}
+        <span class="px-3.5 py-1.5 rounded-full bg-[#f2efe9] text-[#4d5743] border border-[#e5e0d5] text-xs font-medium">
+          {{ tag }}
+        </span>
+      {%- endfor -%}
+    </div>
+
+    {%- form 'product', product, id: 'product-form-arka', class: 'contents' -%}
+      <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id-input>
+
+      {%- if product.has_only_default_variant == false -%}
+        <div class="space-y-4 pt-2">
+          {%- for option in product.options_with_values -%}
+            <div>
+              <label class="text-xs font-semibold text-[#546048] uppercase tracking-wider mb-2 block">{{ option.name }}</label>
+              <div class="flex flex-wrap gap-2">
+                {%- for value in option.values -%}
+                  <button
+                    type="button"
+                    data-option-value
+                    data-option-position="{{ option.position }}"
+                    data-value="{{ value | escape }}"
+                    class="px-5 py-2.5 rounded-lg border-2 text-sm font-medium transition-all {% if option.selected_value == value %}border-[#5a8739] bg-[#5a8739]/10 text-[#5a8739] shadow-sm{% else %}border-border hover:border-[#5a8739]/40 hover:bg-sage-light/20{% endif %}"
+                    aria-pressed="{% if option.selected_value == value %}true{% else %}false{% endif %}"
+                  >
+                    {{ value }}
+                  </button>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="space-y-3 pt-2">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold text-[#546048] uppercase tracking-wider">Quantity</span>
+          <div class="flex items-center border border-[#d8e0ce] rounded-xl overflow-hidden bg-[#fafcf7]">
+            <button type="button" data-qty-decrease class="inline-flex items-center justify-center h-8 w-8 rounded-none hover:bg-[#edf2e6] text-[#333d2a] transition-all duration-300" aria-label="Decrease quantity">
+              {% render 'icon', name: 'minus', class: 'h-3.5 w-3.5' %}
+            </button>
+            <input
+              type="number"
+              name="quantity"
+              data-qty-input
+              value="1"
+              min="1"
+              class="w-8 text-center text-sm font-bold text-[#27321e] bg-transparent border-0 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              aria-label="Quantity"
+            >
+            <button type="button" data-qty-increase class="inline-flex items-center justify-center h-8 w-8 rounded-none hover:bg-[#edf2e6] text-[#333d2a] transition-all duration-300" aria-label="Increase quantity">
+              {% render 'icon', name: 'plus', class: 'h-3.5 w-3.5' %}
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <button
+            type="submit"
+            data-add-to-cart
+            data-ajax-add
+            class="w-full inline-flex items-center justify-center bg-[#4e6231] hover:bg-[#405227] text-white h-13 text-base font-semibold rounded-2xl shadow-sm hover:shadow transition-all duration-200 disabled:pointer-events-none disabled:opacity-50"
+            {% unless current_variant.available %}disabled{% endunless %}
+          >
+            <span data-cta-label>{% if current_variant.available %}Add to Cart{% else %}Out of Stock{% endif %}</span>
+          </button>
+          {%- comment -%} Buy Now posts the same form straight to checkout. {%- endcomment -%}
+          <button
+            type="submit"
+            name="checkout"
+            class="w-full inline-flex items-center justify-center border-2 border-[#4e6231] text-[#4e6231] hover:bg-[#4e6231]/10 h-13 text-base font-semibold rounded-2xl transition-all duration-200 disabled:pointer-events-none disabled:opacity-50"
+            {% unless current_variant.available %}disabled{% endunless %}
+          >
+            Buy Now
+          </button>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-xs text-[#707c65] font-normal text-center pt-1">
+          <span>✓ Secure checkout</span>
+          <span>✓ Supports cow rescue</span>
+        </div>
+      </div>
+    {%- endform -%}
+
+    <div class="pt-4 border-t border-[#edf1e7] space-y-1">
+      {%- comment -%} Double-quoted so "What's Inside" can carry its apostrophe. {%- endcomment -%}
+      {%- assign arka_sections = "overview|Product Description|file-text|open,combo_includes|What's Inside|package|open,key_highlights|Key Highlights|sparkles|closed,ingredients|Ingredients & Aroma|leaf|closed,how_to_use|How to Use|circle-help|closed,safety_string|Safety & Care|shield|closed,details|Product Specifications|info|closed" | split: ',' -%}
+      <product-accordion class="w-full block">
+        {%- for entry in arka_sections -%}
+          {%- assign parts = entry | split: '|' -%}
+          {%- case parts[0] -%}
+            {%- when 'overview' -%}{%- assign body = overview -%}
+            {%- when 'combo_includes' -%}{%- assign body = combo_includes -%}
+            {%- when 'key_highlights' -%}{%- assign body = key_highlights -%}
+            {%- when 'ingredients' -%}{%- assign body = ingredients -%}
+            {%- when 'how_to_use' -%}{%- assign body = how_to_use -%}
+            {%- when 'safety_string' -%}{%- assign body = safety_string -%}
+            {%- when 'details' -%}{%- assign body = details -%}
+          {%- endcase -%}
+
+          {%- if body != blank -%}
+            <div data-accordion-item class="border-b border-[#edf1e7]">
+              <button
+                type="button"
+                data-accordion-trigger
+                aria-expanded="{% if parts[3] == 'open' %}true{% else %}false{% endif %}"
+                class="w-full text-[15px] font-semibold text-[#27321e] hover:no-underline py-3.5 group flex items-center justify-between gap-3"
+              >
+                <span class="flex items-center gap-2.5">
+                  {% render 'icon', name: parts[2], class: 'w-4 h-4 text-[#4e6231]' %}
+                  <span>{{ parts[1] }}</span>
+                </span>
+                <span data-accordion-chevron class="transition-transform duration-300 text-[#4e6231] {% if parts[3] == 'open' %}rotate-180{% endif %}">
+                  {% render 'icon', name: 'chevron-down', class: 'w-4 h-4' %}
+                </span>
+              </button>
+              <div
+                data-accordion-panel
+                class="pb-4 pt-1 text-[#434e3a] leading-relaxed text-sm whitespace-pre-line [&_p]:mb-2 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-1"
+                {% unless parts[3] == 'open' %}hidden{% endunless %}
+              >
+                {{ body }}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </product-accordion>
+    </div>
+  </div>
+</div>

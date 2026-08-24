@@ -1,0 +1,295 @@
+{% doc %}
+  Slide-in cart drawer, matching src/components/CartDrawer.tsx.
+
+  Rendered once in layout/theme.liquid so it is available on every page. State
+  comes from Shopify's Ajax Cart API (/cart.js) rather than the React store, but
+  the markup, thresholds and copy are the same.
+
+  Line-item and suggestion markup live in <template> elements here rather than in
+  theme.js so Tailwind's content scanner, which reads *.liquid only, emits every
+  class the drawer applies at runtime.
+
+  @example
+  {% render 'cart-drawer' %}
+{% enddoc %}
+
+{%- liquid
+  assign aarambh_handle = 'aarambh-the-starter-collection-incense-sticks-by-aurora-stomatal-farms'
+  assign aarambh_product = all_products[aarambh_handle]
+  assign aarambh_variant = aarambh_product.variants.first
+-%}
+
+<cart-drawer
+  data-free-shipping-threshold="999"
+  data-flat-shipping-fee="60"
+  data-aarambh-handle="{{ aarambh_handle }}"
+  data-aarambh-variant-id="{{ aarambh_variant.id }}"
+  data-panel-open-class="translate-x-0"
+  data-panel-closed-class="translate-x-full"
+  data-disabled-class="opacity-50 cursor-not-allowed"
+>
+  <div data-cart-backdrop class="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm" hidden></div>
+
+  <div
+    data-cart-panel
+    class="fixed top-0 right-0 h-[100dvh] w-full sm:w-[420px] z-50 flex flex-col transition-transform duration-300 ease-in-out translate-x-full"
+    style="background: #fffbf5; border-left: 1px solid rgba(46,63,37,0.08);"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Your Cart"
+  >
+    <div class="flex items-center justify-between px-6 py-5 border-b border-[#2e3f25]/8">
+      <div>
+        <h2 class="text-2xl text-[#2a3625]" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">
+          Your Cart
+        </h2>
+        <p data-cart-count class="text-xs text-[#6a7462] mt-0.5" hidden></p>
+      </div>
+      <button
+        type="button"
+        data-cart-close
+        class="w-9 h-9 rounded-full border border-[#2e3f25]/10 flex items-center justify-center text-[#6a7462] hover:bg-[#2e3f25]/5 transition-colors"
+        aria-label="Close Cart"
+      >
+        {% render 'icon', name: 'x', class: 'w-4 h-4' %}
+      </button>
+    </div>
+
+    {%- comment -%} Free shipping progress nudge {%- endcomment -%}
+    <div data-shipping-nudge class="px-6 py-3.5 border-b border-[#2e3f25]/8 bg-[#fbf7ee]" hidden>
+      <div data-nudge-unlocked class="flex items-center gap-2.5 text-xs font-semibold text-[#2e4e18] bg-[#4f7a2e]/10 px-3.5 py-2.5 rounded-xl border border-[#4f7a2e]/20 animate-fade-in" hidden>
+        <div class="w-5 h-5 rounded-full bg-[#4f7a2e] flex items-center justify-center text-white flex-shrink-0 shadow-sm">
+          {% render 'icon', name: 'circle-check-big', class: 'w-3.5 h-3.5' %}
+        </div>
+        <span>🎉 You've unlocked <strong class="font-bold text-[#2e4e18]">FREE Shipping</strong>!</span>
+      </div>
+
+      <div data-nudge-progress class="space-y-2" hidden>
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-[#2a3625] font-medium flex items-center gap-1.5">
+            {% render 'icon', name: 'truck', class: 'w-3.5 h-3.5 text-[#b56c3d]' %}
+            You're <span data-amount-away class="font-bold text-[#b56c3d]">₹0</span> away from <span class="font-bold text-[#4f7a2e]">Free Shipping</span>
+          </span>
+          <span data-progress-label class="text-[10px] font-bold text-[#6a7462]">0%</span>
+        </div>
+        <div class="w-full h-2 rounded-full bg-[#2e3f25]/10 overflow-hidden relative">
+          <div
+            data-progress-bar
+            class="h-full rounded-full transition-all duration-500 ease-out"
+            style="width: 0%; background: linear-gradient(90deg, #b56c3d 0%, #d4af37 60%, #4f7a2e 100%);"
+          ></div>
+        </div>
+        <p class="text-[10px] text-[#6a7462] flex items-center justify-between">
+          <span>₹60 flat shipping below ₹999</span>
+          <span class="font-semibold text-[#4f7a2e]">Free shipping over ₹999</span>
+        </p>
+      </div>
+    </div>
+
+    {%- comment -%} Aarambh-only notice {%- endcomment -%}
+    <div data-aarambh-notice class="mx-6 mt-4 p-3.5 rounded-2xl bg-[#fff8ed] border border-[#d4af37]/35 flex items-start gap-2.5 text-xs text-[#7a5c00] animate-fade-in" hidden>
+      {% render 'icon', name: 'circle-alert', class: 'w-4 h-4 text-[#b58900] flex-shrink-0 mt-0.5' %}
+      <div class="space-y-1">
+        <p class="font-bold text-[#2a3625]">Aarambh is an Order Add-on</p>
+        <p class="text-[11px] leading-relaxed text-[#6a7462]">
+          The Aarambh Starter Set (₹99) rides alongside any full-sized pack or combo. Please add any full-sized product below to proceed to checkout!
+        </p>
+      </div>
+    </div>
+
+    <div class="flex-1 min-h-0 overflow-y-auto px-6 py-4">
+      <div data-cart-empty class="flex flex-col items-center justify-center h-full gap-4 text-center" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart w-12 h-12 text-[#2e3f25]/20" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+        <p class="text-[#6a7462] font-light">Your cart is empty</p>
+        <p class="text-xs text-[#6a7462]/60">Add some incense to begin your ritual</p>
+      </div>
+
+      <div data-cart-body class="space-y-3" hidden>
+        <div data-cart-items class="space-y-3"></div>
+
+        {%- comment -%} Aarambh order-bump {%- endcomment -%}
+        {%- if aarambh_variant -%}
+          <div data-aarambh-bump class="p-4 rounded-2xl border border-dashed border-[#d4af37]/50 bg-[#fffdf8] shadow-sm relative overflow-hidden group/upsell mt-4" hidden>
+            <div class="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-[#d4af37]/60 via-[#f5c842] to-[#d4af37]/60"></div>
+
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] font-bold text-[#b58900] bg-[#fff8ed] px-2 py-0.5 rounded-full border border-[#d4af37]/20 flex items-center gap-1">
+                {% render 'icon', name: 'sparkles', class: 'w-3 h-3 text-[#d4af37]' %} Exclusive Order-Bump
+              </span>
+              <span class="text-[11px] font-black text-[#4f7a2e]">Only ₹99</span>
+            </div>
+
+            <div class="flex gap-3">
+              <div class="w-14 h-14 rounded-xl overflow-hidden bg-[#f0ece4] flex-shrink-0 border border-[#2e3f25]/5">
+                {%- if aarambh_product.featured_image -%}
+                  <img
+                    src="{{ aarambh_product.featured_image | image_url: width: 150 }}"
+                    alt="Aarambh Starter Set"
+                    width="56"
+                    height="56"
+                    loading="lazy"
+                    class="w-full h-full object-cover group-hover/upsell:scale-105 transition-transform duration-500"
+                  >
+                {%- else -%}
+                  <div class="w-full h-full flex items-center justify-center text-xl">🕯️</div>
+                {%- endif -%}
+              </div>
+
+              <div class="flex-1 min-w-0 flex flex-col justify-center">
+                <h4 class="text-xs font-bold text-[#2a3625] leading-snug line-clamp-2" style="font-family: 'Cormorant Garamond', serif;">
+                  Add the Aarambh Starter Set — 3 sacred scents — for ₹99
+                </h4>
+                <p class="text-[10px] text-[#6a7462] mt-0.5 line-clamp-2 leading-tight">
+                  Experience all 3 signature aromas (Dasangam, Floral, Lemongrass) alongside your order.
+                </p>
+              </div>
+
+              <div class="flex items-center justify-end flex-shrink-0 ml-1">
+                <button
+                  type="button"
+                  data-add-variant="{{ aarambh_variant.id }}"
+                  class="px-3.5 py-2 rounded-full text-[10px] font-black uppercase tracking-wider text-white transition-all shadow hover:shadow-md hover:scale-[1.03]"
+                  style="background: linear-gradient(135deg, #d4af37, #b58900);"
+                >
+                  + Add ₹99
+                </button>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Suggestions — candidates rendered server-side, chosen client-side {%- endcomment -%}
+        <div data-suggestions class="mt-4 pt-3 border-t border-[#2e3f25]/5" hidden>
+          <p class="text-[10px] font-black uppercase tracking-[0.18em] text-[#6a7462] mb-3 flex items-center justify-between">
+            <span data-suggestions-title>You might also like</span>
+            <span data-suggestions-remaining class="text-[#b56c3d] font-bold" hidden></span>
+          </p>
+          <div data-suggestion-list class="space-y-2">
+            {%- for product in collections.all.products limit: 24 -%}
+              {%- assign suggestion_variant = product.variants.first -%}
+              {%- if suggestion_variant and product.handle != aarambh_handle and product.available -%}
+                {%- assign suggestion_title = product.title | downcase -%}
+                <div
+                  data-suggestion
+                  data-handle="{{ product.handle }}"
+                  data-variant-id="{{ suggestion_variant.id }}"
+                  data-price="{{ suggestion_variant.price }}"
+                  data-combo="{% if suggestion_title contains 'combo' %}true{% else %}false{% endif %}"
+                  class="flex items-center gap-3 p-2.5 rounded-xl border border-[#2e3f25]/8 bg-white hover:border-[#4f7a2e]/30 transition-colors"
+                  hidden
+                >
+                  <div class="w-11 h-11 rounded-lg overflow-hidden bg-[#f0ece4] flex-shrink-0">
+                    {%- if product.featured_image -%}
+                      <img
+                        src="{{ product.featured_image | image_url: width: 120 }}"
+                        alt="{{ product.title | escape }}"
+                        width="44"
+                        height="44"
+                        loading="lazy"
+                        class="w-full h-full object-cover"
+                      >
+                    {%- else -%}
+                      <div class="w-full h-full flex items-center justify-center text-base">🕯️</div>
+                    {%- endif -%}
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-1.5">
+                      <p class="text-xs text-[#2a3625] leading-snug line-clamp-1" style="font-family: 'Cormorant Garamond', serif; font-weight: 600;">
+                        {{ product.title }}
+                      </p>
+                      {%- if suggestion_title contains 'combo' -%}
+                        <span class="text-[8px] font-black bg-[#4f7a2e]/10 text-[#4f7a2e] px-1.5 py-0.2 rounded-full uppercase tracking-wider">
+                          Combo
+                        </span>
+                      {%- endif -%}
+                    </div>
+                    <p class="text-xs font-bold text-[#4f7a2e]">₹{{ suggestion_variant.price | divided_by: 100.0 | round }}</p>
+                  </div>
+                  <button
+                    type="button"
+                    data-add-variant="{{ suggestion_variant.id }}"
+                    class="flex-shrink-0 px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-wider text-white transition-transform hover:scale-105"
+                    style="background: #4f7a2e;"
+                  >
+                    + Add
+                  </button>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div data-cart-footer class="flex-shrink-0 px-6 py-5 border-t border-[#2e3f25]/8 bg-[#fffbf5] space-y-3" hidden>
+      <div class="space-y-2 pb-2 border-b border-[#2e3f25]/8 text-xs">
+        <div class="flex items-center justify-between text-[#6a7462]">
+          <span>Subtotal</span>
+          <span data-subtotal class="font-semibold text-[#2a3625]">₹0</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-[#6a7462] flex items-center gap-1.5">
+            {% render 'icon', name: 'truck', class: 'w-3.5 h-3.5 text-[#6a7462]' %} Shipping
+          </span>
+          <div data-shipping-free class="flex items-center gap-1.5" hidden>
+            <span class="text-[11px] text-[#6a7462] line-through">₹60</span>
+            <span class="text-[11px] font-bold text-[#4f7a2e] uppercase tracking-wider bg-[#4f7a2e]/10 px-2 py-0.5 rounded-full">FREE</span>
+          </div>
+          <div data-shipping-paid class="flex items-center gap-1.5" hidden>
+            <span class="font-semibold text-[#2a3625]">₹60</span>
+            <span class="text-[10px] text-[#6a7462]">(Flat rate)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-[10px] font-bold text-[#6a7462] uppercase tracking-widest block">Estimated Total</span>
+          <span class="text-[10px] text-[#6a7462]/70 font-light">Taxes &amp; shipping confirmed at checkout</span>
+        </div>
+        <span data-estimated-total class="text-2xl text-[#2a3625]" style="font-family: 'Cormorant Garamond', serif; font-weight: 600;">₹0</span>
+      </div>
+
+      <button
+        type="button"
+        data-cart-checkout
+        class="w-full flex items-center justify-center gap-2 py-4 rounded-full text-xs font-black uppercase tracking-[0.2em] text-white transition-all hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
+        style="background: linear-gradient(135deg, #2e4e18, #4f7a2e);"
+      >
+        <span data-checkout-label>Checkout</span>
+        {% render 'icon', name: 'arrow-right', class: 'w-3.5 h-3.5' %}
+      </button>
+    </div>
+  </div>
+
+  {%- comment -%} Line-item template — kept in Liquid so Tailwind sees its classes. {%- endcomment -%}
+  <template data-cart-item-template>
+    <div class="flex gap-3 p-3 rounded-2xl border border-[#2e3f25]/8 bg-white">
+      <div class="w-14 h-14 rounded-xl overflow-hidden bg-[#f0ece4] flex-shrink-0">
+        <img data-item-image width="56" height="56" class="w-full h-full object-cover" alt="" hidden>
+        <div data-item-image-fallback class="w-full h-full flex items-center justify-center text-xl">🕯️</div>
+      </div>
+
+      <div class="flex-1 min-w-0">
+        <h4 data-item-title class="text-sm text-[#2a3625] leading-snug mb-0.5 line-clamp-2" style="font-family: 'Cormorant Garamond', serif; font-weight: 600;"></h4>
+        <p data-item-variant class="text-xs text-[#6a7462] mb-1" hidden></p>
+        <p data-item-price class="text-sm font-bold text-[#4f7a2e]"></p>
+      </div>
+
+      <div class="flex flex-col items-end justify-between gap-2 flex-shrink-0">
+        <button type="button" data-item-remove class="text-[#6a7462]/50 hover:text-red-400 transition-colors" aria-label="Remove item">
+          {% render 'icon', name: 'trash-2', class: 'w-3.5 h-3.5' %}
+        </button>
+        <div class="flex items-center gap-1.5 border border-[#2e3f25]/10 rounded-full px-2 py-1">
+          <button type="button" data-item-decrease class="w-5 h-5 flex items-center justify-center text-[#6a7462] hover:text-[#2a3625] transition-colors" aria-label="Decrease quantity">
+            {% render 'icon', name: 'minus', class: 'w-3 h-3' %}
+          </button>
+          <span data-item-quantity class="w-5 text-center text-xs font-semibold text-[#2a3625]"></span>
+          <button type="button" data-item-increase class="w-5 h-5 flex items-center justify-center text-[#6a7462] hover:text-[#2a3625] transition-colors" aria-label="Increase quantity">
+            {% render 'icon', name: 'plus', class: 'w-3 h-3' %}
+          </button>
+        </div>
+      </div>
+    </div>
+  </template>
+</cart-drawer>

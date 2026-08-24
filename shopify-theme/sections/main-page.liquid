@@ -1,0 +1,49 @@
+{%- comment -%}
+  Generic content page (Privacy Policy, Terms & Conditions, Returns & Refunds,
+  About, etc). Content is authored in the Shopify admin; this section supplies
+  the theme's typography so admin-authored HTML matches the rest of the site.
+{%- endcomment -%}
+
+<main class="pt-24 md:pt-32 pb-20">
+  <section class="py-12 md:py-16 bg-sage-light/30">
+    <div class="container text-center">
+      <span class="text-[#5a8739] text-xs uppercase tracking-[0.2em] mb-3 block">
+        {{ section.settings.eyebrow }}
+      </span>
+      <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-4">
+        {{ page.title }}
+      </h1>
+    </div>
+  </section>
+
+  <div class="container py-12 md:py-16">
+    <div
+      class="max-w-3xl mx-auto text-muted-foreground leading-relaxed
+        [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:md:text-3xl [&_h2]:text-foreground [&_h2]:mt-10 [&_h2]:mb-4
+        [&_h3]:font-serif [&_h3]:text-xl [&_h3]:text-foreground [&_h3]:mt-8 [&_h3]:mb-3
+        [&_p]:mb-5
+        [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-5 [&_ul]:space-y-2
+        [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-5 [&_ol]:space-y-2
+        [&_a]:text-[#4f7a2e] [&_a]:font-semibold [&_a]:underline [&_a]:underline-offset-2
+        [&_strong]:text-foreground [&_strong]:font-semibold
+        [&_table]:w-full [&_table]:mb-5 [&_td]:border [&_td]:border-border [&_td]:p-2
+        [&_th]:border [&_th]:border-border [&_th]:p-2 [&_th]:text-foreground"
+    >
+      {{ page.content }}
+    </div>
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Stomatal Farms"
+    }
+  ]
+}
+{% endschema %}

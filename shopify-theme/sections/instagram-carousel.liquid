@@ -1,0 +1,103 @@
+<section class="py-24 md:py-32 px-4 bg-[#fffbf5] relative overflow-hidden">
+  <div class="max-w-7xl mx-auto relative z-10">
+    <div class="text-center mb-16">
+      <p class="text-xs font-bold uppercase tracking-[0.2em] text-[#5c6e58] mb-4 flex items-center justify-center gap-3">
+        {% render 'icon', name: 'instagram', class: 'w-4 h-4' %}
+        {{ section.settings.eyebrow }}
+      </p>
+      <h2 class="text-3xl md:text-5xl text-[#2a3625] mb-6" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">
+        {{ section.settings.heading }}
+      </h2>
+      <p class="text-[#6a7462] font-light max-w-lg mx-auto">
+        {{ section.settings.subheading }}
+      </p>
+    </div>
+
+    <instagram-carousel class="relative group">
+      <div data-carousel-viewport class="overflow-hidden rounded-[40px]">
+        <div class="flex -ml-4 md:-ml-8">
+          {%- assign instagram_media = 'image|instagram-1.jpg,image|instagram-2.jpg,image|instagram-3.jpg,image|instagram-4.jpg,image|instagram-5.jpg,video|instagram-6.mp4' | split: ',' -%}
+          {%- for entry in instagram_media -%}
+            {%- assign media = entry | split: '|' -%}
+            <div class="flex-[0_0_85%] min-w-0 pl-4 md:flex-[0_0_35%] md:pl-8">
+              <div class="relative aspect-[4/5] rounded-[32px] overflow-hidden shadow-xl border border-[#2e3f25]/5 group/item">
+                {%- if media[0] == 'image' -%}
+                  <img
+                    src="{{ media[1] | asset_url }}"
+                    alt="Instagram post {{ forloop.index }}"
+                    width="1485"
+                    height="1856"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover/item:scale-110"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  <video
+                    src="{{ media[1] | asset_url }}"
+                    class="w-full h-full object-cover"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                  ></video>
+                {%- endif -%}
+                <div class="absolute inset-0 bg-black/20 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  {% render 'icon', name: 'instagram', class: 'w-8 h-8 text-white' %}
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <button
+        type="button"
+        data-carousel-prev
+        class="hidden md:flex absolute top-1/2 left-4 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 backdrop-blur-md items-center justify-center text-[#2a3625] shadow-lg hover:bg-white transition-all opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0"
+        aria-label="Previous post"
+      >
+        {% render 'icon', name: 'chevron-left', class: 'w-6 h-6' %}
+      </button>
+      <button
+        type="button"
+        data-carousel-next
+        class="hidden md:flex absolute top-1/2 right-4 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 backdrop-blur-md items-center justify-center text-[#2a3625] shadow-lg hover:bg-white transition-all opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0"
+        aria-label="Next post"
+      >
+        {% render 'icon', name: 'chevron-right', class: 'w-6 h-6' %}
+      </button>
+    </instagram-carousel>
+
+    <div class="flex justify-center gap-2 mt-8 md:hidden">
+      {%- for i in (1..6) -%}
+        <div class="w-1.5 h-1.5 rounded-full bg-[#5c6e58]/20"></div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Instagram carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Join our community"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Aromatics in real life."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "See how our community uses Aurora to transform their daily rituals. Tag us @stomatalfarms to be featured."
+    }
+  ],
+  "presets": [{ "name": "Instagram carousel" }]
+}
+{% endschema %}

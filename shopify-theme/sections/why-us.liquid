@@ -1,0 +1,21 @@
+<section class="py-12 md:py-16 px-4 bg-[#0e1610]">
+  <div class="max-w-2xl mx-auto">
+    <div class="grid grid-cols-2 gap-3 md:gap-4 max-w-xl mx-auto">
+      {%- assign why_badges = '🔥|Rooted in Vedic Tradition,🧘|Elevates Daily Ritual,🐄|Supports Cow Welfare,🌿|Ash → Garden Fertiliser,🛡️|Safe for Kids & Pets,🔥|Zero Chemical Burn' | split: ',' -%}
+      {%- for entry in why_badges -%}
+        {%- assign badge = entry | split: '|' -%}
+        <div class="flex items-center gap-2.5 px-4 py-3 rounded-full border bg-[#f5c842] border-[#f5c842] text-[#1a1a0a] text-[11px] md:text-sm font-semibold transition-all hover:-translate-y-0.5">
+          <span class="text-base">{{ badge[0] }}</span>
+          {{ badge[1] }}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Why us",
+  "presets": [{ "name": "Why us" }]
+}
+{% endschema %}

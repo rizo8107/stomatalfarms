@@ -1,0 +1,71 @@
+{%- comment -%}
+  Legal / governance page (Privacy Policy, Terms & Conditions, Returns &
+  Refunds), matching the shared layout of those pages in src/pages/.
+
+  Clauses are blocks, so the copy is editable in the Theme Customizer. The
+  page's own title/handle still comes from Shopify; these templates carry the
+  original copy so the pages read correctly with no admin setup.
+{%- endcomment -%}
+
+<main class="pt-20 md:pt-28 pb-16">
+  <section class="py-16 bg-sage-light/20 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.02] pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/p6.png');"></div>
+    <div class="container text-center relative z-10">
+      <span class="text-[#5a8739] text-xs uppercase tracking-[0.3em] mb-4 block font-semibold">
+        {{ section.settings.eyebrow }}
+      </span>
+      <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl text-foreground mb-6" style="font-family: 'Cormorant Garamond', serif; font-weight: 400;">
+        {{ section.settings.heading | default: page.title }}
+      </h1>
+      {%- if section.settings.intro != blank -%}
+        <p class="text-muted-foreground max-w-2xl mx-auto text-lg font-light leading-relaxed">
+          {{ section.settings.intro }}
+        </p>
+      {%- endif -%}
+    </div>
+  </section>
+
+  <div class="container py-16">
+    <div class="max-w-3xl mx-auto space-y-12">
+      {%- for block in section.blocks -%}
+        <section class="space-y-4" {{ block.shopify_attributes }}>
+          <h2 class="font-serif text-2xl text-foreground" style="font-family: 'Cormorant Garamond', serif;">
+            {{ block.settings.heading }}
+          </h2>
+          <div class="text-muted-foreground font-light leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_a]:text-[#4f7a2e] [&_a]:font-semibold [&_a]:underline">
+            {{ block.settings.body }}
+          </div>
+        </section>
+      {%- endfor -%}
+
+      {%- if page.content != blank -%}
+        <div class="text-muted-foreground font-light leading-relaxed [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6">
+          {{ page.content }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</main>
+
+{% schema %}
+{
+  "name": "Legal page",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Legal & Governance" },
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "intro", "label": "Intro" }
+  ],
+  "blocks": [
+    {
+      "type": "clause",
+      "name": "Clause",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading" },
+        { "type": "richtext", "id": "body", "label": "Body" }
+      ]
+    }
+  ],
+  "max_blocks": 50,
+  "presets": [{ "name": "Legal page" }]
+}
+{% endschema %}

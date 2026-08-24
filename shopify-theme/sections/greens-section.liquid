@@ -1,0 +1,179 @@
+{%- liquid
+  assign greens_collection = collections[section.settings.collection]
+  if greens_collection == blank
+    assign greens_collection = collections.all
+  endif
+-%}
+
+<section class="py-16 md:py-28 px-4 relative overflow-hidden" style="background: linear-gradient(160deg, #1a2e12 0%, #2a3f1a 40%, #1e3614 100%);">
+  <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 20% 50%, #a8c690 0%, transparent 50%), radial-gradient(circle at 80% 20%, #7aaa55 0%, transparent 40%);"></div>
+
+  <div class="max-w-7xl mx-auto relative z-10">
+    <div class="grid lg:grid-cols-2 gap-16 lg:gap-20 items-start mb-20">
+
+      <div class="flex flex-col gap-6">
+        <p class="text-[10px] font-black uppercase tracking-[0.25em] text-[#a8c690] flex items-center gap-2">
+          <span class="w-6 h-px bg-[#a8c690]/40"></span>
+          By Stomatal Farms
+        </p>
+        <h2
+          class="leading-tight text-white"
+          style="font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 500;"
+        >
+          <span class="italic text-[#a8c690]">Greens,</span> Microgreens<br>
+          &amp; Dehydrated <span class="italic text-[#a8c690]">Blends</span>
+        </h2>
+        <p class="text-white/60 font-light text-base leading-relaxed max-w-sm">
+          Freshly harvested and delivered straight from our farm to your kitchen.
+        </p>
+        <a
+          href="{{ routes.collections_url }}?category=greens"
+          class="group inline-flex items-center gap-2.5 w-fit px-8 py-3 rounded-full text-xs font-black uppercase tracking-[0.2em] text-[#1a2e12] transition-all hover:-translate-y-0.5 hover:shadow-lg"
+          style="background: #a8c690;"
+        >
+          Shop Farm Produce
+          {% render 'icon', name: 'arrow-right', class: 'w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform' %}
+        </a>
+      </div>
+
+      <div class="flex flex-col gap-2.5">
+        {%- assign greens_categories = 'Greens;Hydroponically grown, chemical-free seasonal greens;https://cdn.shopify.com/s/files/1/0735/4469/5965/files/7cc0e5_f91c9dad181c449e989d6a3c6ace055d_mv2_4b260971-6fcc-4440-b5ab-a981700befde.jpg?v=1757855391;1000;1334~Microgreens;Nutrient-dense, delivered weekly to your door;https://cdn.shopify.com/s/files/1/0735/4469/5965/files/7cc0e5_e3229c8e871b4bd8b19f594f1d29a4dd_mv2_7ded16d3-31b2-4285-bcf0-2c9f2f87cbc6.jpg?v=1757855508;1000;1000~Dehydrated Blends;Naturally dehydrated Moringa & Curry Leaf;https://cdn.shopify.com/s/files/1/0735/4469/5965/files/01.jpg?v=1773151907;2048;2048' | split: '~' -%}
+        {%- for entry in greens_categories -%}
+          {%- assign cat = entry | split: ';' -%}
+          <div
+            class="rounded-2xl border border-white/10 p-5 md:p-6 flex gap-6 items-center"
+            style="background: rgba(255,255,255,0.06);"
+          >
+            <div class="w-28 h-28 md:w-32 md:h-32 rounded-xl overflow-hidden border border-white/10 flex-shrink-0">
+              <img src="{{ cat[2] }}" alt="{{ cat[0] | escape }}" width="{{ cat[3] }}" height="{{ cat[4] }}" loading="lazy" class="w-full h-full object-cover">
+            </div>
+            <div>
+              <h3 class="text-2xl md:text-3xl text-white leading-tight font-semibold" style="font-family: 'Cormorant Garamond', serif;">
+                {{ cat[0] }}
+              </h3>
+              <p class="text-base md:text-lg text-white/50 font-light leading-relaxed mt-1.5">{{ cat[1] }}</p>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div>
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <p class="text-[10px] font-black uppercase tracking-[0.25em] text-[#a8c690] mb-2 flex items-center gap-2">
+            <span class="w-6 h-px bg-[#a8c690]/40"></span>
+            Fresh · Weekly Harvest
+          </p>
+          <h3 class="text-2xl md:text-3xl text-white" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">
+            Our Green Products
+          </h3>
+        </div>
+        <a
+          href="{{ routes.collections_url }}?category=greens"
+          class="hidden sm:inline-flex text-[10px] font-black uppercase tracking-[0.2em] text-[#a8c690] border border-[#a8c690]/30 px-5 py-2 rounded-full hover:bg-white/5 transition-colors"
+        >
+          View All →
+        </a>
+      </div>
+
+      {%- comment -%}
+        Same keyword + availability filter the React version applies over the
+        first 50 products. Point the section at a dedicated greens collection to
+        skip the keyword matching entirely.
+      {%- endcomment -%}
+      {%- assign green_count = 0 -%}
+      <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4" data-greens-grid>
+        {%- for product in greens_collection.products limit: 50 -%}
+          {%- if product.available -%}
+            {%- assign product_title = product.title | downcase -%}
+            {%- assign product_description = product.description | downcase -%}
+            {%- assign is_green = false -%}
+            {%- if product_title contains 'microgreen' or product_title contains 'greens' or product_title contains 'moringa' or product_title contains 'leafy' or product_title contains 'curry leaf' or product_title contains 'dehydrated' -%}
+              {%- assign is_green = true -%}
+            {%- elsif product_description contains 'microgreen' or product_description contains 'hydroponically' -%}
+              {%- assign is_green = true -%}
+            {%- endif -%}
+
+            {%- if is_green -%}
+              {%- assign green_count = green_count | plus: 1 -%}
+              {%- assign variant = product.variants.first -%}
+              {%- assign price = variant.price | divided_by: 100.0 | round -%}
+              {%- assign is_whatsapp = false -%}
+              {%- if product_title contains 'microgreen' or product_title contains 'leafy' or product_description contains 'microgreen' -%}
+                {%- assign is_whatsapp = true -%}
+              {%- endif -%}
+
+              <div
+                class="rounded-xl md:rounded-2xl border border-white/10 overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
+                style="background: rgba(255,255,255,0.07);"
+              >
+                {%- if product.featured_image -%}
+                  <div class="aspect-[4/3] overflow-hidden">
+                    <img
+                      src="{{ product.featured_image | image_url: width: 600 }}"
+                      alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                      width="{{ product.featured_image.width }}"
+                      height="{{ product.featured_image.height }}"
+                      loading="lazy"
+                      class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    >
+                  </div>
+                {%- else -%}
+                  <div class="aspect-[4/3] bg-white/5 flex items-center justify-center text-3xl">🌱</div>
+                {%- endif -%}
+
+                <div class="flex flex-col flex-1 p-3 md:p-5 gap-2">
+                  <h4
+                    class="text-sm md:text-base text-white leading-snug line-clamp-2"
+                    style="font-family: 'Cormorant Garamond', serif; font-weight: 600;"
+                  >
+                    {{ product.title }}
+                  </h4>
+
+                  <div class="flex items-baseline gap-1.5 mt-auto">
+                    {%- if variant -%}
+                      <span class="text-sm md:text-lg font-bold text-[#a8c690]">₹{{ price }}</span>
+                    {%- endif -%}
+                    {%- if variant.compare_at_price > variant.price -%}
+                      {%- assign compare_at = variant.compare_at_price | divided_by: 100.0 | round -%}
+                      <span class="text-[10px] text-white/30 line-through">₹{{ compare_at }}</span>
+                    {%- endif -%}
+                  </div>
+
+                  {%- comment -%} Inert in Phase 1: cart lands in Phase 2, WhatsApp in Phase 3. {%- endcomment -%}
+                  <button
+                    type="button"
+                    class="w-full py-2 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-[0.12em] text-[#1a2e12] transition-all hover:opacity-90"
+                    style="background: #a8c690;"
+                  >
+                    {% if is_whatsapp %}WhatsApp{% else %}Add to Cart{% endif %}
+                  </button>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if green_count == 0 -%}
+        <p class="text-white/40 text-center py-12 text-sm">No green products available right now.</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Greens section",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Leave empty to keyword-match greens across all products, the way the React site did."
+    }
+  ],
+  "presets": [{ "name": "Greens section" }]
+}
+{% endschema %}

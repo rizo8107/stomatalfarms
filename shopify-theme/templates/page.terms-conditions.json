@@ -1,0 +1,59 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-legal",
+      "settings": {
+        "eyebrow": "Legal & Governance",
+        "heading": "Terms & Conditions",
+        "intro": "Welcome to Stomatal Farms. Please read these terms carefully before using our website or purchasing our Aurora products."
+      },
+      "blocks": {
+        "s1": {
+          "type": "clause",
+          "settings": {
+            "heading": "1. Acceptance of Terms",
+            "body": "<p>By accessing this website, purchasing Aurora wellness products, or interacting with our services, you agree to comply with and be bound by these Terms and Conditions. If you do not agree, please do not use our services.</p>"
+          }
+        },
+        "s2": {
+          "type": "clause",
+          "settings": {
+            "heading": "2. Handcrafted Wellness Products",
+            "body": "<p>All Aurora products (including incense sticks, cups, ghee lamps, and bath salts) are handcrafted in small batches with natural ingredients and organic elements. Minor variations in color, texture, and aroma are inherent in handcrafted items and should be expected rather than viewed as defects.</p>"
+          }
+        },
+        "s3": {
+          "type": "clause",
+          "settings": {
+            "heading": "3. Pricing & Billing",
+            "body": "<p>All prices are displayed in Indian Rupees (INR) and are subject to change without notice. We reserve the right to refuse or cancel orders due to pricing inaccuracies or stock limitations. Transactions are processed securely via our checkout system.</p>"
+          }
+        },
+        "s4": {
+          "type": "clause",
+          "settings": {
+            "heading": "4. Shipping & Delivery",
+            "body": "<p>There is no minimum order value required — you are welcome to order even a single item. We provide Free Shipping on all orders over ₹999 across India. For orders below ₹999, a flat shipping fee of ₹60 applies.</p><p>We strive to dispatch orders within 3 to 5 working days. While we partner with reliable logistics providers, transit times may vary by destination. Stomatal Farms is not liable for unexpected delays caused by courier partners or force majeure events.</p>"
+          }
+        },
+        "s5": {
+          "type": "clause",
+          "settings": {
+            "heading": "5. Governing Law",
+            "body": "<p>These terms are governed by and construed in accordance with the laws of India. Any disputes arising out of your use of this site or purchases made through it shall be subject to the exclusive jurisdiction of the courts in Chennai, Tamil Nadu.</p><p>Last Updated: May 2026. For questions regarding these terms, contact us at contact@stomatalfarms.com.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

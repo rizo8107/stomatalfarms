@@ -1,0 +1,152 @@
+<section class="py-24 md:py-32 px-4 bg-[#f9f6f0] relative overflow-hidden">
+  <div class="absolute bottom-0 left-0 w-64 h-64 bg-[#4f7a2e]/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2"></div>
+
+  <div class="max-w-3xl mx-auto relative z-10">
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full bg-[#4f7a2e]/5 border border-[#4f7a2e]/10">
+        {% render 'icon', name: 'circle-help', class: 'w-3 h-3 text-[#4f7a2e]' %}
+        <span class="text-[10px] font-black uppercase tracking-[0.2em] text-[#4f7a2e]">{{ section.settings.eyebrow }}</span>
+      </div>
+      <h2 class="text-4xl md:text-5xl text-[#2a3625] mb-6" style="font-family: 'Cormorant Garamond', serif; font-weight: 500;">
+        {{ section.settings.heading }}
+      </h2>
+      <p class="text-[#6a7462] font-light max-w-lg mx-auto">
+        {{ section.settings.subheading }}
+      </p>
+    </div>
+
+    {%- comment -%}
+      Open/closed class sets are declared here, not in theme.js, so Tailwind's
+      content scanner (which reads *.liquid only) emits all of them.
+    {%- endcomment -%}
+    <faq-accordion
+      class="flex flex-col gap-4"
+      data-item-open="bg-white shadow-xl border-[#2e3f25]/10"
+      data-item-closed="bg-white/40 border-transparent hover:bg-white/60"
+      data-question-open="text-[#4f7a2e]"
+      data-question-closed="text-[#2a3625]"
+      data-chevron-open="bg-[#4f7a2e] text-white rotate-180"
+      data-chevron-closed="bg-white text-[#2a3625] shadow-sm group-hover:shadow-md"
+      data-panel-open="max-h-96 opacity-100"
+      data-panel-closed="max-h-0 opacity-0"
+    >
+      {%- for block in section.blocks -%}
+        <div
+          data-faq-item
+          class="rounded-[32px] overflow-hidden transition-all duration-500 border bg-white/40 border-transparent hover:bg-white/60"
+          {{ block.shopify_attributes }}
+        >
+          <button
+            type="button"
+            data-faq-trigger
+            aria-expanded="false"
+            class="w-full text-left px-8 py-6 flex items-center justify-between gap-6 outline-none group"
+          >
+            <span data-faq-question class="text-base md:text-lg font-medium transition-colors duration-300 text-[#2a3625]" style="font-family: 'Cormorant Garamond', serif;">
+              {{ block.settings.question }}
+            </span>
+            <div
+              data-faq-chevron
+              class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 bg-white text-[#2a3625] shadow-sm group-hover:shadow-md"
+            >
+              {% render 'icon', name: 'chevron-down', class: 'w-5 h-5' %}
+            </div>
+          </button>
+
+          <div data-faq-panel class="transition-all duration-500 ease-in-out max-h-0 opacity-0">
+            <div class="px-8 pb-8 text-sm md:text-base text-[#6a7462] leading-relaxed font-light">
+              <div class="w-full h-[1px] bg-[#2e3f25]/5 mb-6"></div>
+              {{ block.settings.answer }}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </faq-accordion>
+
+    <div class="mt-16 text-center">
+      <p class="text-sm text-[#6a7462]">
+        Still have questions? <a href="{{ pages.contact.url | default: '/pages/contact' }}" class="text-[#4f7a2e] font-bold border-b border-[#4f7a2e]/30 hover:border-[#4f7a2e] transition-all">Reach out to us</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Common Inquiries"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Thoughtfully answered."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Everything you need to know about our natural aromatics and how to integrate them into your daily life."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Which product should I start with?",
+            "answer": "Our incense sticks are perfect for daily use, while cups offer a deeper, more therapeutic experience. If you're new, the Combo packs are our most loved starting point."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Are these safe for children and elders?",
+            "answer": "Absolutely. Every Aurora product is crafted from 100% natural, chemical-free ingredients with no synthetic binders, making them safe for everyone in your family."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How long does each product last?",
+            "answer": "Our sticks and cups both burn for ~45 minutes. The aroma and essence linger for hours after the burn ends, filling your space long after the flame goes out."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What are your shipping rates and is there a minimum order?",
+            "answer": "We have no minimum order value — you can purchase even a single item! We provide FREE shipping on all orders over ₹999 across India. For orders under ₹999, a flat shipping fee of ₹60 applies."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
