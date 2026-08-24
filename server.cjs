@@ -181,6 +181,22 @@ async function syncGoogleReviews() {
 }
 
 // API Routes
+
+// The Shopify Liquid theme is served from the shop's own domain, so its
+// client-side fetch of this endpoint is cross-origin and the browser requires
+// CORS headers. The payload is public, read-only and credential-free, so a
+// wildcard origin is appropriate here. OPTIONS is handled so the route keeps
+// working if a future caller sends a header that triggers a preflight.
+app.use('/api/reviews', (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Max-Age', '86400');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+  next();
+});
+
 app.get('/api/reviews', async (req, res) => {
   if (!pool) {
     return res.json({ rating: 4.8, totalReviews: 0, reviews: [] });
