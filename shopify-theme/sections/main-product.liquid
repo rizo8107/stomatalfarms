@@ -72,6 +72,34 @@
   {%- assign details = details | strip -%}
 {%- endif -%}
 
+{%- comment -%}
+  Layout toggle. Precedence:
+    1. the product's own `custom.product_layout` metafield ("arka" or "standard")
+    2. the section's ARKA-style handle list
+    3. the standard layout
+  The metafield lets a merchant flip one product from the product page in admin;
+  the handle list works with no metafield setup at all.
+{%- endcomment -%}
+{%- liquid
+  assign layout_choice = product.metafields.custom.product_layout.value | default: '' | downcase | strip
+  assign use_arka_layout = false
+
+  if layout_choice == 'arka'
+    assign use_arka_layout = true
+  elsif layout_choice == 'standard' or layout_choice == 'normal'
+    assign use_arka_layout = false
+  else
+    assign arka_handles = section.settings.arka_handles | newline_to_br | replace: '<br />', ',' | replace: '<br/>', ',' | split: ','
+    for entry in arka_handles
+      assign candidate = entry | strip | downcase
+      if candidate != blank and candidate == product.handle
+        assign use_arka_layout = true
+        break
+      endif
+    endfor
+  endif
+-%}
+
 <main class="pt-24 md:pt-32 pb-24 md:pb-12">
   <div class="container px-4 max-w-7xl mx-auto">
     <a
@@ -127,7 +155,7 @@
           {%- endif -%}
         </div>
 
-        {%- if product.handle == section.settings.bespoke_handle -%}
+        {%- if use_arka_layout -%}
           {% render 'product-arka-panel',
             product: product,
             current_variant: current_variant,
@@ -443,10 +471,10 @@
   "name": "Product",
   "settings": [
     {
-      "type": "text",
-      "id": "bespoke_handle",
-      "label": "Bespoke layout handle",
-      "info": "This product renders the hand-built ARKA panel instead of the standard layout.",
+      "type": "textarea",
+      "id": "arka_handles",
+      "label": "ARKA-style product handles",
+      "info": "One handle per line (or comma separated). These products render the ARKA panel instead of the standard layout. A product's own custom.product_layout metafield (\"arka\" or \"standard\") overrides this list.",
       "default": "arka-cow-dung-incense-cups"
     },
     {

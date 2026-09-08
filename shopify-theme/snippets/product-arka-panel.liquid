@@ -20,7 +20,21 @@
   {% render 'product-arka-panel', product: product, current_variant: current_variant %}
 {% enddoc %}
 
+{%- comment -%}
+  Panel copy is metafield-driven so any product can use this layout, not just
+  ARKA. Blank metafields fall back to the product's own values, and the sections
+  they drive are omitted entirely when there is nothing to show.
+{%- endcomment -%}
 {%- liquid
+  assign panel_title = product.metafields.custom.panel_title.value | default: product.title
+  assign panel_subtitle = product.metafields.custom.panel_subtitle.value
+  assign panel_tagline = product.metafields.custom.panel_tagline.value
+  assign box_metrics_raw = product.metafields.custom.box_metrics.value
+  assign pill_tags_raw = product.metafields.custom.pill_tags.value
+
+  assign box_metrics = box_metrics_raw | newline_to_br | replace: '<br />', '~' | replace: '<br/>', '~' | split: '~'
+  assign pill_tags = pill_tags_raw | split: ','
+
   assign price_value = current_variant.price | divided_by: 100.0 | round
   assign has_discount = false
   if current_variant.compare_at_price > current_variant.price
@@ -45,16 +59,20 @@
 
     <div class="space-y-1">
       <h1 class="font-serif text-3xl sm:text-4xl md:text-[40px] font-normal text-[#222a1c] leading-tight tracking-tight">
-        ARKA — Cow Dung Incense Cups
+        {{ panel_title }}
       </h1>
-      <p class="font-serif italic text-[15px] sm:text-base text-[#6f6e5b]">
-        The Original Blend · Camphor, Frankincense &amp; Herbs
-      </p>
+      {%- if panel_subtitle != blank -%}
+        <p class="font-serif italic text-[15px] sm:text-base text-[#6f6e5b]">
+          {{ panel_subtitle }}
+        </p>
+      {%- endif -%}
     </div>
 
-    <div class="font-serif italic text-lg sm:text-xl text-[#4e652f] leading-snug">
-      One cup a day. Thirty days of calm.
-    </div>
+    {%- if panel_tagline != blank -%}
+      <div class="font-serif italic text-lg sm:text-xl text-[#4e652f] leading-snug">
+        {{ panel_tagline }}
+      </div>
+    {%- endif -%}
 
     <div>
       <div class="flex flex-wrap items-baseline gap-2.5 sm:gap-3">
@@ -78,35 +96,57 @@
       </p>
     </div>
 
-    <div class="space-y-2 pt-1">
-      <span class="text-[11px] font-bold uppercase tracking-widest text-[#776856] block">
-        WHAT'S IN THE BOX
-      </span>
-      <div class="grid grid-cols-3 gap-2.5 sm:gap-3">
-        <div class="bg-[#fcfbf7] rounded-2xl border border-[#ebe6dc] p-3 sm:p-4 text-center shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex flex-col items-center justify-center min-h-[95px]">
-          <span class="text-2xl sm:text-3xl font-serif font-bold text-[#232a1c] leading-none">30</span>
-          <span class="text-sm font-serif font-bold text-[#232a1c] mt-1 leading-tight">incense</span>
-          <span class="text-[11px] text-[#6e7764] font-normal mt-1 leading-tight text-center">cups — one for every day of the month</span>
-        </div>
-        <div class="bg-[#fcfbf7] rounded-2xl border border-[#ebe6dc] p-3 sm:p-4 text-center shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex flex-col items-center justify-center min-h-[95px]">
-          <span class="text-2xl sm:text-3xl font-serif font-bold text-[#232a1c] leading-none">30 g</span>
-          <span class="text-xs text-[#6e7764] font-medium mt-2 leading-tight text-center">herbal incense powder</span>
-        </div>
-        <div class="bg-[#fcfbf7] rounded-2xl border border-[#ebe6dc] p-3 sm:p-4 text-center shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex flex-col items-center justify-center min-h-[95px]">
-          <span class="text-2xl sm:text-3xl font-serif font-bold text-[#232a1c] leading-none">1</span>
-          <span class="text-xs text-[#6e7764] font-medium mt-2 leading-tight text-center">incense holder</span>
+    {%- if box_metrics.size > 0 -%}
+      <div class="space-y-2 pt-1">
+        <span class="text-[11px] font-bold uppercase tracking-widest text-[#776856] block">
+          WHAT'S IN THE BOX
+        </span>
+        <div class="grid grid-cols-3 gap-2.5 sm:gap-3">
+          {%- comment -%}
+            One card per line. Two forms, both accepted:
+              value|caption                 -> big number over a caption
+              value|emphasis|caption        -> big number, bold serif line, caption
+          {%- endcomment -%}
+          {%- for entry in box_metrics -%}
+            {%- assign metric = entry | strip | split: '|' -%}
+            {%- liquid
+              assign metric_value = metric[0] | strip
+              if metric.size >= 3
+                assign metric_emphasis = metric[1] | strip
+                assign metric_caption = metric[2] | strip
+              else
+                assign metric_emphasis = ''
+                assign metric_caption = metric[1] | strip
+              endif
+            -%}
+            {%- if metric_value != blank -%}
+              <div class="bg-[#fcfbf7] rounded-2xl border border-[#ebe6dc] p-3 sm:p-4 text-center shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex flex-col items-center justify-center min-h-[95px]">
+                <span class="text-2xl sm:text-3xl font-serif font-bold text-[#232a1c] leading-none">{{ metric_value }}</span>
+                {%- if metric_emphasis != blank -%}
+                  <span class="text-sm font-serif font-bold text-[#232a1c] mt-1 leading-tight">{{ metric_emphasis }}</span>
+                  <span class="text-[11px] text-[#6e7764] font-normal mt-1 leading-tight text-center">{{ metric_caption }}</span>
+                {%- else -%}
+                  <span class="text-xs text-[#6e7764] font-medium mt-2 leading-tight text-center">{{ metric_caption }}</span>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
         </div>
       </div>
-    </div>
+    {%- endif -%}
 
-    <div class="flex flex-wrap gap-2 pt-1">
-      {%- assign arka_tags = 'Cow dung based,Lab tested,No synthetic fragrance,No charcoal,Zero-waste ash' | split: ',' -%}
-      {%- for tag in arka_tags -%}
-        <span class="px-3.5 py-1.5 rounded-full bg-[#f2efe9] text-[#4d5743] border border-[#e5e0d5] text-xs font-medium">
-          {{ tag }}
-        </span>
-      {%- endfor -%}
-    </div>
+    {%- if pill_tags.size > 0 -%}
+      <div class="flex flex-wrap gap-2 pt-1">
+        {%- for tag in pill_tags -%}
+          {%- assign tag_label = tag | strip -%}
+          {%- if tag_label != blank -%}
+            <span class="px-3.5 py-1.5 rounded-full bg-[#f2efe9] text-[#4d5743] border border-[#e5e0d5] text-xs font-medium">
+              {{ tag_label }}
+            </span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
 
     {%- form 'product', product, id: 'product-form-arka', class: 'contents' -%}
       <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id-input>

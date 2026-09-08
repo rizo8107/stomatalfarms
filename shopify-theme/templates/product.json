@@ -2,7 +2,9 @@
   "sections": {
     "main": {
       "type": "main-product",
-      "settings": {}
+      "settings": {
+        "arka_handles": "arka-cow-dung-incense-cups"
+      }
     },
     "google_reviews": {
       "type": "google-reviews-carousel",
