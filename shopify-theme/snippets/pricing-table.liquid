@@ -1,0 +1,71 @@
+{% doc %}
+  Renders a "Pricing & Savings" breakdown table, matching the product listing
+  sheets: dark header, plain item rows, a bold subtotal and a highlighted
+  final offer price.
+
+  Driven by the custom.pricing_rows metafield, one row per line:
+    Item name|Amount
+    Item name|Amount|total     -> bold subtotal row
+    Item name|Amount|offer     -> highlighted final price row
+
+  @param {string} rows - The custom.pricing_rows metafield value
+  @param {string} [heading] - Optional accent line above the table
+  @param {string} [note] - Optional caption under the table
+  @param {string} [amount_heading] - Right column heading (default "MRP (Rs)")
+
+  @example
+  {% render 'pricing-table', rows: pricing_rows %}
+{% enddoc %}
+
+{%- assign pricing_lines = rows | newline_to_br | replace: '<br />', '~' | replace: '<br/>', '~' | split: '~' -%}
+
+{%- if pricing_lines.size > 0 -%}
+  {%- if heading != blank -%}
+    <p class="text-[#8a6d2f] font-semibold text-sm mb-3">{{ heading }}</p>
+  {%- endif -%}
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm border-collapse">
+      <thead>
+        <tr class="bg-[#2a3625] text-white">
+          <th class="text-left font-semibold px-4 py-2.5 rounded-tl-lg">Item</th>
+          <th class="text-right font-semibold px-4 py-2.5 rounded-tr-lg whitespace-nowrap">
+            {{ amount_heading | default: 'MRP (Rs)' }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for raw_row in pricing_lines -%}
+          {%- assign row = raw_row | strip -%}
+          {%- if row != blank -%}
+            {%- assign cells = row | split: '|' -%}
+            {%- assign item = cells[0] | strip -%}
+            {%- assign amount = cells[1] | strip -%}
+            {%- assign flag = cells[2] | strip | downcase -%}
+            {%- if item != blank -%}
+              {%- liquid
+                assign row_class = 'border-b border-[#e6e2d8] text-[#434e3a]'
+                assign cell_weight = 'font-normal'
+                if flag == 'total'
+                  assign row_class = 'border-b border-[#e6e2d8] text-[#27321e] bg-[#faf8f3]'
+                  assign cell_weight = 'font-bold'
+                elsif flag == 'offer'
+                  assign row_class = 'text-[#27321e] bg-[#f4ecdc]'
+                  assign cell_weight = 'font-bold'
+                endif
+              -%}
+              <tr class="{{ row_class }}">
+                <td class="px-4 py-2.5 {{ cell_weight }}">{{ item }}</td>
+                <td class="px-4 py-2.5 text-right whitespace-nowrap {{ cell_weight }}">{{ amount }}</td>
+              </tr>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </tbody>
+    </table>
+  </div>
+
+  {%- if note != blank -%}
+    <p class="text-xs text-[#7e8874] italic text-center mt-3">{{ note }}</p>
+  {%- endif -%}
+{%- endif -%}

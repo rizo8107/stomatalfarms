@@ -1,0 +1,84 @@
+{% doc %}
+  Renders a newline-separated metafield as a bulleted list with the lead-in
+  bolded, matching the product listing sheets.
+
+  Each line may be written as:
+    Label: description
+    Label — description
+    plain sentence
+
+  A line that is entirely uppercase and has no separator is treated as a pasted
+  section heading (e.g. "WHAT'S INCLUDED") and skipped, since the accordion
+  already provides that heading.
+
+  @param {string} text - The metafield value
+  @param {string} [tone] - "light" for use on dark backgrounds
+
+  @example
+  {% render 'spec-list', text: combo_includes %}
+{% enddoc %}
+
+{%- liquid
+  assign lines = text | newline_to_br | replace: '<br />', '~' | replace: '<br/>', '~' | split: '~'
+  assign bullet_color = 'bg-[#4e6231]/40'
+  assign label_color = 'text-[#27321e]'
+  assign body_color = 'text-[#434e3a]'
+  if tone == 'light'
+    assign bullet_color = 'bg-white/30'
+    assign label_color = 'text-white'
+    assign body_color = 'text-white/70'
+  endif
+-%}
+
+<ul class="space-y-2.5">
+  {%- for raw_line in lines -%}
+    {%- assign line = raw_line | strip -%}
+    {%- if line != blank -%}
+
+      {%- comment -%} Skip pasted ALL-CAPS section headings. {%- endcomment -%}
+      {%- assign upper_line = line | upcase -%}
+      {%- assign is_heading = false -%}
+      {%- if line == upper_line -%}
+        {%- unless line contains ':' -%}
+          {%- unless line contains '—' -%}
+            {%- assign is_heading = true -%}
+          {%- endunless -%}
+        {%- endunless -%}
+      {%- endif -%}
+
+      {%- unless is_heading -%}
+        {%- liquid
+          assign label = ''
+          assign body = line
+          if line contains ': '
+            assign parts = line | split: ': '
+            assign label = parts[0] | strip
+            assign body = line | remove_first: parts[0] | remove_first: ': ' | strip
+          elsif line contains ' — '
+            assign parts = line | split: ' — '
+            assign label = parts[0] | strip
+            assign body = line | remove_first: parts[0] | remove_first: ' — ' | strip
+          endif
+
+          assign label_size = label | size
+          if label_size > 60
+            assign label = ''
+            assign body = line
+          endif
+        -%}
+
+        <li class="flex items-start gap-2.5 text-sm leading-relaxed">
+          <span class="mt-[7px] w-1.5 h-1.5 rounded-full {{ bullet_color }} flex-shrink-0"></span>
+          <span class="{{ body_color }}">
+            {%- if label != blank -%}
+              <span class="font-semibold {{ label_color }}">{{ label }}</span>{% if body != blank %} — {{ body }}{% endif %}
+            {%- else -%}
+              {{ body }}
+            {%- endif -%}
+          </span>
+        </li>
+      {%- endunless -%}
+
+    {%- endif -%}
+  {%- endfor -%}
+</ul>

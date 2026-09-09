@@ -132,7 +132,7 @@
 
           {%- if product.images.size > 1 -%}
             <div class="flex gap-2 md:gap-3 overflow-x-auto pb-2 scrollbar-hide w-full">
-              {%- for image in product.images limit: 6 -%}
+              {%- for image in product.images -%}
                 <button
                   type="button"
                   data-thumbnail
@@ -212,7 +212,7 @@
             </div>
           {%- endif -%}
 
-          {%- assign accordion_entries = 'key_highlights|Key Highlights|plus,combo_includes|This Combo Includes|leaf,ingredients|Ingredients & Aroma|shield,how_to_use|How to Use|award,nutritional_focus|Nutritional Focus|leaf,safety_string|Safety & Care|shield,details|Product Specifications|truck' | split: ',' -%}
+          {%- assign accordion_entries = 'key_highlights|Key Highlights|plus,combo_includes|This Combo Includes|leaf,ingredients|Ingredients & Aroma|shield,how_to_use|How to Use|award,nutritional_focus|Nutritional Focus|leaf,safety_string|Safety & Care|shield,pricing_rows|Pricing & Savings|info,details|Product Specifications|truck' | split: ',' -%}
           <product-accordion class="w-full space-y-3 block">
             {%- for entry in accordion_entries -%}
               {%- assign parts = entry | split: '|' -%}
@@ -223,6 +223,7 @@
                 {%- when 'how_to_use' -%}{%- assign body = how_to_use -%}
                 {%- when 'nutritional_focus' -%}{%- assign body = nutritional_focus -%}
                 {%- when 'safety_string' -%}{%- assign body = safety_string -%}
+                {%- when 'pricing_rows' -%}{%- assign body = product.metafields.custom.pricing_rows.value -%}
                 {%- when 'details' -%}{%- assign body = details -%}
               {%- endcase -%}
 
@@ -244,8 +245,16 @@
                       {% render 'icon', name: 'chevron-down', class: 'w-4 h-4' %}
                     </span>
                   </button>
-                  <div data-accordion-panel class="pb-8 pl-14 whitespace-pre-line text-muted-foreground text-[15px] leading-relaxed" hidden>
-                    {{ body }}
+                  <div data-accordion-panel class="pb-8 pl-14 text-muted-foreground text-[15px] leading-relaxed" hidden>
+                    {%- if parts[0] == 'pricing_rows' -%}
+                      {% render 'pricing-table',
+                        rows: body,
+                        heading: product.metafields.custom.pricing_heading.value,
+                        note: product.metafields.custom.pricing_note.value
+                      %}
+                    {%- else -%}
+                      {% render 'spec-list', text: body %}
+                    {%- endif -%}
                   </div>
                 </div>
               {%- endif -%}

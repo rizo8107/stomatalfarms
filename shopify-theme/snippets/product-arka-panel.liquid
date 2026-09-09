@@ -202,7 +202,7 @@
             type="submit"
             data-add-to-cart
             data-ajax-add
-            class="w-full inline-flex items-center justify-center bg-[#4e6231] hover:bg-[#405227] text-white h-13 text-base font-semibold rounded-2xl shadow-sm hover:shadow transition-all duration-200 disabled:pointer-events-none disabled:opacity-50"
+            class="w-full inline-flex items-center justify-center bg-[#4e6231] hover:bg-[#405227] text-white h-[52px] text-base font-semibold rounded-2xl shadow-sm hover:shadow transition-all duration-200 disabled:pointer-events-none disabled:opacity-50"
             {% unless current_variant.available %}disabled{% endunless %}
           >
             <span data-cta-label>{% if current_variant.available %}Add to Cart{% else %}Out of Stock{% endif %}</span>
@@ -211,7 +211,7 @@
           <button
             type="submit"
             name="checkout"
-            class="w-full inline-flex items-center justify-center border-2 border-[#4e6231] text-[#4e6231] hover:bg-[#4e6231]/10 h-13 text-base font-semibold rounded-2xl transition-all duration-200 disabled:pointer-events-none disabled:opacity-50"
+            class="w-full inline-flex items-center justify-center border-2 border-[#4e6231] text-[#4e6231] hover:bg-[#4e6231]/10 h-[52px] text-base font-semibold rounded-2xl transition-all duration-200 disabled:pointer-events-none disabled:opacity-50"
             {% unless current_variant.available %}disabled{% endunless %}
           >
             Buy Now
@@ -227,7 +227,7 @@
 
     <div class="pt-4 border-t border-[#edf1e7] space-y-1">
       {%- comment -%} Double-quoted so "What's Inside" can carry its apostrophe. {%- endcomment -%}
-      {%- assign arka_sections = "overview|Product Description|file-text|open,combo_includes|What's Inside|package|open,key_highlights|Key Highlights|sparkles|closed,ingredients|Ingredients & Aroma|leaf|closed,how_to_use|How to Use|circle-help|closed,safety_string|Safety & Care|shield|closed,details|Product Specifications|info|closed" | split: ',' -%}
+      {%- assign arka_sections = "overview|Product Description|file-text|open,combo_includes|What's Inside|package|open,key_highlights|Key Highlights|sparkles|closed,ingredients|Ingredients & Aroma|leaf|closed,how_to_use|How to Use|circle-help|closed,safety_string|Safety & Care|shield|closed,pricing_rows|Pricing & Savings|info|closed,details|Product Specifications|info|closed" | split: ',' -%}
       <product-accordion class="w-full block">
         {%- for entry in arka_sections -%}
           {%- assign parts = entry | split: '|' -%}
@@ -238,6 +238,7 @@
             {%- when 'ingredients' -%}{%- assign body = ingredients -%}
             {%- when 'how_to_use' -%}{%- assign body = how_to_use -%}
             {%- when 'safety_string' -%}{%- assign body = safety_string -%}
+            {%- when 'pricing_rows' -%}{%- assign body = product.metafields.custom.pricing_rows.value -%}
             {%- when 'details' -%}{%- assign body = details -%}
           {%- endcase -%}
 
@@ -259,10 +260,26 @@
               </button>
               <div
                 data-accordion-panel
-                class="pb-4 pt-1 text-[#434e3a] leading-relaxed text-sm whitespace-pre-line [&_p]:mb-2 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-1"
+                class="pb-4 pt-1 text-[#434e3a] leading-relaxed text-sm"
                 {% unless parts[3] == 'open' %}hidden{% endunless %}
               >
-                {{ body }}
+                {%- comment -%}
+                  Pricing renders as a table, the overview stays prose, and every
+                  other section becomes a scannable list rather than a paragraph.
+                {%- endcomment -%}
+                {%- if parts[0] == 'pricing_rows' -%}
+                  {% render 'pricing-table',
+                    rows: body,
+                    heading: product.metafields.custom.pricing_heading.value,
+                    note: product.metafields.custom.pricing_note.value
+                  %}
+                {%- elsif parts[0] == 'overview' -%}
+                  <div class="whitespace-pre-line [&_p]:mb-2 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-1">
+                    {{ body }}
+                  </div>
+                {%- else -%}
+                  {% render 'spec-list', text: body %}
+                {%- endif -%}
               </div>
             </div>
           {%- endif -%}

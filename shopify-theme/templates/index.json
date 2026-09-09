@@ -1,16 +1,73 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero",
-      "settings": {}
+      "settings": {
+        "background_image": "https://cdn.shopify.com/s/files/1/0735/4469/5965/files/banner_hero.jpg?v=1778374221",
+        "background_image_alt": "Aurora Aromatic Wellness"
+      }
     },
     "social_proof_bar": {
       "type": "social-proof-bar",
       "settings": {}
     },
+    "178892612050ceb741": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_45f1860_zz6Mcp": {
+          "type": "ai_gen_block_45f1860",
+          "settings": {
+            "ribbon_text": "Festive Sale — ends soon.",
+            "eyebrow": "Ganesh Chaturthi Offers Are Live",
+            "title": "Cow dung–based, chemical-free incense",
+            "description": "<p>Flat 15% off festive combos — only 20 days left.</p>",
+            "cta_label": "Grab the Offers",
+            "cta_link": "shopify://collections/ganesh-chaturthi-offers",
+            "desktop_image": "shopify://shop_images/for_web.jpg",
+            "mobile_image": "shopify://shop_images/for_mobile.jpg",
+            "desktop_width_percent": 100,
+            "banner_height": 460,
+            "mobile_image_height": 360,
+            "content_width": 600,
+            "vertical_alignment": "center",
+            "text_alignment": "left",
+            "mobile_alignment": "center",
+            "title_size": 48,
+            "mobile_title_size": 34,
+            "background_color": "#25382A",
+            "text_color": "#FFFFFF",
+            "accent_color": "#E7C873",
+            "overlay_color": "#162219",
+            "ribbon_background": "#E7C873",
+            "ribbon_text_color": "#25382A",
+            "overlay_opacity": 20,
+            "button_color": "#E7C873",
+            "button_text_color": "#25382A",
+            "corner_radius": 12,
+            "button_radius": 6
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_45f1860_zz6Mcp"
+      ],
+      "settings": {}
+    },
     "google_reviews_carousel": {
       "type": "google-reviews-carousel",
-      "settings": {}
+      "settings": {
+        "reviews_endpoint": "https://stomatalfarms.com/api/reviews"
+      }
     },
     "aurora_comparison": {
       "type": "aurora-comparison",
@@ -18,21 +75,31 @@
     },
     "bundle_carousel": {
       "type": "bundle-carousel",
-      "settings": {}
+      "settings": {
+        "collection": ""
+      }
     },
     "products_section": {
       "type": "products-section",
       "settings": {
-        "products_to_show": 6
+        "collection": "",
+        "products_to_show": 6,
+        "eyebrow": "Our Best Sellers",
+        "heading": "Most Loved Items"
       }
     },
     "greens_section": {
       "type": "greens-section",
-      "settings": {}
+      "settings": {
+        "collection": ""
+      }
     },
     "video_carousel": {
       "type": "video-carousel",
-      "settings": {}
+      "settings": {
+        "eyebrow": "From Aurora",
+        "video_urls": "https://cdn.shopify.com/videos/c/o/v/b7cb1c7e761146b396382bfca162dedd.mp4,https://cdn.shopify.com/videos/c/o/v/b4c6bb109167438ab8591eafd15eab07.mp4,https://cdn.shopify.com/videos/c/o/v/4cab5995a53549b3b402e5b226451fcb.mp4,https://cdn.shopify.com/videos/c/o/v/e8bf46f5f2094abe9bc7a9a7dd431e67.mp4,https://cdn.shopify.com/videos/c/o/v/1020d997526540b8b8b41fbfbbe65165.mp4,https://cdn.shopify.com/videos/c/o/v/01fecbcfa26a474b8c1914223d31b60e.mp4,https://cdn.shopify.com/videos/c/o/v/90108b258cb74d3bb3d759f5c0ed7791.mp4"
+      }
     },
     "why_us": {
       "type": "why-us",
@@ -70,12 +137,25 @@
           }
         }
       },
-      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4"],
-      "settings": {}
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4"
+      ],
+      "settings": {
+        "eyebrow": "Common Inquiries",
+        "heading": "Thoughtfully answered.",
+        "subheading": "Everything you need to know about our natural aromatics and how to integrate them into your daily life."
+      }
     },
     "instagram_carousel": {
       "type": "instagram-carousel",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Join our community",
+        "heading": "Aromatics in real life.",
+        "subheading": "See how our community uses Aurora to transform their daily rituals. Tag us @stomatalfarms to be featured."
+      }
     },
     "final_cta": {
       "type": "final-cta",
@@ -85,6 +165,7 @@
   "order": [
     "hero",
     "social_proof_bar",
+    "178892612050ceb741",
     "google_reviews_carousel",
     "aurora_comparison",
     "bundle_carousel",
