@@ -27,12 +27,22 @@
 {%- endcomment -%}
 {%- liquid
   assign panel_title = product.metafields.custom.panel_title.value | default: product.title
-  assign panel_subtitle = product.metafields.custom.panel_subtitle.value
+  assign panel_subtitle = product.metafields.custom.panel_subtitle.value | default: product.metafields.custom.custom_panel_subtitle.value
   assign panel_tagline = product.metafields.custom.panel_tagline.value
-  assign box_metrics_raw = product.metafields.custom.box_metrics.value
+  assign box_metrics_raw = product.metafields.custom.box_metrics.value | default: product.metafields.custom.box_metric.value
   assign pill_tags_raw = product.metafields.custom.pill_tags.value
 
   assign box_metrics = box_metrics_raw | newline_to_br | replace: '<br />', '~' | replace: '<br/>', '~' | split: '~'
+
+  # Count real cards so the grid can size itself; blank lines must not widen it.
+  assign box_metrics_count = 0
+  for entry in box_metrics
+    assign entry_value = entry | strip
+    if entry_value != blank
+      assign box_metrics_count = box_metrics_count | plus: 1
+    endif
+  endfor
+
   assign pill_tags = pill_tags_raw | split: ','
 
   assign price_value = current_variant.price | divided_by: 100.0 | round
@@ -96,12 +106,16 @@
       </p>
     </div>
 
-    {%- if box_metrics.size > 0 -%}
+    {%- if box_metrics_count > 0 -%}
       <div class="space-y-2 pt-1">
         <span class="text-[11px] font-bold uppercase tracking-widest text-[#776856] block">
           WHAT'S IN THE BOX
         </span>
-        <div class="grid grid-cols-3 gap-2.5 sm:gap-3">
+        {%- comment -%}
+          Column count follows the card count: four cards pair up on mobile and
+          sit in one row from sm up, rather than wrapping 3 + 1.
+        {%- endcomment -%}
+        <div class="grid gap-2.5 sm:gap-3 {% if box_metrics_count == 1 %}grid-cols-1{% elsif box_metrics_count == 2 %}grid-cols-2{% elsif box_metrics_count == 4 %}grid-cols-2 sm:grid-cols-4{% else %}grid-cols-3{% endif %}">
           {%- comment -%}
             One card per line. Two forms, both accepted:
               value|caption                 -> big number over a caption
@@ -238,7 +252,7 @@
             {%- when 'ingredients' -%}{%- assign body = ingredients -%}
             {%- when 'how_to_use' -%}{%- assign body = how_to_use -%}
             {%- when 'safety_string' -%}{%- assign body = safety_string -%}
-            {%- when 'pricing_rows' -%}{%- assign body = product.metafields.custom.pricing_rows.value -%}
+            {%- when 'pricing_rows' -%}{%- assign body = product.metafields.custom.pricing_rows.value | default: product.metafields.custom.custom_pricing_rows.value -%}
             {%- when 'details' -%}{%- assign body = details -%}
           {%- endcase -%}
 
@@ -271,7 +285,7 @@
                   {% render 'pricing-table',
                     rows: body,
                     heading: product.metafields.custom.pricing_heading.value,
-                    note: product.metafields.custom.pricing_note.value
+                    note: product.metafields.custom.pricing_note.value | default: product.metafields.custom.custom_pricing_note.value
                   %}
                 {%- elsif parts[0] == 'overview' -%}
                   <div class="whitespace-pre-line [&_p]:mb-2 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-1">
