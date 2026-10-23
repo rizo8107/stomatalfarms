@@ -1,0 +1,641 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "ad_banner": {
+      "type": "aurora-banner",
+      "settings": {
+        "banner_label": "Campaign banner",
+        "placeholder_note": "Use the exact headline, visual and offer from the ad.",
+        "link": "shopify://products/aarambh-the-starter-collection-incense-sticks-by-aurora-stomatal-farms",
+        "height_mode": "fixed",
+        "desktop_width": 1920,
+        "desktop_height": 700,
+        "mobile_width": 900,
+        "mobile_height": 1100,
+        "show_placeholder": true,
+        "heading_tag": "h1",
+        "full_width": true,
+        "corner_radius": 0,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "subheading": "Same offer as the ad",
+        "heading": "Natural [cow dung] incense, made on our farm",
+        "text": "<p>No charcoal, no chemicals. Free delivery above ₹999.</p>",
+        "button_label_1": "Shop Now",
+        "button_link_1": "shopify://collections/cow-dung-incense-sticks",
+        "button_style_1": "solid",
+        "button_label_2": "",
+        "button_link_2": "",
+        "content_position": "middle-left",
+        "text_alignment": "left",
+        "content_width": 45,
+        "mobile_content_layout": "overlay",
+        "content_position_mobile": "bottom",
+        "text_alignment_mobile": "left",
+        "show_content_box": true,
+        "content_box_color": "#1F3B2D",
+        "content_box_opacity": 80,
+        "heading_size": 48,
+        "heading_size_mobile": 28,
+        "text_color": "#FFFFFF",
+        "accent_color": "#D9B866",
+        "button_color": "#D9B866",
+        "button_text_color": "#1F3B2D"
+      }
+    },
+    "benefits": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_LEfVGd": {
+          "type": "column",
+          "settings": {
+            "icon": "leaf",
+            "another_icon": "",
+            "custom_icon": "",
+            "title": "100% [natural]",
+            "highlight_type": "underline",
+            "title_link": "",
+            "open_new_window": false,
+            "heading_size": 100,
+            "text": "<p>Purified desi cow dung, herbs and resins</p>"
+          }
+        },
+        "column_ipkiCp": {
+          "type": "column",
+          "settings": {
+            "icon": "check-mark",
+            "another_icon": "",
+            "custom_icon": "",
+            "title": "No charcoal, [no chemicals]",
+            "highlight_type": "underline",
+            "title_link": "",
+            "open_new_window": false,
+            "heading_size": 100,
+            "text": "<p>Lab certified, no synthetic fragrance</p>"
+          }
+        },
+        "column_ipMknc": {
+          "type": "column",
+          "settings": {
+            "icon": "clock",
+            "another_icon": "",
+            "custom_icon": "",
+            "title": "~45-min [slow burn]",
+            "highlight_type": "underline",
+            "title_link": "",
+            "open_new_window": false,
+            "heading_size": 100,
+            "text": "<p>Thick, bamboo-less sticks and cups</p>"
+          }
+        },
+        "column_aurora_3": {
+          "type": "column",
+          "settings": {
+            "icon": "heart",
+            "another_icon": "",
+            "custom_icon": "",
+            "title": "Handmade in [Chennai]",
+            "highlight_type": "underline",
+            "title_link": "",
+            "open_new_window": false,
+            "heading_size": 100,
+            "text": "<p>Hand-rolled and sun-dried in small batches</p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_LEfVGd",
+        "column_ipkiCp",
+        "column_ipMknc",
+        "column_aurora_3"
+      ],
+      "settings": {
+        "title": "",
+        "highlight_type": "underline",
+        "heading_size": 100,
+        "heading_tag": "h2",
+        "secondary_background": "none",
+        "border_column": "none",
+        "column_content_alignment": "center",
+        "icon_position": "above",
+        "icon_size": 40,
+        "enable_desktop_slider": false,
+        "swiper_on_mobile": false,
+        "enable_arrow_mobile": false,
+        "auto_play": true,
+        "change_bar_every": 5,
+        "background_color_light": "rgba(0,0,0,0)",
+        "heading_light": "rgba(0,0,0,0)",
+        "text_light": "rgba(0,0,0,0)",
+        "color_heading_highlight_light": "rgba(0,0,0,0)",
+        "line_border_light": "rgba(0,0,0,0)",
+        "color_icon_light": "rgba(0,0,0,0)",
+        "background_color_dark": "rgba(0,0,0,0)",
+        "heading_dark": "rgba(0,0,0,0)",
+        "text_dark": "rgba(0,0,0,0)",
+        "color_heading_highlight_dark": "rgba(0,0,0,0)",
+        "line_border_dark": "rgba(0,0,0,0)",
+        "color_icon_dark": "rgba(0,0,0,0)",
+        "column_layout_desktop": "lg:w-1/4",
+        "section_height_desktop": "md:py-7",
+        "spacing_desktop": 40,
+        "full_width": false,
+        "padding_full_width": true,
+        "show_section_divider": false,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "column_layout_mobile": "w-1/2",
+        "section_height_mobile": "py-5",
+        "spacing_mobile": 16,
+        "full_width_mobile": false,
+        "show_section_divider_mobile": false,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "products": {
+      "type": "featured-collection",
+      "blocks": {
+        "collection_epUrnE": {
+          "type": "collection",
+          "settings": {
+            "collection": "cow-dung-incense-sticks",
+            "show_description": false,
+            "description": "",
+            "number_of_lines_shown": "none",
+            "read_more_label": "Read more",
+            "see_less_label": "See less",
+            "show_vendor": false,
+            "show_rating": true,
+            "show_highlighted_features": false,
+            "show_highlighted_attributes": false,
+            "show_quickview": false,
+            "show_promotion": false,
+            "promotion_position": "left",
+            "card_link": "",
+            "open_new_window": false,
+            "heading": "Featured collection",
+            "highlight_type": "underline",
+            "heading_size": 70,
+            "content": "<p>10% OFF</p>",
+            "text_size": 100,
+            "content_alignment": "center",
+            "content_position": "bottom",
+            "button_label": "See more",
+            "button_link": "",
+            "open_new_window_button": false,
+            "show_button_style": "primary",
+            "enable_text_overlay": false,
+            "overlay_opacity": 0,
+            "image_ratio": "100",
+            "background_color": "rgba(0,0,0,0)",
+            "color_text": "rgba(0,0,0,0)",
+            "color_heading_highlight_light": "rgba(0,0,0,0)",
+            "color_button": "rgba(0,0,0,0)",
+            "color_text_button": "rgba(0,0,0,0)",
+            "color_button_hover": "rgba(0,0,0,0)",
+            "color_text_button_hover": "rgba(0,0,0,0)",
+            "color_button_secondary": "rgba(0,0,0,0)",
+            "secondary_button_text": "rgba(0,0,0,0)",
+            "colors_text_link": "rgba(0,0,0,0)",
+            "show_sound_control": false,
+            "video_url": "",
+            "enable_video_autoplay": false,
+            "video_alt_text": "",
+            "product_card": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_epUrnE"
+      ],
+      "name": "Best Sellers",
+      "settings": {
+        "title": "Start [here]",
+        "highlight_type": "font_highlight",
+        "heading_size": 100,
+        "heading_tag": "h2",
+        "heading_alignment": "center",
+        "subheading": "",
+        "text": "",
+        "show_view_all": true,
+        "view_all_position": "bottom",
+        "view_all_button_style": "secondary",
+        "title_size": 90,
+        "title_style": "capitalize",
+        "title_position": "inline",
+        "tab_button_style": "button",
+        "color_background": "rgba(0,0,0,0)",
+        "color_text": "rgba(0,0,0,0)",
+        "color_background_secondary": "rgba(0,0,0,0)",
+        "color_text_secondary": "rgba(0,0,0,0)",
+        "color_background_hover": "rgba(0,0,0,0)",
+        "color_text_hover": "rgba(0,0,0,0)",
+        "color_background_dark": "rgba(0,0,0,0)",
+        "color_text_dark": "rgba(0,0,0,0)",
+        "color_background_secondary_dark": "rgba(0,0,0,0)",
+        "color_text_secondary_dark": "rgba(0,0,0,0)",
+        "color_background_hover_dark": "rgba(0,0,0,0)",
+        "color_text_hover_dark": "rgba(0,0,0,0)",
+        "enable_desktop_slider": false,
+        "slider_style": "vertical",
+        "swiper_on_mobile": true,
+        "enable_arrow_mobile": false,
+        "auto_play": false,
+        "change_slides_speed": 5,
+        "columns_desktop": 4,
+        "rows_desktop": 1,
+        "spacing": 20,
+        "full_width": false,
+        "show_section_divider": false,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "columns_mobile": "2",
+        "spacing_mobile": 16,
+        "full_width_mobile": false,
+        "show_section_divider_mobile": false,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "explainer": {
+      "type": "image-with-text",
+      "settings": {
+        "image": "shopify://shop_images/Banner_2_-_1920x860_3ad6f093-5605-4b98-9fb3-b564b4833d8a.webp",
+        "desktop_height": "natural",
+        "mobile_height": "natural",
+        "content_layout": "no-overlap",
+        "text_position": "center",
+        "text_alignment": "start",
+        "image_alignment": "right",
+        "image_alignment_mobile": "left",
+        "columns_desktop": 2,
+        "columns_mobile": "2",
+        "line_border": "none",
+        "icon_position": "row",
+        "icon_size": 24,
+        "alignment": "left",
+        "top_padding": 40,
+        "bottom_padding": 40,
+        "top_padding_mobile": 24,
+        "bottom_padding_mobile": 24,
+        "desktop_image_width": "medium"
+      },
+      "blocks": {
+        "h": {
+          "type": "heading",
+          "settings": {
+            "subheading": "Why Aurora",
+            "heading": "India's first [cow dung] incense, rooted in tradition",
+            "heading_tag": "h2",
+            "text": "<p>For centuries, Indian homes have burned purified desi cow dung in yagnas and homams to cleanse the air. Aurora, from Stomatal Farms, turns that ritual into everyday sticks and cups: solar-dried cow dung blended with herbs, temple resins and natural extracts, hand-rolled with no charcoal and no bamboo core.</p><p><strong>It does not smell of dung.</strong> It burns slowly, smokes gently and fills your home with a clean, temple-like aroma. Every purchase also supports cow welfare and rescue.</p>",
+            "number_of_lines_shown": "none",
+            "heading_base_size": 80
+          }
+        },
+        "c1": {
+          "type": "columns",
+          "settings": {
+            "icon": "leaf",
+            "title": "100% natural",
+            "text": "<p>Cow dung, herbs & resins</p>",
+            "wide_desktop": 1,
+            "wide_mobile": "1"
+          }
+        },
+        "c2": {
+          "type": "columns",
+          "settings": {
+            "icon": "check-mark",
+            "title": "Zero chemicals",
+            "text": "<p>Lab certified, no DEP oils</p>",
+            "wide_desktop": 1,
+            "wide_mobile": "1"
+          }
+        },
+        "c3": {
+          "type": "columns",
+          "settings": {
+            "icon": "fire",
+            "title": "No charcoal",
+            "text": "<p>Clean, gentle smoke</p>",
+            "wide_desktop": 1,
+            "wide_mobile": "1"
+          }
+        },
+        "c4": {
+          "type": "columns",
+          "settings": {
+            "icon": "clock",
+            "title": "~45-min burn",
+            "text": "<p>Thick, bamboo-less sticks</p>",
+            "wide_desktop": 1,
+            "wide_mobile": "1"
+          }
+        },
+        "b": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/all",
+            "show_button_style": "primary"
+          }
+        }
+      },
+      "block_order": [
+        "h",
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "b"
+      ]
+    },
+    "reviews": {
+      "type": "aurora-google-reviews",
+      "settings": {
+        "heading": "Loved by families across India",
+        "link_label": "Read all reviews on Google →",
+        "show_placeholder": false,
+        "link": "https://search.google.com/local/reviews?placeid=ChIJ0WAVLno-pGcRr0yNSWn8bxA"
+      },
+      "blocks": {
+        "greview_01": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Lovely Incense Sticks and Cups with a Smooth, Pleasant aroma. No eye irritation and not overpowering, making it perfect for daily use. Packaging is also Neat and Safe and Smart.",
+            "author": "Pinkesh Kumar",
+            "date": ""
+          }
+        },
+        "greview_02": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "I have so far used the Dasangam havan cups and I have to admit it's the best that I have come across thus far. I can't wait to experience the other two variants- floral and lemongrass.\nI only had an initial hiccup with their courier partner which they promptly took care of after I escalated the matter.\nKeep it up and all the very best.",
+            "author": "Partho Ghosh",
+            "date": ""
+          }
+        },
+        "greview_03": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Excellent quality. I have ordered multiple times since the aroma is so subtle and divine. Very genuine product",
+            "author": "Padmaja K",
+            "date": ""
+          }
+        },
+        "greview_04": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "We just tried once at home and found that High-quality, clean burns, natural aromas, and long-lasting scents. It's really worth. At first I saw these products and thought that it's a routine but after use I came to know that the doop sticks and doop cups and all are made by purely natural ingredients. My overall rating is 5 out of 5. Highly recommended. And packing is awesome",
+            "author": "Balaji Kanthi Nag.B",
+            "date": ""
+          }
+        },
+        "greview_05": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Excellent product. It creates a serene ambience which greatly enhances the concentration of the mind towards prayer.",
+            "author": "Sankaran Anantharaman",
+            "date": ""
+          }
+        },
+        "greview_06": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Recently tried some products from STOMATAL FARMS and really liked them.\n\nThe incense sticks (Dasangam and Lemongrass) had a very pleasant and calming fragrance. Both felt natural and refreshing.\n\nAlso tried their moringa powder blend with 70% Moringa powder and 30% curry leaves—it feels healthy, natural, and good quality.\n\nOverall, a nice experience with their products. 🌿",
+            "author": "Rakesh Pandian",
+            "date": ""
+          }
+        },
+        "greview_07": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Very nice product i have come across…made with natural ingredients and the smoke is very mild and spreads a positive vibe around the home😇",
+            "author": "nandhini karthikeyan",
+            "date": ""
+          }
+        },
+        "greview_08": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Very good product pure cow dung Awesome product so divine feel very auspicious thank u for taking time to rectify the courier issue. Purchased combo pack . All three are superb.",
+            "author": "indumathi venugopal",
+            "date": ""
+          }
+        },
+        "greview_09": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Using Dasangam sticks in daily pooja\ngives pleasant flavour liked by all\nIt creates pease during pooja",
+            "author": "V Gunaseelan",
+            "date": ""
+          }
+        },
+        "greview_10": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Really ❣️ Great ,I've been using this product for about four months, and it's really great. I feel it 100%natural and great product...Thank you so much for this high-quality product.(Stomatal farm)",
+            "author": "Sathya Seelan r",
+            "date": ""
+          }
+        },
+        "greview_11": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Really,very happy with this product 😊 I have been using this product for last two months.really fragrance and quality too good thanks.i am very happy to have received this product",
+            "author": "Vennila Vidhya",
+            "date": ""
+          }
+        },
+        "greview_12": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Smells amazing. Def must try it once and trust me, you will keep coming back to try the product..",
+            "author": "Narayanee S",
+            "date": ""
+          }
+        },
+        "greview_13": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Nice collections, worth the money… fragrance feels good during prayers. I use daily",
+            "author": "nithya rajsri",
+            "date": ""
+          }
+        },
+        "greview_14": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "It's is nice . Based on natural products.no throat eye irritation very nice product",
+            "author": "Guru Venkatesan Guru",
+            "date": ""
+          }
+        }
+      },
+      "block_order": [
+        "greview_01",
+        "greview_02",
+        "greview_03",
+        "greview_04",
+        "greview_05",
+        "greview_06",
+        "greview_07",
+        "greview_08",
+        "greview_09",
+        "greview_10",
+        "greview_11",
+        "greview_12",
+        "greview_13",
+        "greview_14"
+      ]
+    },
+    "whatsapp": {
+      "type": "aurora-image-reviews",
+      "settings": {
+        "heading": "Straight from our customers' WhatsApp",
+        "text": "Real messages from families who light Aurora every day."
+      },
+      "blocks": {
+        "s1": {
+          "type": "screenshot",
+          "settings": {}
+        },
+        "s2": {
+          "type": "screenshot",
+          "settings": {}
+        },
+        "s3": {
+          "type": "screenshot",
+          "settings": {}
+        },
+        "s4": {
+          "type": "screenshot",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "heading": "Frequently asked [questions]",
+        "show_view_all": false,
+        "collapsible": true,
+        "enable_microdata_schema": true
+      },
+      "blocks": {
+        "f1": {
+          "type": "frequently_asked_question",
+          "settings": {
+            "icon": "none",
+            "heading": "Which product should I start with?",
+            "row_content": "<p>Our incense sticks are perfect for daily use, while cups offer a deeper, more therapeutic experience. If you're new, the combo packs are our most-loved starting point.</p>"
+          }
+        },
+        "f2": {
+          "type": "frequently_asked_question",
+          "settings": {
+            "icon": "none",
+            "heading": "Does cow dung incense smell of dung?",
+            "row_content": "<p>No. The cow dung is purified and solar-dried, so it is odourless. You only smell the herbs, resins and natural extracts.</p>"
+          }
+        },
+        "f3": {
+          "type": "frequently_asked_question",
+          "settings": {
+            "icon": "none",
+            "heading": "Are these safe for children and elders?",
+            "row_content": "<p>Yes. Every Aurora product is made from natural, chemical-free ingredients with no synthetic binders.</p>"
+          }
+        },
+        "f4": {
+          "type": "frequently_asked_question",
+          "settings": {
+            "icon": "none",
+            "heading": "How long does each product last?",
+            "row_content": "<p>Sticks burn for about 45 minutes and cups for about 25–30 minutes. The aroma lingers for hours after.</p>"
+          }
+        },
+        "f5": {
+          "type": "frequently_asked_question",
+          "settings": {
+            "icon": "none",
+            "heading": "What are your shipping rates?",
+            "row_content": "<p>There is no minimum order. Shipping is FREE on orders above ₹999 across India; a flat ₹60 applies below ₹999.</p>"
+          }
+        },
+        "f6": {
+          "type": "frequently_asked_question",
+          "settings": {
+            "icon": "none",
+            "heading": "What if my order arrives damaged?",
+            "row_content": "<p>Message us on WhatsApp with a photo or unboxing video within 24 hours of delivery and we will replace it free.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6"
+      ]
+    },
+    "lead": {
+      "type": "aurora-lead-capture",
+      "settings": {
+        "offer_badge": "Get 10% off your first order",
+        "heading": "Join the Aurora family",
+        "text": "<p>Share your WhatsApp number or email and we'll send your 10% off code right away – plus festive offers and new fragrance launches. No spam, ever.</p>",
+        "show_phone": true,
+        "phone_required": false,
+        "button_label": "Get my 10% off",
+        "success_text": "You're in! Use code DIWALI10 at checkout for 10% off.",
+        "show_consent_checkbox": true,
+        "consent_checkbox_label": "Send me offers on WhatsApp",
+        "consent_text": "We'll only message you about offers and new launches. Unsubscribe anytime."
+      }
+    }
+  },
+  "order": [
+    "ad_banner",
+    "benefits",
+    "products",
+    "explainer",
+    "reviews",
+    "whatsapp",
+    "faq",
+    "lead"
+  ]
+}

@@ -8,15 +8,204 @@
  * ------------------------------------------------------------
  */
 {
+  "name": "t:sections.footer.name",
   "type": "footer",
-  "name": "t:general.footer",
   "sections": {
+    "newsletter_YGcyJC": {
+      "type": "newsletter",
+      "blocks": {
+        "heading_tJkAwD": {
+          "type": "heading",
+          "settings": {
+            "heading": "Subscribe to our emails",
+            "highlight_type": "underline",
+            "heading_size": 100,
+            "heading_tag": "h2",
+            "text": "",
+            "text_size": 100
+          }
+        },
+        "paragraph_3pYKwm": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Be the first to know about new collections and exclusive offers.</p>"
+          }
+        },
+        "email_form_P6Y47t": {
+          "type": "email_form",
+          "settings": {
+            "button_label": "Subscribe"
+          }
+        }
+      },
+      "block_order": [
+        "heading_tJkAwD",
+        "paragraph_3pYKwm",
+        "email_form_P6Y47t"
+      ],
+      "disabled": true,
+      "name": "t:sections.newsletter.name",
+      "settings": {
+        "overlay_opacity": 0,
+        "form_width": "large",
+        "content_layout": "vertical",
+        "background_color_light": "",
+        "heading_light": "rgba(0,0,0,0)",
+        "color_heading_highlight_light": "rgba(0,0,0,0)",
+        "text_light": "rgba(0,0,0,0)",
+        "button_light": "rgba(0,0,0,0)",
+        "button_text_light": "rgba(0,0,0,0)",
+        "button_hover_light": "rgba(0,0,0,0)",
+        "button_text_hover_light": "rgba(0,0,0,0)",
+        "line_border": "rgba(0,0,0,0)",
+        "background_color_dark": "",
+        "heading_dark": "rgba(0,0,0,0)",
+        "color_heading_highlight_dark": "rgba(0,0,0,0)",
+        "text_dark": "rgba(0,0,0,0)",
+        "button_dark": "rgba(0,0,0,0)",
+        "button_text_dark": "rgba(0,0,0,0)",
+        "button_hover_dark": "rgba(0,0,0,0)",
+        "button_text_hover_dark": "rgba(0,0,0,0)",
+        "line_border_dark": "rgba(0,0,0,0)",
+        "desktop_height": "450px",
+        "show_section_divider": false,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "mobile_height": "300px",
+        "show_section_divider_mobile": false,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
     "footer": {
       "type": "footer",
-      "settings": {}
+      "blocks": {
+        "image_wnw3WN": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Stomatal_farms-converted.webp",
+            "image_width": 100,
+            "link_image_footer": "",
+            "open_new_window": false,
+            "rounded_corner_image": false,
+            "alignment": "left",
+            "text": "<p><strong>Aurora Rituals</strong></p>",
+            "spacing": 4
+          }
+        },
+        "footer-1": {
+          "type": "link_list",
+          "settings": {
+            "open_by_default": false,
+            "heading_menu": "Quick Links",
+            "menu": "footer",
+            "show_social_icons": false
+          }
+        },
+        "link_list_JMLJPG": {
+          "type": "link_list",
+          "settings": {
+            "open_by_default": false,
+            "heading_menu": "Legal Pages",
+            "menu": "footer-legal-pages",
+            "show_social_icons": false
+          }
+        },
+        "footer-0": {
+          "type": "link_list",
+          "settings": {
+            "open_by_default": false,
+            "heading_menu": "Our Brands",
+            "menu": "footer-brand-menu",
+            "show_social_icons": true
+          }
+        },
+        "aurora_seller": {
+          "type": "text",
+          "settings": {
+            "open_by_default": false,
+            "heading_text": "Seller details",
+            "subtext": "<p><strong>Aurora by Stomatal Farms LLP</strong><br>Registered office: [full address], Chennai, Tamil Nadu, India</p><p>Customer care: +91 63790 33131 (Mon–Sat, 9 AM – 6 PM)</p><p>Grievance officer: [name] · [email]</p>",
+            "show_social_icons": false
+          }
+        }
+      },
+      "block_order": [
+        "image_wnw3WN",
+        "footer-1",
+        "link_list_JMLJPG",
+        "footer-0",
+        "aurora_seller"
+      ],
+      "settings": {
+        "columns_desktop": 4,
+        "show_language_selector": false,
+        "show_currency_selector": false,
+        "show_social_icons": false,
+        "payment_enable": true,
+        "custom_payment": "google_pay, apple_pay, paytm, paypal, visa, master, rupay",
+        "show_copyright": true,
+        "add_copyright_text": "",
+        "additional_layout": "horizontal",
+        "show_powered": false,
+        "enable_follow_on_shop": false,
+        "horizontal_position": "right",
+        "top_padding": 0,
+        "bottom_padding": 20,
+        "top_padding_mobile": 0,
+        "bottom_padding_mobile": 28
+      },
+      "disabled": true
+    },
+    "aurora_footer": {
+      "type": "aurora-footer",
+      "blocks": {
+        "col_1": {
+          "type": "links",
+          "settings": {
+            "title": "Shop",
+            "links": "Incense Sticks | /collections/cow-dung-incense-sticks\nIncense Cups | /collections/cow-dung-incense-cups\nRitual Combos | /collections/ritual-combos\nGifting | /collections/gifts-1000-1500\nUnder ₹499 | /collections/under-499\nFarm Fresh | /collections/farm-fresh"
+          }
+        },
+        "col_2": {
+          "type": "links",
+          "settings": {
+            "title": "Help",
+            "links": "Contact us | /pages/contact\nTrack my order | https://shopify.com/73544695965/account/orders\nShipping policy | /policies/shipping-policy\nReturns & refunds | /policies/refund-policy\nWholesale & Export | /pages/distributors\nOur story | /pages/about-us"
+          }
+        },
+        "col_3": {
+          "type": "links",
+          "settings": {
+            "title": "Policies",
+            "links": "Privacy policy | /policies/privacy-policy\nTerms of service | /policies/terms-of-service\nRefund & cancellation | /policies/refund-policy\nShipping policy | /policies/shipping-policy"
+          }
+        }
+      },
+      "block_order": [
+        "col_1",
+        "col_2",
+        "col_3"
+      ],
+      "settings": {
+        "logo": "shopify://shop_images/Stomatal_farms-converted.webp",
+        "logo_width": 100,
+        "tagline": "Ancient rituals, elevated living. Handmade cow dung incense from Chennai.",
+        "whatsapp": "+91 63790 33131",
+        "email": "",
+        "hours": "Mon–Sat, 9 AM – 6 PM",
+        "seller_details": "<p><strong>Seller:</strong> Aurora by Stomatal Farms LLP · Registered office: [full address], Chennai, Tamil Nadu, India · <strong>Grievance officer:</strong> [name] · [email] · +91 63790 33131</p><p>We never ask for OTPs or payments over phone calls.</p>",
+        "copyright": "Aurora by Stomatal Farms LLP",
+        "show_payments": true,
+        "background": "#1F3B2D",
+        "text_color": "#B9CDB4",
+        "accent_color": "#D9B866"
+      }
     }
   },
   "order": [
-    "footer"
+    "newsletter_YGcyJC",
+    "footer",
+    "aurora_footer"
   ]
 }

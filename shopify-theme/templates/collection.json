@@ -1,11 +1,485 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "main": {
-      "type": "main-collection",
-      "settings": {}
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "blocks": {
+        "promotion_block_wCYQn6": {
+          "type": "promotion_block",
+          "disabled": true,
+          "settings": {
+            "subheading": "",
+            "heading": "Body care",
+            "highlight_type": "underline",
+            "title_size": 80,
+            "content": "<p>Meet our founder and find out why Pai was made for sensitive skin.</p>",
+            "text_size": 100,
+            "show_sound_control": false,
+            "video_url": "",
+            "enable_video_autoplay": false,
+            "video_alt_text": "",
+            "image_overlay_opacity": 20,
+            "position": 6,
+            "button_label": "Shop now",
+            "button_link": "",
+            "open_new_window": false,
+            "show_button_style": "primary",
+            "alignment": "left",
+            "content_position": "end",
+            "background_color_light": "rgba(0,0,0,0)",
+            "text_color_light": "rgba(0,0,0,0)",
+            "color_heading_highlight_light": "rgba(0,0,0,0)",
+            "background_color_dark": "rgba(0,0,0,0)",
+            "text_color_dark": "rgba(0,0,0,0)",
+            "color_heading_highlight_dark": "rgba(0,0,0,0)",
+            "color_button": "rgba(0,0,0,0)",
+            "color_text_button": "rgba(0,0,0,0)",
+            "color_button_hover": "rgba(0,0,0,0)",
+            "color_text_button_hover": "rgba(0,0,0,0)",
+            "color_button_secondary": "rgba(0,0,0,0)",
+            "secondary_button_text": "rgba(0,0,0,0)",
+            "colors_text_link": "rgba(0,0,0,0)",
+            "number_of_columns": 2,
+            "number_of_row": 1,
+            "number_of_columns_mobile": "2",
+            "number_of_row_mobile": "2"
+          }
+        }
+      },
+      "block_order": [
+        "promotion_block_wCYQn6"
+      ],
+      "settings": {
+        "enable_filtering": true,
+        "filter_type": "drawer",
+        "default_hide_filtering": false,
+        "expand_filter": false,
+        "sticky_filtering": true,
+        "filter_edge_style": "adapt",
+        "enable_collection_count": false,
+        "enable_sorting": true,
+        "products_per_page": "48;24",
+        "products_per_row_on_desktop": 4,
+        "products_per_row_on_mobile": "2",
+        "pagination": "infinite_scroll",
+        "paginate_type": "circle",
+        "show_vendor": false,
+        "show_rating": true,
+        "show_highlighted_features": true,
+        "show_highlighted_attributes": true,
+        "show_quickview": true,
+        "show_description": false,
+        "enable_advanced_filter": false,
+        "key_value": "Skin color",
+        "hide_unavaiable_filter": true,
+        "columns_desktop_1": 4,
+        "desktop_image_width_1": 150,
+        "columns_desktop_2": 4,
+        "desktop_image_width_2": 150,
+        "enable_desktop_slider": true,
+        "image_ratio_filter": "round",
+        "advanced_filter_image_ratio": "square",
+        "enable_micro_schema": false,
+        "full_width": false,
+        "spacing_col": 28,
+        "spacing_row": 28,
+        "padding_top": 0,
+        "padding_bottom": 100,
+        "spacing_col_mobile": 16,
+        "spacing_row_mobile": 12,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "collage_bQj3RW": {
+      "type": "collage",
+      "blocks": {
+        "image_KP9Hba": {
+          "type": "image",
+          "settings": {
+            "overlay_opacity": 0,
+            "image_link": "",
+            "open_new_window": false,
+            "image_padding": false,
+            "number_of_columns": 2,
+            "number_of_row": 2,
+            "title": "",
+            "highlight_type": "underline",
+            "title_size": 80,
+            "text": "",
+            "text_size": 100,
+            "button_label": "",
+            "button_link": "",
+            "show_button_style": "primary",
+            "open_new_window_button": false,
+            "text_align": "center",
+            "content_position": "center",
+            "title_color": "rgba(0,0,0,0)",
+            "text_color": "rgba(0,0,0,0)",
+            "color_heading_highlight_light": "rgba(0,0,0,0)",
+            "color_button": "rgba(0,0,0,0)",
+            "color_text_button": "rgba(0,0,0,0)",
+            "color_button_hover": "rgba(0,0,0,0)",
+            "color_text_button_hover": "rgba(0,0,0,0)",
+            "color_button_secondary": "rgba(0,0,0,0)",
+            "secondary_button_text": "rgba(0,0,0,0)",
+            "colors_text_link": "rgba(0,0,0,0)"
+          }
+        },
+        "product_3C6QaF": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "show_quickview": true,
+            "info_alignment": "center",
+            "desktop_size": "large",
+            "number_of_columns": 1,
+            "number_of_row": 1
+          }
+        },
+        "product_tEPbGi": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "show_quickview": true,
+            "info_alignment": "center",
+            "desktop_size": "large",
+            "number_of_columns": 1,
+            "number_of_row": 1
+          }
+        },
+        "product_NYzpTM": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "show_quickview": true,
+            "info_alignment": "center",
+            "desktop_size": "large",
+            "number_of_columns": 1,
+            "number_of_row": 1
+          }
+        },
+        "product_VjTcDA": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "show_quickview": true,
+            "info_alignment": "center",
+            "desktop_size": "large",
+            "number_of_columns": 1,
+            "number_of_row": 1
+          }
+        }
+      },
+      "block_order": [
+        "image_KP9Hba",
+        "product_3C6QaF",
+        "product_tEPbGi",
+        "product_NYzpTM",
+        "product_VjTcDA"
+      ],
+      "disabled": true,
+      "name": "t:sections.collage.name",
+      "settings": {
+        "heading": "[Exclusively] for you.",
+        "highlight_type": "font_highlight",
+        "heading_size": 100,
+        "heading_tag": "h2",
+        "heading_alignment": "center",
+        "subheading": "",
+        "text": "<p>Four travel-sized remedies for jet lag, tension, dry skin, and summer stress. </p>",
+        "background_color_light": "rgba(0,0,0,0)",
+        "heading_color_light": "rgba(0,0,0,0)",
+        "heading_highlight_color_light": "rgba(0,0,0,0)",
+        "text_color_light": "rgba(0,0,0,0)",
+        "background_color_dark": "rgba(0,0,0,0)",
+        "heading_color_dark": "rgba(0,0,0,0)",
+        "text_color_dark": "rgba(0,0,0,0)",
+        "heading_highlight_color_dark": "rgba(0,0,0,0)",
+        "show_vendor": false,
+        "show_rating": false,
+        "show_highlighted_features": true,
+        "show_highlighted_attributes": true,
+        "swiper_on_mobile": true,
+        "enable_arrow_mobile": false,
+        "auto_play": false,
+        "change_slides_speed": 5,
+        "max_columns": 4,
+        "spacing": 20,
+        "full_width": true,
+        "show_section_divider": true,
+        "padding_top": 100,
+        "padding_bottom": 100,
+        "min_columns_mobile": "2",
+        "spacing_mobile": 16,
+        "full_width_mobile": false,
+        "show_section_divider_mobile": true,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "aurora_collection_banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_image": false,
+        "show_collection_name": true,
+        "title_position": "text-center",
+        "size_title": 130,
+        "desktop_height": "auto",
+        "mobile_height": "auto",
+        "full_width": false,
+        "full_width_mobile": false,
+        "padding_top": 24,
+        "padding_bottom": 16,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 12
+      },
+      "blocks": {
+        "bc": {
+          "type": "breadcrumbs",
+          "settings": {
+            "desktop_content_alignment": "text-center",
+            "mobile_content_alignment": "text-center"
+          }
+        },
+        "d": {
+          "type": "description",
+          "settings": {
+            "number_of_lines_shown": "small",
+            "desktop_content_alignment": "text-center",
+            "mobile_content_alignment": "text-center"
+          }
+        }
+      },
+      "block_order": [
+        "bc",
+        "d"
+      ]
+    },
+    "aurora_collection_explainer": {
+      "type": "image-with-text",
+      "settings": {
+        "image": "shopify://shop_images/0c0f9a2b-c9d2-4e0f-8cee-f8c5d738619d.jpg",
+        "desktop_height": "natural",
+        "mobile_height": "natural",
+        "content_layout": "no-overlap",
+        "text_position": "center",
+        "text_alignment": "start",
+        "image_alignment": "left",
+        "image_alignment_mobile": "left",
+        "columns_desktop": 2,
+        "columns_mobile": "2",
+        "line_border": "none",
+        "icon_position": "row",
+        "icon_size": 24,
+        "alignment": "left",
+        "top_padding": 40,
+        "bottom_padding": 40,
+        "top_padding_mobile": 24,
+        "bottom_padding_mobile": 24,
+        "desktop_image_width": "medium"
+      },
+      "blocks": {
+        "h": {
+          "type": "heading",
+          "settings": {
+            "subheading": "New to Aurora?",
+            "heading": "Incense made from purified [desi cow dung] & herbs",
+            "heading_tag": "h2",
+            "text": "<p>It's simple: purified, solar-dried desi cow dung is blended with herbs, temple resins and natural extracts, then hand-rolled into sticks and cups. <strong>It does not smell of dung.</strong> It burns slowly, smokes gently and fills your home with a clean, temple-like aroma.</p><p>No charcoal, no bamboo core, no synthetic perfume. Just the way yagnas and homams have purified Indian homes for centuries.</p>",
+            "number_of_lines_shown": "none",
+            "heading_base_size": 80
+          }
+        },
+        "c1": {
+          "type": "columns",
+          "settings": {
+            "icon": "leaf",
+            "title": "100% natural",
+            "text": "<p>Cow dung, herbs & resins</p>",
+            "wide_desktop": 1,
+            "wide_mobile": "1"
+          }
+        },
+        "c2": {
+          "type": "columns",
+          "settings": {
+            "icon": "check-mark",
+            "title": "Zero chemicals",
+            "text": "<p>Lab certified, no DEP oils</p>",
+            "wide_desktop": 1,
+            "wide_mobile": "1"
+          }
+        },
+        "c3": {
+          "type": "columns",
+          "settings": {
+            "icon": "fire",
+            "title": "No charcoal",
+            "text": "<p>Clean, gentle smoke</p>",
+            "wide_desktop": 1,
+            "wide_mobile": "1"
+          }
+        },
+        "c4": {
+          "type": "columns",
+          "settings": {
+            "icon": "clock",
+            "title": "~45-min burn",
+            "text": "<p>Thick, bamboo-less sticks</p>",
+            "wide_desktop": 1,
+            "wide_mobile": "1"
+          }
+        },
+        "b": {
+          "type": "button",
+          "settings": {
+            "button_label": "Try the starter collection",
+            "button_link": "shopify://products/aarambh-the-starter-collection-incense-sticks-by-aurora-stomatal-farms",
+            "show_button_style": "primary"
+          }
+        }
+      },
+      "block_order": [
+        "h",
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "b"
+      ]
+    },
+    "aurora_collection_art": {
+      "type": "aurora-banner",
+      "settings": {
+        "banner_label": "Collection banner",
+        "placeholder_note": "Collection-specific offer or hero image.",
+        "use_collection_banner": true,
+        "height_mode": "fixed",
+        "desktop_width": 1920,
+        "desktop_height": 600,
+        "mobile_width": 900,
+        "mobile_height": 600,
+        "show_placeholder": true,
+        "heading_tag": "h2",
+        "full_width": false,
+        "corner_radius": 10,
+        "padding_top": 24,
+        "padding_bottom": 0,
+        "padding_top_mobile": 12,
+        "padding_bottom_mobile": 0
+      },
+      "blocks": {
+        "art_pack": {
+          "type": "collection_art",
+          "settings": {
+            "title": "Pack of 6 & 12",
+            "collections": [],
+            "url_match": "pack=6,12",
+            "desktop_asset": "aurora-cat-pack-of-6-and-12-desktop.jpg",
+            "mobile_asset": "aurora-cat-pack-of-6-and-12-mobile.jpg",
+            "alt": "Aurora incense cups in packs of 6 and 12"
+          }
+        },
+        "art_sticks": {
+          "type": "collection_art",
+          "settings": {
+            "title": "Incense sticks",
+            "collections": [
+              "cow-dung-incense-sticks",
+              "incense-sticks"
+            ],
+            "url_match": "type=sticks",
+            "desktop_asset": "aurora-cat-incense-sticks-desktop.jpg",
+            "mobile_asset": "aurora-cat-incense-sticks-mobile.jpg",
+            "alt": "Aurora cow dung incense sticks"
+          }
+        },
+        "art_cups": {
+          "type": "collection_art",
+          "settings": {
+            "title": "Incense cups",
+            "collections": [
+              "cow-dung-incense-cups",
+              "incense-cups"
+            ],
+            "url_match": "type=cups",
+            "desktop_asset": "aurora-cat-incense-cups-desktop.jpg",
+            "mobile_asset": "aurora-cat-incense-cups-mobile.jpg",
+            "alt": "Aurora cow dung incense cups"
+          }
+        },
+        "art_combo": {
+          "type": "collection_art",
+          "settings": {
+            "title": "Combos",
+            "collections": [
+              "ritual-combos",
+              "combo-packs-cups-sticks",
+              "try-all-three"
+            ],
+            "url_match": "type=combo",
+            "desktop_asset": "aurora-cat-combo-desktop.jpg",
+            "mobile_asset": "aurora-cat-combo-mobile.jpg",
+            "alt": "Aurora incense combos with cups, sticks and ghee diya"
+          }
+        },
+        "art_festive": {
+          "type": "collection_art",
+          "settings": {
+            "title": "Festive gifting",
+            "collections": [
+              "festive-offers",
+              "diwali-combo",
+              "a-season-of-light-blessings",
+              "gifts-under-1000",
+              "gifts-1000-1500",
+              "gifts-1500-above",
+              "thamboolam-bulk-gifting"
+            ],
+            "url_match": "type=gift,festive",
+            "desktop_asset": "aurora-cat-festive-gifting-desktop.jpg",
+            "mobile_asset": "aurora-cat-festive-gifting-mobile.jpg",
+            "alt": "Festive gifting with Aurora incense"
+          }
+        },
+        "art_holders": {
+          "type": "collection_art",
+          "settings": {
+            "title": "Coconut shell holders",
+            "collections": [
+              "ritual-essentials"
+            ],
+            "url_match": "type=essentials",
+            "desktop_asset": "aurora-cat-coconut-shell-holders-desktop.jpg",
+            "mobile_asset": "aurora-cat-coconut-shell-holders-mobile.jpg",
+            "alt": "Handcrafted coconut shell incense holder"
+          }
+        }
+      },
+      "block_order": [
+        "art_pack",
+        "art_sticks",
+        "art_cups",
+        "art_combo",
+        "art_festive",
+        "art_holders"
+      ]
     }
   },
   "order": [
-    "main"
+    "aurora_collection_art",
+    "aurora_collection_banner",
+    "product-grid",
+    "aurora_collection_explainer",
+    "collage_bQj3RW"
   ]
 }

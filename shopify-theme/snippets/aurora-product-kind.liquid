@@ -1,0 +1,93 @@
+{%- comment -%}
+  Classifies a product for the Aurora menu funnel and collection filters, following
+  "Aurora_Website_Category_Structure.pdf". Store data is inconsistent (blank product
+  types, wrong tags), so this reads the title, handle, product type and exact tags.
+
+  Accepts:
+  - product: {Object}
+
+  Outputs (use with capture): "<kind>|<fragrances>|<moods>|<packs>"
+    kind:       sticks | cups | starter | combo | gift | festive | essentials | bath | greens | other
+    fragrances: dasangam floral lemongrass arka sandalwood | assorted
+    moods:      pooja calm fresh trio
+    packs:      pack sizes found in variant / product titles, e.g. "3 6 12" (1 = single)
+{%- endcomment -%}
+{%- liquid
+  assign name = product.title | append: ' ' | append: product.handle | append: ' ' | append: product.type | downcase
+  assign type = product.type | downcase
+  assign tags = product.tags | join: '|' | downcase | split: '|'
+
+  assign kind = 'other'
+  if name contains 'microgreen' or name contains 'salad' or name contains 'greens' or name contains 'amaranth' or name contains 'palak' or name contains 'tomato' or name contains 'edible flower'
+    assign kind = 'greens'
+  elsif name contains 'aarambh' or name contains 'starter'
+    assign kind = 'starter'
+  elsif name contains 'gift' or name contains 'hamper' or name contains 'sacred'
+    assign kind = 'gift'
+  elsif name contains 'festive' or name contains 'vinayagar' or name contains ' duo'
+    assign kind = 'festive'
+  elsif type == 'combo pack' or tags contains 'combo' or tags contains 'bundle' or name contains 'combo' or name contains 'bundle'
+    assign kind = 'combo'
+  elsif name contains 'holder' or name contains 'cow-dung-ash' or name contains 'cow dung ash' or name contains 'panchagavya' or name contains 'ghee'
+    assign kind = 'essentials'
+  elsif name contains 'bath'
+    assign kind = 'bath'
+  elsif name contains 'cup'
+    assign kind = 'cups'
+  elsif name contains 'stick'
+    assign kind = 'sticks'
+  endif
+
+  assign fragrances = ''
+  assign frag_count = 0
+  assign known = 'dasangam,floral,lemongrass,arka,sandalwood' | split: ','
+  for fragrance in known
+    if name contains fragrance or tags contains fragrance
+      assign fragrances = fragrances | append: ' ' | append: fragrance
+      assign frag_count = frag_count | plus: 1
+    endif
+  endfor
+  if fragrances == blank and kind != 'greens' and kind != 'other'
+    assign fragrances = 'assorted'
+  endif
+
+  comment
+    Moods from the plan: Daily Pooja & Devotion = Dasangam + Arka + holder; Calm & Unwind =
+    Floral + bath salts + relaxation gift; Fresh & Energising = Lemongrass; Try All Three =
+    Aarambh and the multi-fragrance bundles.
+  endcomment
+  assign moods = ''
+  if kind != 'greens'
+    if fragrances contains 'dasangam' or fragrances contains 'arka' or name contains 'holder'
+      assign moods = moods | append: ' pooja'
+    endif
+    if fragrances contains 'floral' or kind == 'bath' or name contains 'relaxation'
+      assign moods = moods | append: ' calm'
+    endif
+    if fragrances contains 'lemongrass'
+      assign moods = moods | append: ' fresh'
+    endif
+    if kind == 'starter' or frag_count >= 3
+      assign moods = moods | append: ' trio'
+    elsif kind == 'combo' and fragrances == 'assorted'
+      assign moods = moods | append: ' trio'
+    endif
+  endif
+
+  assign packs = ''
+  for variant in product.variants
+    if variant.title contains 'Pack of'
+      assign n = variant.title | split: 'Pack of' | last | strip | split: ' ' | first
+      assign packs = packs | append: ' ' | append: n
+    endif
+  endfor
+  if packs == blank
+    if product.title contains 'Pack of'
+      assign n = product.title | split: 'Pack of' | last | strip | remove: ')' | split: ' ' | first
+      assign packs = ' ' | append: n
+    else
+      assign packs = ' 1'
+    endif
+  endif
+-%}
+{{- kind }}|{{ fragrances | strip }}|{{ moods | strip }}|{{ packs | strip -}}

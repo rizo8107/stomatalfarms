@@ -1,0 +1,487 @@
+{%- comment -%}
+  Aurora editorial section: a centred, full-width column for narrative copy and
+  "pointer" groups. Built for the About Us content, but generic.
+
+  Deliberately has no side-by-side image: the brief asks for standalone,
+  full-width blocks rather than text on one side and media on the other.
+
+  Block types:
+    paragraph  - a body paragraph
+    pullquote  - the closing line, bold italic
+    group      - a sub-heading with bullets (one per line)
+    divider    - a short gold rule
+{%- endcomment -%}
+
+{%- liquid
+  case section.settings.band
+    when 'sage'
+      assign band_class = 'aurora-band--sage'
+    when 'cream'
+      assign band_class = 'aurora-band--cream'
+    when 'forest'
+      assign band_class = 'aurora-band--forest'
+    else
+      assign band_class = ''
+  endcase
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }} .aust { padding-block: {{ section.settings.padding_mobile }}px; }
+  #shopify-section-{{ section.id }} .aust__inner {
+    max-width: {{ section.settings.content_width }}px;
+    margin: 0 auto;
+    padding-inline: 20px;
+    text-align: {{ section.settings.text_align }};
+  }
+  #shopify-section-{{ section.id }} .aust__eyebrow {
+    display: block;
+    font-family: var(--font-body-family);
+    font-size: 12px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+    color: {{ section.settings.eyebrow_color }};
+    margin: 0 0 10px;
+  }
+  #shopify-section-{{ section.id }} .aust__title {
+    margin: 0;
+    font-family: var(--font-heading-family);
+    font-weight: 400;
+    line-height: 1.1;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size_mobile }}px;
+  }
+  #shopify-section-{{ section.id }} .aust__title em,
+  #shopify-section-{{ section.id }} .aust__title i {
+    font-style: italic;
+    color: {{ section.settings.accent_color }};
+  }
+  #shopify-section-{{ section.id }} .aust__rule {
+    width: 180px; height: 1.5px; border: 0; margin: 18px auto 0;
+    background: {{ section.settings.accent_color }};
+  }
+  #shopify-section-{{ section.id }} .aust__body { margin-top: 28px; }
+  #shopify-section-{{ section.id }} .aust__p {
+    margin: 0 0 20px;
+    font-family: {% if section.settings.prose_serif %}var(--font-heading-family){% else %}var(--font-body-family){% endif %};
+    font-size: {{ section.settings.body_size_mobile }}px;
+    line-height: 1.55;
+    color: {{ section.settings.body_color }};
+  }
+  #shopify-section-{{ section.id }} .aust__p:last-child { margin-bottom: 0; }
+  #shopify-section-{{ section.id }} .aust__pull {
+    margin: 26px 0 0;
+    font-family: var(--font-heading-family);
+    font-style: italic; font-weight: 400;
+    font-size: {{ section.settings.body_size_mobile | plus: 3 }}px;
+    line-height: 1.35;
+    color: {{ section.settings.heading_color }};
+  }
+  #shopify-section-{{ section.id }} .aust__groups {
+    display: grid; gap: 26px; margin-top: 30px; text-align: left;
+  }
+  #shopify-section-{{ section.id }} .aust__gh {
+    margin: 0 0 10px;
+    font-family: var(--font-heading-family);
+    font-weight: 400; font-size: 21px; line-height: 1.15;
+    color: {{ section.settings.heading_color }};
+  }
+  #shopify-section-{{ section.id }} .aust__list { margin: 0; padding: 0; list-style: none; }
+  #shopify-section-{{ section.id }} .aust__li {
+    position: relative;
+    margin: 0 0 8px;
+    padding-left: 20px;
+    font-family: var(--font-body-family);
+    font-size: 15px; line-height: 1.55;
+    color: {{ section.settings.body_color }};
+  }
+  #shopify-section-{{ section.id }} .aust__li:last-child { margin-bottom: 0; }
+  #shopify-section-{{ section.id }} .aust__li::before {
+    content: ''; position: absolute; left: 2px; top: 10px;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: {{ section.settings.accent_color }};
+  }
+  #shopify-section-{{ section.id }} .aust__div {
+    width: 120px; height: 1px; border: 0; margin: 10px auto;
+    background: {{ section.settings.accent_color }};
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .aust { padding-block: {{ section.settings.padding_desktop }}px; }
+    #shopify-section-{{ section.id }} .aust__title { font-size: {{ section.settings.heading_size }}px; }
+    #shopify-section-{{ section.id }} .aust__p { font-size: {{ section.settings.body_size }}px; }
+    #shopify-section-{{ section.id }} .aust__pull { font-size: {{ section.settings.body_size | plus: 4 }}px; }
+    #shopify-section-{{ section.id }} .aust__groups {
+      grid-template-columns: repeat({{ section.settings.group_columns }}, minmax(0, 1fr));
+      gap: 32px 40px;
+    }
+    #shopify-section-{{ section.id }} .aust__gh { font-size: 23px; }
+  }
+{% endstyle %}
+
+{%- comment -%}
+  Handle gate. page.about-us.json is an *alternate* template and only applies
+  when the page's Theme template is set to it in the admin. Until that is done,
+  this section can sit on the default page template and show itself only on the
+  handles listed here, so the content is live without an admin change. Leave
+  "Only show on pages" blank to show everywhere.
+{%- endcomment -%}
+{%- liquid
+  assign show_section = true
+  assign only = section.settings.limit_handles | strip
+  if only != blank
+    assign show_section = false
+    assign wanted = only | downcase | split: ','
+    for h in wanted
+      assign want = h | strip
+      if want != blank and page.handle == want
+        assign show_section = true
+      endif
+    endfor
+  endif
+-%}
+{%- if show_section -%}
+{%- if section.settings.hide_page_title -%}
+  {%- comment -%}
+    The page title duplicates this section's own heading. Hidden from here
+    rather than by switching it off on main-page, which would also strip the
+    title from Contact and Micro Greens - they share the default template.
+  {%- endcomment -%}
+  <style>
+    .page__container .page__title { display: none; }
+    .page__container div:has(> .page__title) { margin-bottom: 0; }
+    /* The wrapper keeps its 20px/28px padding once the heading is hidden,
+       leaving an empty strip between the header and this section. */
+    section.x-section-page > div.x-section-page { padding-block: 0; }
+  </style>
+{%- endif -%}
+<section class="aust {{ band_class }}">
+  <div class="aust__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="aust__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      {%- if section.settings.heading_tag == 'h1' -%}
+        <h1 class="aust__title">{{ section.settings.heading }}</h1>
+      {%- else -%}
+        <h2 class="aust__title">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.show_rule -%}<hr class="aust__rule">{%- endif -%}
+    {%- endif -%}
+
+    {%- assign group_blocks = section.blocks | where: 'type', 'group' -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="aust__body">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'paragraph' -%}
+              {%- if block.settings.text != blank -%}
+                <p class="aust__p" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+              {%- endif -%}
+            {%- when 'pullquote' -%}
+              {%- if block.settings.text != blank -%}
+                <p class="aust__pull" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+              {%- endif -%}
+            {%- when 'divider' -%}
+              <hr class="aust__div" {{ block.shopify_attributes }}>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if group_blocks.size > 0 -%}
+      <div class="aust__groups">
+        {%- for block in group_blocks -%}
+          <div {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}
+              <h3 class="aust__gh">{{ block.settings.heading }}</h3>
+            {%- endif -%}
+            {%- if block.settings.points != blank -%}
+              {%- comment -%} One bullet per line; blank lines are skipped. {%- endcomment -%}
+              {%- assign lines = block.settings.points | newline_to_br | split: '<br />' -%}
+              <ul class="aust__list">
+                {%- for line in lines -%}
+                  {%- assign point = line | strip -%}
+                  {%- if point != blank -%}
+                    <li class="aust__li">{{ point }}</li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Aurora story",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "hide_page_title",
+      "label": "Hide the page title",
+      "info": "The page title above this section is hidden on the pages where this section shows.",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Wrap one phrase in <em> to set it in italic gold."
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading level",
+      "default": "h2",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1 (use once per page)"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rule",
+      "label": "Gold rule under the heading",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size on desktop",
+      "min": 24,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size on mobile",
+      "min": 18,
+      "max": 44,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "checkbox",
+      "id": "prose_serif",
+      "label": "Set paragraphs in the serif",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Body size on desktop",
+      "min": 13,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "body_size_mobile",
+      "label": "Body size on mobile",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "group_columns",
+      "label": "Pointer columns on desktop",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "text",
+      "id": "limit_handles",
+      "label": "Only show on pages",
+      "info": "Comma-separated page handles, e.g. about-us. Leave blank to show on every page that uses this template."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "band",
+      "label": "Background band",
+      "default": "ivory",
+      "options": [
+        {
+          "value": "ivory",
+          "label": "Ivory (page background)"
+        },
+        {
+          "value": "sage",
+          "label": "Sage"
+        },
+        {
+          "value": "cream",
+          "label": "Warm cream"
+        },
+        {
+          "value": "forest",
+          "label": "Forest (dark)"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Content width",
+      "min": 520,
+      "max": 1280,
+      "step": 20,
+      "unit": "px",
+      "default": 880
+    },
+    {
+      "type": "range",
+      "id": "padding_desktop",
+      "label": "Vertical padding on desktop",
+      "min": 24,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_mobile",
+      "label": "Vertical padding on mobile",
+      "min": 16,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#1F3B2D"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body text",
+      "default": "#2A211A"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow",
+      "default": "#8A6420"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (rule, bullets, italics)",
+      "default": "#8A6420"
+    }
+  ],
+  "max_blocks": 20,
+  "blocks": [
+    {
+      "type": "paragraph",
+      "name": "Paragraph",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "pullquote",
+      "name": "Closing line",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "name": "Pointer group",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "points",
+          "label": "Points",
+          "info": "One bullet per line."
+        }
+      ]
+    },
+    {
+      "type": "divider",
+      "name": "Divider",
+      "settings": []
+    }
+  ],
+  "presets": [
+    {
+      "name": "Aurora story"
+    }
+  ]
+}
+{% endschema %}

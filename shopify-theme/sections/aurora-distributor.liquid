@@ -1,0 +1,580 @@
+{%- comment -%}
+  Aurora: Export / distribution / private-label page (from "Aurora Distributor Page.pdf").
+  Everything is editable: texts in section settings, cards as blocks.
+  The enquiry form is Shopify's contact form – submissions arrive in the store's email inbox.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign profile_link = s.profile_link | default: '#enquire'
+  assign wa = s.whatsapp | remove: '+' | remove: ' ' | remove: '-'
+-%}
+{%- style -%}
+  #aurora-dist-{{ section.id }} {
+    --d-dark: {{ s.color_dark }}; --d-dark-2: {{ s.color_dark_2 }}; --d-cream: {{ s.color_cream }};
+    --d-gold: {{ s.color_gold }}; --d-ink: {{ s.color_ink }};
+    --d-serif: var(--font-heading-family);
+  }
+{%- endstyle -%}
+
+{%- comment -%}
+  Handle gate. page.distributor.json is an *alternate* template, and the admin's
+  Template dropdown only lists templates from the published theme - so until this
+  theme is live, the page sits on "Default page". Listing the handle here lets the
+  section render on the default template instead. Blank shows it everywhere.
+{%- endcomment -%}
+{%- liquid
+  assign show_section = true
+  assign only = s.limit_handles | strip
+  if only != blank
+    assign show_section = false
+    assign wanted = only | downcase | split: ','
+    for h in wanted
+      assign want = h | strip
+      if want != blank and page.handle == want
+        assign show_section = true
+      endif
+    endfor
+  endif
+-%}
+{%- if show_section -%}
+{%- if s.hide_page_title -%}
+  {%- comment -%}
+    The page title duplicates this section's own heading. Hidden from here
+    rather than by switching it off on main-page, which would also strip the
+    title from Contact and Micro Greens - they share the default template.
+  {%- endcomment -%}
+  <style>
+    .page__container .page__title { display: none; }
+    .page__container div:has(> .page__title) { margin-bottom: 0; }
+    /* The wrapper keeps its 20px/28px padding once the heading is hidden,
+       leaving an empty strip between the header and this section. */
+    section.x-section-page > div.x-section-page { padding-block: 0; }
+  </style>
+{%- endif -%}
+<div class="aurora-dist" id="aurora-dist-{{ section.id }}">
+  {%- comment -%} 1. Hero {%- endcomment -%}
+  <section class="aurora-dist__hero">
+    <div class="aurora-dist__wrap aurora-dist__hero-grid">
+      <div>
+        {%- if s.eyebrow != blank -%}<p class="aurora-dist__eyebrow">{{ s.eyebrow }}</p>{%- endif -%}
+        <h1 class="aurora-dist__h1">{{ s.heading }}</h1>
+        {%- if s.text != blank -%}<div class="aurora-dist__lead">{{ s.text }}</div>{%- endif -%}
+        <div class="aurora-dist__ctas">
+          {%- if s.cta_label != blank -%}<a class="aurora-dist__btn aurora-dist__btn--gold" href="#enquire">{{ s.cta_label }}</a>{%- endif -%}
+          {%- if s.profile_label != blank -%}
+            <a class="aurora-dist__btn aurora-dist__btn--ghost" href="{{ profile_link }}"{% if s.profile_link != blank %} target="_blank" rel="noopener"{% endif %}>{{ s.profile_label }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="aurora-dist__badges">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'badge' -%}
+            <div class="aurora-dist__badge" {{ block.shopify_attributes }}>
+              <h3>{{ block.settings.title }}</h3>
+              <p>{{ block.settings.text }}</p>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 2. Who we work with {%- endcomment -%}
+  <section class="aurora-dist__light" id="partners">
+    <div class="aurora-dist__wrap">
+      <h2 class="aurora-dist__h2">{{ s.who_heading }}</h2>
+      {%- if s.who_text != blank -%}<p class="aurora-dist__sub">{{ s.who_text }}</p>{%- endif -%}
+      <div class="aurora-dist__cards">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'partner' -%}
+            <div class="aurora-dist__card" {{ block.shopify_attributes }}>
+              <h3>{{ block.settings.title }}</h3>
+              <p>{{ block.settings.text }}</p>
+              {%- if block.settings.icon != blank and block.settings.icon != 'none' -%}
+                <span class="aurora-dist__card-icon" aria-hidden="true">{% render 'aurora-icon', icon: block.settings.icon %}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 3. The range {%- endcomment -%}
+  <section class="aurora-dist__dark" id="range">
+    <div class="aurora-dist__wrap">
+      <h2 class="aurora-dist__h2">{{ s.range_heading }}</h2>
+      {%- if s.range_text != blank -%}<p class="aurora-dist__sub">{{ s.range_text }}</p>{%- endif -%}
+      <div class="aurora-dist__range">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'range_item' -%}
+            <div class="aurora-dist__range-item" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                <div class="aurora-dist__range-img">{{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 990px) 20vw, 45vw' }}</div>
+              {%- endif -%}
+              <h3>{{ block.settings.title }}</h3>
+              <p>{{ block.settings.text }}</p>
+              {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}">{{ s.range_link_label }} →</a>{%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} 4. How it works + terms {%- endcomment -%}
+  <section class="aurora-dist__dark aurora-dist__dark--alt" id="how-it-works">
+    <div class="aurora-dist__wrap">
+      <h2 class="aurora-dist__h2">{{ s.how_heading }}</h2>
+      <ol class="aurora-dist__steps">
+        {%- assign step_n = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'step' -%}
+            {%- assign step_n = step_n | plus: 1 -%}
+            <li class="aurora-dist__step" {{ block.shopify_attributes }}>
+              <span class="aurora-dist__num">{% if step_n < 10 %}0{% endif %}{{ step_n }}</span>
+              <h3>{{ block.settings.title }}</h3>
+              <p>{{ block.settings.text }}</p>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ol>
+      <dl class="aurora-dist__terms">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'term' -%}
+            <div class="aurora-dist__term" {{ block.shopify_attributes }}>
+              <dt>{{ block.settings.label }}</dt>
+              <dd>{{ block.settings.value }}</dd>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </dl>
+    </div>
+  </section>
+
+  {%- comment -%} 5. Enquiry form {%- endcomment -%}
+  <section class="aurora-dist__light" id="enquire">
+    <div class="aurora-dist__wrap aurora-dist__contact">
+      <div>
+        <h2 class="aurora-dist__h2">{{ s.form_heading }}</h2>
+        {%- if s.form_text != blank -%}<p class="aurora-dist__sub">{{ s.form_text }}</p>{%- endif -%}
+        <dl class="aurora-dist__facts">
+          {%- if s.email != blank -%}<div><dt>Email</dt><dd><a href="mailto:{{ s.email }}">{{ s.email }}</a></dd></div>{%- endif -%}
+          {%- if s.whatsapp != blank -%}<div><dt>WhatsApp</dt><dd><a href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{{ s.whatsapp }}</a></dd></div>{%- endif -%}
+          {%- if s.based_in != blank -%}<div><dt>Based in</dt><dd>{{ s.based_in }}</dd></div>{%- endif -%}
+          {%- if s.company != blank -%}<div><dt>Company</dt><dd>{{ s.company }}</dd></div>{%- endif -%}
+        </dl>
+      </div>
+      <div class="aurora-dist__form-card">
+        {%- form 'contact', id: 'AuroraDistForm', class: 'aurora-dist__form' -%}
+          <input type="hidden" name="contact[Enquiry type]" value="Distributor / export enquiry">
+          {%- if form.posted_successfully? -%}
+            <p class="aurora-dist__success" tabindex="-1" autofocus>{{ s.success_text }}</p>
+          {%- else -%}
+            {%- if form.errors -%}<p class="aurora-dist__error">{{ form.errors | default_errors }}</p>{%- endif -%}
+            <div class="aurora-dist__fields">
+              <label>Full name<input type="text" name="contact[name]" autocomplete="name" required></label>
+              <label>Company name<input type="text" name="contact[Company]" autocomplete="organization" required></label>
+              <label>Email<input type="email" name="contact[email]" autocomplete="email" required></label>
+              <label>Phone / WhatsApp<input type="tel" name="contact[phone]" autocomplete="tel" required></label>
+              <label>Country<input type="text" name="contact[Country]" autocomplete="country-name" required></label>
+              <label>I'm interested in
+                <select name="contact[Interested in]">
+                  {%- assign options = s.interest_options | newline_to_br | split: '<br />' -%}
+                  {%- for o in options -%}{%- assign o = o | strip -%}{%- if o != blank -%}<option>{{ o }}</option>{%- endif -%}{%- endfor -%}
+                </select>
+              </label>
+              <label>Products of interest<input type="text" name="contact[Products of interest]" placeholder="e.g. incense cups, ghee diyas"></label>
+              <label>Estimated monthly volume
+                <select name="contact[Monthly volume]">
+                  {%- assign options = s.volume_options | newline_to_br | split: '<br />' -%}
+                  {%- for o in options -%}{%- assign o = o | strip -%}{%- if o != blank -%}<option>{{ o }}</option>{%- endif -%}{%- endfor -%}
+                </select>
+              </label>
+              <label class="aurora-dist__full">Tell us about your business<textarea name="contact[body]" rows="4"></textarea></label>
+            </div>
+            <button type="submit" class="aurora-dist__btn aurora-dist__btn--dark">{{ s.submit_label }}</button>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    </div>
+  </section>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Aurora: Distributor page",
+  "tag": "div",
+  "class": "x-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "hide_page_title",
+      "label": "Hide the page title",
+      "info": "The page title above this section is hidden on the pages where this section shows.",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "limit_handles",
+      "label": "Only show on pages",
+      "info": "Comma-separated page handles, e.g. distributors. Leave blank to show on every page using this template."
+    },
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Export · Distribution · Private label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Bring Aurora's rituals to your market."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Handmade, cow dung-based incense and ghee diyas from Chennai, with zero synthetic fragrance. We partner with distributors, importers and retailers who want a natural, premium ritual range on their shelves.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Main button (scrolls to the form)",
+      "default": "Become a distributor"
+    },
+    {
+      "type": "text",
+      "id": "profile_label",
+      "label": "Second button",
+      "default": "Download company profile"
+    },
+    {
+      "type": "url",
+      "id": "profile_link",
+      "label": "Company profile link",
+      "info": "Upload the PDF in Content › Files, then paste its link here. Empty = scrolls to the form."
+    },
+    {
+      "type": "header",
+      "content": "Who we work with"
+    },
+    {
+      "type": "text",
+      "id": "who_heading",
+      "label": "Heading",
+      "default": "Who we work with"
+    },
+    {
+      "type": "text",
+      "id": "who_text",
+      "label": "Text",
+      "default": "Pick the model that fits your business. Each one gets dedicated support from our team."
+    },
+    {
+      "type": "header",
+      "content": "The range"
+    },
+    {
+      "type": "text",
+      "id": "range_heading",
+      "label": "Heading",
+      "default": "The range"
+    },
+    {
+      "type": "text",
+      "id": "range_text",
+      "label": "Text",
+      "default": "Every product is built on a natural cow dung base, with aromas from hydrodistilled botanicals."
+    },
+    {
+      "type": "text",
+      "id": "range_link_label",
+      "label": "Product link text",
+      "default": "View products"
+    },
+    {
+      "type": "header",
+      "content": "How it works"
+    },
+    {
+      "type": "text",
+      "id": "how_heading",
+      "label": "Heading",
+      "default": "How it works"
+    },
+    {
+      "type": "header",
+      "content": "Enquiry form"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Heading",
+      "default": "Let's talk partnership"
+    },
+    {
+      "type": "text",
+      "id": "form_text",
+      "label": "Text",
+      "default": "Share a few details and our export team will reply within 2 working days."
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email",
+      "default": "export@aurorarituals.store"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp",
+      "label": "WhatsApp",
+      "default": "+91 63790 33131"
+    },
+    {
+      "type": "text",
+      "id": "based_in",
+      "label": "Based in",
+      "default": "Chennai, Tamil Nadu, India"
+    },
+    {
+      "type": "text",
+      "id": "company",
+      "label": "Company",
+      "default": "Aurora by Stomatal Farms LLP"
+    },
+    {
+      "type": "textarea",
+      "id": "interest_options",
+      "label": "'I'm interested in' options",
+      "info": "One per line",
+      "default": "Distribution / import\nBulk & wholesale\nWhite label / private label\nRetail stocking"
+    },
+    {
+      "type": "textarea",
+      "id": "volume_options",
+      "label": "Monthly volume options",
+      "info": "One per line",
+      "default": "Not sure yet\nUnder 500 units\n500 – 2,000 units\n2,000 – 10,000 units\n10,000+ units"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit button",
+      "default": "Send enquiry"
+    },
+    {
+      "type": "text",
+      "id": "success_text",
+      "label": "Thank-you message",
+      "default": "Thank you! Our export team will get back to you within 2 working days."
+    },
+    {
+      "type": "header",
+      "content": "Design"
+    },
+    {
+      "type": "color",
+      "id": "color_dark",
+      "label": "Dark green",
+      "default": "#1F3B2D"
+    },
+    {
+      "type": "color",
+      "id": "color_dark_2",
+      "label": "Dark green (panels)",
+      "default": "#1F3B2D"
+    },
+    {
+      "type": "color",
+      "id": "color_cream",
+      "label": "Cream",
+      "default": "#FBF6EC"
+    },
+    {
+      "type": "color",
+      "id": "color_gold",
+      "label": "Gold",
+      "default": "#D9B866"
+    },
+    {
+      "type": "color",
+      "id": "color_ink",
+      "label": "Text on cream",
+      "default": "#2A211A"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Hero badge",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "IEC registered"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Export-ready, with Aurora's own Import Export Code"
+        }
+      ]
+    },
+    {
+      "type": "partner",
+      "name": "Partner type",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Distributors & importers"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Territory partners who stock and supply Aurora to retailers in their country."
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "box",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "box",
+              "label": "Parcel"
+            },
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "cash",
+              "label": "Cash"
+            },
+            {
+              "value": "hand",
+              "label": "Hand"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "cow",
+              "label": "Cow"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "lab",
+              "label": "Lab"
+            },
+            {
+              "value": "sun",
+              "label": "Sun"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "range_item",
+      "name": "Range item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (optional)",
+          "info": "Square, 800 × 800 px"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Incense cups"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Arka, Paneer Rose, Dasangam"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        }
+      ]
+    },
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Send an enquiry"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Tell us about your business and market using the form below."
+        }
+      ]
+    },
+    {
+      "type": "term",
+      "name": "Trade term",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Minimum order"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "Shared on enquiry"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Aurora: Distributor page",
+      "category": "Aurora"
+    }
+  ]
+}
+{% endschema %}

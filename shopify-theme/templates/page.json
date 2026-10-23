@@ -1,11 +1,371 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-page",
-      "settings": {}
+      "settings": {
+        "show_heading": true,
+        "heading_size": 170,
+        "heading_tag": "h1",
+        "show_breadcrumbs": false,
+        "show_breadcrumbs_border": false,
+        "full_width_breadcrumb": true,
+        "desktop_content_alignment": "text-left",
+        "mobile_content_alignment": "text-left",
+        "background_color_light": "#FBF6EC",
+        "text_color_light": "rgba(0,0,0,0)",
+        "textlink_color_light": "rgba(0,0,0,0)",
+        "background_color_dark": "#1F3B2D",
+        "text_color_dark": "rgba(0,0,0,0)",
+        "textlink_color_dark": "rgba(0,0,0,0)",
+        "max_container_page_width": 100,
+        "padding_top": 28,
+        "padding_bottom": 28,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "aurora_story": {
+      "type": "aurora-story",
+      "blocks": {
+        "p1": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>It began with passion: a belief that the things we bring into our homes should be as pure as the intentions behind them.</p>"
+          }
+        },
+        "p2": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>At Aurora, nothing is hidden. No chemicals, no synthetics, only what nature gives us. Cow dung, honoured for generations. Clove, our signature ingredient. Aromas drawn straight from the earth. What’s on our label is exactly what’s inside.</p>"
+          }
+        },
+        "p3": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>We make every product the way we would for our own families, because that’s who we make them for.</p>"
+          }
+        },
+        "p4": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>What started as passion now grows with every kind word from the people who light our incense in their homes.</p>"
+          }
+        },
+        "pull": {
+          "type": "pullquote",
+          "settings": {
+            "text": "<p>Your trust is our ritual. And we’re just getting started.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "pull"
+      ],
+      "settings": {
+        "eyebrow": "Our story",
+        "heading": "It began with <em>passion</em>.",
+        "heading_tag": "h2",
+        "show_rule": true,
+        "heading_size": 48,
+        "heading_size_mobile": 30,
+        "prose_serif": true,
+        "body_size": 18,
+        "body_size_mobile": 16,
+        "group_columns": 2,
+        "band": "sage",
+        "text_align": "center",
+        "content_width": 820,
+        "padding_desktop": 88,
+        "padding_mobile": 44,
+        "heading_color": "#1F3B2D",
+        "body_color": "#2A211A",
+        "eyebrow_color": "#8A6420",
+        "accent_color": "#8A6420",
+        "limit_handles": "about-us",
+        "hide_page_title": true
+      }
+    },
+    "aurora_pointers": {
+      "type": "aurora-story",
+      "blocks": {
+        "g1": {
+          "type": "group",
+          "settings": {
+            "heading": "Who we are",
+            "points": "A passion-driven team creating eco-friendly, sustainable, high-quality products for everyday rituals."
+          }
+        },
+        "g2": {
+          "type": "group",
+          "settings": {
+            "heading": "What we promise",
+            "points": "No chemicals, no synthetics, no shortcuts.\nComplete transparency: what’s on the label is exactly what’s inside."
+          }
+        },
+        "g3": {
+          "type": "group",
+          "settings": {
+            "heading": "What makes Aurora different",
+            "points": "Every ingredient is naturally sourced.\nEvery aroma comes straight from nature, with nothing synthetic added.\nCow dung at the heart of our incense, valued for generations for its purifying properties.\nAsh that can be reused in many ways around the home.\nOur signature ingredient, named openly: clove."
+          }
+        },
+        "g4": {
+          "type": "group",
+          "settings": {
+            "heading": "What we stand for",
+            "points": "The earth, the wellbeing of our families, and everything genuinely good."
+          }
+        },
+        "g5": {
+          "type": "group",
+          "settings": {
+            "heading": "Where we’re headed",
+            "points": "Taking natural, honest rituals to homes around the world, fuelled by the love of the people who use our products."
+          }
+        }
+      },
+      "block_order": [
+        "g1",
+        "g2",
+        "g3",
+        "g4",
+        "g5"
+      ],
+      "settings": {
+        "eyebrow": "About Aurora",
+        "heading": "Made the way we’d make it <em>for our own</em>.",
+        "heading_tag": "h2",
+        "show_rule": true,
+        "heading_size": 42,
+        "heading_size_mobile": 28,
+        "prose_serif": false,
+        "body_size": 17,
+        "body_size_mobile": 16,
+        "group_columns": 2,
+        "band": "ivory",
+        "text_align": "center",
+        "content_width": 980,
+        "padding_desktop": 88,
+        "padding_mobile": 44,
+        "heading_color": "#1F3B2D",
+        "body_color": "#2A211A",
+        "eyebrow_color": "#8A6420",
+        "accent_color": "#8A6420",
+        "limit_handles": "about-us",
+        "hide_page_title": false
+      }
+    },
+    "aurora_distributor": {
+      "type": "aurora-distributor",
+      "blocks": {
+        "badge_1": {
+          "type": "badge",
+          "settings": {
+            "title": "IEC registered",
+            "text": "Export-ready, with Aurora's own Import Export Code"
+          }
+        },
+        "badge_2": {
+          "type": "badge",
+          "settings": {
+            "title": "Trademarked",
+            "text": "A registered brand you can build on with confidence"
+          }
+        },
+        "badge_3": {
+          "type": "badge",
+          "settings": {
+            "title": "Lab-certified",
+            "text": "Family-safe, with no synthetic aroma chemicals"
+          }
+        },
+        "badge_4": {
+          "type": "badge",
+          "settings": {
+            "title": "Small-batch",
+            "text": "Handcrafted and sun-dried in Chennai"
+          }
+        },
+        "partner_1": {
+          "type": "partner",
+          "settings": {
+            "title": "Distributors & importers",
+            "text": "Territory partners who stock and supply Aurora to retailers in their country.",
+            "icon": "truck"
+          }
+        },
+        "partner_2": {
+          "type": "partner",
+          "settings": {
+            "title": "Bulk & wholesale buyers",
+            "text": "Large-volume orders for temples, wellness centres, hotels and resellers.",
+            "icon": "box"
+          }
+        },
+        "partner_3": {
+          "type": "partner",
+          "settings": {
+            "title": "White label / private label",
+            "text": "Our formulations, made and packed under your own brand.",
+            "icon": "gift"
+          }
+        },
+        "partner_4": {
+          "type": "partner",
+          "settings": {
+            "title": "Retail stocking partners",
+            "text": "Stores and online shops that want Aurora on their shelves, as is.",
+            "icon": "cash"
+          }
+        },
+        "range_1": {
+          "type": "range_item",
+          "settings": {
+            "title": "Incense cups",
+            "text": "Arka, Paneer Rose, Dasangam",
+            "image": "shopify://shop_images/ARKA.jpg",
+            "link": "shopify://collections/cow-dung-incense-cups"
+          }
+        },
+        "range_2": {
+          "type": "range_item",
+          "settings": {
+            "title": "Incense sticks",
+            "text": "Slow, even burn with a soft aroma",
+            "image": "shopify://shop_images/Dasangam_incense_stick_-_1.jpg",
+            "link": "shopify://collections/cow-dung-incense-sticks"
+          }
+        },
+        "range_3": {
+          "type": "range_item",
+          "settings": {
+            "title": "Ghee diyas",
+            "text": "Ready-to-light ghee lamps for daily pooja",
+            "image": "shopify://shop_images/ghee_diya.jpg",
+            "link": "shopify://products/panchagavya"
+          }
+        },
+        "range_4": {
+          "type": "range_item",
+          "settings": {
+            "title": "Bath salts",
+            "text": "Sandalwood and Bulgarian rose",
+            "image": "shopify://shop_images/bath_salts.jpg",
+            "link": "shopify://products/bath-salts"
+          }
+        },
+        "range_5": {
+          "type": "range_item",
+          "settings": {
+            "title": "Incense holders",
+            "text": "Hand-finished coconut shell, logo engraved",
+            "image": "shopify://shop_images/holder_3.png",
+            "link": "shopify://products/premium-handcrafted-coconut-shell-incense-holder"
+          }
+        },
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Send an enquiry",
+            "text": "Tell us about your business and market using the form below."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Get the catalogue",
+            "text": "We share our company profile and trade price list within 2 working days."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Try a sample kit",
+            "text": "Experience the range before you commit. Sample kit terms shared on enquiry."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "title": "Place your first order",
+            "text": "We agree terms, produce your batch and ship to your door."
+          }
+        },
+        "term_1": {
+          "type": "term",
+          "settings": {
+            "label": "Minimum order",
+            "value": "Shared on enquiry"
+          }
+        },
+        "term_2": {
+          "type": "term",
+          "settings": {
+            "label": "Lead time",
+            "value": "Shared on enquiry"
+          }
+        },
+        "term_3": {
+          "type": "term",
+          "settings": {
+            "label": "Private label from",
+            "value": "Shared on enquiry"
+          }
+        },
+        "term_4": {
+          "type": "term",
+          "settings": {
+            "label": "Shipping",
+            "value": "FOB / CIF available"
+          }
+        }
+      },
+      "block_order": [
+        "badge_1",
+        "badge_2",
+        "badge_3",
+        "badge_4",
+        "partner_1",
+        "partner_2",
+        "partner_3",
+        "partner_4",
+        "range_1",
+        "range_2",
+        "range_3",
+        "range_4",
+        "range_5",
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4",
+        "term_1",
+        "term_2",
+        "term_3",
+        "term_4"
+      ],
+      "settings": {
+        "limit_handles": "distributors",
+        "hide_page_title": true
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "aurora_story",
+    "aurora_pointers",
+    "aurora_distributor"
   ]
 }

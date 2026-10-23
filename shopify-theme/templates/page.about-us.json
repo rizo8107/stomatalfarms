@@ -1,0 +1,404 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "aurora_about_banner": {
+      "type": "aurora-banner",
+      "settings": {
+        "banner_label": "Our story banner",
+        "placeholder_note": "Founder / farm photo – real people, real cows.",
+        "height_mode": "fixed",
+        "desktop_width": 1920,
+        "desktop_height": 600,
+        "mobile_width": 900,
+        "mobile_height": 900,
+        "show_placeholder": true,
+        "heading_tag": "h2",
+        "full_width": false,
+        "corner_radius": 10,
+        "padding_top": 24,
+        "padding_bottom": 0,
+        "padding_top_mobile": 12,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "show_heading": true,
+        "heading_size": 170,
+        "heading_tag": "h1",
+        "show_breadcrumbs": false,
+        "show_breadcrumbs_border": false,
+        "full_width_breadcrumb": true,
+        "desktop_content_alignment": "text-left",
+        "mobile_content_alignment": "text-left",
+        "background_color_light": "#FBF6EC",
+        "text_color_light": "rgba(0,0,0,0)",
+        "textlink_color_light": "rgba(0,0,0,0)",
+        "background_color_dark": "#1F3B2D",
+        "text_color_dark": "rgba(0,0,0,0)",
+        "textlink_color_dark": "rgba(0,0,0,0)",
+        "max_container_page_width": 100,
+        "padding_top": 28,
+        "padding_bottom": 0,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "aurora_story": {
+      "type": "aurora-story",
+      "blocks": {
+        "p1": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>It began with passion: a belief that the things we bring into our homes should be as pure as the intentions behind them.</p>"
+          }
+        },
+        "p2": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>At Aurora, nothing is hidden. No chemicals, no synthetics, only what nature gives us. Cow dung, honoured for generations. Clove, our signature ingredient. Aromas drawn straight from the earth. What’s on our label is exactly what’s inside.</p>"
+          }
+        },
+        "p3": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>We make every product the way we would for our own families, because that’s who we make them for.</p>"
+          }
+        },
+        "p4": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>What started as passion now grows with every kind word from the people who light our incense in their homes.</p>"
+          }
+        },
+        "pull": {
+          "type": "pullquote",
+          "settings": {
+            "text": "<p>Your trust is our ritual. And we’re just getting started.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "pull"
+      ],
+      "settings": {
+        "eyebrow": "Our story",
+        "heading": "It began with <em>passion</em>.",
+        "heading_tag": "h1",
+        "show_rule": true,
+        "heading_size": 48,
+        "heading_size_mobile": 30,
+        "prose_serif": true,
+        "body_size": 18,
+        "body_size_mobile": 16,
+        "group_columns": 2,
+        "band": "sage",
+        "text_align": "center",
+        "content_width": 820,
+        "padding_desktop": 88,
+        "padding_mobile": 44,
+        "heading_color": "#1F3B2D",
+        "body_color": "#2A211A",
+        "eyebrow_color": "#8A6420",
+        "accent_color": "#8A6420",
+        "limit_handles": ""
+      }
+    },
+    "aurora_comparison": {
+      "type": "comparison-table",
+      "blocks": {
+        "cr1": {
+          "type": "criterion",
+          "settings": {
+            "heading": "Base material",
+            "criterion_detail_product": "Purified desi cow dung",
+            "criterion_detail_externals": "Charcoal powder"
+          }
+        },
+        "cr2": {
+          "type": "criterion",
+          "settings": {
+            "heading": "Bamboo core",
+            "criterion_detail_product": "None – bamboo-less",
+            "criterion_detail_externals": "Bamboo stick core"
+          }
+        },
+        "cr3": {
+          "type": "criterion",
+          "settings": {
+            "heading": "Fragrance",
+            "criterion_detail_product": "Natural herbs & extracts",
+            "criterion_detail_externals": "Synthetic perfume"
+          }
+        },
+        "cr4": {
+          "type": "criterion",
+          "settings": {
+            "heading": "Chemical binders",
+            "criterion_detail_product": "None",
+            "criterion_detail_externals": "Often used"
+          }
+        },
+        "cr5": {
+          "type": "criterion",
+          "settings": {
+            "heading": "Eye irritation / heavy smoke",
+            "criterion_detail_product": "Gentle, low smoke",
+            "criterion_detail_externals": "Common"
+          }
+        },
+        "cr6": {
+          "type": "criterion",
+          "settings": {
+            "heading": "Leftover ash",
+            "criterion_detail_product": "Reusable as fertiliser / vibhuti",
+            "criterion_detail_externals": "Waste"
+          }
+        },
+        "cr7": {
+          "type": "criterion",
+          "settings": {
+            "heading": "Safe around kids & pets",
+            "criterion_detail_product": "Yes",
+            "criterion_detail_externals": "Not always"
+          }
+        }
+      },
+      "block_order": [
+        "cr1",
+        "cr2",
+        "cr3",
+        "cr4",
+        "cr5",
+        "cr6",
+        "cr7"
+      ],
+      "name": "t:sections.comparision-table.name",
+      "settings": {
+        "heading": "Aurora vs Regular Incense",
+        "highlight_type": "underline",
+        "heading_size": 100,
+        "heading_tag": "h2",
+        "heading_alignment": "center",
+        "description": "",
+        "product": "",
+        "alternative_text": "Aurora",
+        "external_item_labels": "Regular incense",
+        "background_color_light": "rgba(0,0,0,0)",
+        "heading_light": "rgba(0,0,0,0)",
+        "color_heading_highlight_light": "rgba(0,0,0,0)",
+        "text_light": "rgba(0,0,0,0)",
+        "column_highlight_light": "rgba(0,0,0,0)",
+        "line_border": "rgba(0,0,0,0)",
+        "background_color_dark": "rgba(0,0,0,0)",
+        "heading_dark": "rgba(0,0,0,0)",
+        "color_heading_highlight_dark": "rgba(0,0,0,0)",
+        "text_dark": "rgba(0,0,0,0)",
+        "column_highlight_dark": "rgba(0,0,0,0)",
+        "line_border_dark": "rgba(0,0,0,0)",
+        "full_width": false,
+        "show_section_divider": false,
+        "padding_top": 28,
+        "padding_bottom": 28,
+        "show_section_divider_mobile": false,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 28
+      }
+    },
+    "aurora_best": {
+      "type": "featured-collection",
+      "blocks": {
+        "collection_epUrnE": {
+          "type": "collection",
+          "settings": {
+            "collection": "best-sellers",
+            "show_description": false,
+            "description": "",
+            "number_of_lines_shown": "none",
+            "read_more_label": "Read more",
+            "see_less_label": "See less",
+            "show_vendor": false,
+            "show_rating": true,
+            "show_highlighted_features": false,
+            "show_highlighted_attributes": false,
+            "show_quickview": false,
+            "show_promotion": false,
+            "promotion_position": "left",
+            "card_link": "",
+            "open_new_window": false,
+            "heading": "Featured collection",
+            "highlight_type": "underline",
+            "heading_size": 70,
+            "content": "<p>10% OFF</p>",
+            "text_size": 100,
+            "content_alignment": "center",
+            "content_position": "bottom",
+            "button_label": "See more",
+            "button_link": "",
+            "open_new_window_button": false,
+            "show_button_style": "primary",
+            "enable_text_overlay": false,
+            "overlay_opacity": 0,
+            "image_ratio": "100",
+            "background_color": "rgba(0,0,0,0)",
+            "color_text": "rgba(0,0,0,0)",
+            "color_heading_highlight_light": "rgba(0,0,0,0)",
+            "color_button": "rgba(0,0,0,0)",
+            "color_text_button": "rgba(0,0,0,0)",
+            "color_button_hover": "rgba(0,0,0,0)",
+            "color_text_button_hover": "rgba(0,0,0,0)",
+            "color_button_secondary": "rgba(0,0,0,0)",
+            "secondary_button_text": "rgba(0,0,0,0)",
+            "colors_text_link": "rgba(0,0,0,0)",
+            "show_sound_control": false,
+            "video_url": "",
+            "enable_video_autoplay": false,
+            "video_alt_text": "",
+            "product_card": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_epUrnE"
+      ],
+      "name": "Best Sellers",
+      "settings": {
+        "title": "Start your [ritual]",
+        "highlight_type": "font_highlight",
+        "heading_size": 100,
+        "heading_tag": "h2",
+        "heading_alignment": "center",
+        "subheading": "",
+        "text": "",
+        "show_view_all": true,
+        "view_all_position": "bottom",
+        "view_all_button_style": "secondary",
+        "title_size": 90,
+        "title_style": "capitalize",
+        "title_position": "inline",
+        "tab_button_style": "button",
+        "color_background": "rgba(0,0,0,0)",
+        "color_text": "rgba(0,0,0,0)",
+        "color_background_secondary": "rgba(0,0,0,0)",
+        "color_text_secondary": "rgba(0,0,0,0)",
+        "color_background_hover": "rgba(0,0,0,0)",
+        "color_text_hover": "rgba(0,0,0,0)",
+        "color_background_dark": "rgba(0,0,0,0)",
+        "color_text_dark": "rgba(0,0,0,0)",
+        "color_background_secondary_dark": "rgba(0,0,0,0)",
+        "color_text_secondary_dark": "rgba(0,0,0,0)",
+        "color_background_hover_dark": "rgba(0,0,0,0)",
+        "color_text_hover_dark": "rgba(0,0,0,0)",
+        "enable_desktop_slider": false,
+        "slider_style": "vertical",
+        "swiper_on_mobile": true,
+        "enable_arrow_mobile": false,
+        "auto_play": false,
+        "change_slides_speed": 5,
+        "columns_desktop": 4,
+        "rows_desktop": 1,
+        "spacing": 20,
+        "full_width": false,
+        "show_section_divider": false,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "columns_mobile": "2",
+        "spacing_mobile": 16,
+        "full_width_mobile": false,
+        "show_section_divider_mobile": false,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "aurora_pointers": {
+      "type": "aurora-story",
+      "blocks": {
+        "g1": {
+          "type": "group",
+          "settings": {
+            "heading": "Who we are",
+            "points": "A passion-driven team creating eco-friendly, sustainable, high-quality products for everyday rituals."
+          }
+        },
+        "g2": {
+          "type": "group",
+          "settings": {
+            "heading": "What we promise",
+            "points": "No chemicals, no synthetics, no shortcuts.\nComplete transparency: what’s on the label is exactly what’s inside."
+          }
+        },
+        "g3": {
+          "type": "group",
+          "settings": {
+            "heading": "What makes Aurora different",
+            "points": "Every ingredient is naturally sourced.\nEvery aroma comes straight from nature, with nothing synthetic added.\nCow dung at the heart of our incense, valued for generations for its purifying properties.\nAsh that can be reused in many ways around the home.\nOur signature ingredient, named openly: clove."
+          }
+        },
+        "g4": {
+          "type": "group",
+          "settings": {
+            "heading": "What we stand for",
+            "points": "The earth, the wellbeing of our families, and everything genuinely good."
+          }
+        },
+        "g5": {
+          "type": "group",
+          "settings": {
+            "heading": "Where we’re headed",
+            "points": "Taking natural, honest rituals to homes around the world, fuelled by the love of the people who use our products."
+          }
+        }
+      },
+      "block_order": [
+        "g1",
+        "g2",
+        "g3",
+        "g4",
+        "g5"
+      ],
+      "settings": {
+        "eyebrow": "About Aurora",
+        "heading": "Made the way we’d make it <em>for our own</em>.",
+        "heading_tag": "h2",
+        "show_rule": true,
+        "heading_size": 42,
+        "heading_size_mobile": 28,
+        "prose_serif": false,
+        "body_size": 17,
+        "body_size_mobile": 16,
+        "group_columns": 2,
+        "band": "ivory",
+        "text_align": "center",
+        "content_width": 980,
+        "padding_desktop": 88,
+        "padding_mobile": 44,
+        "heading_color": "#1F3B2D",
+        "body_color": "#2A211A",
+        "eyebrow_color": "#8A6420",
+        "accent_color": "#8A6420",
+        "limit_handles": ""
+      }
+    }
+  },
+  "order": [
+    "aurora_about_banner",
+    "aurora_story",
+    "aurora_pointers",
+    "aurora_comparison",
+    "aurora_best",
+    "main"
+  ]
+}

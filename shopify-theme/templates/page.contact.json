@@ -1,11 +1,112 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
-      "type": "contact",
-      "settings": {}
+      "type": "main-page",
+      "settings": {
+        "show_heading": true,
+        "heading_size": 100,
+        "heading_tag": "h4",
+        "show_breadcrumbs": false,
+        "show_breadcrumbs_border": false,
+        "full_width_breadcrumb": true,
+        "desktop_content_alignment": "text-left",
+        "mobile_content_alignment": "text-left",
+        "background_color_light": "#FBF6EC",
+        "text_color_light": "rgba(0,0,0,0)",
+        "textlink_color_light": "rgba(0,0,0,0)",
+        "background_color_dark": "#1F3B2D",
+        "text_color_dark": "rgba(0,0,0,0)",
+        "textlink_color_dark": "rgba(0,0,0,0)",
+        "max_container_page_width": 100,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "blocks": {
+        "name": {
+          "type": "name",
+          "settings": {
+            "heading": "Name",
+            "mark_as_required": false
+          }
+        },
+        "email": {
+          "type": "email",
+          "settings": {
+            "heading": "Email"
+          }
+        },
+        "phone": {
+          "type": "phone",
+          "settings": {
+            "heading": "Phone number",
+            "mark_as_required": true
+          }
+        },
+        "message": {
+          "type": "message",
+          "settings": {
+            "heading": "Message",
+            "mark_as_required": false
+          }
+        }
+      },
+      "block_order": [
+        "name",
+        "email",
+        "phone",
+        "message"
+      ],
+      "settings": {
+        "heading": "Questions? Send us an email",
+        "highlight_type": "underline",
+        "heading_size": 70,
+        "heading_tag": "h2",
+        "heading_alignment": "left",
+        "text": "",
+        "background_color_light": "rgba(0,0,0,0)",
+        "background_color_dark": "rgba(0,0,0,0)",
+        "button_label": "Send",
+        "button_alignment": "right",
+        "success_message": "Thanks for contacting us. We'll get back to you as soon as possible.",
+        "show_content": "info",
+        "form_alignment": "left",
+        "desktop_height": "550px",
+        "mobile_height": "400px",
+        "contact_heading": "Contact infomation",
+        "highlight_type_1": "underline",
+        "heading_tag_2": "h2",
+        "infomation": "",
+        "address": "Chennai, Tamil Nadu, India",
+        "phone_nummber": "+91 6379033131 | +91 9790768502",
+        "email_address": "contact@stomatalfarms.com",
+        "contact_text": "<p>Monday - Saturday: 9:00 AM - 6:00 PM<br/>Sunday: Closed</p>",
+        "full_width": false,
+        "show_section_divider": false,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "full_width_mobile": false,
+        "show_section_divider_mobile": false,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "form"
   ]
 }

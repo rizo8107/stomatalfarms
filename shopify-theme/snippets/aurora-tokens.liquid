@@ -1,0 +1,62 @@
+{%- comment -%}
+  Aurora design-system token overrides.
+
+  These rebind the theme's own CSS variables to the brand's faces and corner
+  radius. They live here rather than in aurora.css because theme.liquid renders
+  css-variables.liquid *after* the stylesheet link, so anything declared in
+  aurora.css at :root is overwritten by the theme's generated values. Rendering
+  this snippet immediately after css-variables puts the Aurora values last.
+
+  DM Serif Display and Jost are loaded from Google Fonts in theme.liquid, since
+  neither is offered by Shopify's font picker.
+{%- endcomment -%}
+<style>
+  :root {
+    /* Headings, product names, prices in hero, review quotes. */
+    --font-heading-family: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+    --font-heading-weight: 400;
+    --font-heading-style: normal;
+
+    /* One accent phrase per heading, italic, in Antique Gold. */
+    --font-heading-highlight: 'DM Serif Display', Georgia, serif;
+    --font-heading-highlight-style: italic;
+    --font-heading-highlight-weight: 400;
+
+    /* Everything else: body, buttons, labels, prices, navigation. */
+    --font-body-family: 'Jost', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-body-weight: 400;
+    --font-body-style: normal;
+    --font-button: 'Jost', system-ui, -apple-system, sans-serif;
+    --font-button-weight: 500;
+    --font-button-style: normal;
+
+    /* Corners 2px on everything except pills and round icon buttons. */
+    --border-radius: 2px;
+  }
+
+  {%- comment -%}
+    Product card title, driven from Theme settings > Aurora typography.
+    It scales smoothly between the two values rather than jumping at a
+    breakpoint: the phone size at 390px wide, the desktop size from 1024px up.
+
+    This snippet renders after aurora.css, so it overrides the fallback there.
+  {%- endcomment -%}
+  {%- liquid
+    assign ct_m = settings.aurora_card_title_mobile | default: 15 | times: 1.0
+    assign ct_d = settings.aurora_card_title_desktop | default: 21 | times: 1.0
+    assign ct_slope = ct_d | minus: ct_m | divided_by: 6.34
+    assign ct_offset = ct_slope | times: 3.9
+    assign ct_offset = ct_m | minus: ct_offset
+  -%}
+  .card-info {
+    --aur-card-title: clamp({{ ct_m }}px, {{ ct_slope }}vw + {{ ct_offset }}px, {{ ct_d }}px);
+  }
+
+  {%- comment -%}
+    Height of the full-width collection cards on phones, from
+    Theme settings > Aurora layout.
+  {%- endcomment -%}
+  .section-collection-list {
+    --aur-collection-card-h: {{ settings.aurora_collection_card_height | default: 150 }}px;
+  }
+</style>

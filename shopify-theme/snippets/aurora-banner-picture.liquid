@@ -1,0 +1,60 @@
+{%- comment -%}
+  Aurora: responsive <picture> for a banner, from uploaded images or from theme files
+  (assets/), with a separate mobile crop.
+
+  Accepts:
+  - desktop_image / mobile_image: {Image} uploaded artwork (wins over theme files)
+  - desktop_asset / mobile_asset: {String} theme file names, e.g. aurora-cat-combo-desktop.jpg
+  - alt: {String}
+  - loading: {String} 'lazy' | 'eager'
+  - priority: {String} fetchpriority
+  - attrs: {String} extra attributes for the <picture>
+{%- endcomment -%}
+{%- liquid
+  assign d_img = desktop_image | default: mobile_image
+  assign m_img = mobile_image
+  assign d_file = desktop_asset | default: mobile_asset
+  assign m_file = mobile_asset
+-%}
+<picture class="aurora-banner__media" {{ attrs }}>
+  {%- if m_img != blank -%}
+    <source
+      media="(max-width: 767px)"
+      srcset="{{ m_img | image_url: width: 450 }} 450w, {{ m_img | image_url: width: 750 }} 750w, {{ m_img | image_url: width: 1100 }} 1100w"
+      sizes="100vw"
+      width="{{ m_img.width }}"
+      height="{{ m_img.height }}"
+    >
+  {%- elsif d_img == blank and m_file != blank -%}
+    <source
+      media="(max-width: 767px)"
+      srcset="{{ m_file | asset_img_url: '450x' }} 450w, {{ m_file | asset_img_url: '750x' }} 750w, {{ m_file | asset_img_url: '900x' }} 900w"
+      sizes="100vw"
+    >
+  {%- endif -%}
+  {%- if d_img != blank -%}
+    {{
+      d_img
+      | image_url: width: 2400
+      | image_tag:
+        widths: '480, 750, 1100, 1500, 1920, 2400',
+        sizes: '100vw',
+        alt: alt,
+        loading: loading,
+        fetchpriority: priority,
+        class: 'aurora-banner__img'
+    }}
+  {%- elsif d_file != blank -%}
+    <img
+      class="aurora-banner__img"
+      src="{{ d_file | asset_img_url: '1920x' }}"
+      srcset="{{ d_file | asset_img_url: '750x' }} 750w, {{ d_file | asset_img_url: '1100x' }} 1100w, {{ d_file | asset_img_url: '1500x' }} 1500w, {{ d_file | asset_img_url: '1920x' }} 1920w"
+      sizes="100vw"
+      alt="{{ alt }}"
+      loading="{{ loading }}"
+      fetchpriority="{{ priority }}"
+      width="1920"
+      height="600"
+    >
+  {%- endif -%}
+</picture>

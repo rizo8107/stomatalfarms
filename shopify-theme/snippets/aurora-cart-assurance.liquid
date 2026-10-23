@@ -1,0 +1,17 @@
+{%- comment -%}
+  Aurora: shipping and returns in plain words, under the checkout button
+  (Theme settings › Aurora: Cart & WhatsApp).
+{%- endcomment -%}
+{%- if settings.aurora_cart_assurance_enable -%}
+  <ul class="aurora-cart-assurance" role="list">
+    {%- for i in (1..4) -%}
+      {%- assign key = 'aurora_cart_line_' | append: i -%}
+      {%- if settings[key] != blank -%}
+        <li>
+          <svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path d="M5 10.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          {{ settings[key] }}
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

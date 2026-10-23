@@ -1,0 +1,112 @@
+{%- comment -%}
+  Aurora footer: brand column + link columns (blocks) + seller details strip + payments/copyright.
+  Link columns use "Label | /url" lines, so they're edited here instead of in admin menus.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign wa = s.whatsapp | remove: '+' | remove: ' ' | remove: '-'
+-%}
+<footer class="aurora-foot" style="--af-bg: {{ s.background }}; --af-text: {{ s.text_color }}; --af-accent: {{ s.accent_color }};">
+  <div class="aurora-foot__wrap">
+    <div class="aurora-foot__top">
+      <div class="aurora-foot__brand">
+        {%- if s.logo != blank -%}
+          <a href="{{ routes.root_url }}" class="aurora-foot__logo">{{ s.logo | image_url: width: 240 | image_tag: loading: 'lazy', width: s.logo_width, alt: shop.name }}</a>
+        {%- endif -%}
+        {%- if s.tagline != blank -%}<p class="aurora-foot__tagline">{{ s.tagline }}</p>{%- endif -%}
+        <div class="aurora-foot__social">
+          {%- if settings.social_instagram_link != blank -%}
+            <a href="{{ settings.social_instagram_link }}" target="_blank" rel="noopener" aria-label="Instagram"><svg class="aurora-foot__line-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          {%- endif -%}
+          {%- if s.whatsapp != blank -%}
+            <a href="https://wa.me/{{ wa }}" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.6 11.6 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3z"/></svg></a>
+          {%- endif -%}
+          {%- if s.email != blank -%}
+            <a href="mailto:{{ s.email }}" aria-label="Email"><svg class="aurora-foot__line-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+          {%- endif -%}
+        </div>
+        {%- if s.whatsapp != blank or s.email != blank -%}
+          <ul class="aurora-foot__contact" role="list">
+            {%- if s.whatsapp != blank -%}<li>WhatsApp / Call: <a href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{{ s.whatsapp }}</a></li>{%- endif -%}
+            {%- if s.email != blank -%}<li>Email: <a href="mailto:{{ s.email }}">{{ s.email }}</a></li>{%- endif -%}
+            {%- if s.hours != blank -%}<li>{{ s.hours }}</li>{%- endif -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- assign lines = block.settings.links | newline_to_br | split: '<br />' -%}
+        <details class="aurora-foot__col" {{ block.shopify_attributes }} open>
+          <summary class="aurora-foot__head">{{ block.settings.title }}<svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path d="M5 7.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <ul role="list">
+            {%- for line in lines -%}
+              {%- assign parts = line | split: '|' -%}
+              {%- assign label = parts[0] | strip -%}
+              {%- if label != blank -%}
+                <li><a href="{{ parts[1] | strip | default: '#' }}">{{ label }}</a></li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </details>
+      {%- endfor -%}
+    </div>
+
+    {%- if s.seller_details != blank -%}
+      <div class="aurora-foot__seller">{{ s.seller_details }}</div>
+    {%- endif -%}
+
+    <div class="aurora-foot__bottom">
+      <p>© {{ 'now' | date: '%Y' }} {{ s.copyright | default: shop.name }}</p>
+      {%- if s.show_payments -%}
+        <ul class="aurora-foot__pay" role="list">
+          {%- liquid
+            assign pay_types = shop.enabled_payment_types
+            if settings.custom_payment != blank
+              assign pay_types = settings.custom_payment | remove: ' ' | split: ','
+            endif
+            if pay_types.size == 0
+              assign pay_types = s.payment_fallback | remove: ' ' | split: ','
+            endif
+          -%}
+          {%- for type in pay_types -%}<li>{{ type | payment_type_svg_tag }}</li>{%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Aurora: Footer",
+  "tag": "div",
+  "class": "x-section",
+  "enabled_on": { "groups": ["footer"] },
+  "max_blocks": 4,
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "range", "id": "logo_width", "label": "Logo width", "min": 60, "max": 200, "step": 10, "unit": "px", "default": 100 },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Ancient rituals, elevated living. Handmade cow dung incense from Chennai." },
+    { "type": "text", "id": "whatsapp", "label": "WhatsApp / phone", "default": "+91 63790 33131" },
+    { "type": "text", "id": "email", "label": "Email" },
+    { "type": "text", "id": "hours", "label": "Support hours", "default": "Mon–Sat, 9 AM – 6 PM" },
+    { "type": "richtext", "id": "seller_details", "label": "Seller details (E-Commerce Rules)", "info": "Seller name, registered address, grievance officer name and contact" },
+    { "type": "text", "id": "copyright", "label": "Copyright name", "default": "Aurora by Stomatal Farms LLP" },
+    { "type": "checkbox", "id": "show_payments", "label": "Show payment icons", "default": true },
+    { "type": "text", "id": "payment_fallback", "label": "Payment icons to show", "info": "Used when Shopify reports no payment methods. Comma separated, e.g. google_pay, paytm, visa, master, rupay", "default": "google_pay, paytm, visa, master, rupay" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#1F3B2D" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#B9CDB4" },
+    { "type": "color", "id": "accent_color", "label": "Headings and hover", "default": "#D9B866" }
+  ],
+  "blocks": [
+    {
+      "type": "links",
+      "name": "Link column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Shop" },
+        { "type": "textarea", "id": "links", "label": "Links", "info": "One per line: Label | /link", "default": "Incense Sticks | /collections/cow-dung-incense-sticks" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Aurora: Footer", "category": "Aurora", "blocks": [ { "type": "links" }, { "type": "links" }, { "type": "links" } ] } ]
+}
+{% endschema %}

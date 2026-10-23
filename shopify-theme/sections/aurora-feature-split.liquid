@@ -1,0 +1,486 @@
+{%- comment -%}
+  Aurora feature split panel.
+
+  A two-up editorial row: one half is a text panel (eyebrow, serif heading with
+  an optional gold italic phrase, body copy, optional bullet list, optional
+  price, one button), the other half is a full-bleed image. Used for the ARKA
+  "original blend" row and the Gift Sets row.
+
+  On mobile the two halves stack; mobile_order decides whether the photo or the
+  copy comes first, and the image drops to its own aspect ratio so it never
+  grows taller than the 4:5 tile the mobile spec calls for.
+
+  The heading accepts an <em> wrapper for the one accent phrase per heading the
+  style guide allows, e.g. Gifts <em>you are proud of.</em>
+{%- endcomment -%}
+
+{%- liquid
+  assign img = section.settings.image
+  if img == blank and section.settings.product != blank
+    assign img = section.settings.product.featured_image
+  endif
+
+  assign price_label = section.settings.price_text | strip
+  if price_label == blank and section.settings.show_price and section.settings.product != blank
+    assign price_label = section.settings.product.price | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹'
+  endif
+
+  assign btn_link = section.settings.button_link
+  if btn_link == blank and section.settings.product != blank
+    assign btn_link = section.settings.product.url
+  endif
+
+  assign ratio_pct = 125
+  case section.settings.image_ratio_mobile
+    when 'square'
+      assign ratio_pct = 100
+    when 'landscape'
+      assign ratio_pct = 67
+    when 'portrait'
+      assign ratio_pct = 125
+    when 'tall'
+      assign ratio_pct = 140
+  endcase
+-%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .aurora-fsplit {
+    --fs-pt: {{ section.settings.padding_mobile }}px;
+    --fs-panel: {{ section.settings.panel_color }};
+    --fs-heading: {{ section.settings.heading_color }};
+    --fs-body: {{ section.settings.body_color }};
+    --fs-eyebrow: {{ section.settings.eyebrow_color }};
+    --fs-accent: {{ section.settings.accent_color }};
+    --fs-tick: {{ section.settings.bullet_color }};
+    --fs-h: {{ section.settings.heading_size_mobile }}px;
+    --fs-b: {{ section.settings.body_size_mobile }}px;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .aurora-fsplit {
+      --fs-pt: {{ section.settings.padding_desktop }}px;
+      --fs-h: {{ section.settings.heading_size }}px;
+      --fs-b: {{ section.settings.body_size }}px;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .aurora-fsplit {
+    background: var(--aur-ivory, #FFFDF7);
+    padding-block: {{ section.settings.section_padding_mobile }}px;
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__wrap {
+    {% if section.settings.full_width %}
+      max-width: none;
+      padding-inline: 0;
+    {% else %}
+      max-width: {{ section.settings.content_width }}px;
+      margin-inline: auto;
+      padding-inline: 20px;
+    {% endif %}
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    /* Corners 2px on everything except pills and round icon buttons. */
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__panel {
+    background: var(--fs-panel);
+    color: var(--fs-body);
+    padding: var(--fs-pt) 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    {% if section.settings.text_align == 'center' %}
+      text-align: center;
+      align-items: center;
+    {% endif %}
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__media {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: {{ ratio_pct }}%;
+    background: var(--aur-sage, #EAF3E7);
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__media img,
+  #shopify-section-{{ section.id }} .aurora-fsplit__media svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: {{ section.settings.image_focus }};
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__eyebrow {
+    font-family: var(--font-body-family);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fs-eyebrow);
+    margin: 0;
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__heading {
+    font-family: var(--font-heading-family);
+    font-weight: var(--font-heading-weight, 400);
+    font-size: var(--fs-h);
+    line-height: 1.1;
+    letter-spacing: {{ section.settings.heading_tracking | divided_by: 100.0 }}em;
+    color: var(--fs-heading);
+    margin: 0;
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__heading em {
+    font-family: var(--font-heading-highlight, var(--font-heading-family));
+    font-style: italic;
+    color: var(--fs-accent);
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__body {
+    font-family: var(--font-body-family);
+    font-size: var(--fs-b);
+    line-height: 1.55;
+    color: var(--fs-body);
+    margin: 0;
+    max-width: 46ch;
+    {% if section.settings.text_align == 'center' %}margin-inline: auto;{% endif %}
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__body > * + * {
+    margin-top: 0.75em;
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__list {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+    {% if section.settings.text_align == 'center' %}justify-items: center;{% endif %}
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-family: var(--font-body-family);
+    font-size: var(--fs-b);
+    line-height: 1.55;
+    color: var(--fs-body);
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__tick {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    color: var(--fs-tick);
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__price {
+    font-family: var(--font-heading-family);
+    font-size: calc(var(--fs-b) + 8px);
+    line-height: 1.2;
+    color: var(--fs-heading);
+    margin: 0;
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__rule {
+    width: 48px;
+    height: 1px;
+    border: 0;
+    margin: 0;
+    background: var(--fs-accent);
+    opacity: 0.7;
+    {% if section.settings.text_align == 'center' %}margin-inline: auto;{% endif %}
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: {% if section.settings.text_align == 'center' %}center{% else %}flex-start{% endif %};
+    min-height: 52px;
+    padding: 0 30px;
+    margin-top: 6px;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    background: {{ section.settings.button_bg }};
+    color: {{ section.settings.button_text }};
+    font-family: var(--font-button, var(--font-body-family));
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  #shopify-section-{{ section.id }} .aurora-fsplit__cta:hover {
+    background: {{ section.settings.button_bg_hover }};
+    color: {{ section.settings.button_text_hover }};
+  }
+
+  {%- comment -%} Which half comes first once the two halves stack. {%- endcomment -%}
+  {% if section.settings.mobile_order == 'image_first' %}
+    #shopify-section-{{ section.id }} .aurora-fsplit__media { order: 1; }
+    #shopify-section-{{ section.id }} .aurora-fsplit__panel { order: 2; }
+  {% else %}
+    #shopify-section-{{ section.id }} .aurora-fsplit__panel { order: 1; }
+    #shopify-section-{{ section.id }} .aurora-fsplit__media { order: 2; }
+  {% endif %}
+
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .aurora-fsplit {
+      padding-block: {{ section.settings.section_padding }}px;
+    }
+    #shopify-section-{{ section.id }} .aurora-fsplit__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    #shopify-section-{{ section.id }} .aurora-fsplit__panel {
+      order: {% if section.settings.media_position == 'right' %}1{% else %}2{% endif %};
+      padding: var(--fs-pt) clamp(32px, 5vw, 72px);
+      gap: 18px;
+    }
+    #shopify-section-{{ section.id }} .aurora-fsplit__media {
+      order: {% if section.settings.media_position == 'right' %}2{% else %}1{% endif %};
+      padding-bottom: 0;
+      min-height: 100%;
+    }
+    #shopify-section-{{ section.id }} .aurora-fsplit__eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.24em;
+    }
+  }
+{%- endstyle -%}
+
+<section class="aurora-fsplit">
+  <div class="aurora-fsplit__wrap">
+    <div class="aurora-fsplit__grid">
+      <div class="aurora-fsplit__media">
+        {%- if img != blank -%}
+          {{
+            img
+            | image_url: width: 1400
+            | image_tag:
+              widths: '480,720,990,1400,1800',
+              sizes: '(min-width: 990px) 50vw, 100vw',
+              loading: 'lazy',
+              alt: img.alt
+          }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+
+      <div class="aurora-fsplit__panel">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="aurora-fsplit__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <{{ section.settings.heading_tag }} class="aurora-fsplit__heading">
+            {{- section.settings.heading -}}
+          </{{ section.settings.heading_tag }}>
+        {%- endif -%}
+
+        {%- if section.settings.show_rule -%}
+          <hr class="aurora-fsplit__rule">
+        {%- endif -%}
+
+        {%- if section.settings.body != blank -%}
+          <div class="aurora-fsplit__body">{{ section.settings.body }}</div>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <ul class="aurora-fsplit__list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'bullet' and block.settings.text != blank -%}
+                <li {{ block.shopify_attributes }}>
+                  <svg class="aurora-fsplit__tick" viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false">
+                    <path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
+                  </svg>
+                  <span>{{ block.settings.text }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if price_label != blank -%}
+          <p class="aurora-fsplit__price">{{ price_label }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank -%}
+          <a class="aurora-fsplit__cta" href="{{ btn_link | default: '#' }}">
+            {{- section.settings.button_label -}}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Aurora feature split",
+  "tag": "section",
+  "class": "aurora-fsplit-section",
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Image side (desktop)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "select",
+      "id": "mobile_order",
+      "label": "First on mobile",
+      "options": [
+        { "value": "image_first", "label": "Image" },
+        { "value": "text_first", "label": "Text" }
+      ],
+      "default": "image_first"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centre" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Edge to edge",
+      "default": true
+    },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "Supplies the image, price and button link when those are left empty."
+    },
+    {
+      "type": "select",
+      "id": "image_ratio_mobile",
+      "label": "Image ratio (mobile)",
+      "options": [
+        { "value": "landscape", "label": "3:2 landscape" },
+        { "value": "square", "label": "1:1 square" },
+        { "value": "portrait", "label": "4:5 portrait" },
+        { "value": "tall", "label": "5:7 tall" }
+      ],
+      "default": "portrait"
+    },
+    {
+      "type": "select",
+      "id": "image_focus",
+      "label": "Image focus",
+      "options": [
+        { "value": "center", "label": "Centre" },
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" },
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Wrap one phrase in <em> </em> to set it in gold italic.",
+      "default": "ARKA"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading tag",
+      "options": [
+        { "value": "h2", "label": "h2" },
+        { "value": "h3", "label": "h3" },
+        { "value": "p", "label": "Paragraph" }
+      ],
+      "default": "h2"
+    },
+    { "type": "checkbox", "id": "show_rule", "label": "Show rule under heading", "default": false },
+    { "type": "richtext", "id": "body", "label": "Body" },
+    { "type": "checkbox", "id": "show_price", "label": "Show price", "default": false },
+    { "type": "text", "id": "price_text", "label": "Price override" },
+    { "type": "header", "content": "Button" },
+    { "type": "text", "id": "button_label", "label": "Label" },
+    { "type": "url", "id": "button_link", "label": "Link" },
+    { "type": "color", "id": "button_bg", "label": "Background", "default": "#D9B866" },
+    { "type": "color", "id": "button_text", "label": "Text", "default": "#1F3B2D" },
+    { "type": "color", "id": "button_bg_hover", "label": "Background on hover", "default": "#D9B866" },
+    { "type": "color", "id": "button_text_hover", "label": "Text on hover", "default": "#1F3B2D" },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "panel_color", "label": "Panel background", "default": "#1F3B2D" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#FFFDF7" },
+    { "type": "color", "id": "body_color", "label": "Body text", "default": "#EAF3E7" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#D9B866" },
+    { "type": "color", "id": "accent_color", "label": "Accent (gold italic, rule)", "default": "#D9B866" },
+    { "type": "color", "id": "bullet_color", "label": "Bullet tick", "default": "#D9B866" },
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "heading_size", "min": 28, "max": 96, "step": 2, "unit": "px", "label": "Heading size (desktop)", "default": 64 },
+    { "type": "range", "id": "heading_size_mobile", "min": 22, "max": 64, "step": 1, "unit": "px", "label": "Heading size (mobile)", "default": 38 },
+    { "type": "range", "id": "heading_tracking", "min": -2, "max": 20, "step": 1, "label": "Heading letter spacing (hundredths of an em)", "default": 0 },
+    { "type": "range", "id": "body_size", "min": 13, "max": 22, "step": 1, "unit": "px", "label": "Body size (desktop)", "default": 16 },
+    { "type": "range", "id": "body_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Body size (mobile)", "default": 15 },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "content_width", "min": 1000, "max": 1600, "step": 20, "unit": "px", "label": "Content width", "default": 1300, "info": "Ignored when Edge to edge is on." },
+    { "type": "range", "id": "section_padding", "min": 0, "max": 140, "step": 4, "unit": "px", "label": "Space above and below (desktop)", "default": 88 },
+    { "type": "range", "id": "section_padding_mobile", "min": 0, "max": 96, "step": 2, "unit": "px", "label": "Space above and below (mobile)", "default": 40 },
+    { "type": "range", "id": "padding_desktop", "min": 32, "max": 140, "step": 4, "unit": "px", "label": "Panel padding (desktop)", "default": 72 },
+    { "type": "range", "id": "padding_mobile", "min": 20, "max": 96, "step": 2, "unit": "px", "label": "Panel padding (mobile)", "default": 36 }
+  ],
+  "blocks": [
+    {
+      "type": "bullet",
+      "name": "Bullet",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Aurora feature split - dark",
+      "settings": {
+        "panel_color": "#1F3B2D",
+        "heading_color": "#FFFDF7",
+        "body_color": "#EAF3E7",
+        "eyebrow_color": "#D9B866",
+        "accent_color": "#D9B866",
+        "bullet_color": "#D9B866",
+        "button_bg": "#D9B866",
+        "button_text": "#1F3B2D"
+      }
+    },
+    {
+      "name": "Aurora feature split - light",
+      "settings": {
+        "panel_color": "#FFFDF7",
+        "heading_color": "#1F3B2D",
+        "body_color": "#4F473F",
+        "eyebrow_color": "#8A6420",
+        "accent_color": "#8A6420",
+        "bullet_color": "#2E7D4F",
+        "button_bg": "#2E7D4F",
+        "button_text": "#FFFFFF",
+        "button_bg_hover": "#236A40",
+        "button_text_hover": "#FFFFFF",
+        "heading_size": 48,
+        "heading_size_mobile": 32
+      }
+    }
+  ]
+}
+{% endschema %}

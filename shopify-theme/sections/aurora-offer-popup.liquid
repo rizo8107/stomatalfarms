@@ -1,0 +1,253 @@
+{%- comment -%}
+  Aurora offer popup.
+
+  Ported from the React OfferPopup (src/components/OfferPopup.tsx). Same
+  behaviour: opens a few seconds after the page loads, once per browser
+  session, showing one product with its image, price, saving and up to three
+  highlights, with Add to cart and Details buttons.
+
+  Differences from the React version
+  - Product comes from a product picker, not a hard-coded handle.
+  - Highlights are read from the product metafield custom.key_highlights, one
+    per line, exactly as the React app read them.
+  - Styled on the Aurora tokens (Forest panel, Soft Gold on the dark green,
+    2px corners) instead of the original brown and bright yellow.
+  - Add to cart goes through the theme's own cart, so the cart drawer opens
+    the same way it does from a product card.
+  - Uses the native <dialog> element: Esc closes it, focus is trapped, and the
+    page behind is inert while it is open.
+  - In the theme editor it does not pop up on its own; it opens while its
+    section is selected, so it can be previewed and edited.
+{%- endcomment -%}
+
+{%- liquid
+  assign offer = section.settings.product
+  assign variant = offer.selected_or_first_available_variant
+  assign show = false
+  if section.settings.enabled and offer != blank and variant != blank
+    assign show = true
+  endif
+
+  assign price = variant.price
+  assign compare = variant.compare_at_price
+  assign has_discount = false
+  if compare > price
+    assign has_discount = true
+    assign saving = compare | minus: price
+    assign percent_off = saving | times: 100.0 | divided_by: compare | round
+  endif
+
+  assign highlights = ''
+  assign raw_highlights = offer.metafields.custom.key_highlights.value
+  if raw_highlights != blank
+    assign highlights = raw_highlights | newline_to_br | split: '<br />'
+  endif
+-%}
+
+{%- if show -%}
+  <dialog
+    id="aurora-offer-{{ section.id }}"
+    class="aurora-offer"
+    aria-labelledby="aurora-offer-title-{{ section.id }}"
+    data-storage-key="{{ section.settings.storage_key | default: 'aurora_offer_popup_seen' | escape }}"
+    data-delay="{{ section.settings.delay | default: 3 | times: 1000 }}"
+    data-once="{{ section.settings.once_per_session }}"
+    {{ section.shopify_attributes }}
+  >
+    <button type="button" class="aurora-offer__close" data-offer-close aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+
+    {%- if offer.featured_image != blank -%}
+      <div class="aurora-offer__media">
+        {{
+          offer.featured_image
+          | image_url: width: 760
+          | image_tag:
+            widths: '380, 560, 760',
+            sizes: '(min-width: 480px) 380px, calc(100vw - 32px)',
+            loading: 'eager',
+            fetchpriority: 'low',
+            alt: offer.featured_image.alt | default: offer.title
+        }}
+        {%- if has_discount -%}
+          <span class="aurora-offer__badge">{{ percent_off }}% off</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="aurora-offer__body">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="aurora-offer__eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+
+      <h2 class="aurora-offer__title" id="aurora-offer-title-{{ section.id }}">{{ offer.title }}</h2>
+
+      {%- if highlights != blank -%}
+        <ul class="aurora-offer__points">
+          {%- assign shown = 0 -%}
+          {%- for line in highlights -%}
+            {%- assign point = line | strip -%}
+            {%- if point != blank and shown < 3 -%}
+              {%- assign shown = shown | plus: 1 -%}
+              <li>{%- render 'aurora-icon', icon: 'check' -%}<span>{{ point }}</span></li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      <div class="aurora-offer__price">
+        <span class="aurora-offer__now">{{ price | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</span>
+        {%- if has_discount -%}
+          <s class="aurora-offer__was">{{ compare | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</s>
+          <span class="aurora-offer__save">Save {{ saving | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- if variant.available -%}
+        <div class="aurora-offer__actions">
+          <button type="button" class="aurora-offer__btn aurora-offer__btn--gold" data-offer-add data-variant-id="{{ variant.id }}">
+            {{ section.settings.button_label | default: 'Add to cart' }}
+          </button>
+          <a class="aurora-offer__btn aurora-offer__btn--ghost" href="{{ offer.url }}">Details</a>
+        </div>
+      {%- else -%}
+        <div class="aurora-offer__actions aurora-offer__actions--stack">
+          <a class="aurora-offer__btn aurora-offer__btn--gold" href="{{ offer.url }}">View offer</a>
+          <span class="aurora-offer__note">Back in stock soon</span>
+        </div>
+      {%- endif -%}
+    </div>
+  </dialog>
+
+  <script>
+    (function () {
+      var dlg = document.getElementById('aurora-offer-{{ section.id }}');
+      if (!dlg || typeof dlg.showModal !== 'function') return;
+
+      var KEY = dlg.getAttribute('data-storage-key');
+      var DELAY = Number(dlg.getAttribute('data-delay')) || 3000;
+      var ONCE = dlg.getAttribute('data-once') === 'true';
+
+      function seen() { try { return sessionStorage.getItem(KEY) === '1'; } catch (e) { return false; } }
+      function mark() { try { sessionStorage.setItem(KEY, '1'); } catch (e) { /* storage off: it simply shows again */ } }
+      function open() { if (!dlg.open) dlg.showModal(); }
+      function close() { if (dlg.open) dlg.close(); }
+
+      dlg.addEventListener('close', function () { if (ONCE) mark(); });
+      // The dialog has no padding, so a click on the dialog itself is a click on the backdrop.
+      dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });
+      dlg.querySelectorAll('[data-offer-close]').forEach(function (b) { b.addEventListener('click', close); });
+
+      // Add to cart: same path as aurora.js uses for product cards, so the drawer behaves the same.
+      var add = dlg.querySelector('[data-offer-add]');
+      if (add) {
+        add.addEventListener('click', async function () {
+          var label = add.textContent;
+          var store = function (n) { return (window.Alpine && window.Alpine.store(n)) || null; };
+          var helper = store('xCartHelper');
+          add.disabled = true;
+          add.textContent = 'Adding...';
+          try {
+            if (helper && helper.waitForCartUpdate) await helper.waitForCartUpdate();
+            window.updatingCart = true;
+            var sections = helper ? helper.getSectionsToRender().map(function (s) { return s.id; }) : [];
+            var res = await fetch(window.Shopify.routes.root + 'cart/add.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              body: JSON.stringify({ items: [{ id: Number(add.getAttribute('data-variant-id')), quantity: 1 }], sections: sections })
+            });
+            var data = await res.json();
+            if (!res.ok || data.status) throw new Error(data.description || data.message || 'Could not add to cart');
+            close(); // free the page before the cart drawer opens over it
+            if (helper && data.sections) helper.reRenderSections(data.sections);
+            var noti = store('xCartNoti');
+            var mini = store('xMiniCart');
+            if (noti && noti.enable) noti.setItem(data);
+            else if (mini) mini.openCart();
+            else window.location.href = window.Shopify.routes.root + 'cart';
+            document.dispatchEvent(new CustomEvent('neone:cart:items-changed'));
+          } catch (err) {
+            add.textContent = 'Try again';
+            setTimeout(function () { add.textContent = label; }, 2200);
+            add.disabled = false;
+            return;
+          } finally {
+            window.updatingCart = false;
+          }
+          add.disabled = false;
+          add.textContent = label;
+        });
+      }
+
+      // Theme editor: never pop up on its own; show while this section is selected.
+      if (window.Shopify && window.Shopify.designMode) {
+        document.addEventListener('shopify:section:select', function (e) {
+          if (e.target && e.target.contains(dlg)) open();
+        });
+        document.addEventListener('shopify:section:deselect', function (e) {
+          if (e.target && e.target.contains(dlg)) close();
+        });
+        return;
+      }
+
+      if (seen()) return;
+      setTimeout(function () {
+        // Do not stack on top of another open modal.
+        if (!document.querySelector('dialog[open]')) open();
+      }, DELAY);
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Aurora offer popup",
+  "tag": "div",
+  "class": "aurora-offer-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Show the popup",
+      "default": true
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Offer product",
+      "info": "Shown with its image, price and saving. Highlights come from the product's custom.key_highlights metafield, one per line."
+    },
+    { "type": "text", "id": "eyebrow", "label": "Label above the title", "default": "Monsoon offer" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" },
+    { "type": "header", "content": "Behaviour" },
+    {
+      "type": "range",
+      "id": "delay",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "unit": "s",
+      "label": "Open after",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "once_per_session",
+      "label": "Show once per visit",
+      "info": "After it is closed it stays hidden until the visitor starts a new browser session.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "storage_key",
+      "label": "Memory key",
+      "info": "Change this to show the popup again to people who already dismissed it, for example for a new offer.",
+      "default": "aurora_offer_popup_seen"
+    }
+  ],
+  "presets": [
+    { "name": "Aurora offer popup" }
+  ]
+}
+{% endschema %}

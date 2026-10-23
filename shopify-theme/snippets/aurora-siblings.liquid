@@ -1,0 +1,225 @@
+{%- comment -%}
+  Aurora product variations: AROMA and PACK SIZE.
+
+  The reference product page offers Aroma (Dasangam / Floral / Lemongrass) and
+  Pack size (1 box / 3 / 6 / 12) as two rows of options. In the store those
+  choices are spread over several separate products, and some of them also sit
+  inside one product as Size variants. The theme's own sibling feature needs
+  metafields that do not exist on these products, so this reads the same
+  name-based classification the collection filters use (aurora-product-kind).
+
+  Aroma row   : always shown on an incense stick or cup page. Each pill opens
+                the same kind of product in another fragrance, at the pack size
+                currently chosen, falling back to that fragrance's first pack.
+  Pack row    : shown only when the product has a single variant. Products that
+                already carry a Size picker keep their own pack buttons, so
+                nothing is shown twice.
+
+  Accepts:
+  - block: {Object} aurora_siblings block
+  - product: {Object}
+{%- endcomment -%}
+
+{%- liquid
+  capture cur_meta
+    render 'aurora-product-kind', product: product
+  endcapture
+  assign cm = cur_meta | split: '|'
+  assign cur_kind = cm[0]
+  assign cur_frag = cm[1] | strip
+
+  assign show = false
+  if cur_kind == 'sticks' or cur_kind == 'cups'
+    if cur_frag == 'dasangam' or cur_frag == 'floral' or cur_frag == 'lemongrass'
+      assign show = true
+    endif
+  endif
+-%}
+
+{%- if show -%}
+  {%- liquid
+    assign cur_variant = product.selected_or_first_available_variant
+    assign cur_pack = 1
+    if cur_variant.title contains 'Pack of'
+      assign cur_pack = cur_variant.title | split: 'Pack of' | last | strip | split: ' ' | first | plus: 0
+    elsif product.title contains 'Pack of'
+      assign cur_pack = product.title | split: 'Pack of' | last | strip | remove: ')' | split: ' ' | first | plus: 0
+    endif
+    assign cur_pack_s = cur_pack | append: ''
+
+    comment
+      One entry per (product, variant) of the same kind and a single known
+      fragrance: fragrance ~ pack ~ url ~ variant id ~ price ~ available ~ multi-variant
+    endcomment
+    assign entries = ''
+    for p in collections.all.products limit: 50
+      capture pm
+        render 'aurora-product-kind', product: p
+      endcapture
+      assign pp = pm | split: '|'
+      if pp[0] == cur_kind
+        assign pf = pp[1] | strip
+        if pf == 'dasangam' or pf == 'floral' or pf == 'lemongrass'
+          assign multi = false
+          if p.variants.size > 1
+            assign multi = true
+          endif
+          for v in p.variants
+            assign vp = 1
+            if v.title contains 'Pack of'
+              assign vp = v.title | split: 'Pack of' | last | strip | split: ' ' | first | plus: 0
+            elsif p.title contains 'Pack of'
+              assign vp = p.title | split: 'Pack of' | last | strip | remove: ')' | split: ' ' | first | plus: 0
+            endif
+            assign target = p.url
+            if multi
+              assign target = p.url | append: '?variant=' | append: v.id
+            endif
+            assign entry = pf | append: '~' | append: vp | append: '~' | append: target | append: '~' | append: v.id | append: '~' | append: v.price | append: '~' | append: v.available
+            assign entries = entries | append: entry | append: '¶'
+          endfor
+        endif
+      endif
+    endfor
+    assign rows = entries | split: '¶'
+
+    comment
+      Pack of every variant of THIS product, so the pills can follow a pack change on the page.
+    endcomment
+    assign variant_packs = ''
+    for v in product.variants
+      assign vpk = 1
+      if v.title contains 'Pack of'
+        assign vpk = v.title | split: 'Pack of' | last | strip | split: ' ' | first | plus: 0
+      elsif product.title contains 'Pack of'
+        assign vpk = product.title | split: 'Pack of' | last | strip | remove: ')' | split: ' ' | first | plus: 0
+      endif
+      assign variant_packs = variant_packs | append: v.id | append: ':' | append: vpk | append: ';'
+    endfor
+
+    assign aroma_label = block.settings.aroma_label | default: 'Aroma'
+    assign pack_label = block.settings.pack_label | default: 'Pack size'
+    assign frag_list = 'dasangam,floral,lemongrass' | split: ','
+  -%}
+
+  <div
+    class="aurora-block aurora-siblings"
+    data-aurora-siblings
+    data-default-pack="{{ cur_pack }}"
+    data-variant-packs="{{ variant_packs }}"
+    {{ block.shopify_attributes }}
+  >
+    {%- if block.settings.show_aroma -%}
+      <div class="aurora-siblings__group">
+        <p class="aurora-siblings__label">{{ aroma_label }}</p>
+        <div class="aurora-siblings__row">
+          {%- for g in frag_list -%}
+            {%- liquid
+              assign pick = ''
+              assign fallback = ''
+              assign urls = ''
+              for row in rows
+                assign f = row | split: '~'
+                if f[0] == g
+                  if fallback == blank
+                    assign fallback = row
+                  endif
+                  if f[1] == cur_pack_s and pick == blank
+                    assign pick = row
+                  endif
+                  assign urls = urls | append: f[1] | append: '=' | append: f[2] | append: ';'
+                endif
+              endfor
+              assign use = pick | default: fallback
+              assign uf = use | split: '~'
+              assign fbp = fallback | split: '~'
+              assign is_current = false
+              if g == cur_frag
+                assign is_current = true
+              endif
+            -%}
+            {%- if is_current -%}
+              <span class="aurora-siblings__pill is-current" aria-current="true">{{ g | capitalize }}</span>
+            {%- elsif use != blank -%}
+              <a
+                class="aurora-siblings__pill{% if uf[5] == 'false' %} is-soldout{% endif %}"
+                href="{{ uf[2] }}"
+                data-urls="{{ urls }}"
+                data-fallback="{{ fbp[2] }}"
+              >{{ g | capitalize }}</a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if block.settings.show_pack and product.variants.size == 1 -%}
+      <div class="aurora-siblings__group">
+        <p class="aurora-siblings__label">{{ pack_label }}</p>
+        <div class="aurora-siblings__row aurora-siblings__row--packs">
+          {%- assign pack_order = '1,3,6,12' | split: ',' -%}
+          {%- for n in pack_order -%}
+            {%- liquid
+              assign hit = ''
+              for row in rows
+                assign f = row | split: '~'
+                if hit == blank and f[0] == cur_frag and f[1] == n
+                  assign hit = row
+                endif
+              endfor
+              assign h = hit | split: '~'
+              assign is_here = false
+              if n == cur_pack_s
+                assign is_here = true
+              endif
+            -%}
+            {%- if hit != blank -%}
+              {%- if is_here -%}
+                <span class="aurora-siblings__pill aurora-siblings__pill--pack is-current" aria-current="true">
+                  <span class="aurora-siblings__name">{% if n == '1' %}1 box{% else %}Pack of {{ n }}{% endif %}</span>
+                  <span class="aurora-siblings__price">{{ h[4] | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</span>
+                </span>
+              {%- else -%}
+                <a class="aurora-siblings__pill aurora-siblings__pill--pack{% if h[5] == 'false' %} is-soldout{% endif %}" href="{{ h[2] }}">
+                  <span class="aurora-siblings__name">{% if n == '1' %}1 box{% else %}Pack of {{ n }}{% endif %}</span>
+                  <span class="aurora-siblings__price">{{ h[4] | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</span>
+                </a>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('[data-aurora-siblings]');
+      if (!root || root.getAttribute('data-bound') === '1') return;
+      root.setAttribute('data-bound', '1');
+      var packOf = {};
+      (root.getAttribute('data-variant-packs') || '').split(';').forEach(function (pair) {
+        var kv = pair.split(':');
+        if (kv[0]) packOf[kv[0]] = kv[1];
+      });
+      var pills = root.querySelectorAll('[data-urls]');
+      // The theme writes ?variant=ID when a pack is chosen; send the aroma links to that same pack.
+      function sync() {
+        var vid = new URL(window.location.href).searchParams.get('variant');
+        var n = (vid && packOf[vid]) || root.getAttribute('data-default-pack');
+        pills.forEach(function (el) {
+          var urls = {};
+          (el.getAttribute('data-urls') || '').split(';').forEach(function (pair) {
+            var i = pair.indexOf('=');
+            if (i > 0 && !urls[pair.slice(0, i)]) urls[pair.slice(0, i)] = pair.slice(i + 1);
+          });
+          var target = urls[n] || el.getAttribute('data-fallback');
+          if (target) el.setAttribute('href', target);
+        });
+      }
+      document.addEventListener('click', function () { setTimeout(sync, 150); });
+      document.addEventListener('change', function () { setTimeout(sync, 150); });
+      sync();
+    })();
+  </script>
+{%- endif -%}

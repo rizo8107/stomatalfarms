@@ -1,0 +1,60 @@
+{%- comment -%}
+  Aurora: compact trust strip – icon + short title per item (optional one-line note).
+{%- endcomment -%}
+{%- assign s = section.settings -%}
+{%- if section.blocks.size > 0 -%}
+<section
+  class="aurora-trust{% if s.show_text %} aurora-trust--text{% endif %}"
+  style="--at-bg: {{ s.background }}; --at-text: {{ s.text_color }}; --at-icon: {{ s.icon_color }}; --at-icon-bg: {{ s.icon_bg }}; --at-pt: {{ s.padding_top }}px; --at-pb: {{ s.padding_bottom }}px;"
+>
+  <ul class="aurora-trust__list page-width" role="list">
+    {%- for block in section.blocks -%}
+      <li class="aurora-trust__item" {{ block.shopify_attributes }}>
+        <span class="aurora-trust__icon">{%- render 'aurora-icon', icon: block.settings.icon -%}</span>
+        <span class="aurora-trust__copy">
+          <strong>{{ block.settings.title }}</strong>
+          {%- if s.show_text and block.settings.text != blank -%}<small>{{ block.settings.text }}</small>{%- endif -%}
+        </span>
+      </li>
+    {%- endfor -%}
+  </ul>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Aurora: Trust strip",
+  "tag": "div",
+  "class": "x-section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "checkbox", "id": "show_text", "label": "Show a one-line note under each title", "default": false },
+    { "type": "color", "id": "background", "label": "Background", "default": "#F3F6EE" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#1F3B2D" },
+    { "type": "color", "id": "icon_color", "label": "Icon", "default": "#236A40" },
+    { "type": "color", "id": "icon_bg", "label": "Icon circle", "default": "#FFFFFF" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon", "default": "leaf",
+          "options": [
+            { "value": "leaf", "label": "Leaf (natural)" }, { "value": "no-chemicals", "label": "No chemicals" }, { "value": "no-charcoal", "label": "No charcoal" },
+            { "value": "cow", "label": "Cow" }, { "value": "hand", "label": "Handmade" }, { "value": "sun", "label": "Sun dried" }, { "value": "lab", "label": "Lab tested" },
+            { "value": "truck", "label": "Delivery" }, { "value": "cash", "label": "Cash on delivery" }, { "value": "shield", "label": "Guarantee" }, { "value": "heart", "label": "Heart" }, { "value": "check", "label": "Tick" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "100% natural" },
+        { "type": "text", "id": "text", "label": "Note (optional)" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Aurora: Trust strip", "category": "Aurora", "blocks": [ { "type": "item" }, { "type": "item" }, { "type": "item" }, { "type": "item" } ] } ],
+  "enabled_on": { "templates": ["*"] }
+}
+{% endschema %}

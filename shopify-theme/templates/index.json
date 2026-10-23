@@ -9,172 +9,2537 @@
  */
 {
   "sections": {
-    "hero": {
-      "type": "hero",
-      "settings": {
-        "background_image": "https://cdn.shopify.com/s/files/1/0735/4469/5965/files/banner_hero.jpg?v=1778374221",
-        "background_image_alt": "Aurora Aromatic Wellness"
-      }
-    },
-    "social_proof_bar": {
-      "type": "social-proof-bar",
-      "settings": {}
-    },
-    "178892612050ceb741": {
-      "type": "_blocks",
+    "aurora_hero": {
+      "type": "aurora-hero-slideshow",
       "blocks": {
-        "ai_gen_block_45f1860_zz6Mcp": {
-          "type": "ai_gen_block_45f1860",
+        "slide_BcWjdF": {
+          "type": "slide",
           "settings": {
-            "ribbon_text": "Festive Sale — ends soon.",
-            "eyebrow": "Ganesh Chaturthi Offers Are Live",
-            "title": "Cow dung–based, chemical-free incense",
-            "description": "<p>Flat 15% off festive combos — only 20 days left.</p>",
-            "cta_label": "Grab the Offers",
-            "cta_link": "shopify://collections/ganesh-chaturthi-offers",
-            "desktop_image": "shopify://shop_images/for_web.jpg",
-            "mobile_image": "shopify://shop_images/for_mobile.jpg",
-            "desktop_width_percent": 100,
-            "banner_height": 460,
-            "mobile_image_height": 360,
-            "content_width": 600,
-            "vertical_alignment": "center",
-            "text_alignment": "left",
-            "mobile_alignment": "center",
-            "title_size": 48,
-            "mobile_title_size": 34,
-            "background_color": "#25382A",
-            "text_color": "#FFFFFF",
-            "accent_color": "#E7C873",
-            "overlay_color": "#162219",
-            "ribbon_background": "#E7C873",
-            "ribbon_text_color": "#25382A",
-            "overlay_opacity": 20,
-            "button_color": "#E7C873",
-            "button_text_color": "#25382A",
-            "corner_radius": 12,
-            "button_radius": 6
-          },
-          "blocks": {}
+            "desktop_image": "shopify://shop_images/Aurora_Incense_Cups_Family_Landscape_Banner-4.png",
+            "mobile_image": "shopify://shop_images/8.png",
+            "link": "",
+            "alt_text": "",
+            "hide_text": false,
+            "subheading": "",
+            "heading": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "content_position": "left",
+            "show_box": true
+          }
+        },
+        "slide_main": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/Aurora_incense_comparison__smoky_to_golden-2.png",
+            "mobile_image": "shopify://shop_images/5_1.png",
+            "link": "shopify://products/aarambh-the-starter-collection-incense-sticks-by-aurora-stomatal-farms",
+            "alt_text": "Natural incense, thoughtfully crafted",
+            "hide_text": true,
+            "subheading": "",
+            "heading": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "content_position": "left",
+            "show_box": false
+          }
+        },
+        "slide_offer": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/Aurora_mother_and_child_banner-1.png",
+            "mobile_image": "shopify://shop_images/4_26866f15-ef8f-4f30-9e69-ac7e991f8ec8.png",
+            "link": "shopify://products/aarambh-the-starter-collection-incense-sticks-by-aurora-stomatal-farms",
+            "alt_text": "Aarambh starter collection – try Aurora for ₹99",
+            "hide_text": false,
+            "subheading": "Diwali offer · extra 10% off with DIWALI10",
+            "heading": "Natural [cow dung] incense, made on our farm",
+            "text": "<p>No charcoal, no chemicals. Burns clean for about 45 minutes.</p>",
+            "button_label": "Shop Now",
+            "button_link": "",
+            "content_position": "left",
+            "show_box": true
+          }
+        },
+        "slide_banner1": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/Aurora_products_in_warm_sunlight-3.png",
+            "mobile_image": "shopify://shop_images/3_7ef4205c-3b1c-4bb9-b14d-6a910a51ad9f.png",
+            "link": "shopify://collections/best-sellers",
+            "alt_text": "Aurora best sellers",
+            "hide_text": false,
+            "subheading": "",
+            "heading": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "content_position": "left",
+            "show_box": true
+          }
+        },
+        "slide_banner2": {
+          "type": "slide",
+          "settings": {
+            "desktop_image": "shopify://shop_images/Aurora_incense_in_warm_lamplight-5.png",
+            "mobile_image": "shopify://shop_images/1_1.png",
+            "link": "shopify://pages/about-us",
+            "alt_text": "India's first cow dung incense – our story",
+            "hide_text": false,
+            "subheading": "",
+            "heading": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
+            "content_position": "left",
+            "show_box": true
+          }
         }
       },
       "block_order": [
-        "ai_gen_block_45f1860_zz6Mcp"
+        "slide_BcWjdF",
+        "slide_main",
+        "slide_offer",
+        "slide_banner1",
+        "slide_banner2"
       ],
-      "settings": {}
-    },
-    "google_reviews_carousel": {
-      "type": "google-reviews-carousel",
       "settings": {
-        "reviews_endpoint": "https://stomatalfarms.com/api/reviews"
+        "label": "Featured offers",
+        "image_only": true,
+        "height_mode": "auto",
+        "image_fit": "cover",
+        "background": "#EAF3E7",
+        "desktop_width": 1920,
+        "desktop_height": 860,
+        "mobile_width": 900,
+        "mobile_height": 1290,
+        "show_placeholder": true,
+        "autoplay": true,
+        "interval": 5,
+        "show_arrows": true,
+        "show_dots": true,
+        "full_width": true,
+        "corner_radius": 0,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "heading_size": 46,
+        "heading_size_mobile": 28,
+        "text_color": "#ffffff",
+        "accent_color": "#D9B866",
+        "button_color": "#D9B866",
+        "button_text_color": "#1F3B2D",
+        "content_box_color": "#1F3B2Dd1"
       }
     },
-    "aurora_comparison": {
-      "type": "aurora-comparison",
-      "settings": {}
-    },
-    "bundle_carousel": {
-      "type": "bundle-carousel",
+    "aurora_banner_offer": {
+      "type": "aurora-banner",
+      "disabled": true,
       "settings": {
-        "collection": ""
+        "banner_label": "Banner 1 – Offer",
+        "desktop_image": "shopify://shop_images/Natural_Incense_Thoughtfully_Crafted.png",
+        "mobile_image": "shopify://shop_images/1_bce92ba3-d45f-48fa-8612-2968152b42c2.png",
+        "link": "shopify://products/aarambh-the-starter-collection-incense-sticks-by-aurora-stomatal-farms",
+        "use_collection_banner": false,
+        "height_mode": "fixed",
+        "desktop_width": 1920,
+        "desktop_height": 860,
+        "mobile_width": 900,
+        "mobile_height": 1290,
+        "show_placeholder": true,
+        "placeholder_note": "",
+        "subheading": "",
+        "heading": "",
+        "heading_tag": "h1",
+        "heading_size": 48,
+        "heading_size_mobile": 28,
+        "text": "",
+        "button_label_1": "",
+        "button_link_1": "shopify://collections/all",
+        "button_style_1": "solid",
+        "button_label_2": "",
+        "button_link_2": "",
+        "button_style_2": "outline",
+        "content_position": "middle-left",
+        "text_alignment": "left",
+        "content_width": 45,
+        "mobile_content_layout": "overlay",
+        "content_position_mobile": "bottom",
+        "text_alignment_mobile": "left",
+        "show_content_box": false,
+        "text_color": "#ffffff",
+        "accent_color": "#D9B866",
+        "button_color": "#D9B866",
+        "button_text_color": "#1F3B2D",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "content_box_color": "#1F3B2D",
+        "content_box_opacity": 80,
+        "banner_background": "#EAF3E7",
+        "section_background": "rgba(0,0,0,0)",
+        "full_width": true,
+        "corner_radius": 0,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "hide_on_mobile": false,
+        "hide_on_desktop": false
       }
     },
-    "products_section": {
-      "type": "products-section",
+    "scrolling_banner_r6XXtc": {
+      "type": "scrolling-banner",
+      "blocks": {
+        "heading_ha6Hk3": {
+          "type": "text",
+          "settings": {
+            "text": "100% Natural Aromatics",
+            "highlight_type": "underline",
+            "text_size": 100,
+            "text_color": "primary",
+            "spacing_left": 24,
+            "spacing_right": 24,
+            "spacing_left_mobile": 16,
+            "spacing_right_mobile": 16
+          }
+        },
+        "heading_feDV6j": {
+          "type": "text",
+          "settings": {
+            "text": "Cow Dung Base",
+            "highlight_type": "underline",
+            "text_size": 100,
+            "text_color": "primary",
+            "spacing_left": 24,
+            "spacing_right": 24,
+            "spacing_left_mobile": 16,
+            "spacing_right_mobile": 16
+          }
+        },
+        "heading_hbGJBk": {
+          "type": "text",
+          "settings": {
+            "text": "No Charcoal",
+            "highlight_type": "underline",
+            "text_size": 100,
+            "text_color": "primary",
+            "spacing_left": 24,
+            "spacing_right": 24,
+            "spacing_left_mobile": 16,
+            "spacing_right_mobile": 16
+          }
+        },
+        "heading_W84p3w": {
+          "type": "text",
+          "settings": {
+            "text": "45-Minute Burn",
+            "highlight_type": "underline",
+            "text_size": 100,
+            "text_color": "primary",
+            "spacing_left": 24,
+            "spacing_right": 24,
+            "spacing_left_mobile": 16,
+            "spacing_right_mobile": 16
+          }
+        }
+      },
+      "block_order": [
+        "heading_ha6Hk3",
+        "heading_feDV6j",
+        "heading_hbGJBk",
+        "heading_W84p3w"
+      ],
       "settings": {
-        "collection": "",
-        "products_to_show": 6,
-        "eyebrow": "Our Best Sellers",
-        "heading": "Most Loved Items"
+        "show_border": false,
+        "speed": 40,
+        "direction": "left",
+        "pause_hover": true,
+        "enable_rotating_effect": false,
+        "overlay_opacity": 0,
+        "bg_light": "#236A40",
+        "color_text_light": "#ffffff",
+        "color_text_light_2": "#ffffff",
+        "color_heading_highlight_light": "#D9B866",
+        "bg_dark": "rgba(0,0,0,0)",
+        "color_text_dark": "rgba(0,0,0,0)",
+        "color_text_dark_2": "rgba(0,0,0,0)",
+        "color_heading_highlight_dark": "rgba(0,0,0,0)",
+        "space_block": 50,
+        "desktop_height": "450px",
+        "padding_top": 12,
+        "padding_bottom": 12,
+        "space_block_mobile": 30,
+        "mobile_height": "500px",
+        "padding_top_mobile": 8,
+        "padding_bottom_mobile": 8
       }
     },
-    "greens_section": {
-      "type": "greens-section",
+    "aurora_banner_positioning": {
+      "type": "aurora-banner",
+      "disabled": true,
       "settings": {
-        "collection": ""
+        "banner_label": "Banner 2 – Brand positioning",
+        "link": "shopify://pages/about-us",
+        "use_collection_banner": false,
+        "height_mode": "fixed",
+        "desktop_width": 1920,
+        "desktop_height": 860,
+        "mobile_width": 900,
+        "mobile_height": 1290,
+        "show_placeholder": true,
+        "placeholder_note": "Brand positioning: India's first cow dung incense.",
+        "subheading": "",
+        "heading": "",
+        "heading_tag": "h2",
+        "heading_size": 48,
+        "heading_size_mobile": 30,
+        "text": "",
+        "button_label_1": "Shop Now",
+        "button_link_1": "shopify://collections/all",
+        "button_style_1": "solid",
+        "button_label_2": "",
+        "button_link_2": "",
+        "button_style_2": "outline",
+        "content_position": "bottom-center",
+        "text_alignment": "center",
+        "content_width": 50,
+        "mobile_content_layout": "overlay",
+        "content_position_mobile": "bottom",
+        "text_alignment_mobile": "center",
+        "show_content_box": false,
+        "text_color": "#ffffff",
+        "accent_color": "#D9B866",
+        "button_color": "#D9B866",
+        "button_text_color": "#1F3B2D",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "content_box_color": "#1F3B2D",
+        "content_box_opacity": 80,
+        "banner_background": "#EAF3E7",
+        "section_background": "rgba(0,0,0,0)",
+        "full_width": true,
+        "corner_radius": 0,
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20,
+        "hide_on_mobile": false,
+        "hide_on_desktop": false
       }
     },
-    "video_carousel": {
-      "type": "video-carousel",
+    "aurora_trust": {
+      "type": "aurora-trust-strip",
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {
+            "icon": "leaf",
+            "title": "100% natural",
+            "text": "Cow dung, herbs & resins"
+          }
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {
+            "icon": "no-chemicals",
+            "title": "No chemicals",
+            "text": "No synthetic fragrance"
+          }
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {
+            "icon": "no-charcoal",
+            "title": "No charcoal",
+            "text": "Clean, gentle smoke"
+          }
+        },
+        "item_4": {
+          "type": "item",
+          "settings": {
+            "icon": "hand",
+            "title": "Handmade in Chennai",
+            "text": "Sun-dried, small batch"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4"
+      ],
+      "disabled": true,
       "settings": {
-        "eyebrow": "From Aurora",
-        "video_urls": "https://cdn.shopify.com/videos/c/o/v/b7cb1c7e761146b396382bfca162dedd.mp4,https://cdn.shopify.com/videos/c/o/v/b4c6bb109167438ab8591eafd15eab07.mp4,https://cdn.shopify.com/videos/c/o/v/4cab5995a53549b3b402e5b226451fcb.mp4,https://cdn.shopify.com/videos/c/o/v/e8bf46f5f2094abe9bc7a9a7dd431e67.mp4,https://cdn.shopify.com/videos/c/o/v/1020d997526540b8b8b41fbfbbe65165.mp4,https://cdn.shopify.com/videos/c/o/v/01fecbcfa26a474b8c1914223d31b60e.mp4,https://cdn.shopify.com/videos/c/o/v/90108b258cb74d3bb3d759f5c0ed7791.mp4"
+        "show_text": false,
+        "background": "#f3f6ee",
+        "text_color": "#1F3B2D",
+        "icon_color": "#236A40",
+        "icon_bg": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 20
       }
     },
-    "why_us": {
-      "type": "why-us",
-      "settings": {}
+    "multicolumn_rxMYDJ": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_LEfVGd": {
+          "type": "column",
+          "settings": {
+            "icon": "leaf",
+            "another_icon": "",
+            "custom_icon": "",
+            "title": "100% [natural]",
+            "highlight_type": "underline",
+            "title_link": "",
+            "open_new_window": false,
+            "heading_size": 100,
+            "text": "<p>Purified desi cow dung, herbs and resins</p>"
+          }
+        },
+        "column_ipkiCp": {
+          "type": "column",
+          "settings": {
+            "icon": "check-mark",
+            "another_icon": "",
+            "custom_icon": "",
+            "title": "No charcoal, [no chemicals]",
+            "highlight_type": "underline",
+            "title_link": "",
+            "open_new_window": false,
+            "heading_size": 100,
+            "text": "<p>Lab certified, no synthetic fragrance</p>"
+          }
+        },
+        "column_ipMknc": {
+          "type": "column",
+          "settings": {
+            "icon": "clock",
+            "another_icon": "",
+            "custom_icon": "",
+            "title": "~45-min [slow burn]",
+            "highlight_type": "underline",
+            "title_link": "",
+            "open_new_window": false,
+            "heading_size": 100,
+            "text": "<p>Thick, bamboo-less sticks and cups</p>"
+          }
+        },
+        "column_aurora_3": {
+          "type": "column",
+          "settings": {
+            "icon": "heart",
+            "another_icon": "",
+            "custom_icon": "",
+            "title": "Handmade in [Chennai]",
+            "highlight_type": "underline",
+            "title_link": "",
+            "open_new_window": false,
+            "heading_size": 100,
+            "text": "<p>Hand-rolled and sun-dried in small batches</p>"
+          }
+        }
+      },
+      "block_order": [
+        "column_LEfVGd",
+        "column_ipkiCp",
+        "column_ipMknc",
+        "column_aurora_3"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "highlight_type": "underline",
+        "heading_size": 100,
+        "heading_tag": "h2",
+        "secondary_background": "none",
+        "border_column": "none",
+        "column_content_alignment": "center",
+        "icon_position": "above",
+        "icon_size": 40,
+        "enable_desktop_slider": false,
+        "swiper_on_mobile": false,
+        "enable_arrow_mobile": false,
+        "auto_play": true,
+        "change_bar_every": 5,
+        "background_color_light": "rgba(0,0,0,0)",
+        "heading_light": "rgba(0,0,0,0)",
+        "text_light": "rgba(0,0,0,0)",
+        "color_heading_highlight_light": "rgba(0,0,0,0)",
+        "line_border_light": "rgba(0,0,0,0)",
+        "color_icon_light": "rgba(0,0,0,0)",
+        "background_color_dark": "rgba(0,0,0,0)",
+        "heading_dark": "rgba(0,0,0,0)",
+        "text_dark": "rgba(0,0,0,0)",
+        "color_heading_highlight_dark": "rgba(0,0,0,0)",
+        "line_border_dark": "rgba(0,0,0,0)",
+        "color_icon_dark": "rgba(0,0,0,0)",
+        "column_layout_desktop": "lg:w-1/4",
+        "section_height_desktop": "md:py-7",
+        "spacing_desktop": 40,
+        "full_width": false,
+        "padding_full_width": true,
+        "show_section_divider": false,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "column_layout_mobile": "w-1/2",
+        "section_height_mobile": "py-5",
+        "spacing_mobile": 16,
+        "full_width_mobile": false,
+        "show_section_divider_mobile": false,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
     },
-    "faq": {
+    "collection_list_qw6tTw": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_qaM8JD": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "cow-dung-incense-sticks"
+          }
+        },
+        "featured_collection_UUAVB9": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "cow-dung-incense-cups"
+          }
+        },
+        "featured_collection_6knPj8": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "ritual-combos"
+          }
+        },
+        "featured_collection_JrEqzR": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "diwali-combo"
+          }
+        },
+        "featured_collection_VYPn8R": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "others"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_qaM8JD",
+        "featured_collection_UUAVB9",
+        "featured_collection_6knPj8",
+        "featured_collection_JrEqzR",
+        "featured_collection_VYPn8R"
+      ],
+      "name": "t:sections.collection-list.name",
+      "settings": {
+        "heading": "New collections & [combos]",
+        "highlight_type": "underline",
+        "heading_size": 100,
+        "heading_tag": "h2",
+        "heading_alignment": "center",
+        "show_view_all": false,
+        "background_color_light": "",
+        "background_color_dark": "",
+        "collection_metafield": "",
+        "image_ratio": "square",
+        "title_size": 80,
+        "show_text_overlay": false,
+        "content_alignment": "center",
+        "content_position": "center",
+        "image_overlay_opacity": 5,
+        "title_color": "rgba(0,0,0,0)",
+        "text_light": "rgba(0,0,0,0)",
+        "title_color_dark": "rgba(0,0,0,0)",
+        "text_dark": "rgba(0,0,0,0)",
+        "show_item_count": false,
+        "columns_desktop": 5,
+        "columns_mobile": "3",
+        "enable_desktop_slider": true,
+        "swiper_on_mobile": false,
+        "enable_arrow_mobile": false,
+        "spacing": 20,
+        "show_section_divider": false,
+        "full_width": false,
+        "padding_top": 20,
+        "padding_bottom": 40,
+        "spacing_mobile": 10,
+        "show_section_divider_mobile": false,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "e32885d8-0a8f-4c4f-8801-377d01cb7656": {
+      "type": "featured-collection",
+      "blocks": {
+        "collection_epUrnE": {
+          "type": "collection",
+          "settings": {
+            "collection": "best-sellers",
+            "show_description": false,
+            "description": "",
+            "number_of_lines_shown": "none",
+            "read_more_label": "Read more",
+            "see_less_label": "See less",
+            "show_vendor": false,
+            "show_rating": true,
+            "show_highlighted_features": false,
+            "show_highlighted_attributes": false,
+            "show_quickview": false,
+            "show_promotion": false,
+            "promotion_position": "left",
+            "card_link": "",
+            "open_new_window": false,
+            "heading": "Featured collection",
+            "highlight_type": "underline",
+            "heading_size": 70,
+            "content": "<p>10% OFF</p>",
+            "text_size": 100,
+            "content_alignment": "center",
+            "content_position": "bottom",
+            "button_label": "See more",
+            "button_link": "",
+            "open_new_window_button": false,
+            "show_button_style": "primary",
+            "enable_text_overlay": false,
+            "overlay_opacity": 0,
+            "image_ratio": "100",
+            "background_color": "rgba(0,0,0,0)",
+            "color_text": "rgba(0,0,0,0)",
+            "color_heading_highlight_light": "rgba(0,0,0,0)",
+            "color_button": "rgba(0,0,0,0)",
+            "color_text_button": "rgba(0,0,0,0)",
+            "color_button_hover": "rgba(0,0,0,0)",
+            "color_text_button_hover": "rgba(0,0,0,0)",
+            "color_button_secondary": "rgba(0,0,0,0)",
+            "secondary_button_text": "rgba(0,0,0,0)",
+            "colors_text_link": "rgba(0,0,0,0)",
+            "show_sound_control": false,
+            "video_url": "",
+            "enable_video_autoplay": false,
+            "video_alt_text": "",
+            "product_card": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_epUrnE"
+      ],
+      "name": "Best Sellers",
+      "settings": {
+        "title": "Best [sellers]",
+        "highlight_type": "font_highlight",
+        "heading_size": 100,
+        "heading_tag": "h2",
+        "heading_alignment": "center",
+        "subheading": "",
+        "text": "",
+        "show_view_all": true,
+        "view_all_position": "bottom",
+        "view_all_button_style": "secondary",
+        "title_size": 90,
+        "title_style": "capitalize",
+        "title_position": "inline",
+        "tab_button_style": "button",
+        "color_background": "rgba(0,0,0,0)",
+        "color_text": "rgba(0,0,0,0)",
+        "color_background_secondary": "rgba(0,0,0,0)",
+        "color_text_secondary": "rgba(0,0,0,0)",
+        "color_background_hover": "rgba(0,0,0,0)",
+        "color_text_hover": "rgba(0,0,0,0)",
+        "color_background_dark": "rgba(0,0,0,0)",
+        "color_text_dark": "rgba(0,0,0,0)",
+        "color_background_secondary_dark": "rgba(0,0,0,0)",
+        "color_text_secondary_dark": "rgba(0,0,0,0)",
+        "color_background_hover_dark": "rgba(0,0,0,0)",
+        "color_text_hover_dark": "rgba(0,0,0,0)",
+        "enable_desktop_slider": false,
+        "slider_style": "vertical",
+        "swiper_on_mobile": true,
+        "enable_arrow_mobile": false,
+        "auto_play": false,
+        "change_slides_speed": 5,
+        "columns_desktop": 4,
+        "rows_desktop": 1,
+        "spacing": 20,
+        "full_width": false,
+        "show_section_divider": false,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "columns_mobile": "2",
+        "spacing_mobile": 16,
+        "full_width_mobile": false,
+        "show_section_divider_mobile": false,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "aurora_featured_bundles": {
+      "type": "featured-collection",
+      "blocks": {
+        "collection_epUrnE": {
+          "type": "collection",
+          "settings": {
+            "collection": "combo-packs-cups-sticks",
+            "show_description": false,
+            "description": "",
+            "number_of_lines_shown": "none",
+            "read_more_label": "Read more",
+            "see_less_label": "See less",
+            "show_vendor": false,
+            "show_rating": true,
+            "show_highlighted_features": false,
+            "show_highlighted_attributes": false,
+            "show_quickview": false,
+            "show_promotion": false,
+            "promotion_position": "left",
+            "card_link": "",
+            "open_new_window": false,
+            "heading": "Bundles",
+            "highlight_type": "underline",
+            "heading_size": 70,
+            "content": "<p>10% OFF</p>",
+            "text_size": 100,
+            "content_alignment": "center",
+            "content_position": "bottom",
+            "button_label": "See more",
+            "button_link": "",
+            "open_new_window_button": false,
+            "show_button_style": "primary",
+            "enable_text_overlay": false,
+            "overlay_opacity": 0,
+            "image_ratio": "100",
+            "background_color": "rgba(0,0,0,0)",
+            "color_text": "rgba(0,0,0,0)",
+            "color_heading_highlight_light": "rgba(0,0,0,0)",
+            "color_button": "rgba(0,0,0,0)",
+            "color_text_button": "rgba(0,0,0,0)",
+            "color_button_hover": "rgba(0,0,0,0)",
+            "color_text_button_hover": "rgba(0,0,0,0)",
+            "color_button_secondary": "rgba(0,0,0,0)",
+            "secondary_button_text": "rgba(0,0,0,0)",
+            "colors_text_link": "rgba(0,0,0,0)",
+            "show_sound_control": false,
+            "video_url": "",
+            "enable_video_autoplay": false,
+            "video_alt_text": "",
+            "product_card": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_epUrnE"
+      ],
+      "name": "Best Sellers",
+      "settings": {
+        "title": "Featured [bundles]",
+        "highlight_type": "font_highlight",
+        "heading_size": 100,
+        "heading_tag": "h2",
+        "heading_alignment": "center",
+        "subheading": "",
+        "text": "<p>Save more with ready-made ritual sets – perfect for gifting this festive season.</p>",
+        "show_view_all": true,
+        "view_all_position": "bottom",
+        "view_all_button_style": "secondary",
+        "title_size": 90,
+        "title_style": "capitalize",
+        "title_position": "inline",
+        "tab_button_style": "button",
+        "color_background": "rgba(0,0,0,0)",
+        "color_text": "rgba(0,0,0,0)",
+        "color_background_secondary": "rgba(0,0,0,0)",
+        "color_text_secondary": "rgba(0,0,0,0)",
+        "color_background_hover": "rgba(0,0,0,0)",
+        "color_text_hover": "rgba(0,0,0,0)",
+        "color_background_dark": "rgba(0,0,0,0)",
+        "color_text_dark": "rgba(0,0,0,0)",
+        "color_background_secondary_dark": "rgba(0,0,0,0)",
+        "color_text_secondary_dark": "rgba(0,0,0,0)",
+        "color_background_hover_dark": "rgba(0,0,0,0)",
+        "color_text_hover_dark": "rgba(0,0,0,0)",
+        "enable_desktop_slider": false,
+        "slider_style": "vertical",
+        "swiper_on_mobile": true,
+        "enable_arrow_mobile": false,
+        "auto_play": false,
+        "change_slides_speed": 5,
+        "columns_desktop": 4,
+        "rows_desktop": 1,
+        "spacing": 20,
+        "full_width": false,
+        "show_section_divider": false,
+        "padding_top": 0,
+        "padding_bottom": 40,
+        "columns_mobile": "2",
+        "spacing_mobile": 16,
+        "full_width_mobile": false,
+        "show_section_divider_mobile": false,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "video_looping_ijQzex": {
+      "type": "video-looping",
+      "blocks": {
+        "shoppable_video_GiBgcj": {
+          "type": "shoppable_video",
+          "settings": {
+            "video": "shopify://files/videos/stomatalfarms_1773147473_3849761452513628641_71321221184.mp4",
+            "show_sound_control": false,
+            "video_url": "",
+            "video_alt_text": "",
+            "integrated_social_media": "icon-instagram",
+            "account_username": "",
+            "social_account_url": "",
+            "social_post": "",
+            "product_1": "aarambh-the-starter-collection-incense-sticks-by-aurora-stomatal-farms",
+            "hotspot_desktop_horizontal_1": 30,
+            "hotspot_desktop_vertical_1": 50,
+            "hotspot_mobile_horizontal_1": 27,
+            "hotspot_mobile_vertical_1": 47,
+            "product_2": "",
+            "hotspot_desktop_horizontal_2": 53,
+            "hotspot_desktop_vertical_2": 27,
+            "hotspot_mobile_horizontal_2": 54,
+            "hotspot_mobile_vertical_2": 25,
+            "product_3": "",
+            "hotspot_desktop_horizontal_3": 64,
+            "hotspot_desktop_vertical_3": 50,
+            "hotspot_mobile_horizontal_3": 65,
+            "hotspot_mobile_vertical_3": 50,
+            "product_4": "",
+            "hotspot_desktop_horizontal_4": 20,
+            "hotspot_desktop_vertical_4": 20,
+            "hotspot_mobile_horizontal_4": 20,
+            "hotspot_mobile_vertical_4": 20,
+            "product_5": "",
+            "hotspot_desktop_horizontal_5": 20,
+            "hotspot_desktop_vertical_5": 20,
+            "hotspot_mobile_horizontal_5": 20,
+            "hotspot_mobile_vertical_5": 20
+          }
+        },
+        "shoppable_video_XxrzM7": {
+          "type": "shoppable_video",
+          "settings": {
+            "video": "shopify://files/videos/v.mp4",
+            "show_sound_control": false,
+            "video_url": "",
+            "video_alt_text": "",
+            "integrated_social_media": "icon-instagram",
+            "account_username": "",
+            "social_account_url": "",
+            "social_post": "",
+            "product_1": "arka-cow-dung-incense-cups",
+            "hotspot_desktop_horizontal_1": 30,
+            "hotspot_desktop_vertical_1": 50,
+            "hotspot_mobile_horizontal_1": 27,
+            "hotspot_mobile_vertical_1": 47,
+            "product_2": "",
+            "hotspot_desktop_horizontal_2": 53,
+            "hotspot_desktop_vertical_2": 27,
+            "hotspot_mobile_horizontal_2": 54,
+            "hotspot_mobile_vertical_2": 25,
+            "product_3": "",
+            "hotspot_desktop_horizontal_3": 64,
+            "hotspot_desktop_vertical_3": 50,
+            "hotspot_mobile_horizontal_3": 65,
+            "hotspot_mobile_vertical_3": 50,
+            "product_4": "",
+            "hotspot_desktop_horizontal_4": 20,
+            "hotspot_desktop_vertical_4": 20,
+            "hotspot_mobile_horizontal_4": 20,
+            "hotspot_mobile_vertical_4": 20,
+            "product_5": "",
+            "hotspot_desktop_horizontal_5": 20,
+            "hotspot_desktop_vertical_5": 20,
+            "hotspot_mobile_horizontal_5": 20,
+            "hotspot_mobile_vertical_5": 20
+          }
+        },
+        "shoppable_video_Cazcjd": {
+          "type": "shoppable_video",
+          "settings": {
+            "video": "shopify://files/videos/mylapore_paati_1776346692_3876599000997029092_54877846385.mp4",
+            "show_sound_control": false,
+            "video_url": "",
+            "video_alt_text": "",
+            "integrated_social_media": "icon-instagram",
+            "account_username": "",
+            "social_account_url": "",
+            "social_post": "",
+            "product_1": "spiritual-fragrance-divine-light-gift-pack-combo-🎉-festive-offer-40-off-now",
+            "hotspot_desktop_horizontal_1": 30,
+            "hotspot_desktop_vertical_1": 50,
+            "hotspot_mobile_horizontal_1": 27,
+            "hotspot_mobile_vertical_1": 47,
+            "product_2": "",
+            "hotspot_desktop_horizontal_2": 53,
+            "hotspot_desktop_vertical_2": 27,
+            "hotspot_mobile_horizontal_2": 54,
+            "hotspot_mobile_vertical_2": 25,
+            "product_3": "",
+            "hotspot_desktop_horizontal_3": 64,
+            "hotspot_desktop_vertical_3": 50,
+            "hotspot_mobile_horizontal_3": 65,
+            "hotspot_mobile_vertical_3": 50,
+            "product_4": "",
+            "hotspot_desktop_horizontal_4": 20,
+            "hotspot_desktop_vertical_4": 20,
+            "hotspot_mobile_horizontal_4": 20,
+            "hotspot_mobile_vertical_4": 20,
+            "product_5": "",
+            "hotspot_desktop_horizontal_5": 20,
+            "hotspot_desktop_vertical_5": 20,
+            "hotspot_mobile_horizontal_5": 20,
+            "hotspot_mobile_vertical_5": 20
+          }
+        },
+        "shoppable_video_Armr8L": {
+          "type": "shoppable_video",
+          "settings": {
+            "video": "shopify://files/videos/mylapore_paati_1760015446_3739602554633264248_54877846385.mp4",
+            "show_sound_control": false,
+            "video_url": "",
+            "video_alt_text": "",
+            "integrated_social_media": "icon-instagram",
+            "account_username": "",
+            "social_account_url": "",
+            "social_post": "",
+            "product_1": "triple-aroma-divine-glow-gift-hamper-combo-🎁-special-diwali-price-40-off-now",
+            "hotspot_desktop_horizontal_1": 30,
+            "hotspot_desktop_vertical_1": 50,
+            "hotspot_mobile_horizontal_1": 27,
+            "hotspot_mobile_vertical_1": 47,
+            "product_2": "",
+            "hotspot_desktop_horizontal_2": 53,
+            "hotspot_desktop_vertical_2": 27,
+            "hotspot_mobile_horizontal_2": 54,
+            "hotspot_mobile_vertical_2": 25,
+            "product_3": "",
+            "hotspot_desktop_horizontal_3": 64,
+            "hotspot_desktop_vertical_3": 50,
+            "hotspot_mobile_horizontal_3": 65,
+            "hotspot_mobile_vertical_3": 50,
+            "product_4": "",
+            "hotspot_desktop_horizontal_4": 20,
+            "hotspot_desktop_vertical_4": 20,
+            "hotspot_mobile_horizontal_4": 20,
+            "hotspot_mobile_vertical_4": 20,
+            "product_5": "",
+            "hotspot_desktop_horizontal_5": 20,
+            "hotspot_desktop_vertical_5": 20,
+            "hotspot_mobile_horizontal_5": 20,
+            "hotspot_mobile_vertical_5": 20
+          }
+        },
+        "shoppable_video_W88Pj9": {
+          "type": "shoppable_video",
+          "settings": {
+            "video": "shopify://files/videos/stomatalfarms_1759644824_3736492592805790172_71321221184.mp4",
+            "show_sound_control": false,
+            "video_url": "",
+            "video_alt_text": "",
+            "integrated_social_media": "icon-instagram",
+            "account_username": "",
+            "social_account_url": "",
+            "social_post": "",
+            "product_1": "cow-dung-ash",
+            "hotspot_desktop_horizontal_1": 30,
+            "hotspot_desktop_vertical_1": 50,
+            "hotspot_mobile_horizontal_1": 27,
+            "hotspot_mobile_vertical_1": 47,
+            "product_2": "",
+            "hotspot_desktop_horizontal_2": 53,
+            "hotspot_desktop_vertical_2": 27,
+            "hotspot_mobile_horizontal_2": 54,
+            "hotspot_mobile_vertical_2": 25,
+            "product_3": "",
+            "hotspot_desktop_horizontal_3": 64,
+            "hotspot_desktop_vertical_3": 50,
+            "hotspot_mobile_horizontal_3": 65,
+            "hotspot_mobile_vertical_3": 50,
+            "product_4": "",
+            "hotspot_desktop_horizontal_4": 20,
+            "hotspot_desktop_vertical_4": 20,
+            "hotspot_mobile_horizontal_4": 20,
+            "hotspot_mobile_vertical_4": 20,
+            "product_5": "",
+            "hotspot_desktop_horizontal_5": 20,
+            "hotspot_desktop_vertical_5": 20,
+            "hotspot_mobile_horizontal_5": 20,
+            "hotspot_mobile_vertical_5": 20
+          }
+        },
+        "shoppable_video_3EJpwH": {
+          "type": "shoppable_video",
+          "settings": {
+            "video": "shopify://files/videos/stomatalfarms_1778427136_3894050350529222281_71321221184.mp4",
+            "show_sound_control": false,
+            "video_url": "",
+            "video_alt_text": "",
+            "integrated_social_media": "icon-instagram",
+            "account_username": "",
+            "social_account_url": "",
+            "social_post": "",
+            "product_1": "aurora-balance-bundle-cups-sticks-dasangam-floral-lemongrass-flat-35-off",
+            "hotspot_desktop_horizontal_1": 30,
+            "hotspot_desktop_vertical_1": 50,
+            "hotspot_mobile_horizontal_1": 27,
+            "hotspot_mobile_vertical_1": 47,
+            "product_2": "",
+            "hotspot_desktop_horizontal_2": 53,
+            "hotspot_desktop_vertical_2": 27,
+            "hotspot_mobile_horizontal_2": 54,
+            "hotspot_mobile_vertical_2": 25,
+            "product_3": "",
+            "hotspot_desktop_horizontal_3": 64,
+            "hotspot_desktop_vertical_3": 50,
+            "hotspot_mobile_horizontal_3": 65,
+            "hotspot_mobile_vertical_3": 50,
+            "product_4": "",
+            "hotspot_desktop_horizontal_4": 20,
+            "hotspot_desktop_vertical_4": 20,
+            "hotspot_mobile_horizontal_4": 20,
+            "hotspot_mobile_vertical_4": 20,
+            "product_5": "",
+            "hotspot_desktop_horizontal_5": 20,
+            "hotspot_desktop_vertical_5": 20,
+            "hotspot_mobile_horizontal_5": 20,
+            "hotspot_mobile_vertical_5": 20
+          }
+        },
+        "shoppable_video_rHxXar": {
+          "type": "shoppable_video",
+          "settings": {
+            "video": "shopify://files/videos/stomatalfarms_1779116219_3899829244360226226_71321221184.mp4",
+            "show_sound_control": false,
+            "video_url": "",
+            "video_alt_text": "",
+            "integrated_social_media": "icon-instagram",
+            "account_username": "",
+            "social_account_url": "",
+            "social_post": "",
+            "product_1": "incense-cup-bundle",
+            "hotspot_desktop_horizontal_1": 30,
+            "hotspot_desktop_vertical_1": 50,
+            "hotspot_mobile_horizontal_1": 27,
+            "hotspot_mobile_vertical_1": 47,
+            "product_2": "",
+            "hotspot_desktop_horizontal_2": 53,
+            "hotspot_desktop_vertical_2": 27,
+            "hotspot_mobile_horizontal_2": 54,
+            "hotspot_mobile_vertical_2": 25,
+            "product_3": "",
+            "hotspot_desktop_horizontal_3": 64,
+            "hotspot_desktop_vertical_3": 50,
+            "hotspot_mobile_horizontal_3": 65,
+            "hotspot_mobile_vertical_3": 50,
+            "product_4": "",
+            "hotspot_desktop_horizontal_4": 20,
+            "hotspot_desktop_vertical_4": 20,
+            "hotspot_mobile_horizontal_4": 20,
+            "hotspot_mobile_vertical_4": 20,
+            "product_5": "",
+            "hotspot_desktop_horizontal_5": 20,
+            "hotspot_desktop_vertical_5": 20,
+            "hotspot_mobile_horizontal_5": 20,
+            "hotspot_mobile_vertical_5": 20
+          }
+        },
+        "shoppable_video_waGLnB": {
+          "type": "shoppable_video",
+          "settings": {
+            "video": "shopify://files/videos/madras_filterkapi_1779192355_3900470192672541303_67639748812.mp4",
+            "show_sound_control": false,
+            "video_url": "",
+            "video_alt_text": "",
+            "integrated_social_media": "icon-instagram",
+            "account_username": "",
+            "social_account_url": "",
+            "social_post": "",
+            "product_1": "dasangam-incense-cup-pack-of-3",
+            "hotspot_desktop_horizontal_1": 30,
+            "hotspot_desktop_vertical_1": 50,
+            "hotspot_mobile_horizontal_1": 27,
+            "hotspot_mobile_vertical_1": 47,
+            "product_2": "",
+            "hotspot_desktop_horizontal_2": 53,
+            "hotspot_desktop_vertical_2": 27,
+            "hotspot_mobile_horizontal_2": 54,
+            "hotspot_mobile_vertical_2": 25,
+            "product_3": "",
+            "hotspot_desktop_horizontal_3": 64,
+            "hotspot_desktop_vertical_3": 50,
+            "hotspot_mobile_horizontal_3": 65,
+            "hotspot_mobile_vertical_3": 50,
+            "product_4": "",
+            "hotspot_desktop_horizontal_4": 20,
+            "hotspot_desktop_vertical_4": 20,
+            "hotspot_mobile_horizontal_4": 20,
+            "hotspot_mobile_vertical_4": 20,
+            "product_5": "",
+            "hotspot_desktop_horizontal_5": 20,
+            "hotspot_desktop_vertical_5": 20,
+            "hotspot_mobile_horizontal_5": 20,
+            "hotspot_mobile_vertical_5": 20
+          }
+        }
+      },
+      "block_order": [
+        "shoppable_video_GiBgcj",
+        "shoppable_video_XxrzM7",
+        "shoppable_video_Cazcjd",
+        "shoppable_video_Armr8L",
+        "shoppable_video_W88Pj9",
+        "shoppable_video_3EJpwH",
+        "shoppable_video_rHxXar",
+        "shoppable_video_waGLnB"
+      ],
+      "name": "Video looping",
+      "disabled": true,
+      "settings": {
+        "heading": "See it in [real life]",
+        "highlight_type": "font_highlight",
+        "heading_size": 100,
+        "heading_tag": "h2",
+        "heading_alignment": "center",
+        "subheading": "",
+        "overlay_opacity": 70,
+        "product_card_position": "bottom",
+        "enable_hotspots": false,
+        "swiper_on_mobile": true,
+        "auto_play": true,
+        "show_arrow": false,
+        "show_pagination": true,
+        "background_color_light": "rgba(0,0,0,0)",
+        "heading_light": "rgba(0,0,0,0)",
+        "color_heading_highlight_light": "rgba(0,0,0,0)",
+        "hotspot_color_light": "rgba(0,0,0,0)",
+        "background_color_dark": "rgba(0,0,0,0)",
+        "heading_dark": "rgba(0,0,0,0)",
+        "color_heading_highlight_dark": "rgba(0,0,0,0)",
+        "hotspot_color_dark": "rgba(0,0,0,0)",
+        "spacing": 28,
+        "full_width": true,
+        "show_section_divider": false,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "full_width_mobile": false,
+        "show_section_divider_mobile": false,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "aurora_lead_capture": {
+      "type": "aurora-lead-capture",
+      "settings": {
+        "image": "shopify://shop_images/5_a03f25f6-0fb1-4aa1-bb2b-d3f23abb812a.png",
+        "offer_badge": "Get 10% off your first order",
+        "heading": "Join the Aurora family",
+        "text": "<p>Share your WhatsApp number or email and we'll send your 10% off code right away – plus festive offers and new fragrance launches. No spam, ever.</p>",
+        "show_phone": true,
+        "phone_required": false,
+        "country_code": "+91",
+        "phone_placeholder": "WhatsApp number",
+        "email_placeholder": "Email address",
+        "show_consent_checkbox": true,
+        "consent_checkbox_label": "Send me offers on WhatsApp",
+        "button_label": "Get my 10% off",
+        "consent_text": "We'll only message you about offers and new launches. Unsubscribe anytime.",
+        "success_text": "You're in! Use code DIWALI10 at checkout for 10% off.",
+        "customer_tags": "newsletter,lead-capture",
+        "image_position": "left",
+        "hide_image_mobile": false,
+        "text_alignment": "left",
+        "show_box": true,
+        "max_width": 960,
+        "card_radius": 2,
+        "heading_size": 34,
+        "heading_size_mobile": 26,
+        "section_bg": "rgba(0,0,0,0)",
+        "card_bg": "rgba(0,0,0,0)",
+        "heading_color": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "accent_color": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)",
+        "border_color": "rgba(0,0,0,0)",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 28
+      }
+    },
+    "aurora_whatsapp_reviews": {
+      "type": "aurora-image-reviews",
+      "blocks": {
+        "s1": {
+          "type": "screenshot",
+          "settings": {
+            "caption": ""
+          }
+        },
+        "s2": {
+          "type": "screenshot",
+          "settings": {
+            "caption": ""
+          }
+        },
+        "s3": {
+          "type": "screenshot",
+          "settings": {
+            "caption": ""
+          }
+        },
+        "s4": {
+          "type": "screenshot",
+          "settings": {
+            "caption": ""
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "Straight from our customers' WhatsApp",
+        "text": "Real messages from families who light Aurora every day.",
+        "show_placeholder": true,
+        "show_captions": true,
+        "button_label": "",
+        "button_link": "",
+        "layout": "slider",
+        "columns_desktop": 4,
+        "columns_mobile": "1",
+        "full_width": false,
+        "heading_alignment": "center",
+        "heading_size": 34,
+        "heading_size_mobile": 26,
+        "card_radius": 2,
+        "section_bg": "rgba(0,0,0,0)",
+        "card_bg": "rgba(0,0,0,0)",
+        "heading_color": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "border_color": "rgba(0,0,0,0)",
+        "accent_color": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 28
+      }
+    },
+    "aurora_google_reviews": {
+      "type": "aurora-google-reviews",
+      "blocks": {
+        "greview_01": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Lovely Incense Sticks and Cups with a Smooth, Pleasant aroma. No eye irritation and not overpowering, making it perfect for daily use. Packaging is also Neat and Safe and Smart.",
+            "author": "Pinkesh Kumar",
+            "date": ""
+          }
+        },
+        "greview_02": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "I have so far used the Dasangam havan cups and I have to admit it's the best that I have come across thus far. I can't wait to experience the other two variants- floral and lemongrass.\nI only had an initial hiccup with their courier partner which they promptly took care of after I escalated the matter.\nKeep it up and all the very best.",
+            "author": "Partho Ghosh",
+            "date": ""
+          }
+        },
+        "greview_03": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Excellent quality. I have ordered multiple times since the aroma is so subtle and divine. Very genuine product",
+            "author": "Padmaja K",
+            "date": ""
+          }
+        },
+        "greview_04": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "We just tried once at home and found that High-quality, clean burns, natural aromas, and long-lasting scents. It's really worth. At first I saw these products and thought that it's a routine but after use I came to know that the doop sticks and doop cups and all are made by purely natural ingredients. My overall rating is 5 out of 5. Highly recommended. And packing is awesome",
+            "author": "Balaji Kanthi Nag.B",
+            "date": ""
+          }
+        },
+        "greview_05": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Excellent product. It creates a serene ambience which greatly enhances the concentration of the mind towards prayer.",
+            "author": "Sankaran Anantharaman",
+            "date": ""
+          }
+        },
+        "greview_06": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Recently tried some products from STOMATAL FARMS and really liked them.\n\nThe incense sticks (Dasangam and Lemongrass) had a very pleasant and calming fragrance. Both felt natural and refreshing.\n\nAlso tried their moringa powder blend with 70% Moringa powder and 30% curry leaves—it feels healthy, natural, and good quality.\n\nOverall, a nice experience with their products. 🌿",
+            "author": "Rakesh Pandian",
+            "date": ""
+          }
+        },
+        "greview_07": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Very nice product i have come across…made with natural ingredients and the smoke is very mild and spreads a positive vibe around the home😇",
+            "author": "nandhini karthikeyan",
+            "date": ""
+          }
+        },
+        "greview_08": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Very good product pure cow dung Awesome product so divine feel very auspicious thank u for taking time to rectify the courier issue. Purchased combo pack . All three are superb.",
+            "author": "indumathi venugopal",
+            "date": ""
+          }
+        },
+        "greview_09": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Using Dasangam sticks in daily pooja\ngives pleasant flavour liked by all\nIt creates pease during pooja",
+            "author": "V Gunaseelan",
+            "date": ""
+          }
+        },
+        "greview_10": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Really ❣️ Great ,I've been using this product for about four months, and it's really great. I feel it 100%natural and great product...Thank you so much for this high-quality product.(Stomatal farm)",
+            "author": "Sathya Seelan r",
+            "date": ""
+          }
+        },
+        "greview_11": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Really,very happy with this product 😊 I have been using this product for last two months.really fragrance and quality too good thanks.i am very happy to have received this product",
+            "author": "Vennila Vidhya",
+            "date": ""
+          }
+        },
+        "greview_12": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Smells amazing. Def must try it once and trust me, you will keep coming back to try the product..",
+            "author": "Narayanee S",
+            "date": ""
+          }
+        },
+        "greview_13": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "Nice collections, worth the money… fragrance feels good during prayers. I use daily",
+            "author": "nithya rajsri",
+            "date": ""
+          }
+        },
+        "greview_14": {
+          "type": "review",
+          "settings": {
+            "stars": "5",
+            "text": "It's is nice . Based on natural products.no throat eye irritation very nice product",
+            "author": "Guru Venkatesan Guru",
+            "date": ""
+          }
+        }
+      },
+      "block_order": [
+        "greview_01",
+        "greview_02",
+        "greview_03",
+        "greview_04",
+        "greview_05",
+        "greview_06",
+        "greview_07",
+        "greview_08",
+        "greview_09",
+        "greview_10",
+        "greview_11",
+        "greview_12",
+        "greview_13",
+        "greview_14"
+      ],
+      "settings": {
+        "feed_url": "",
+        "feed_max": 12,
+        "feed_min_stars": "4",
+        "feed_photos": true,
+        "feed_total_label": "[count] Google reviews",
+        "show_google_label": true,
+        "heading": "Loved by families across India",
+        "rating": "",
+        "total": "",
+        "link": "https://search.google.com/local/reviews?placeid=ChIJ0WAVLno-pGcRr0yNSWn8bxA",
+        "link_label": "Read all reviews on Google →",
+        "show_placeholder": false,
+        "show_avatar": true,
+        "layout": "slider",
+        "columns_desktop": 3,
+        "columns_mobile": "1",
+        "full_width": false,
+        "heading_alignment": "center",
+        "heading_size": 34,
+        "heading_size_mobile": 26,
+        "card_radius": 2,
+        "star_color": "#8A6420",
+        "section_bg": "rgba(0,0,0,0)",
+        "card_bg": "rgba(0,0,0,0)",
+        "heading_color": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "border_color": "rgba(0,0,0,0)",
+        "accent_color": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 28
+      }
+    },
+    "17888419684ec40c49": {
+      "type": "apps",
+      "blocks": {
+        "instafeed_app_block_XVyLKq": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "Join our community",
+            "title_color": "",
+            "title_size_v2": 0,
+            "alignment": "center",
+            "instafeed_margin_top": 40,
+            "instafeed_margin_bottom": 40,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": true,
+            "link_alignment": "center",
+            "link_color": "#000000",
+            "background_color": "",
+            "feed_id": "",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_XVyLKq"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "aurora_faq": {
       "type": "faq",
       "blocks": {
-        "faq_1": {
-          "type": "faq",
+        "f1": {
+          "type": "frequently_asked_question",
           "settings": {
-            "question": "Which product should I start with?",
-            "answer": "Our incense sticks are perfect for daily use, while cups offer a deeper, more therapeutic experience. If you're new, the Combo packs are our most loved starting point."
+            "icon": "none",
+            "another_icon": "",
+            "custom_icon": "",
+            "heading": "Which product should I start with?",
+            "row_content": "<p>Our incense sticks are perfect for daily use, while cups offer a deeper, more therapeutic experience. If you're new, the combo packs are our most-loved starting point.</p>"
           }
         },
-        "faq_2": {
-          "type": "faq",
+        "f2": {
+          "type": "frequently_asked_question",
           "settings": {
-            "question": "Are these safe for children and elders?",
-            "answer": "Absolutely. Every Aurora product is crafted from 100% natural, chemical-free ingredients with no synthetic binders, making them safe for everyone in your family."
+            "icon": "none",
+            "another_icon": "",
+            "custom_icon": "",
+            "heading": "Does cow dung incense smell of dung?",
+            "row_content": "<p>No. The cow dung is purified and solar-dried, so it is odourless. You only smell the herbs, resins and natural extracts.</p>"
           }
         },
-        "faq_3": {
-          "type": "faq",
+        "f3": {
+          "type": "frequently_asked_question",
           "settings": {
-            "question": "How long does each product last?",
-            "answer": "Our sticks and cups both burn for ~45 minutes. The aroma and essence linger for hours after the burn ends, filling your space long after the flame goes out."
+            "icon": "none",
+            "another_icon": "",
+            "custom_icon": "",
+            "heading": "Are these safe for children and elders?",
+            "row_content": "<p>Yes. Every Aurora product is made from natural, chemical-free ingredients with no synthetic binders.</p>"
           }
         },
-        "faq_4": {
-          "type": "faq",
+        "f4": {
+          "type": "frequently_asked_question",
           "settings": {
-            "question": "What are your shipping rates and is there a minimum order?",
-            "answer": "We have no minimum order value — you can purchase even a single item! We provide FREE shipping on all orders over ₹999 across India. For orders under ₹999, a flat shipping fee of ₹60 applies."
+            "icon": "none",
+            "another_icon": "",
+            "custom_icon": "",
+            "heading": "How long does each product last?",
+            "row_content": "<p>Sticks burn for about 45 minutes and cups for about 25–30 minutes. The aroma lingers for hours after.</p>"
+          }
+        },
+        "f5": {
+          "type": "frequently_asked_question",
+          "settings": {
+            "icon": "none",
+            "another_icon": "",
+            "custom_icon": "",
+            "heading": "What are your shipping rates?",
+            "row_content": "<p>There is no minimum order. Shipping is FREE on orders above ₹999 across India; a flat ₹60 applies below ₹999.</p>"
+          }
+        },
+        "f6": {
+          "type": "frequently_asked_question",
+          "settings": {
+            "icon": "none",
+            "another_icon": "",
+            "custom_icon": "",
+            "heading": "What if my order arrives damaged?",
+            "row_content": "<p>Message us on WhatsApp with a photo or unboxing video within 24 hours of delivery and we will replace it free.</p>"
           }
         }
       },
       "block_order": [
-        "faq_1",
-        "faq_2",
-        "faq_3",
-        "faq_4"
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6"
       ],
       "settings": {
-        "eyebrow": "Common Inquiries",
-        "heading": "Thoughtfully answered.",
-        "subheading": "Everything you need to know about our natural aromatics and how to integrate them into your daily life."
+        "heading": "Frequently asked [questions]",
+        "highlight_type": "underline",
+        "heading_size": 100,
+        "heading_tag": "h2",
+        "heading_alignment": "center",
+        "show_border": false,
+        "row_background": false,
+        "collapsible": true,
+        "show_view_all": false,
+        "view_all_position": "top",
+        "button_link": "",
+        "open_new_window": false,
+        "background_color_light": "rgba(0,0,0,0)",
+        "background_color_dark": "rgba(0,0,0,0)",
+        "enable_microdata_schema": true,
+        "desktop_layout": "1",
+        "image_alignment": "left",
+        "desktop_height": "400px",
+        "show_section_divider": false,
+        "make_full_page_width": false,
+        "padding_top": 28,
+        "padding_bottom": 28,
+        "image_alignment_mobile": "left",
+        "mobile_height": "250px",
+        "show_section_divider_mobile": false,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 28
       }
     },
-    "instagram_carousel": {
-      "type": "instagram-carousel",
+    "aurora_positioning": {
+      "type": "image-with-text",
+      "blocks": {
+        "h": {
+          "type": "heading",
+          "settings": {
+            "subheading": "Why Aurora",
+            "heading": "India's first [cow dung] incense, rooted in tradition",
+            "highlight_type": "underline",
+            "heading_base_size": 80,
+            "heading_tag": "h2",
+            "text": "<p>For centuries, Indian homes have burned purified desi cow dung in yagnas and homams to cleanse the air. Aurora, from Stomatal Farms, turns that ritual into everyday sticks and cups: solar-dried cow dung blended with herbs, temple resins and natural extracts, hand-rolled with no charcoal and no bamboo core.</p><p><strong>It does not smell of dung.</strong> It burns slowly, smokes gently and fills your home with a clean, temple-like aroma. Every purchase also supports cow welfare and rescue.</p>",
+            "number_of_lines_shown": "none",
+            "read_more_label": "Read more",
+            "see_less_label": "See less",
+            "heading_light": "rgba(0,0,0,0)",
+            "text_light": "rgba(0,0,0,0)",
+            "color_heading_highlight_light": "rgba(0,0,0,0)",
+            "heading_dark": "rgba(0,0,0,0)",
+            "text_dark": "rgba(0,0,0,0)",
+            "color_heading_highlight_dark": "rgba(0,0,0,0)"
+          }
+        },
+        "c1": {
+          "type": "columns",
+          "settings": {
+            "icon": "leaf",
+            "another_icon": "",
+            "custom_icon": "",
+            "title": "100% natural",
+            "title_link": "",
+            "open_new_window": false,
+            "heading_size": 100,
+            "text": "<p>Cow dung, herbs & resins</p>",
+            "wide_desktop": 1,
+            "wide_mobile": "1"
+          }
+        },
+        "c2": {
+          "type": "columns",
+          "settings": {
+            "icon": "check-mark",
+            "another_icon": "",
+            "custom_icon": "",
+            "title": "Zero chemicals",
+            "title_link": "",
+            "open_new_window": false,
+            "heading_size": 100,
+            "text": "<p>Lab certified, no DEP oils</p>",
+            "wide_desktop": 1,
+            "wide_mobile": "1"
+          }
+        },
+        "c3": {
+          "type": "columns",
+          "settings": {
+            "icon": "fire",
+            "another_icon": "",
+            "custom_icon": "",
+            "title": "No charcoal",
+            "title_link": "",
+            "open_new_window": false,
+            "heading_size": 100,
+            "text": "<p>Clean, gentle smoke</p>",
+            "wide_desktop": 1,
+            "wide_mobile": "1"
+          }
+        },
+        "c4": {
+          "type": "columns",
+          "settings": {
+            "icon": "clock",
+            "another_icon": "",
+            "custom_icon": "",
+            "title": "~45-min burn",
+            "title_link": "",
+            "open_new_window": false,
+            "heading_size": 100,
+            "text": "<p>Thick, bamboo-less sticks</p>",
+            "wide_desktop": 1,
+            "wide_mobile": "1"
+          }
+        },
+        "b": {
+          "type": "button",
+          "settings": {
+            "button_label": "Shop Now",
+            "button_link": "shopify://collections/all",
+            "open_new_window": false,
+            "show_button_style": "primary",
+            "button_light": "rgba(0,0,0,0)",
+            "button_text_light": "rgba(0,0,0,0)",
+            "button_hover_light": "rgba(0,0,0,0)",
+            "button_text_hover_light": "rgba(0,0,0,0)",
+            "secondary_button_light": "rgba(0,0,0,0)",
+            "secondary_button_text_light": "rgba(0,0,0,0)",
+            "colors_text_link": "rgba(0,0,0,0)",
+            "button_dark": "rgba(0,0,0,0)",
+            "button_text_dark": "rgba(0,0,0,0)",
+            "button_hover_dark": "rgba(0,0,0,0)",
+            "button_text_hover_dark": "rgba(0,0,0,0)",
+            "secondary_button_dark": "rgba(0,0,0,0)",
+            "secondary_button_text_dark": "rgba(0,0,0,0)",
+            "colors_text_link_dark": "rgba(0,0,0,0)"
+          }
+        }
+      },
+      "block_order": [
+        "h",
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "b"
+      ],
       "settings": {
-        "eyebrow": "Join our community",
-        "heading": "Aromatics in real life.",
-        "subheading": "See how our community uses Aurora to transform their daily rituals. Tag us @stomatalfarms to be featured."
+        "show_hero": false,
+        "image": "shopify://shop_images/Yes_cow_dung_9by16.png",
+        "desktop_height": "natural",
+        "mobile_height": "natural",
+        "desktop_image_width": "medium",
+        "image_layout": "normal",
+        "adapt_radius": true,
+        "image_corner_radius": 0,
+        "show_sound_control": false,
+        "video_url": "",
+        "video_alt_text": "",
+        "enable_video_autoplay": false,
+        "content_layout": "no-overlap",
+        "spacing_image": false,
+        "text_position": "center",
+        "text_alignment": "center",
+        "background_color_light": "rgba(0,0,0,0)",
+        "background_color_dark": "rgba(0,0,0,0)",
+        "line_border": "none",
+        "icon_position": "col",
+        "icon_size": 24,
+        "alignment": "center",
+        "columns_desktop": 2,
+        "columns_mobile": "2",
+        "heading_color_light": "rgba(0,0,0,0)",
+        "text_color_light": "rgba(0,0,0,0)",
+        "line_border_light": "rgba(0,0,0,0)",
+        "icon_color_light": "rgba(0,0,0,0)",
+        "heading_color_dark": "rgba(0,0,0,0)",
+        "text_color_dark": "rgba(0,0,0,0)",
+        "line_border_dark": "rgba(0,0,0,0)",
+        "icon_color_dark": "rgba(0,0,0,0)",
+        "image_alignment": "right",
+        "full_width": false,
+        "padding_full_width": false,
+        "top_padding": 40,
+        "bottom_padding": 40,
+        "image_alignment_mobile": "left",
+        "full_width_mobile": false,
+        "top_padding_mobile": 24,
+        "bottom_padding_mobile": 24
       }
     },
-    "final_cta": {
-      "type": "final-cta",
-      "settings": {}
+    "aurora_banner_combos": {
+      "type": "aurora-banner",
+      "disabled": true,
+      "settings": {
+        "banner_label": "Banner 3 – New collections / combos",
+        "link": "shopify://collections/combo-packs-cups-sticks",
+        "use_collection_banner": false,
+        "height_mode": "fixed",
+        "desktop_width": 1920,
+        "desktop_height": 860,
+        "mobile_width": 900,
+        "mobile_height": 1290,
+        "show_placeholder": true,
+        "placeholder_note": "Highlight the combos and new collections.",
+        "subheading": "",
+        "heading": "",
+        "heading_tag": "h2",
+        "heading_size": 48,
+        "heading_size_mobile": 30,
+        "text": "",
+        "button_label_1": "",
+        "button_link_1": "",
+        "button_style_1": "solid",
+        "button_label_2": "",
+        "button_link_2": "",
+        "button_style_2": "outline",
+        "content_position": "middle-left",
+        "text_alignment": "left",
+        "content_width": 50,
+        "mobile_content_layout": "overlay",
+        "content_position_mobile": "bottom",
+        "text_alignment_mobile": "center",
+        "show_content_box": false,
+        "text_color": "#ffffff",
+        "accent_color": "#D9B866",
+        "button_color": "#236A40",
+        "button_text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "content_box_color": "#1F3B2D",
+        "content_box_opacity": 80,
+        "banner_background": "#EAF3E7",
+        "section_background": "rgba(0,0,0,0)",
+        "full_width": true,
+        "corner_radius": 0,
+        "padding_top": 20,
+        "padding_bottom": 0,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 0,
+        "hide_on_mobile": false,
+        "hide_on_desktop": false
+      }
+    },
+    "aurora_brand_story": {
+      "type": "image-with-text",
+      "blocks": {
+        "h": {
+          "type": "heading",
+          "settings": {
+            "subheading": "Our story",
+            "heading": "Rooted in [tradition], made for today's homes",
+            "highlight_type": "underline",
+            "heading_base_size": 80,
+            "heading_tag": "h2",
+            "text": "<p>Aurora is the incense range from Stomatal Farms. We took the age-old practice of burning purified cow dung in yagnas and homams and turned it into everyday sticks, cups and diyas – handcrafted, solar-dried and free of charcoal and chemicals.</p><p>Every purchase also supports cow welfare and rescue. Good for your home, good for the world.</p>",
+            "number_of_lines_shown": "none",
+            "read_more_label": "Read more",
+            "see_less_label": "See less",
+            "heading_light": "rgba(0,0,0,0)",
+            "text_light": "rgba(0,0,0,0)",
+            "color_heading_highlight_light": "rgba(0,0,0,0)",
+            "heading_dark": "rgba(0,0,0,0)",
+            "text_dark": "rgba(0,0,0,0)",
+            "color_heading_highlight_dark": "rgba(0,0,0,0)"
+          }
+        },
+        "b": {
+          "type": "button",
+          "settings": {
+            "button_label": "Read our story",
+            "button_link": "shopify://pages/about-us",
+            "open_new_window": false,
+            "show_button_style": "secondary",
+            "button_light": "rgba(0,0,0,0)",
+            "button_text_light": "rgba(0,0,0,0)",
+            "button_hover_light": "rgba(0,0,0,0)",
+            "button_text_hover_light": "rgba(0,0,0,0)",
+            "secondary_button_light": "rgba(0,0,0,0)",
+            "secondary_button_text_light": "rgba(0,0,0,0)",
+            "colors_text_link": "rgba(0,0,0,0)",
+            "button_dark": "rgba(0,0,0,0)",
+            "button_text_dark": "rgba(0,0,0,0)",
+            "button_hover_dark": "rgba(0,0,0,0)",
+            "button_text_hover_dark": "rgba(0,0,0,0)",
+            "secondary_button_dark": "rgba(0,0,0,0)",
+            "secondary_button_text_dark": "rgba(0,0,0,0)",
+            "colors_text_link_dark": "rgba(0,0,0,0)"
+          }
+        }
+      },
+      "block_order": [
+        "h",
+        "b"
+      ],
+      "disabled": true,
+      "settings": {
+        "show_hero": false,
+        "image": "shopify://shop_images/Banner_1_-_1920x860_a1e57a5f-7a0b-49df-8c36-98e2b0e8fdd9.webp",
+        "desktop_height": "natural",
+        "mobile_height": "natural",
+        "desktop_image_width": "medium",
+        "image_layout": "normal",
+        "adapt_radius": true,
+        "image_corner_radius": 0,
+        "show_sound_control": false,
+        "video_url": "",
+        "video_alt_text": "",
+        "enable_video_autoplay": false,
+        "content_layout": "no-overlap",
+        "spacing_image": false,
+        "text_position": "center",
+        "text_alignment": "start",
+        "background_color_light": "rgba(0,0,0,0)",
+        "background_color_dark": "rgba(0,0,0,0)",
+        "line_border": "dashed",
+        "icon_position": "row",
+        "icon_size": 24,
+        "alignment": "center",
+        "columns_desktop": 2,
+        "columns_mobile": "2",
+        "heading_color_light": "rgba(0,0,0,0)",
+        "text_color_light": "rgba(0,0,0,0)",
+        "line_border_light": "rgba(0,0,0,0)",
+        "icon_color_light": "rgba(0,0,0,0)",
+        "heading_color_dark": "rgba(0,0,0,0)",
+        "text_color_dark": "rgba(0,0,0,0)",
+        "line_border_dark": "rgba(0,0,0,0)",
+        "icon_color_dark": "rgba(0,0,0,0)",
+        "image_alignment": "left",
+        "full_width": false,
+        "padding_full_width": false,
+        "top_padding": 40,
+        "bottom_padding": 40,
+        "image_alignment_mobile": "left",
+        "full_width_mobile": false,
+        "top_padding_mobile": 24,
+        "bottom_padding_mobile": 24
+      }
+    },
+    "4c9e1af5-c4c0-48cf-b771-49029eedd24f": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_Ub9LMP": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Aarambh_Incense_Starter_Collection.webp",
+            "image_mobile": "shopify://shop_images/Aarambh__Rooted_in_Purity.webp",
+            "image_link": "",
+            "open_new_window_image": false,
+            "overlay_opacity": 0,
+            "video_url": "",
+            "video_alt_text": "",
+            "show_sound_control": false,
+            "enable_video_autoplay": false,
+            "mobile_video_url": "",
+            "enable_bakground": false,
+            "subheading": "",
+            "subheading_size": 100,
+            "heading": "",
+            "highlight_type": "underline",
+            "heading_size": 170,
+            "heading_tag": "h2",
+            "text": "",
+            "button_label_1": "",
+            "button_link_1": "",
+            "open_new_window_button": false,
+            "show_button_style_1": "primary",
+            "button_label_2": "",
+            "button_link_2": "",
+            "open_new_window_button_2": false,
+            "show_button_style_2": "primary",
+            "content_alignment": "middle-center",
+            "custom_horizontal": 50,
+            "custom_vertical": 50,
+            "alignment": "center",
+            "text_product": "Check out our products:",
+            "list_products": [],
+            "show_rating": false,
+            "open_new_window_product": false,
+            "content_background_color": "rgba(0,0,0,0)",
+            "color_text": "rgba(0,0,0,0)",
+            "color_button": "rgba(0,0,0,0)",
+            "color_text_button": "rgba(0,0,0,0)",
+            "color_button_hover": "rgba(0,0,0,0)",
+            "color_text_button_hover": "rgba(0,0,0,0)",
+            "color_button_secondary": "rgba(0,0,0,0)",
+            "secondary_button_text": "rgba(0,0,0,0)",
+            "colors_text_link": "rgba(0,0,0,0)",
+            "color_heading_highlight_light": "rgba(0,0,0,0)",
+            "color_product_card_background": "rgba(0,0,0,0)",
+            "color_product_card_text": "rgba(0,0,0,0)"
+          }
+        },
+        "template--20740642505005__4c9e1af5-c4c0-48cf-b771-49029eedd24f-slide-2": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Banner_1_-_1920x860_a1e57a5f-7a0b-49df-8c36-98e2b0e8fdd9.webp",
+            "image_mobile": "shopify://shop_images/Banner_1_-_900x1290_a6535d1f-cb1c-4755-8091-ecc27fd560a1.webp",
+            "image_link": "",
+            "open_new_window_image": false,
+            "overlay_opacity": 0,
+            "video_url": "",
+            "video_alt_text": "",
+            "show_sound_control": false,
+            "enable_video_autoplay": false,
+            "mobile_video_url": "",
+            "enable_bakground": false,
+            "subheading": "",
+            "subheading_size": 100,
+            "heading": "",
+            "highlight_type": "font_highlight",
+            "heading_size": 160,
+            "heading_tag": "h2",
+            "text": "",
+            "button_label_1": "",
+            "button_link_1": "",
+            "open_new_window_button": false,
+            "show_button_style_1": "primary",
+            "button_label_2": "",
+            "button_link_2": "",
+            "open_new_window_button_2": false,
+            "show_button_style_2": "primary",
+            "content_alignment": "middle-left",
+            "custom_horizontal": 50,
+            "custom_vertical": 50,
+            "alignment": "center",
+            "text_product": "Check out our products:",
+            "list_products": [],
+            "show_rating": false,
+            "open_new_window_product": false,
+            "content_background_color": "rgba(0,0,0,0)",
+            "color_text": "rgba(0,0,0,0)",
+            "color_button": "rgba(0,0,0,0)",
+            "color_text_button": "rgba(0,0,0,0)",
+            "color_button_hover": "rgba(0,0,0,0)",
+            "color_text_button_hover": "rgba(0,0,0,0)",
+            "color_button_secondary": "rgba(0,0,0,0)",
+            "secondary_button_text": "rgba(0,0,0,0)",
+            "colors_text_link": "rgba(0,0,0,0)",
+            "color_heading_highlight_light": "rgba(0,0,0,0)",
+            "color_product_card_background": "rgba(0,0,0,0)",
+            "color_product_card_text": "rgba(0,0,0,0)"
+          }
+        },
+        "slide_pp8j6R": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Banner_2_-_1920x860_3ad6f093-5605-4b98-9fb3-b564b4833d8a.webp",
+            "image_mobile": "shopify://shop_images/Banner_2_-_900x1290_1a38229b-aafd-4954-aced-fc80c7e47a21.webp",
+            "image_link": "",
+            "open_new_window_image": false,
+            "overlay_opacity": 0,
+            "video_url": "",
+            "video_alt_text": "",
+            "show_sound_control": false,
+            "enable_video_autoplay": false,
+            "mobile_video_url": "",
+            "enable_bakground": false,
+            "subheading": "",
+            "subheading_size": 100,
+            "heading": "",
+            "highlight_type": "font_highlight",
+            "heading_size": 160,
+            "heading_tag": "h2",
+            "text": "",
+            "button_label_1": "",
+            "button_link_1": "",
+            "open_new_window_button": false,
+            "show_button_style_1": "primary",
+            "button_label_2": "",
+            "button_link_2": "",
+            "open_new_window_button_2": false,
+            "show_button_style_2": "primary",
+            "content_alignment": "middle-left",
+            "custom_horizontal": 50,
+            "custom_vertical": 50,
+            "alignment": "center",
+            "text_product": "Check out our products:",
+            "list_products": [],
+            "show_rating": false,
+            "open_new_window_product": false,
+            "content_background_color": "rgba(0,0,0,0)",
+            "color_text": "rgba(0,0,0,0)",
+            "color_button": "rgba(0,0,0,0)",
+            "color_text_button": "rgba(0,0,0,0)",
+            "color_button_hover": "rgba(0,0,0,0)",
+            "color_text_button_hover": "rgba(0,0,0,0)",
+            "color_button_secondary": "rgba(0,0,0,0)",
+            "secondary_button_text": "rgba(0,0,0,0)",
+            "colors_text_link": "rgba(0,0,0,0)",
+            "color_heading_highlight_light": "rgba(0,0,0,0)",
+            "color_product_card_background": "rgba(0,0,0,0)",
+            "color_product_card_text": "rgba(0,0,0,0)"
+          }
+        },
+        "slide_rh7TzD": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Golu_1_-_1920X860_4b927e90-cc07-4709-9c75-ffa3020cb58f.webp",
+            "image_mobile": "shopify://shop_images/Golu_1_900x1290_389a7a66-3688-4c3b-ad6b-377d0ce944fd.webp",
+            "image_link": "",
+            "open_new_window_image": false,
+            "overlay_opacity": 0,
+            "video_url": "",
+            "video_alt_text": "",
+            "show_sound_control": false,
+            "enable_video_autoplay": false,
+            "mobile_video_url": "",
+            "enable_bakground": false,
+            "subheading": "",
+            "subheading_size": 100,
+            "heading": "",
+            "highlight_type": "font_highlight",
+            "heading_size": 160,
+            "heading_tag": "h2",
+            "text": "",
+            "button_label_1": "",
+            "button_link_1": "",
+            "open_new_window_button": false,
+            "show_button_style_1": "primary",
+            "button_label_2": "",
+            "button_link_2": "",
+            "open_new_window_button_2": false,
+            "show_button_style_2": "primary",
+            "content_alignment": "middle-left",
+            "custom_horizontal": 50,
+            "custom_vertical": 50,
+            "alignment": "center",
+            "text_product": "Check out our products:",
+            "list_products": [],
+            "show_rating": false,
+            "open_new_window_product": false,
+            "content_background_color": "rgba(0,0,0,0)",
+            "color_text": "rgba(0,0,0,0)",
+            "color_button": "rgba(0,0,0,0)",
+            "color_text_button": "rgba(0,0,0,0)",
+            "color_button_hover": "rgba(0,0,0,0)",
+            "color_text_button_hover": "rgba(0,0,0,0)",
+            "color_button_secondary": "rgba(0,0,0,0)",
+            "secondary_button_text": "rgba(0,0,0,0)",
+            "colors_text_link": "rgba(0,0,0,0)",
+            "color_heading_highlight_light": "rgba(0,0,0,0)",
+            "color_product_card_background": "rgba(0,0,0,0)",
+            "color_product_card_text": "rgba(0,0,0,0)"
+          }
+        },
+        "slide_3ddaRG": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Golu_2_1920X860_fd32e5ab-11b0-49e1-8635-26c72b6ae47f.webp",
+            "image_mobile": "shopify://shop_images/Golu_2_900x1290_633d2200-2c85-4980-a034-2f84202ad90f.webp",
+            "image_link": "",
+            "open_new_window_image": false,
+            "overlay_opacity": 0,
+            "video_url": "",
+            "video_alt_text": "",
+            "show_sound_control": false,
+            "enable_video_autoplay": false,
+            "mobile_video_url": "",
+            "enable_bakground": false,
+            "subheading": "",
+            "subheading_size": 100,
+            "heading": "",
+            "highlight_type": "font_highlight",
+            "heading_size": 160,
+            "heading_tag": "h2",
+            "text": "",
+            "button_label_1": "",
+            "button_link_1": "",
+            "open_new_window_button": false,
+            "show_button_style_1": "primary",
+            "button_label_2": "",
+            "button_link_2": "",
+            "open_new_window_button_2": false,
+            "show_button_style_2": "primary",
+            "content_alignment": "middle-left",
+            "custom_horizontal": 50,
+            "custom_vertical": 50,
+            "alignment": "center",
+            "text_product": "Check out our products:",
+            "list_products": [],
+            "show_rating": false,
+            "open_new_window_product": false,
+            "content_background_color": "rgba(0,0,0,0)",
+            "color_text": "rgba(0,0,0,0)",
+            "color_button": "rgba(0,0,0,0)",
+            "color_text_button": "rgba(0,0,0,0)",
+            "color_button_hover": "rgba(0,0,0,0)",
+            "color_text_button_hover": "rgba(0,0,0,0)",
+            "color_button_secondary": "rgba(0,0,0,0)",
+            "secondary_button_text": "rgba(0,0,0,0)",
+            "colors_text_link": "rgba(0,0,0,0)",
+            "color_heading_highlight_light": "rgba(0,0,0,0)",
+            "color_product_card_background": "rgba(0,0,0,0)",
+            "color_product_card_text": "rgba(0,0,0,0)"
+          }
+        }
+      },
+      "block_order": [
+        "slide_Ub9LMP",
+        "template--20740642505005__4c9e1af5-c4c0-48cf-b771-49029eedd24f-slide-2",
+        "slide_pp8j6R",
+        "slide_rh7TzD",
+        "slide_3ddaRG"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".hero-text {display: none !important;}"
+      ],
+      "settings": {
+        "show_hero": true,
+        "auto_play": true,
+        "change_slides_speed": 10,
+        "pause_hover": true,
+        "slider_visual": "dots",
+        "show_arrow": true,
+        "image_pagination_background": "rgba(0,0,0,0)",
+        "image_pagination_text": "rgba(0,0,0,0)",
+        "transition_style": "fade",
+        "full_width": true,
+        "padding_full_width": true,
+        "adapt_corners_desktop": false,
+        "rounded_corner_image": true,
+        "desktop_height": "550",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "full_width_mobile": true,
+        "adapt_corners_mobile": false,
+        "rounded_corner_image_mobile": true,
+        "show_content_below_image": true,
+        "mobile_height": "400",
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
+    },
+    "promotion_grid_Utk9JJ": {
+      "type": "promotion-grid",
+      "blocks": {
+        "promotion_74DhaV": {
+          "type": "promotion",
+          "settings": {
+            "image": "shopify://shop_images/Golu_2026_Premium_Sale_Temple_Display.webp",
+            "image_mobile": "shopify://shop_images/Golu_2026_Premium_Festive_Sale.webp",
+            "image_link": "",
+            "open_new_window": false,
+            "show_sound_control": false,
+            "video_url": "",
+            "enable_video_autoplay": false,
+            "video_alt_text": "",
+            "enable_content_overlay": true,
+            "content_position": "bottom",
+            "overlay_opacity": 0,
+            "number_of_columns": 1,
+            "number_of_row": 1,
+            "icon": "none",
+            "another_icon": "",
+            "custom_icon": "",
+            "icon_size": 45,
+            "sub_title": "",
+            "title": "",
+            "highlight_type": "underline",
+            "title_size": 100,
+            "text": "",
+            "text_size": 130,
+            "button_label": "",
+            "button_link": "shopify://collections/best-sellers",
+            "open_new_window_button": false,
+            "show_button_style": "primary",
+            "text_align": "center",
+            "media_position": "top",
+            "line_1": "",
+            "line_1_size": 80,
+            "line_2": "",
+            "line_2_size": 100,
+            "line_3": "",
+            "line_3_size": 50,
+            "sale_label_position": "top-left",
+            "sale_label_style": "circle",
+            "sale_label_background_color": "#ce021e",
+            "sale_label_color": "#ffffff",
+            "color_overlay": "rgba(0,0,0,0)",
+            "title_color": "rgba(0,0,0,0)",
+            "text_color": "rgba(0,0,0,0)",
+            "color_heading_highlight_light": "rgba(0,0,0,0)",
+            "background_button": "rgba(0,0,0,0)",
+            "color_button": "rgba(0,0,0,0)",
+            "background_button_hover": "rgba(0,0,0,0)",
+            "color_button_hover": "rgba(0,0,0,0)",
+            "color_button_secondary": "rgba(0,0,0,0)",
+            "secondary_button_text": "rgba(0,0,0,0)",
+            "colors_text_link": "rgba(0,0,0,0)"
+          }
+        }
+      },
+      "block_order": [
+        "promotion_74DhaV"
+      ],
+      "disabled": true,
+      "name": "t:sections.promotion-grid.name",
+      "settings": {
+        "heading": "",
+        "highlight_type": "underline",
+        "heading_size": 100,
+        "heading_tag": "h2",
+        "heading_alignment": "center",
+        "swiper_on_mobile": false,
+        "enable_arrow_mobile": false,
+        "auto_play": false,
+        "change_slides_speed": 5,
+        "max_columns": 1,
+        "spacing": 28,
+        "height_desktop": 250,
+        "keep_ratio_on_different_width": false,
+        "show_section_divider": false,
+        "full_width": false,
+        "padding_full_width": false,
+        "padding_top": 28,
+        "padding_bottom": 28,
+        "min_columns_mobile": "1",
+        "spacing_mobile": 0,
+        "height_mobile": 250,
+        "show_section_divider_mobile": false,
+        "full_width_mobile": false,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "highlight_text_with_image_nUBnKX": {
+      "type": "highlight-text-with-image",
+      "blocks": {
+        "image_q7xqgV": {
+          "type": "image",
+          "settings": {
+            "image_url": "",
+            "open_new_window": false,
+            "image_style": "rounded",
+            "image_ratio": "none",
+            "image_width": 86,
+            "image_width_mobile": 70
+          }
+        },
+        "image_YnX4f6": {
+          "type": "image",
+          "settings": {
+            "image_url": "",
+            "open_new_window": false,
+            "image_style": "rounded",
+            "image_ratio": "none",
+            "image_width": 86,
+            "image_width_mobile": 70
+          }
+        },
+        "image_EydDzk": {
+          "type": "image",
+          "settings": {
+            "image_url": "",
+            "open_new_window": false,
+            "image_style": "rounded",
+            "image_ratio": "aspect-4/3",
+            "image_width": 86,
+            "image_width_mobile": 70
+          }
+        }
+      },
+      "block_order": [
+        "image_q7xqgV",
+        "image_YnX4f6",
+        "image_EydDzk"
+      ],
+      "disabled": true,
+      "settings": {
+        "section_height": "fit_content",
+        "anim_speed": "3000",
+        "equal_lines": false,
+        "section_text": "Pure aromas, rooted in tradition, crafted for meaningful daily rituals.",
+        "highlight_type": "underline",
+        "heading_size": 180,
+        "heading_tag": "h2",
+        "subheading": "",
+        "text_alignment": "center",
+        "image_ratio": "aspect-square",
+        "button_text": "",
+        "button_link": "",
+        "open_new_window_button": false,
+        "show_button_style": "secondary",
+        "text_light": "rgba(0,0,0,0)",
+        "heading_highlight_color_light": "rgba(0,0,0,0)",
+        "background_color_light": "rgba(0,0,0,0)",
+        "text_dark": "rgba(0,0,0,0)",
+        "heading_highlight_color_dark": "rgba(0,0,0,0)",
+        "background_color_dark": "rgba(0,0,0,0)",
+        "show_section_divider": false,
+        "make_full_page_width": false,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "show_section_divider_mobile": true,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "featured_collection_XNaFNT": {
+      "type": "featured-collection",
+      "blocks": {
+        "collection_GzLx6P": {
+          "type": "collection",
+          "settings": {
+            "collection": "best-sellers-copy",
+            "show_description": false,
+            "description": "",
+            "number_of_lines_shown": "none",
+            "read_more_label": "Read more",
+            "see_less_label": "See less",
+            "show_vendor": false,
+            "show_rating": false,
+            "show_highlighted_features": false,
+            "show_highlighted_attributes": false,
+            "show_quickview": false,
+            "show_promotion": false,
+            "promotion_position": "left",
+            "card_link": "",
+            "open_new_window": false,
+            "heading": "Featured collection",
+            "highlight_type": "underline",
+            "heading_size": 70,
+            "content": "<p>10% OFF</p>",
+            "text_size": 100,
+            "content_alignment": "center",
+            "content_position": "bottom",
+            "button_label": "See more",
+            "button_link": "",
+            "open_new_window_button": false,
+            "show_button_style": "primary",
+            "enable_text_overlay": false,
+            "overlay_opacity": 0,
+            "image_ratio": "100",
+            "background_color": "rgba(0,0,0,0)",
+            "color_text": "rgba(0,0,0,0)",
+            "color_heading_highlight_light": "rgba(0,0,0,0)",
+            "color_button": "rgba(0,0,0,0)",
+            "color_text_button": "rgba(0,0,0,0)",
+            "color_button_hover": "rgba(0,0,0,0)",
+            "color_text_button_hover": "rgba(0,0,0,0)",
+            "color_button_secondary": "rgba(0,0,0,0)",
+            "secondary_button_text": "rgba(0,0,0,0)",
+            "colors_text_link": "rgba(0,0,0,0)",
+            "show_sound_control": false,
+            "video_url": "",
+            "enable_video_autoplay": false,
+            "video_alt_text": "",
+            "product_card": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_GzLx6P"
+      ],
+      "disabled": true,
+      "name": "New Arrivals",
+      "settings": {
+        "title": "New [launch]",
+        "highlight_type": "font_highlight",
+        "heading_size": 100,
+        "heading_tag": "h2",
+        "heading_alignment": "center",
+        "subheading": "",
+        "text": "",
+        "show_view_all": true,
+        "view_all_position": "bottom",
+        "view_all_button_style": "secondary",
+        "title_size": 90,
+        "title_style": "capitalize",
+        "title_position": "inline",
+        "tab_button_style": "button",
+        "color_background": "rgba(0,0,0,0)",
+        "color_text": "rgba(0,0,0,0)",
+        "color_background_secondary": "rgba(0,0,0,0)",
+        "color_text_secondary": "rgba(0,0,0,0)",
+        "color_background_hover": "rgba(0,0,0,0)",
+        "color_text_hover": "rgba(0,0,0,0)",
+        "color_background_dark": "rgba(0,0,0,0)",
+        "color_text_dark": "rgba(0,0,0,0)",
+        "color_background_secondary_dark": "rgba(0,0,0,0)",
+        "color_text_secondary_dark": "rgba(0,0,0,0)",
+        "color_background_hover_dark": "rgba(0,0,0,0)",
+        "color_text_hover_dark": "rgba(0,0,0,0)",
+        "enable_desktop_slider": true,
+        "slider_style": "vertical",
+        "swiper_on_mobile": true,
+        "enable_arrow_mobile": true,
+        "auto_play": true,
+        "change_slides_speed": 5,
+        "columns_desktop": 4,
+        "rows_desktop": 1,
+        "spacing": 20,
+        "full_width": false,
+        "show_section_divider": false,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "columns_mobile": "2",
+        "spacing_mobile": 16,
+        "full_width_mobile": false,
+        "show_section_divider_mobile": false,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "newsletter_Rwk93n": {
+      "type": "newsletter",
+      "blocks": {
+        "heading_mdT9U7": {
+          "type": "heading",
+          "settings": {
+            "heading": "Subscribe to our emails",
+            "highlight_type": "font_highlight",
+            "heading_size": 100,
+            "heading_tag": "h2",
+            "text": "<p>Be the first to know about new collections and exclusive offers.</p>",
+            "text_size": 100
+          }
+        },
+        "email_form_4BJWqq": {
+          "type": "email_form",
+          "settings": {
+            "button_label": "Submit"
+          }
+        }
+      },
+      "block_order": [
+        "heading_mdT9U7",
+        "email_form_4BJWqq"
+      ],
+      "disabled": true,
+      "settings": {
+        "overlay_opacity": 0,
+        "form_width": "large",
+        "content_layout": "horizontal",
+        "background_color_light": "rgba(0,0,0,0)",
+        "heading_light": "rgba(0,0,0,0)",
+        "color_heading_highlight_light": "rgba(0,0,0,0)",
+        "text_light": "rgba(0,0,0,0)",
+        "button_light": "rgba(0,0,0,0)",
+        "button_text_light": "rgba(0,0,0,0)",
+        "button_hover_light": "rgba(0,0,0,0)",
+        "button_text_hover_light": "rgba(0,0,0,0)",
+        "line_border": "rgba(0,0,0,0)",
+        "background_color_dark": "rgba(0,0,0,0)",
+        "heading_dark": "rgba(0,0,0,0)",
+        "color_heading_highlight_dark": "rgba(0,0,0,0)",
+        "text_dark": "rgba(0,0,0,0)",
+        "button_dark": "rgba(0,0,0,0)",
+        "button_text_dark": "rgba(0,0,0,0)",
+        "button_hover_dark": "rgba(0,0,0,0)",
+        "button_text_hover_dark": "rgba(0,0,0,0)",
+        "line_border_dark": "rgba(0,0,0,0)",
+        "desktop_height": "450px",
+        "show_section_divider": false,
+        "padding_top": 48,
+        "padding_bottom": 48,
+        "mobile_height": "300px",
+        "show_section_divider_mobile": false,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "aurora_instagram_follow": {
+      "type": "aurora-instagram-follow",
+      "settings": {
+        "handle": "aurorarituals.store",
+        "profile_url": "https://www.instagram.com/aurorarituals.store/",
+        "text": "Follow along for new aromas, festive offers and a look inside the farm.",
+        "button_label": "FOLLOW @AURORARITUALS.STORE",
+        "background": "#FFFDF7",
+        "text_color": "#4F473F",
+        "button_bg": "#2E7D4F",
+        "button_bg_hover": "#236A40",
+        "button_text": "#FFFFFF",
+        "padding_desktop": 40,
+        "padding_mobile": 24
+      }
+    },
+    "aurora_offer_popup": {
+      "type": "aurora-offer-popup",
+      "settings": {
+        "enabled": true,
+        "product": "aurora-dasangam-duo-free-aarambh-starter-set-monsoon-offer",
+        "eyebrow": "Monsoon offer",
+        "button_label": "Add to cart",
+        "delay": 3,
+        "once_per_session": true,
+        "storage_key": "aurora_offer_popup_seen"
+      }
     }
   },
   "order": [
-    "hero",
-    "social_proof_bar",
-    "178892612050ceb741",
-    "google_reviews_carousel",
-    "aurora_comparison",
-    "bundle_carousel",
-    "products_section",
-    "greens_section",
-    "video_carousel",
-    "why_us",
-    "faq",
-    "instagram_carousel",
-    "final_cta"
+    "aurora_hero",
+    "aurora_banner_offer",
+    "scrolling_banner_r6XXtc",
+    "aurora_banner_positioning",
+    "aurora_trust",
+    "multicolumn_rxMYDJ",
+    "collection_list_qw6tTw",
+    "e32885d8-0a8f-4c4f-8801-377d01cb7656",
+    "aurora_featured_bundles",
+    "aurora_positioning",
+    "17888419684ec40c49",
+    "aurora_instagram_follow",
+    "aurora_lead_capture",
+    "aurora_whatsapp_reviews",
+    "aurora_google_reviews",
+    "aurora_faq",
+    "aurora_banner_combos",
+    "aurora_brand_story",
+    "4c9e1af5-c4c0-48cf-b771-49029eedd24f",
+    "promotion_grid_Utk9JJ",
+    "highlight_text_with_image_nUBnKX",
+    "featured_collection_XNaFNT",
+    "newsletter_Rwk93n",
+    "video_looping_ijQzex",
+    "aurora_offer_popup"
   ]
 }

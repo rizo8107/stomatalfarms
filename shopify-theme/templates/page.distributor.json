@@ -1,0 +1,204 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "distributor": {
+      "type": "aurora-distributor",
+      "blocks": {
+        "badge_1": {
+          "type": "badge",
+          "settings": {
+            "title": "IEC registered",
+            "text": "Export-ready, with Aurora's own Import Export Code"
+          }
+        },
+        "badge_2": {
+          "type": "badge",
+          "settings": {
+            "title": "Trademarked",
+            "text": "A registered brand you can build on with confidence"
+          }
+        },
+        "badge_3": {
+          "type": "badge",
+          "settings": {
+            "title": "Lab-certified",
+            "text": "Family-safe, with no synthetic aroma chemicals"
+          }
+        },
+        "badge_4": {
+          "type": "badge",
+          "settings": {
+            "title": "Small-batch",
+            "text": "Handcrafted and sun-dried in Chennai"
+          }
+        },
+        "partner_1": {
+          "type": "partner",
+          "settings": {
+            "title": "Distributors & importers",
+            "text": "Territory partners who stock and supply Aurora to retailers in their country."
+          }
+        },
+        "partner_2": {
+          "type": "partner",
+          "settings": {
+            "title": "Bulk & wholesale buyers",
+            "text": "Large-volume orders for temples, wellness centres, hotels and resellers."
+          }
+        },
+        "partner_3": {
+          "type": "partner",
+          "settings": {
+            "title": "White label / private label",
+            "text": "Our formulations, made and packed under your own brand."
+          }
+        },
+        "partner_4": {
+          "type": "partner",
+          "settings": {
+            "title": "Retail stocking partners",
+            "text": "Stores and online shops that want Aurora on their shelves, as is."
+          }
+        },
+        "range_1": {
+          "type": "range_item",
+          "settings": {
+            "title": "Incense cups",
+            "text": "Arka, Paneer Rose, Dasangam",
+            "image": "shopify://shop_images/ARKA.jpg",
+            "link": "shopify://collections/cow-dung-incense-cups"
+          }
+        },
+        "range_2": {
+          "type": "range_item",
+          "settings": {
+            "title": "Incense sticks",
+            "text": "Slow, even burn with a soft aroma",
+            "image": "shopify://shop_images/Lemongrass_incense_stick_Pack_of_3_-1.jpg",
+            "link": "shopify://collections/cow-dung-incense-sticks"
+          }
+        },
+        "range_3": {
+          "type": "range_item",
+          "settings": {
+            "title": "Ghee diyas",
+            "text": "Ready-to-light ghee lamps for daily pooja",
+            "image": "shopify://shop_images/ghee_diya.jpg",
+            "link": "shopify://products/panchagavya"
+          }
+        },
+        "range_4": {
+          "type": "range_item",
+          "settings": {
+            "title": "Bath salts",
+            "text": "Sandalwood and Bulgarian rose",
+            "image": "shopify://shop_images/bath_salts.jpg",
+            "link": "shopify://products/bath-salts"
+          }
+        },
+        "range_5": {
+          "type": "range_item",
+          "settings": {
+            "title": "Incense holders",
+            "text": "Hand-finished coconut shell, logo engraved",
+            "image": "shopify://shop_images/holder_3.png",
+            "link": "shopify://products/premium-handcrafted-coconut-shell-incense-holder"
+          }
+        },
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Send an enquiry",
+            "text": "Tell us about your business and market using the form below."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Get the catalogue",
+            "text": "We share our company profile and trade price list within 2 working days."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Try a sample kit",
+            "text": "Experience the range before you commit. Sample kit terms shared on enquiry."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "title": "Place your first order",
+            "text": "We agree terms, produce your batch and ship to your door."
+          }
+        },
+        "term_1": {
+          "type": "term",
+          "settings": {
+            "label": "Minimum order",
+            "value": "Shared on enquiry"
+          }
+        },
+        "term_2": {
+          "type": "term",
+          "settings": {
+            "label": "Lead time",
+            "value": "Shared on enquiry"
+          }
+        },
+        "term_3": {
+          "type": "term",
+          "settings": {
+            "label": "Private label from",
+            "value": "Shared on enquiry"
+          }
+        },
+        "term_4": {
+          "type": "term",
+          "settings": {
+            "label": "Shipping",
+            "value": "FOB / CIF available"
+          }
+        }
+      },
+      "block_order": [
+        "badge_1",
+        "badge_2",
+        "badge_3",
+        "badge_4",
+        "partner_1",
+        "partner_2",
+        "partner_3",
+        "partner_4",
+        "range_1",
+        "range_2",
+        "range_3",
+        "range_4",
+        "range_5",
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4",
+        "term_1",
+        "term_2",
+        "term_3",
+        "term_4"
+      ],
+      "settings": {
+        "limit_handles": ""
+      }
+    }
+  },
+  "order": [
+    "distributor"
+  ]
+}

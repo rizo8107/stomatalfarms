@@ -1,0 +1,411 @@
+{%- liquid
+  assign s = section.settings
+  assign review_count = 0
+  for block in section.blocks
+    if block.settings.text != blank
+      assign review_count = review_count | plus: 1
+    endif
+  endfor
+-%}
+{%- if review_count > 0 or s.feed_url != blank or request.design_mode or s.show_placeholder -%}
+<section
+  class="aurora-section aurora-reviews aurora-greviews aurora-reviews--{{ s.layout }}"
+  id="aurora-greviews-{{ section.id }}"
+  style="{% render 'aurora-section-vars', s: s %} --as-star: {{ s.star_color }};"
+  {%- if s.feed_url != blank %}
+    data-aurora-greviews-feed="{{ s.feed_url | escape }}"
+    data-max="{{ s.feed_max }}"
+    data-min-stars="{{ s.feed_min_stars }}"
+    data-avatar="{{ s.show_avatar }}"
+    data-photos="{{ s.feed_photos }}"
+    data-total-label="{{ s.feed_total_label | escape }}"
+  {%- endif %}
+>
+  <div class="aurora-section__header aurora-section__header--{{ s.heading_alignment }}">
+    {%- if s.show_google_label -%}
+      <p class="aurora-greviews__brand">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z" fill="#34A853"/><path d="M5.84 14.09a6.6 6.6 0 0 1 0-4.18V7.07H2.18a11 11 0 0 0 0 9.86z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15A11 11 0 0 0 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        Google Reviews
+      </p>
+    {%- endif -%}
+    {%- if s.heading != blank -%}
+      <h2 class="aurora-section__heading">{{ s.heading }}</h2>
+    {%- endif -%}
+    {%- if s.rating != blank or s.feed_url != blank -%}
+      <p class="aurora-greviews__summary"{% if s.rating == blank %} hidden{% endif %}>
+        <span class="aurora-greviews__stars" aria-hidden="true">★★★★★</span>
+        <strong data-greviews-rating>{{ s.rating }}</strong>
+        <span data-greviews-total>{%- if s.total != blank %} · {{ s.total }}{% endif -%}</span>
+      </p>
+    {%- endif -%}
+  </div>
+
+  <div class="aurora-reviews__track{% unless s.full_width %} page-width{% endunless %}">
+    {%- for block in section.blocks -%}
+      {%- if block.settings.text != blank or request.design_mode or s.show_placeholder -%}
+        {%- assign stars = block.settings.stars | plus: 0 -%}
+        <article class="aurora-reviews__item aurora-greviews__card{% if block.settings.text == blank %} is-placeholder{% endif %}" {{ block.shopify_attributes }}>
+          {%- if s.show_avatar -%}
+            {%- assign author = block.settings.author | default: 'Reviewer name' -%}
+            <div class="aurora-greviews__head">
+              <span class="aurora-greviews__avatar" aria-hidden="true">{{ author | slice: 0 | upcase }}</span>
+              <span>
+                <strong>{{ author }}</strong>
+                {%- if block.settings.date != blank -%}<br><small>{{ block.settings.date }}</small>{%- endif -%}
+              </span>
+            </div>
+          {%- endif -%}
+          <p class="aurora-greviews__stars" aria-label="{{ stars }} out of 5 stars">
+            {%- for i in (1..5) -%}{% if i <= stars %}★{% else %}☆{% endif %}{%- endfor -%}
+          </p>
+          <p class="aurora-greviews__text">{{ block.settings.text | default: 'Google review text goes here – copy text-only reviews exactly as posted on your Google Business profile.' | escape | newline_to_br }}</p>
+          {%- unless s.show_avatar -%}
+            <p class="aurora-greviews__author">
+              <strong>{{ block.settings.author | default: 'Reviewer name' }}</strong>
+              {%- if block.settings.date != blank %} · {{ block.settings.date }}{% endif -%}
+            </p>
+          {%- endunless -%}
+        </article>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  {%- if s.link != blank -%}
+    <p class="aurora-section__cta aurora-section__header--{{ s.heading_alignment }}">
+      <a class="aurora-section__button" href="{{ s.link }}" target="_blank" rel="noopener">{{ s.link_label }}</a>
+    </p>
+  {%- endif -%}
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Aurora: Google reviews",
+  "tag": "div",
+  "class": "x-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "paragraph",
+      "content": "Reviews load automatically from the Google review feed below. Review blocks are shown when the feed is empty or unreachable."
+    },
+    {
+      "type": "text",
+      "id": "feed_url",
+      "label": "Google review feed URL",
+      "info": "Your review scraper's address ending in /api/reviews. Leave empty to show only the Review blocks."
+    },
+    {
+      "type": "range",
+      "id": "feed_max",
+      "label": "Reviews to show from the feed",
+      "min": 3,
+      "max": 30,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "feed_min_stars",
+      "label": "Only show reviews with at least",
+      "default": "4",
+      "options": [
+        { "value": "1", "label": "1 star" },
+        { "value": "3", "label": "3 stars" },
+        { "value": "4", "label": "4 stars" },
+        { "value": "5", "label": "5 stars" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "feed_photos",
+      "label": "Show reviewer photos from Google",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "feed_total_label",
+      "label": "Review count text from the feed",
+      "info": "[count] is replaced with the number of Google reviews",
+      "default": "[count] Google reviews"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_google_label",
+      "label": "Show Google label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Loved by families across India"
+    },
+    {
+      "type": "text",
+      "id": "rating",
+      "label": "Average rating",
+      "info": "Copy from your Google Business profile, e.g. 4.8"
+    },
+    {
+      "type": "text",
+      "id": "total",
+      "label": "Review count text",
+      "info": "e.g. 120 reviews"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Google reviews link"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "Read all reviews on Google →"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_placeholder",
+      "label": "Show placeholders while empty",
+      "info": "Lets the team see where reviews go on the preview. Turn off before publishing if no reviews are added.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_avatar",
+      "label": "Show reviewer initial at the top of each card",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "slider",
+      "options": [
+        { "value": "slider", "label": "Swipe slider" },
+        { "value": "grid", "label": "Grid" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Reviews per row (desktop)",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Reviews per row (mobile)",
+      "default": "1",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size (desktop)",
+      "min": 18,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size (mobile)",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave a colour transparent to use the theme colour."
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Stars",
+      "default": "#8A6420"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Card border",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Button and initial",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding (desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding (desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top padding (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom padding (mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 28
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "select",
+          "id": "stars",
+          "label": "Stars",
+          "default": "5",
+          "options": [
+            { "value": "5", "label": "5" },
+            { "value": "4", "label": "4" },
+            { "value": "3", "label": "3" }
+          ]
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review text",
+          "info": "Copy the review exactly as posted on Google"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Reviewer name"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "info": "e.g. Sep 2026"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Aurora: Google reviews",
+      "category": "Aurora",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
+      ]
+    }
+  ]
+}
+{% endschema %}

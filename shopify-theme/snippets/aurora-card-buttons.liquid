@@ -1,0 +1,28 @@
+{%- comment -%}
+  Aurora: "Add to cart" + "Buy now" under the price on product cards
+  (Theme settings › Aurora: Cart & WhatsApp › Product card buttons).
+
+  Accepts:
+  - card_product: {Object}
+{%- endcomment -%}
+{%- if settings.aurora_card_buttons and card_product != blank -%}
+  {%- assign v = card_product.selected_or_first_available_variant -%}
+  <div class="aurora-card-cta">
+    {%- if card_product.available and v.available -%}
+      <button
+        type="button"
+        class="aurora-card-cta__add"
+        data-aurora-card-add
+        data-variant-id="{{ v.id }}"
+        aria-label="{{ settings.aurora_card_add_label | escape }}: {{ card_product.title | escape }}{% unless card_product.has_only_default_variant %} – {{ v.title | escape }}{% endunless %}"
+      >
+        {{- settings.aurora_card_add_label -}}
+      </button>
+      {%- if settings.aurora_card_buy_now -%}
+        <a class="aurora-card-cta__buy" href="{{ routes.root_url | append: '/cart/' | replace: '//', '/' }}{{ v.id }}:1">{{ settings.aurora_card_buy_label }}</a>
+      {%- endif -%}
+    {%- else -%}
+      <a class="aurora-card-cta__buy" href="{{ card_product.url }}">{{ 'products.product.sold_out' | t }} – View product</a>
+    {%- endif -%}
+  </div>
+{%- endif -%}

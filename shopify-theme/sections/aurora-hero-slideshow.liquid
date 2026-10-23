@@ -1,0 +1,189 @@
+{%- comment -%}
+  Aurora: hero slideshow. One slide per block (desktop + mobile artwork, link, optional text).
+  "Image only" hides every text/button so the artwork speaks for itself.
+  Height: "auto" sizes the banner to the first slide's artwork; "fixed" uses the sizes below.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign first = section.blocks.first
+  assign d_w = s.desktop_width | at_least: 1
+  assign d_h = s.desktop_height | at_least: 1
+  assign m_w = s.mobile_width | at_least: 1
+  assign m_h = s.mobile_height | at_least: 1
+  assign ratio_d = d_w | append: ' / ' | append: d_h
+  assign ratio_m = m_w | append: ' / ' | append: m_h
+  if s.height_mode == 'auto' and first.settings.desktop_image != blank
+    assign ratio_d = first.settings.desktop_image.aspect_ratio
+    if first.settings.mobile_image != blank
+      assign ratio_m = first.settings.mobile_image.aspect_ratio
+    else
+      assign ratio_m = first.settings.desktop_image.aspect_ratio
+    endif
+  endif
+  assign show_placeholder = false
+  if s.show_placeholder or request.design_mode
+    assign show_placeholder = true
+  endif
+-%}
+{%- if section.blocks.size > 0 -%}
+<div
+  id="AuroraHero-{{ section.id }}"
+  class="aurora-hero{% if s.full_width %} aurora-hero--full{% endif %}{% if s.image_only %} aurora-hero--image-only{% endif %}"
+  data-aurora-hero
+  data-autoplay="{{ s.autoplay }}"
+  data-interval="{{ s.interval | times: 1000 }}"
+  style="--ah-ratio-d: {{ ratio_d }}; --ah-ratio-m: {{ ratio_m }}; --ah-fit: {{ s.image_fit }};
+    --ah-bg: {{ s.background }}; --ah-radius: {{ s.corner_radius }}px; --ah-text: {{ s.text_color }}; --ah-accent: {{ s.accent_color }};
+    --ah-btn-bg: {{ s.button_color }}; --ah-btn-text: {{ s.button_text_color }}; --ah-box: {{ s.content_box_color }};
+    --ah-heading-d: {{ s.heading_size }}px; --ah-heading-m: {{ s.heading_size_mobile }}px;
+    --ah-pt: {{ s.padding_top }}px; --ah-pb: {{ s.padding_bottom }}px;"
+>
+  <div class="aurora-hero__wrap{% unless s.full_width %} page-width{% endunless %}">
+    <div class="aurora-hero__viewport">
+      <div class="aurora-hero__track" data-hero-track aria-roledescription="carousel" aria-label="{{ s.label | escape }}">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign b = block.settings
+            assign d_img = b.desktop_image | default: b.mobile_image
+            assign m_img = b.mobile_image
+            assign alt = d_img.alt | default: b.heading | default: b.alt_text | default: shop.name | remove: '[' | remove: ']' | escape
+            assign has_text = false
+            unless s.image_only or b.hide_text
+              if b.subheading != blank or b.heading != blank or b.text != blank or b.button_label != blank
+                assign has_text = true
+              endif
+            endunless
+            assign loading = 'lazy'
+            assign priority = 'auto'
+            if forloop.first and section.index <= 2
+              assign loading = 'eager'
+              assign priority = 'high'
+            endif
+            assign focal = d_img.presentation.focal_point | default: 'center'
+            assign focal_style = 'object-position: ' | append: focal
+          -%}
+          <div class="aurora-hero__slide aurora-hero__slide--{{ b.content_position }}" role="group" aria-roledescription="slide" aria-label="{{ forloop.index }} / {{ forloop.length }}" {{ block.shopify_attributes }}>
+            {%- if b.link != blank -%}<a class="aurora-hero__link" href="{{ b.link }}" aria-label="{{ alt }}"></a>{%- endif -%}
+            {%- if d_img != blank -%}
+              <picture class="aurora-hero__media">
+                {%- if m_img != blank -%}
+                  <source media="(max-width: 767px)" srcset="{{ m_img | image_url: width: 450 }} 450w, {{ m_img | image_url: width: 750 }} 750w, {{ m_img | image_url: width: 1100 }} 1100w" sizes="100vw">
+                {%- endif -%}
+                {{ d_img | image_url: width: 2400 | image_tag: widths: '480, 750, 1100, 1500, 1920, 2400', sizes: '100vw', alt: alt, loading: loading, fetchpriority: priority, class: 'aurora-hero__img', style: focal_style }}
+              </picture>
+            {%- elsif show_placeholder -%}
+              <div class="aurora-hero__placeholder" aria-hidden="true">
+                <div class="aurora-banner__placeholder-label">
+                  <strong>Slide {{ forloop.index }}</strong>
+                  <span class="aurora-banner__size aurora-banner__size--desktop">Desktop · {{ d_w }} × {{ d_h }} px</span>
+                  <span class="aurora-banner__size aurora-banner__size--mobile">Mobile · {{ m_w }} × {{ m_h }} px</span>
+                </div>
+              </div>
+            {%- endif -%}
+            {%- if has_text -%}
+              <div class="aurora-hero__content{% if b.show_box %} aurora-hero__content--box{% endif %}">
+                {%- if b.subheading != blank -%}<p class="aurora-hero__sub">{{ b.subheading }}</p>{%- endif -%}
+                {%- if b.heading != blank -%}
+                  <{% if forloop.first %}h1{% else %}h2{% endif %} class="aurora-hero__heading">{{ b.heading | escape | replace: '[', '<span class="aurora-hero__hl">' | replace: ']', '</span>' }}</{% if forloop.first %}h1{% else %}h2{% endif %}>
+                {%- endif -%}
+                {%- if b.text != blank -%}<div class="aurora-hero__text">{{ b.text }}</div>{%- endif -%}
+                {%- if b.button_label != blank -%}<a class="aurora-hero__btn" href="{{ b.button_link | default: b.link | default: '#' }}">{{ b.button_label }}</a>{%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+      {%- if section.blocks.size > 1 -%}
+        {%- if s.show_arrows -%}
+          <button type="button" class="aurora-hero__arrow aurora-hero__arrow--prev" data-hero-prev aria-label="Previous slide"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M12.5 4.5L7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button type="button" class="aurora-hero__arrow aurora-hero__arrow--next" data-hero-next aria-label="Next slide"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M7.5 4.5L13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        {%- endif -%}
+        {%- if s.show_dots -%}
+          <div class="aurora-hero__dots" role="tablist">
+            {%- for block in section.blocks -%}
+              <button type="button" class="aurora-hero__dot{% if forloop.first %} is-active{% endif %}" data-hero-dot="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Aurora: Hero slideshow",
+  "tag": "section",
+  "class": "x-section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "label", "label": "Name (for screen readers)", "default": "Featured offers" },
+    { "type": "checkbox", "id": "image_only", "label": "Image only – hide all text and buttons", "info": "Use when the text is already part of the artwork. Each slide still links to its page.", "default": true },
+    { "type": "header", "content": "Image size & fit" },
+    {
+      "type": "select", "id": "height_mode", "label": "Banner height", "default": "auto",
+      "options": [
+        { "value": "auto", "label": "Auto – match the first slide's image" },
+        { "value": "fixed", "label": "Fixed – use the sizes below" }
+      ]
+    },
+    {
+      "type": "select", "id": "image_fit", "label": "Image fit", "default": "cover",
+      "options": [
+        { "value": "cover", "label": "Fill the banner (crop edges if needed)" },
+        { "value": "contain", "label": "Show the whole image (no crop)" }
+      ]
+    },
+    { "type": "color", "id": "background", "label": "Background behind images", "info": "Visible around images when 'Show the whole image' is used", "default": "#EAF3E7" },
+    { "type": "number", "id": "desktop_width", "label": "Desktop artwork width (px)", "default": 1920 },
+    { "type": "number", "id": "desktop_height", "label": "Desktop artwork height (px)", "default": 860 },
+    { "type": "number", "id": "mobile_width", "label": "Mobile artwork width (px)", "default": 900 },
+    { "type": "number", "id": "mobile_height", "label": "Mobile artwork height (px)", "default": 1290 },
+    { "type": "checkbox", "id": "show_placeholder", "label": "Show size placeholder for slides without an image", "default": true },
+    { "type": "header", "content": "Slideshow" },
+    { "type": "checkbox", "id": "autoplay", "label": "Auto-rotate slides", "default": true },
+    { "type": "range", "id": "interval", "label": "Change slide every", "min": 3, "max": 10, "step": 1, "unit": "s", "default": 5 },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show arrows", "default": true },
+    { "type": "checkbox", "id": "show_dots", "label": "Show dots", "default": true },
+    { "type": "header", "content": "Layout" },
+    { "type": "checkbox", "id": "full_width", "label": "Full width", "default": true },
+    { "type": "range", "id": "corner_radius", "label": "Corner radius", "min": 0, "max": 30, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 0 },
+    { "type": "header", "content": "Text style (when text is shown)" },
+    { "type": "range", "id": "heading_size", "label": "Heading size (desktop)", "min": 20, "max": 72, "step": 2, "unit": "px", "default": 46 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size (mobile)", "min": 18, "max": 44, "step": 2, "unit": "px", "default": 28 },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#FFFFFF" },
+    { "type": "color", "id": "accent_color", "label": "Highlight / subheading", "default": "#D9B866" },
+    { "type": "color", "id": "button_color", "label": "Button", "default": "#D9B866" },
+    { "type": "color", "id": "button_text_color", "label": "Button text", "default": "#1F3B2D" },
+    { "type": "color", "id": "content_box_color", "label": "Text box background", "default": "rgba(23,49,38,0.82)" }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "desktop_image", "label": "Desktop image", "info": "1920 × 860 px recommended" },
+        { "type": "image_picker", "id": "mobile_image", "label": "Mobile image", "info": "900 × 1290 px recommended. Empty = desktop image." },
+        { "type": "url", "id": "link", "label": "Slide link", "info": "The whole slide is clickable" },
+        { "type": "text", "id": "alt_text", "label": "Image description (accessibility)" },
+        { "type": "header", "content": "Text over the image" },
+        { "type": "checkbox", "id": "hide_text", "label": "Hide text on this slide", "default": false },
+        { "type": "text", "id": "subheading", "label": "Subheading" },
+        { "type": "text", "id": "heading", "label": "Heading", "info": "Wrap words in [brackets] to highlight them" },
+        { "type": "richtext", "id": "text", "label": "Text" },
+        { "type": "text", "id": "button_label", "label": "Button label" },
+        { "type": "url", "id": "button_link", "label": "Button link", "info": "Empty = slide link" },
+        {
+          "type": "select", "id": "content_position", "label": "Text position", "default": "left",
+          "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }, { "value": "bottom", "label": "Bottom" } ]
+        },
+        { "type": "checkbox", "id": "show_box", "label": "Background box behind text", "default": true }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Aurora: Hero slideshow", "category": "Aurora", "blocks": [ { "type": "slide" }, { "type": "slide" } ] } ]
+}
+{% endschema %}

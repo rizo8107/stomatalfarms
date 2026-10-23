@@ -1,0 +1,58 @@
+{%- comment -%}
+  Aurora: on phones, show title, subheadline, rating and badges ABOVE the gallery
+  (the buy-box copies are visually hidden on mobile; the h1 stays in the DOM).
+
+  Accepts:
+  - product: {Object}
+  - section: {Object} main product section
+{%- endcomment -%}
+{%- liquid
+  assign title_block = nil
+  assign badges_block = nil
+  assign subheadline = ''
+  assign seen_price = false
+  assign head_notes = ''
+  for b in section.blocks
+    case b.type
+      when 'price'
+        assign seen_price = true
+      when 'aurora_note'
+        if b.settings.style == 'subtle' and seen_price == false and b.settings.text != blank
+          capture note_html
+            render 'aurora-product-block', block: b, product: product, section_id: section.id
+          endcapture
+          assign head_notes = head_notes | append: note_html
+        endif
+      when 'product_name'
+        assign title_block = b
+      when 'aurora_trust_badges'
+        assign badges_block = b
+      when 'aurora_subheadline'
+        assign subheadline = product.metafields.custom.subheadline.value | default: b.settings.text
+    endcase
+  endfor
+  assign rating = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count | plus: 0
+-%}
+<div class="aurora-mhead" aria-hidden="true">
+  {%- if badges_block and badges_block.settings.badge_style == 'tags' -%}
+    {%- render 'aurora-product-block', block: badges_block, product: product, section_id: section.id -%}
+  {%- endif -%}
+  {%- if title_block -%}
+    <p class="aurora-mhead__title h2">{{ product.title | escape }}</p>
+  {%- endif -%}
+  {%- if subheadline != blank -%}
+    <p class="aurora-mhead__sub">{{ subheadline }}</p>
+  {%- endif -%}
+  {{- head_notes -}}
+  {%- if rating != blank and rating_count > 0 -%}
+    <p class="aurora-mhead__rating">
+      <span class="aurora-mhead__star">★</span>
+      <strong>{{ rating.rating | round: 1 }}</strong>
+      <span>({{ rating_count }} ratings)</span>
+    </p>
+  {%- endif -%}
+  {%- if badges_block and badges_block.settings.badge_style != 'tags' -%}
+    {%- render 'aurora-product-block', block: badges_block, product: product, section_id: section.id -%}
+  {%- endif -%}
+</div>

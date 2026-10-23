@@ -7,11 +7,11 @@
 <google-reviews-carousel
   data-endpoint="{{ section.settings.reviews_endpoint }}"
   data-fallback-endpoint="{{ 'reviews-fallback.json' | asset_url }}"
-  data-avatar-colors="bg-[#4285F4] bg-[#9c6ade] bg-[#0f9d8f] bg-[#ea4335] bg-[#f5a623] bg-[#34a853]"
-  data-star-on="fill-[#f5a623] text-[#f5a623]"
+  data-avatar-colors="bg-[#4285F4] bg-[#9c6ade] bg-[#0f9d8f] bg-[#ea4335] bg-[#8A6420] bg-[#34a853]"
+  data-star-on="fill-[#8A6420] text-[#8A6420]"
   data-star-off="fill-transparent text-[#2a3625]/15"
-  data-summary-star-on="w-3.5 h-3.5 fill-[#f5a623] text-[#f5a623]"
-  data-summary-star-off="w-3.5 h-3.5 fill-transparent text-[#f5a623]/30"
+  data-summary-star-on="w-3.5 h-3.5 fill-[#8A6420] text-[#8A6420]"
+  data-summary-star-off="w-3.5 h-3.5 fill-transparent text-[#8A6420]/30"
 >
   <section class="pt-10 md:pt-14 pb-4 px-4 bg-[#f9f6f0]">
     <div class="max-w-7xl mx-auto">
@@ -28,7 +28,7 @@
             <div class="flex items-center gap-1 mt-0.5">
               <span data-summary-stars class="flex items-center gap-1">
                 {% for i in (1..5) %}
-                  {% render 'icon', name: 'star', class: 'w-3.5 h-3.5 fill-[#f5a623] text-[#f5a623]' %}
+                  {% render 'icon', name: 'star', class: 'w-3.5 h-3.5 fill-[#8A6420] text-[#8A6420]' %}
                 {% endfor %}
               </span>
               <span data-summary-rating class="text-sm font-bold text-[#2a3625] ml-1">4.7</span>

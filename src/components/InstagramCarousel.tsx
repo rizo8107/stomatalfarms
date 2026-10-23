@@ -1,99 +1,181 @@
 import { useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
-import Autoplay from 'embla-carousel-autoplay';
-import { ChevronLeft, ChevronRight, Instagram } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
 
-const instagramMedia = [
-  { type: 'image', url: '/instagram/1.jpg' },
-  { type: 'image', url: '/instagram/2.jpg' },
-  { type: 'image', url: '/instagram/3.jpg' },
-  { type: 'image', url: '/instagram/4.jpg' },
-  { type: 'image', url: '/instagram/5.jpg' },
-  { type: 'video', url: '/instagram/6.mp4' },
+interface InstagramPost {
+  type: 'image' | 'video';
+  url: string;
+  hasPlay?: boolean;
+  alt: string;
+}
+
+const instagramMedia: InstagramPost[] = [
+  {
+    type: 'image',
+    url: '/instagram/1.jpg',
+    hasPlay: true,
+    alt: 'Aurora floral incense sticks in sunlight',
+  },
+  {
+    type: 'image',
+    url: '/instagram/2.jpg',
+    hasPlay: false,
+    alt: "Yes it's made of cow dung incense cups",
+  },
+  {
+    type: 'image',
+    url: '/instagram/3.jpg',
+    hasPlay: true,
+    alt: 'Aurora incense for festive Thamboolam and Golu celebrations',
+  },
+  {
+    type: 'image',
+    url: '/instagram/4.jpg',
+    hasPlay: false,
+    alt: 'Aurora natural aromatics collection',
+  },
+  {
+    type: 'image',
+    url: '/instagram/5.jpg',
+    hasPlay: false,
+    alt: 'Handcrafted cow dung incense sticks from Stomatal Farms',
+  },
+  {
+    type: 'video',
+    url: '/instagram/6.mp4',
+    hasPlay: true,
+    alt: 'Gentle smoke and calm burning ritual',
+  },
 ];
 
 export const InstagramCarousel = () => {
-  const autoplay = Autoplay({ delay: 3200, stopOnInteraction: false, stopOnMouseEnter: true });
-
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, align: 'center', skipSnaps: false },
-    [autoplay]
-  );
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: 'start',
+    skipSnaps: false,
+  });
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
+  const profileUrl = 'https://www.instagram.com/aurorarituals.store/';
+
   return (
-    <section className="py-24 md:py-32 px-4 bg-[#fffbf5] relative overflow-hidden">
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-16">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#5c6e58] mb-4 flex items-center justify-center gap-3">
-            <Instagram className="w-4 h-4" />
-            Join our community
-          </p>
+    <section className="py-16 md:py-24 px-4 bg-[#FFFDF7] relative overflow-hidden">
+      <div className="max-w-5xl mx-auto relative z-10">
+        {/* Title */}
+        <div className="text-center mb-8 md:mb-12">
           <h2
-            className="text-3xl md:text-5xl text-[#2a3625] mb-6"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
+            className="text-3xl md:text-5xl text-[#1F3B2D] font-medium tracking-tight"
+            style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
-            Aromatics in real life.
+            Join our community
           </h2>
-          <p className="text-[#6a7462] font-light max-w-lg mx-auto">
-            See how our community uses Aurora to transform their daily rituals. Tag us @stomatalfarms to be featured.
-          </p>
         </div>
 
-        <div className="relative group">
-          <div className="overflow-hidden rounded-[40px]" ref={emblaRef}>
-            <div className="flex -ml-4 md:-ml-8">
+        {/* Carousel / Cards Row */}
+        <div className="relative px-2 md:px-6">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex -ml-3 md:-ml-4">
               {instagramMedia.map((media, index) => (
-                <div key={index} className="flex-[0_0_85%] min-w-0 pl-4 md:flex-[0_0_35%] md:pl-8">
-                  <div className="relative aspect-[4/5] rounded-[32px] overflow-hidden shadow-xl border border-[#2e3f25]/5 group/item">
-                    {media.type === 'image' ? (
-                      <img
-                        src={media.url}
-                        alt={`Instagram post ${index + 1}`}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover/item:scale-110"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <video
-                        src={media.url}
-                        className="w-full h-full object-cover"
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                      />
+                <div
+                  key={index}
+                  className="flex-[0_0_84%] sm:flex-[0_0_48%] md:flex-[0_0_33.3333%] min-w-0 pl-3 md:pl-4"
+                >
+                  <a
+                    href={profileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block relative aspect-[4/5] rounded-2xl overflow-hidden shadow-sm border border-black/5 bg-[#F2EDE4] group cursor-pointer"
+                    aria-label={media.alt}
+                  >
+                    <img
+                      src={media.url}
+                      alt={media.alt}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+
+                    {/* Centered Play Button Overlay for Reels/Videos */}
+                    {media.hasPlay && (
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/85 backdrop-blur-sm shadow-md flex items-center justify-center pl-0.5 text-[#1F3B2D] group-hover:scale-110 transition-transform">
+                          <Play className="w-5 h-5 fill-current" />
+                        </div>
+                      </div>
                     )}
-                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <Instagram className="w-8 h-8 text-white" />
-                    </div>
-                  </div>
+
+                    {/* Subtle Hover Overlay */}
+                    <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                  </a>
                 </div>
               ))}
             </div>
           </div>
 
+          {/* Navigation Arrows */}
           <button
-            className="hidden md:flex absolute top-1/2 left-4 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 backdrop-blur-md items-center justify-center text-[#2a3625] shadow-lg hover:bg-white transition-all opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0"
+            type="button"
+            className="absolute left-0 md:-left-2 top-1/2 -translate-y-1/2 z-20 w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/90 hover:bg-white text-[#1F3B2D] shadow-lg flex items-center justify-center transition-all hover:scale-105 active:scale-95"
             onClick={scrollPrev}
+            aria-label="Previous slide"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-6 h-6 stroke-[2]" />
           </button>
           <button
-            className="hidden md:flex absolute top-1/2 right-4 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 backdrop-blur-md items-center justify-center text-[#2a3625] shadow-lg hover:bg-white transition-all opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0"
+            type="button"
+            className="absolute right-0 md:-right-2 top-1/2 -translate-y-1/2 z-20 w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/90 hover:bg-white text-[#1F3B2D] shadow-lg flex items-center justify-center transition-all hover:scale-105 active:scale-95"
             onClick={scrollNext}
+            aria-label="Next slide"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-6 h-6 stroke-[2]" />
           </button>
         </div>
 
-        <div className="flex justify-center gap-2 mt-8 md:hidden">
-          {instagramMedia.map((_, i) => (
-            <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#5c6e58]/20" />
-          ))}
+        {/* Handle Link */}
+        <div className="text-center mt-10 md:mt-12">
+          <a
+            href={profileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block text-[#1F3B2D] hover:text-[#2E7D4F] text-base md:text-lg font-medium tracking-wide underline underline-offset-8 decoration-1 decoration-[#1F3B2D] hover:decoration-[#2E7D4F] transition-colors"
+          >
+            @aurorarituals.store
+          </a>
+        </div>
+
+        {/* Prompt Text */}
+        <p className="text-center text-[#4F473F] text-sm md:text-base max-w-md mx-auto mt-6 mb-6 leading-relaxed">
+          Follow along for new aromas, festive offers and a look inside the farm.
+        </p>
+
+        {/* Follow CTA Button */}
+        <div className="text-center">
+          <a
+            href={profileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 min-h-[50px] bg-[#2E7D4F] hover:bg-[#236A40] text-white text-xs md:text-sm font-semibold tracking-[0.14em] uppercase rounded-sm shadow-sm transition-all duration-200 hover:shadow-md"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-4 h-4 md:w-5 md:h-5"
+              aria-hidden="true"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.2" cy="6.8" r="1" />
+            </svg>
+            <span>FOLLOW @AURORARITUALS.STORE</span>
+          </a>
         </div>
       </div>
     </section>
   );
 };
+

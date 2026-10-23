@@ -1,0 +1,698 @@
+{% comment %}
+  Aurora conversion blocks for the main product section.
+
+  Accepts:
+  - block: {Object} aurora_* block
+  - product: {Object}
+  - section_id: {String}
+{% endcomment %}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+-%}
+{%- case block.type -%}
+  {%- when 'aurora_subheadline' -%}
+    {%- liquid
+      assign subheadline = product.metafields.custom.subheadline.value | default: block.settings.text
+    -%}
+    {%- if subheadline != blank -%}
+      <p class="aurora-block aurora-subheadline" {{ block.shopify_attributes }}>{{ subheadline }}</p>
+    {%- endif -%}
+
+  {%- when 'aurora_price_savings' -%}
+    <div
+      id="aurora-savings-{{ block.id }}-{{ section_id }}"
+      class="aurora-block aurora-savings"
+      data-aurora-rerender
+      data-section-id="{{ section_id }}"
+      {{ block.shopify_attributes }}
+    >
+      {%- if current_variant.compare_at_price > current_variant.price -%}
+        {%- liquid
+          assign saved = current_variant.compare_at_price | minus: current_variant.price
+          assign saved_percent = saved | times: 100.0 | divided_by: current_variant.compare_at_price | round
+        -%}
+        <p class="aurora-savings__row">
+          {%- if block.settings.show_mrp != false -%}
+            <span class="aurora-savings__mrp">{{ block.settings.mrp_label }} <s>{{ current_variant.compare_at_price | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</s></span>
+          {%- endif -%}
+          <span class="aurora-savings__badge">
+            {{- block.settings.save_label }} {{ saved | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }} ({{ saved_percent }}% {{ block.settings.off_label }})
+          </span>
+        </p>
+      {%- endif -%}
+      {%- if block.settings.tax_note != blank -%}
+        <p class="aurora-savings__tax">{{ block.settings.tax_note }}</p>
+      {%- endif -%}
+      {%- if current_variant.unit_price_measurement -%}
+        <p class="aurora-savings__unit">
+          {{ current_variant.unit_price | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }} /
+          {%- if current_variant.unit_price_measurement.reference_value != 1 %} {{ current_variant.unit_price_measurement.reference_value }}{% endif %}
+          {{ current_variant.unit_price_measurement.reference_unit }}
+        </p>
+      {%- endif -%}
+    </div>
+
+  {%- when 'aurora_offer_tiers' -%}
+    {%- liquid
+      assign keyword = block.settings.pack_keyword | default: 'Pack of'
+      assign pack_count = 0
+      assign base_unit = 0
+      for variant in product.variants
+        if variant.title contains keyword
+          assign units = variant.title | split: keyword | last | strip | plus: 0
+          if units > 0
+            assign pack_count = pack_count | plus: 1
+            assign unit_price = variant.price | divided_by: units
+            if base_unit == 0 or unit_price > base_unit
+              assign base_unit = unit_price
+            endif
+          endif
+        endif
+      endfor
+      assign has_static = false
+      if block.settings.tier_1_title != blank
+        assign has_static = true
+      endif
+    -%}
+    {%- if pack_count > 1 or has_static -%}
+      {%- liquid
+        assign tiers_are_picker = false
+        if pack_count > 1 and pack_count == product.variants.size and product.options.size == 1 and block.settings.replace_picker != false
+          assign tiers_are_picker = true
+        endif
+      -%}
+      {%- if tiers_are_picker -%}
+        {%- comment -%} The tiers act as the pack picker; the theme picker stays in the DOM (hidden) and drives the form. {%- endcomment -%}
+        <style>#shopify-section-{{ section_id }} .x-variant-picker[data-url="{{ product.url }}"] { display: none; }</style>
+      {%- endif -%}
+      <div
+        id="aurora-tiers-{{ block.id }}-{{ section_id }}"
+        class="aurora-block aurora-tiers{% if tiers_are_picker %} aurora-tiers--picker{% endif %}"
+        data-aurora-rerender
+        data-section-id="{{ section_id }}"
+        {% if tiers_are_picker %}role="radiogroup" aria-label="{{ block.settings.heading | escape }}"{% endif %}
+        {{ block.shopify_attributes }}
+      >
+        {%- if block.settings.heading != blank -%}
+          <p class="aurora-tiers__heading">{{ block.settings.heading }}</p>
+        {%- endif -%}
+        <div class="aurora-tiers__grid">
+          {%- if pack_count > 1 -%}
+            {%- assign best_saving = 0 -%}
+            {%- for variant in product.variants -%}
+              {%- if variant.title contains keyword -%}
+                {%- liquid
+                  assign units = variant.title | split: keyword | last | strip | plus: 0
+                  if units > 0
+                    assign unit_price = variant.price | divided_by: units
+                    assign saving = base_unit | minus: unit_price | times: 100 | divided_by: base_unit
+                    if saving > best_saving
+                      assign best_saving = saving
+                    endif
+                  endif
+                -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- assign highlight_done = false -%}
+            {%- for variant in product.variants -%}
+              {%- if variant.title contains keyword -%}
+                {%- liquid
+                  assign units = variant.title | split: keyword | last | strip | plus: 0
+                  if units < 1
+                    assign units = 1
+                  endif
+                  assign unit_price = variant.price | divided_by: units
+                  assign saving = base_unit | minus: unit_price | times: 100 | divided_by: base_unit
+                  assign highlight = false
+                  if saving == best_saving and best_saving > 0 and highlight_done == false
+                    assign highlight = true
+                    assign highlight_done = true
+                  endif
+                -%}
+                <a
+                  href="{{ variant.url }}"
+                  class="aurora-tier{% if highlight %} aurora-tier--highlight{% endif %}{% if variant.id == current_variant.id %} aurora-tier--current{% endif %}"
+                  data-aurora-tier
+                  data-option-value="{{ variant.option1 | escape }}"
+                  {% if tiers_are_picker %}role="radio" aria-checked="{% if variant.id == current_variant.id %}true{% else %}false{% endif %}"{% endif %}
+                >
+                  {%- if highlight and block.settings.highlight_label != blank -%}
+                    <span class="aurora-tier__tag">{{ block.settings.highlight_label }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.show_images != false and variant.featured_image -%}
+                    <span class="aurora-tier__img">{{ variant.featured_image | image_url: width: 240 | image_tag: loading: 'lazy', width: 120, height: 120, alt: variant.title }}</span>
+                  {%- endif -%}
+                  <span class="aurora-tier__title">{{ variant.title }}</span>
+                  <span class="aurora-tier__price">{{ variant.price | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</span>
+                  <span class="aurora-tier__unit">{{ unit_price | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }} {{ block.settings.per_unit_label }}</span>
+                  {%- liquid
+                    comment
+                      Exact rupee saving versus buying the same number of pieces at the single-pack rate.
+                    endcomment
+                    assign saving_amount = base_unit | times: units | minus: variant.price
+                  -%}
+                  {%- if saving_amount > 0 -%}
+                    <span class="aurora-tier__save">{{ block.settings.save_label }} {{ saving_amount | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</span>
+                    <span class="aurora-tier__pct">{{ saving }}% off</span>
+                  {%- endif -%}
+                </a>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- else -%}
+            {%- for i in (1..3) -%}
+              {%- liquid
+                assign title_key = 'tier_' | append: i | append: '_title'
+                assign save_key = 'tier_' | append: i | append: '_save'
+                assign tier_title = block.settings[title_key]
+                assign tier_save = block.settings[save_key]
+                assign tier_index = i | append: ''
+                assign highlight = false
+                if block.settings.highlight_tier == tier_index
+                  assign highlight = true
+                endif
+              -%}
+              {%- if tier_title != blank -%}
+                <div class="aurora-tier{% if highlight %} aurora-tier--highlight{% endif %}">
+                  {%- if highlight and block.settings.highlight_label != blank -%}
+                    <span class="aurora-tier__tag">{{ block.settings.highlight_label }}</span>
+                  {%- endif -%}
+                  <span class="aurora-tier__title">{{ tier_title }}</span>
+                  {%- if tier_save != blank -%}<span class="aurora-tier__save">{{ tier_save }}</span>{%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+        {%- if block.settings.note != blank -%}
+          <p class="aurora-tiers__note">{{ block.settings.note }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+  {%- when 'aurora_pincode' -%}
+    <div class="aurora-block aurora-card aurora-pincode" data-aurora-pincode {{ block.shopify_attributes }}>
+      <script type="application/json">
+        {
+          "homeState": {{ block.settings.home_state | json }},
+          "home": [{{ block.settings.home_min_days }}, {{ block.settings.home_max_days }}],
+          "south": [{{ block.settings.south_min_days }}, {{ block.settings.south_max_days }}],
+          "rest": [{{ block.settings.rest_min_days }}, {{ block.settings.rest_max_days }}],
+          "shippingText": {{ block.settings.shipping_text | json }},
+          "codEnabled": {{ block.settings.cod_enabled | json }},
+          "codText": {{ block.settings.cod_text | json }},
+          "prepaidText": {{ block.settings.prepaid_text | json }},
+          "blocked": {{ block.settings.blocked_pincodes | json }},
+          "invalidText": {{ block.settings.invalid_text | json }},
+          "unserviceableText": {{ block.settings.unserviceable_text | json }}
+        }
+      </script>
+      <p class="aurora-pincode__heading">
+        <svg class="aurora-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+        {{ block.settings.heading }}
+      </p>
+      <form class="aurora-pincode__form" novalidate>
+        <label class="aurora-visually-hidden" for="aurora-pin-{{ block.id }}">{{ block.settings.placeholder }}</label>
+        <input
+          id="aurora-pin-{{ block.id }}"
+          class="aurora-pincode__input"
+          type="text"
+          inputmode="numeric"
+          autocomplete="postal-code"
+          maxlength="6"
+          placeholder="{{ block.settings.placeholder | escape }}"
+        >
+        <button type="submit" class="aurora-pincode__button">{{ block.settings.button_label }}</button>
+      </form>
+      <div data-pincode-output aria-live="polite">
+        <div class="aurora-pincode__static">
+          {%- if block.settings.dispatch_text != blank -%}<span>{%- render 'aurora-icon', icon: 'box' -%} {{ block.settings.dispatch_text }}</span>{%- endif -%}
+          {%- if block.settings.shipping_text != blank -%}<span>{%- render 'aurora-icon', icon: 'truck' -%} {{ block.settings.shipping_text }}</span>{%- endif -%}
+          {%- if block.settings.cod_enabled and block.settings.cod_text != blank -%}<span>{%- render 'aurora-icon', icon: 'cash' -%} {{ block.settings.cod_text }}</span>{%- endif -%}
+        </div>
+      </div>
+    </div>
+
+  {%- when 'aurora_siblings' -%}
+    {%- render 'aurora-siblings', block: block, product: product -%}
+
+  {%- when 'aurora_accordion' -%}
+    {%- comment -%}
+      One collapsed row, so the accordion stack can live in the buy box
+      directly under the buy buttons. Markup matches the standalone
+      aurora-product-accordions section, so the styling is shared.
+    {%- endcomment -%}
+    {%- liquid
+      assign b = block.settings
+      assign body = ''
+      case b.kind
+        when 'description'
+          assign body = product.description | default: b.content
+        when 'content'
+          assign body = b.content
+      endcase
+
+      comment
+        A row can name a product metafield (namespace custom). When the product
+        has it filled in, it replaces the row's own text; when it does not, the
+        text typed into the block is kept as the fallback.
+      endcomment
+      assign meta_key = b.metafield_key | strip
+      if meta_key != blank and b.kind == 'content'
+        assign meta_value = product.metafields.custom[meta_key].value
+        assign meta_text = meta_value | strip
+        if meta_text != blank
+          assign meta_lines = meta_text | newline_to_br | split: '<br />'
+          assign in_list = false
+          capture meta_html
+            for raw_line in meta_lines
+              assign line = raw_line | strip
+              if line == blank
+                if in_list
+                  echo '</ul>'
+                  assign in_list = false
+                endif
+              else
+                assign lead = line | slice: 0
+                if lead == '•' or lead == '-' or lead == '*'
+                  unless in_list
+                    echo '<ul class="aurora-acc__list">'
+                    assign in_list = true
+                  endunless
+                  assign item = line | slice: 1, 2000 | strip | escape
+                  echo '<li>' | append: item | append: '</li>'
+                else
+                  if in_list
+                    echo '</ul>'
+                    assign in_list = false
+                  endif
+                  assign safe_line = line | escape
+                  echo '<p>' | append: safe_line | append: '</p>'
+                endif
+              endif
+            endfor
+            if in_list
+              echo '</ul>'
+            endif
+          endcapture
+          assign body = meta_html
+        endif
+      endif
+      assign show = true
+      if b.kind == 'description' or b.kind == 'content'
+        if body == blank
+          assign show = false
+        endif
+      endif
+    -%}
+    {%- if show and b.title != blank -%}
+      <details class="aurora-block aurora-acc__item aurora-acc__item--inline w-full"{% if b.open %} open{% endif %} {{ block.shopify_attributes }}>
+        <summary class="aurora-acc__summary">
+          <span class="aurora-acc__title">{{ b.title }}</span>
+          <span class="aurora-acc__chevron" aria-hidden="true"><svg viewBox="0 0 20 20" width="14" height="14"><path d="M5 7.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </summary>
+        <div class="aurora-acc__panel">
+          {%- case b.kind -%}
+            {%- when 'description', 'content' -%}
+              <div class="aurora-acc__body"><div class="rte">{{ body }}</div></div>
+
+            {%- when 'comparison' -%}
+              <div class="aurora-acc__table-wrap">
+                <table class="aurora-acc__table">
+                  <thead>
+                    <tr><th scope="col"></th><th scope="col" class="is-brand">{{ b.brand_label }}</th><th scope="col">{{ b.other_label }}</th></tr>
+                  </thead>
+                  <tbody>
+                    {%- assign rows = b.rows | newline_to_br | split: '<br />' -%}
+                    {%- for row in rows -%}
+                      {%- assign cells = row | strip | split: '|' -%}
+                      {%- if cells.size >= 3 -%}
+                        <tr>
+                          <th scope="row">{{ cells[0] | strip }}</th>
+                          <td class="is-brand"><span class="aurora-acc__yes" aria-hidden="true">{%- render 'aurora-icon', icon: 'check' -%}</span> {{ cells[1] | strip }}</td>
+                          <td><span class="aurora-acc__no" aria-hidden="true">{%- render 'aurora-icon', icon: 'close' -%}</span> {{ cells[2] | strip }}</td>
+                        </tr>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </tbody>
+                </table>
+              </div>
+              {%- if b.note != blank -%}<p class="aurora-acc__note">{{ b.note }}</p>{%- endif -%}
+
+            {%- when 'faq' -%}
+              <div class="aurora-acc__faq">
+                {%- for i in (1..8) -%}
+                  {%- liquid
+                    assign q_key = 'question_' | append: i
+                    assign a_key = 'answer_' | append: i
+                  -%}
+                  {%- if b[q_key] != blank -%}
+                    <details class="aurora-acc__q">
+                      <summary>{{ b[q_key] }}</summary>
+                      <div class="rte">{{ b[a_key] }}</div>
+                    </details>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+
+            {%- when 'specs' -%}
+              <dl class="aurora-acc__specs">
+                {%- if b.show_mrp -%}
+                  <div><dt>MRP</dt><dd>{{ current_variant.compare_at_price | default: current_variant.price | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }} (inclusive of all taxes)</dd></div>
+                {%- endif -%}
+                {%- assign rows = b.rows | newline_to_br | split: '<br />' -%}
+                {%- for row in rows -%}
+                  {%- assign cells = row | strip | split: '|' -%}
+                  {%- if cells.size >= 2 -%}
+                    <div><dt>{{ cells[0] | strip }}</dt><dd>{{ cells[1] | strip }}</dd></div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </dl>
+          {%- endcase -%}
+        </div>
+      </details>
+    {%- endif -%}
+
+  {%- when 'aurora_assurance' -%}
+    <div class="aurora-block aurora-card aurora-assurance" {{ block.shopify_attributes }}>
+      {%- if block.settings.heading != blank -%}
+        <p class="aurora-assurance__heading">{{ block.settings.heading }}</p>
+      {%- endif -%}
+      {%- if block.settings.policy_text != blank -%}
+        <p class="aurora-assurance__policy">
+          {%- render 'aurora-icon', icon: 'return' -%}
+          <span>
+            {%- if block.settings.policy_label != blank -%}<strong>{{ block.settings.policy_label }}:</strong> {% endif -%}
+            {{ block.settings.policy_text }}
+            {%- if block.settings.policy_link_label != blank and block.settings.policy_link != blank %} <a href="{{ block.settings.policy_link }}">{{ block.settings.policy_link_label }}</a>{% endif -%}
+          </span>
+        </p>
+      {%- endif -%}
+      <div class="aurora-assurance__grid">
+        {%- for i in (1..4) -%}
+          {%- liquid
+            assign title_key = 'item_' | append: i | append: '_title'
+            assign text_key = 'item_' | append: i | append: '_text'
+            assign icon_key = 'item_' | append: i | append: '_icon'
+            assign item_title = block.settings[title_key]
+            assign item_text = block.settings[text_key]
+            assign item_icon = block.settings[icon_key]
+          -%}
+          {%- if item_title != blank -%}
+            <div class="aurora-assurance__item">
+              {%- render 'aurora-icon', icon: item_icon -%}
+              <span><strong>{{ item_title }}</strong>{{ item_text }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%- if block.settings.whatsapp_number != blank -%}
+        {%- liquid
+          assign wa_number = block.settings.whatsapp_number | remove: '+' | remove: ' ' | remove: '-'
+          assign wa_message = block.settings.whatsapp_message | replace: '[product]', product.title | append: ' ' | append: shop.url | append: product.url
+        -%}
+        <a
+          class="aurora-whatsapp"
+          href="https://wa.me/{{ wa_number }}?text={{ wa_message | url_encode }}"
+          target="_blank"
+          rel="noopener"
+        >
+          {%- render 'aurora-icon', icon: 'whatsapp' -%}
+          {{ block.settings.whatsapp_label }}
+        </a>
+      {%- endif -%}
+    </div>
+
+  {%- when 'aurora_note' -%}
+    {%- if block.settings.text != blank -%}
+      <p class="aurora-block aurora-note{% if block.settings.style == 'subtle' %} aurora-note--subtle{% endif %}" {{ block.shopify_attributes }}>
+        {%- unless block.settings.style == 'subtle' or block.settings.icon == 'none' -%}{%- render 'aurora-icon', icon: block.settings.icon -%}{%- endunless -%}
+        <span>
+          {%- if block.settings.label != blank -%}<strong>{{ block.settings.label }}:</strong> {% endif -%}
+          {{ block.settings.text }}
+          {%- if block.settings.link_label != blank and block.settings.link != blank %} <a href="{{ block.settings.link }}">{{ block.settings.link_label }}</a>{% endif -%}
+        </span>
+      </p>
+    {%- endif -%}
+
+  {%- when 'aurora_coupon' -%}
+    {%- liquid
+      assign coupon_live = true
+      if block.settings.ends_on != blank
+        assign today = 'now' | date: '%Y%m%d' | plus: 0
+        assign ends = block.settings.ends_on | remove: '-' | strip | plus: 0
+        if ends > 0 and today > ends
+          assign coupon_live = false
+        endif
+      endif
+    -%}
+    {%- if coupon_live and block.settings.code != blank -%}
+      <div
+        class="aurora-block aurora-coupon"
+        style="{% if block.settings.background.alpha != 0.0 %}--ac-bg: {{ block.settings.background }};{% endif %}{% if block.settings.accent.alpha != 0.0 %} --ac-accent: {{ block.settings.accent }};{% endif %}"
+        {{ block.shopify_attributes }}
+      >
+        {%- if block.settings.emoji != blank -%}<span class="aurora-coupon__emoji" aria-hidden="true">{{ block.settings.emoji }}</span>{%- endif -%}
+        <p class="aurora-coupon__text">
+          {%- if block.settings.label != blank -%}<strong>{{ block.settings.label }}</strong> {% endif -%}
+          {{- block.settings.text -}}
+        </p>
+        <button
+          type="button"
+          class="aurora-coupon__code"
+          data-aurora-copy="{{ block.settings.code | escape }}"
+          data-copied="{{ block.settings.copied_label | escape }}"
+          aria-label="{{ block.settings.copy_label | escape }}: {{ block.settings.code | escape }}"
+        >
+          <span class="aurora-coupon__value">{{ block.settings.code }}</span>
+          {%- render 'aurora-icon', icon: 'copy' -%}
+          <span class="aurora-coupon__hint" aria-live="polite">{{ block.settings.copy_label }}</span>
+        </button>
+      </div>
+    {%- endif -%}
+
+  {%- when 'aurora_secure_pay' -%}
+    {%- liquid
+      assign pay_list = block.settings.payment_types | remove: ' ' | split: ','
+      if pay_list.size == 0
+        assign pay_list = shop.enabled_payment_types
+      endif
+    -%}
+    <div class="aurora-block aurora-securepay" {{ block.shopify_attributes }}>
+      {%- if block.settings.heading != blank -%}
+        <p class="aurora-securepay__head">
+          {%- render 'aurora-icon', icon: 'lock' -%}
+          <strong>{{ block.settings.heading }}</strong>
+          {%- if block.settings.text != blank %}<span>{{ block.settings.text }}</span>{% endif -%}
+        </p>
+      {%- endif -%}
+      <ul class="aurora-securepay__list" role="list">
+        {%- for type in pay_list -%}
+          {%- comment -%} Shopify has no PhonePe artwork (it falls back to a generic card), so use a brand badge {%- endcomment -%}
+          {%- if type == 'phonepe' or type == 'phone_pe' -%}
+            {%- assign pay_svg = '' -%}
+          {%- else -%}
+            {%- capture pay_svg -%}{{ type | payment_type_svg_tag }}{%- endcapture -%}
+          {%- endif -%}
+          {%- if type == 'phonepe' or type == 'phone_pe' -%}
+            <li class="aurora-securepay__chip aurora-securepay__chip--phonepe">PhonePe</li>
+          {%- elsif pay_svg contains '<svg' -%}
+            <li class="aurora-securepay__icon">{{ pay_svg }}</li>
+          {%- else -%}
+            <li class="aurora-securepay__chip aurora-securepay__chip--{{ type | handleize }}">{{ type | replace: '_', ' ' }}</li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+
+  {%- when 'aurora_trust_line' -%}
+    {%- liquid
+      assign rating = product.metafields.reviews.rating.value
+      assign rating_count = product.metafields.reviews.rating_count | plus: 0
+      assign show_stars = false
+      if block.settings.show_rating and rating != blank and rating_count > 0
+        assign show_stars = true
+      endif
+    -%}
+    {%- if show_stars or block.settings.text != blank -%}
+      <p class="aurora-block aurora-trustline" {{ block.shopify_attributes }}>
+        {%- if show_stars -%}
+          <a class="aurora-trustline__rating" href="#judgeme_product_reviews">
+            <span class="aurora-trustline__stars" aria-hidden="true">★</span>
+            <strong>{{ rating.rating | round: 1 }}</strong>
+            <span>({{ rating_count }} reviews)</span>
+          </a>
+          {%- if block.settings.text != blank %}<span class="aurora-trustline__dot" aria-hidden="true">·</span>{% endif -%}
+        {%- endif -%}
+        {%- if block.settings.text != blank -%}<span>{{ block.settings.text }}</span>{%- endif -%}
+      </p>
+    {%- endif -%}
+
+  {%- when 'aurora_delivery_note' -%}
+    {%- liquid
+      assign threshold_rupees = block.settings.threshold | default: settings.order_amount_freeshipping | default: 999
+      assign threshold = threshold_rupees | times: 100
+      comment
+        Compare against what the order would be once this item is added.
+      endcomment
+      assign order_total = cart.total_price | plus: current_variant.price
+      assign remaining = threshold | minus: order_total
+      assign progress = order_total | times: 100 | divided_by: threshold
+      if progress > 100
+        assign progress = 100
+      endif
+    -%}
+    <div
+      id="aurora-delivery-{{ block.id }}-{{ section_id }}"
+      class="aurora-block aurora-delivery{% if remaining <= 0 %} aurora-delivery--unlocked{% endif %}"
+      data-aurora-rerender
+      data-section-id="{{ section_id }}"
+      {{ block.shopify_attributes }}
+    >
+      <p class="aurora-delivery__text">
+        {%- render 'aurora-icon', icon: 'truck' -%}
+        <span>
+          {%- if remaining > 0 -%}
+            {%- assign remaining_money = remaining | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' -%}
+            {{ block.settings.remaining_text | replace: '[amount]', remaining_money }}
+          {%- else -%}
+            {{ block.settings.unlocked_text }}
+          {%- endif -%}
+        </span>
+      </p>
+      {%- if block.settings.show_bar -%}
+        <span class="aurora-delivery__bar" aria-hidden="true"><span style="width: {{ progress }}%"></span></span>
+      {%- endif -%}
+    </div>
+
+  {%- when 'aurora_fbt' -%}
+    {%- liquid
+      assign fbt_count = 0
+      assign fbt_total = 0
+      assign fbt_compare = 0
+      if block.settings.include_current and current_variant.available
+        assign fbt_total = current_variant.price
+        assign fbt_compare = current_variant.compare_at_price | default: current_variant.price
+      endif
+      for addon in block.settings.products
+        if addon.available and addon.id != product.id
+          assign fbt_count = fbt_count | plus: 1
+          if block.settings.preselect
+            assign addon_variant = addon.selected_or_first_available_variant
+            assign fbt_total = fbt_total | plus: addon_variant.price
+            assign addon_compare = addon_variant.compare_at_price | default: addon_variant.price
+            if addon_compare < addon_variant.price
+              assign addon_compare = addon_variant.price
+            endif
+            assign fbt_compare = fbt_compare | plus: addon_compare
+          endif
+        endif
+      endfor
+    -%}
+    {%- if fbt_count > 0 -%}
+      <div
+        id="aurora-fbt-{{ block.id }}-{{ section_id }}"
+        class="aurora-block aurora-card aurora-fbt"
+        data-aurora-fbt
+        data-aurora-rerender
+        data-section-id="{{ section_id }}"
+        data-money-format="{{ shop.money_format | strip_html | escape }}"
+        {{ block.shopify_attributes }}
+      >
+        {%- if block.settings.heading != blank -%}
+          <p class="aurora-fbt__heading">{{ block.settings.heading }}</p>
+        {%- endif -%}
+        <ul class="aurora-fbt__list" role="list">
+          {%- if block.settings.include_current and current_variant.available -%}
+            {%- assign item_compare = current_variant.compare_at_price | default: current_variant.price -%}
+            <li>
+              <label class="aurora-fbt__item">
+                <input type="checkbox" checked data-variant-id="{{ current_variant.id }}" data-price="{{ current_variant.price }}" data-compare="{{ item_compare | at_least: current_variant.price }}">
+                <span class="aurora-fbt__img">
+                  {%- assign item_image = current_variant.featured_image | default: product.featured_image -%}
+                  {%- if item_image -%}{{ item_image | image_url: width: 120 | image_tag: loading: 'lazy', width: 56, height: 56, alt: product.title }}{%- endif -%}
+                </span>
+                <span class="aurora-fbt__info">
+                  <span class="aurora-fbt__title"><span class="aurora-fbt__tag">{{ block.settings.this_item_label }}</span> {{ product.title }}</span>
+                  <span class="aurora-fbt__price">{{ current_variant.price | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</span>
+                </span>
+              </label>
+            </li>
+          {%- endif -%}
+          {%- for addon in block.settings.products -%}
+            {%- if addon.available and addon.id != product.id -%}
+              {%- assign addon_variant = addon.selected_or_first_available_variant -%}
+              {%- assign addon_compare = addon_variant.compare_at_price | default: addon_variant.price -%}
+              <li>
+                <label class="aurora-fbt__item">
+                  <input type="checkbox" {% if block.settings.preselect %}checked{% endif %} data-variant-id="{{ addon_variant.id }}" data-price="{{ addon_variant.price }}" data-compare="{{ addon_compare | at_least: addon_variant.price }}">
+                  <span class="aurora-fbt__img">
+                    {%- if addon.featured_image -%}{{ addon.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', width: 56, height: 56, alt: addon.title }}{%- endif -%}
+                  </span>
+                  <span class="aurora-fbt__info">
+                    <a class="aurora-fbt__title" href="{{ addon.url }}">{{ addon.title }}</a>
+                    <span class="aurora-fbt__price">
+                      {{ addon_variant.price | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}
+                      {%- if addon_variant.compare_at_price > addon_variant.price %} <s>{{ addon_variant.compare_at_price | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</s>{% endif -%}
+                    </span>
+                  </span>
+                </label>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+        <div class="aurora-fbt__footer">
+          <p class="aurora-fbt__total">
+            <span>{{ block.settings.total_label }}</span>
+            <strong data-fbt-total>{{ fbt_total | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}</strong>
+            <s data-fbt-compare>{% if fbt_compare > fbt_total %}{{ fbt_compare | money_without_trailing_zeros | replace: 'Rs. ', '₹' | replace: 'Rs.', '₹' }}{% endif %}</s>
+          </p>
+          <button type="button" class="aurora-fbt__button" data-fbt-add {% if fbt_total == 0 %}disabled{% endif %}>{{ block.settings.button_label }}</button>
+        </div>
+        {%- if block.settings.note != blank -%}
+          <p class="aurora-fbt__note">{{ block.settings.note }}</p>
+        {%- endif -%}
+        <p class="aurora-fbt__error" data-fbt-error role="alert" hidden></p>
+      </div>
+    {%- endif -%}
+
+  {%- when 'aurora_trust_badges' -%}
+    <div
+      class="aurora-block aurora-badges aurora-badges--{{ block.settings.badge_style | default: 'pill' }}"
+      style="--ab-logo: {{ block.settings.logo_size | default: 40 }}px;
+        {%- if block.settings.badge_bg != blank and block.settings.badge_bg.alpha != 0.0 %} --ab-badge-bg: {{ block.settings.badge_bg }};{% endif -%}
+        {%- if block.settings.badge_text != blank and block.settings.badge_text.alpha != 0.0 %} --ab-badge-text: {{ block.settings.badge_text }};{% endif -%}"
+      {{ block.shopify_attributes }}
+    >
+      {%- if block.settings.logo != blank -%}
+        {{
+          block.settings.logo
+          | image_url: width: 120
+          | image_tag: class: 'aurora-badges__logo', loading: 'lazy', widths: '60, 120', sizes: '40px', alt: block.settings.logo.alt
+        }}
+      {%- endif -%}
+      <ul class="aurora-badges__list" role="list">
+        {%- for i in (1..5) -%}
+          {%- assign badge_key = 'badge_' | append: i -%}
+          {%- if block.settings[badge_key] != blank -%}
+            {%- liquid
+              assign badge_icon_key = badge_key | append: '_icon'
+              assign badge_image_key = badge_key | append: '_image'
+              assign badge_icon = block.settings[badge_icon_key] | default: 'check'
+              assign badge_image = block.settings[badge_image_key]
+            -%}
+            <li class="aurora-badges__item">
+              {%- if block.settings.badge_style == 'tags' -%}
+              {%- elsif badge_image != blank -%}
+                <span class="aurora-badges__mark">
+                  {{- badge_image | image_url: width: 160 | image_tag: loading: 'lazy', width: 80, height: 80, alt: block.settings[badge_key] -}}
+                </span>
+              {%- elsif block.settings.show_check_icon != false -%}
+                <span class="aurora-badges__mark">{%- render 'aurora-icon', icon: badge_icon -%}</span>
+              {%- endif -%}
+              <span class="aurora-badges__text">{{ block.settings[badge_key] }}</span>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+{%- endcase -%}

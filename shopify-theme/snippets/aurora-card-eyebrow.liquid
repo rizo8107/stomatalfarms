@@ -1,0 +1,99 @@
+{%- comment -%}
+  Aurora category eyebrow for product cards.
+
+  The reference deck puts a category line above every product name
+  (STARTER SET, INCENSE STICKS, INCENSE CUPS) set in Jost caps, Antique Gold.
+
+  Only 18 of the 41 products carry a Shopify product type, so this resolves a
+  category in order of how deliberate the source is:
+
+    1. metafield custom.category  - a hand-written label, wins over everything
+    2. product.type               - the Shopify product type
+    3. a category collection      - from the ordered list below, so a product
+                                    reads "Incense Sticks" rather than whichever
+                                    marketing collection happens to come first
+    4. any remaining collection   - last resort, skipping the catch-alls
+
+  Setting product type (or the metafield) in admin is the tidy fix and gives
+  exact control over the wording; the collection fallbacks keep a card from
+  showing nothing until then.
+
+  Accepts:
+  - card_product: {Object} the product
+  - eyebrow_class: {String} extra classes (optional)
+{%- endcomment -%}
+
+{%- liquid
+  assign eyebrow = ''
+
+  assign manual = card_product.metafields.custom.category.value | default: card_product.metafields.custom.category
+  if manual != blank
+    assign eyebrow = manual
+  endif
+
+  if eyebrow == blank
+    assign p_search = card_product.title | append: ' ' | append: card_product.handle | append: ' ' | append: card_product.type | downcase
+
+    if p_search contains 'salad' or p_search contains 'microgreen' or p_search contains 'moringa' or p_search contains 'curry leaf'
+      assign eyebrow = 'Farm Fresh'
+    elsif p_search contains 'combo' or p_search contains 'bundle' or p_search contains 'hamper' or p_search contains 'sacred aroma' or p_search contains 'sacred harmony' or p_search contains 'sacred rituals'
+      assign eyebrow = 'Ritual Combos'
+    elsif p_search contains 'cup' or p_search contains 'arka'
+      assign eyebrow = 'Incense Cups'
+    elsif p_search contains 'stick' or p_search contains 'aarambh'
+      assign eyebrow = 'Incense Sticks'
+    elsif p_search contains 'holder' or p_search contains 'ash' or p_search contains 'ghee' or p_search contains 'diye' or p_search contains 'diya'
+      assign eyebrow = 'Ritual Essentials'
+    elsif p_search contains 'bath' or p_search contains 'salt'
+      assign eyebrow = 'Bath & Wellness'
+    elsif card_product.type != blank
+      assign eyebrow = card_product.type
+    endif
+  endif
+
+  if eyebrow == blank
+    assign preferred = 'ritual-combos,cow-dung-incense-cups,cow-dung-incense-sticks,incense-cups,incense-sticks,ritual-essentials,bath-wellness,farm-fresh,start-here'
+    assign preferred_list = preferred | split: ','
+    for want in preferred_list
+      if eyebrow == blank
+        for col in card_product.collections
+          if eyebrow == blank and col.handle == want
+            assign eyebrow = col.title
+          endif
+        endfor
+      endif
+    endfor
+  endif
+
+  if eyebrow == blank
+    assign skip = 'all,frontpage,home-page,featured,best-sellers,best-sellers-copy,new-arrivals,whatsapp-orders,festive-offers,others'
+    assign skip_list = skip | split: ','
+    for col in card_product.collections
+      if eyebrow == blank
+        assign is_skipped = false
+        for s in skip_list
+          if col.handle == s
+            assign is_skipped = true
+          endif
+        endfor
+        unless is_skipped
+          assign eyebrow = col.title
+        endunless
+      endif
+    endfor
+  endif
+
+  comment
+    One collection title begins with a word joiner (U+2060); zero-width marks
+    like these survive strip and show up as a stray gap before the label.
+  endcomment
+  assign eyebrow = eyebrow | replace: '⁠', '' | replace: '​', '' | replace: '﻿', '' | strip
+-%}
+
+{%- comment -%}
+  Rendered even when it resolves to nothing: the empty line keeps the title,
+  and therefore the price, on the same level as the cards beside it.
+{%- endcomment -%}
+<div class="aurora-card-eyebrow {{ eyebrow_class }}{% if eyebrow == blank %} aurora-card-eyebrow--empty{% endif %}">
+  {{- eyebrow | escape -}}
+</div>

@@ -1,0 +1,136 @@
+{%- comment -%}
+  Instagram follow prompt.
+
+  The feed above this is drawn by the Instafeed app entirely in the browser,
+  so its handle and layout cannot be edited from the theme. This adds the
+  follow call to action underneath it as real, crawlable markup: one link to
+  the profile, styled on the Aurora tokens.
+{%- endcomment -%}
+
+{%- liquid
+  assign handle = section.settings.handle | strip | remove: '@'
+  assign url = section.settings.profile_url | strip
+  if url == blank and handle != blank
+    assign url = 'https://www.instagram.com/' | append: handle | append: '/'
+  endif
+-%}
+
+{%- if url != blank -%}
+  {%- style -%}
+    #shopify-section-{{ section.id }} .aurora-igf {
+      background: {{ section.settings.background }};
+      padding-block: {{ section.settings.padding_mobile }}px;
+      text-align: center;
+    }
+    @media screen and (min-width: 990px) {
+      #shopify-section-{{ section.id }} .aurora-igf {
+        padding-block: {{ section.settings.padding_desktop }}px;
+      }
+    }
+    #shopify-section-{{ section.id }} .aurora-igf__inner {
+      max-width: 1300px;
+      margin-inline: auto;
+      padding-inline: 20px;
+    }
+    #shopify-section-{{ section.id }} .aurora-igf__text {
+      font-family: var(--font-body-family);
+      font-size: 15px;
+      line-height: 1.55;
+      color: {{ section.settings.text_color }};
+      margin: 0 0 14px;
+    }
+    #shopify-section-{{ section.id }} .aurora-igf__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 0 28px;
+      border-radius: 2px;
+      border: 1px solid transparent;
+      background: {{ section.settings.button_bg }};
+      color: {{ section.settings.button_text }};
+      font-family: var(--font-button, var(--font-body-family));
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    #shopify-section-{{ section.id }} .aurora-igf__btn:hover {
+      background: {{ section.settings.button_bg_hover }};
+      color: {{ section.settings.button_text }};
+    }
+    #shopify-section-{{ section.id }} .aurora-igf__btn svg {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 20px;
+    }
+  {%- endstyle -%}
+
+  <section class="aurora-igf">
+    <div class="aurora-igf__inner">
+      {%- if section.settings.text != blank -%}
+        <p class="aurora-igf__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+      <a
+        class="aurora-igf__btn"
+        href="{{ url }}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <rect x="3" y="3" width="18" height="18" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.2" cy="6.8" r="1"/>
+        </svg>
+        <span>{{ section.settings.button_label }}</span>
+      </a>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Aurora Instagram follow",
+  "tag": "section",
+  "class": "aurora-igf-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "handle",
+      "label": "Instagram handle",
+      "default": "aurorarituals.store"
+    },
+    {
+      "type": "url",
+      "id": "profile_url",
+      "label": "Profile URL",
+      "info": "Leave empty to build it from the handle."
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Line above the button",
+      "default": "Follow along for new aromas, festive offers and a look inside the farm."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "FOLLOW @AURORARITUALS.STORE"
+    },
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "background", "label": "Background", "default": "#FFFDF7" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#4F473F" },
+    { "type": "color", "id": "button_bg", "label": "Button background", "default": "#2E7D4F" },
+    { "type": "color", "id": "button_bg_hover", "label": "Button background on hover", "default": "#236A40" },
+    { "type": "color", "id": "button_text", "label": "Button text", "default": "#FFFFFF" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Space above and below (desktop)", "default": 40 },
+    { "type": "range", "id": "padding_mobile", "min": 0, "max": 80, "step": 2, "unit": "px", "label": "Space above and below (mobile)", "default": 24 }
+  ],
+  "presets": [{ "name": "Aurora Instagram follow" }]
+}
+{% endschema %}

@@ -1,0 +1,20 @@
+{%- comment -%}
+  Outputs the shared design settings of Aurora sections as CSS custom properties.
+  Colours left transparent in the editor are skipped so theme colours apply.
+
+  Accepts:
+  - s: {Object} section.settings
+{%- endcomment -%}
+{%- if s.section_bg != blank and s.section_bg.alpha != 0.0 %}--as-bg: {{ s.section_bg }};{% endif -%}
+{%- if s.card_bg != blank and s.card_bg.alpha != 0.0 %}--as-card-bg: {{ s.card_bg }};{% endif -%}
+{%- if s.heading_color != blank and s.heading_color.alpha != 0.0 %}--as-heading: {{ s.heading_color }};{% endif -%}
+{%- if s.text_color != blank and s.text_color.alpha != 0.0 %}--as-text: {{ s.text_color }};{% endif -%}
+{%- if s.accent_color != blank and s.accent_color.alpha != 0.0 %}--as-accent: {{ s.accent_color }};{% endif -%}
+{%- if s.button_text_color != blank and s.button_text_color.alpha != 0.0 %}--as-btn-text: {{ s.button_text_color }};{% endif -%}
+{%- if s.border_color != blank and s.border_color.alpha != 0.0 %}--as-border: {{ s.border_color }};{% endif -%}
+--as-pt: {{ s.padding_top }}px; --as-pb: {{ s.padding_bottom }}px;
+--as-pt-m: {{ s.padding_top_mobile }}px; --as-pb-m: {{ s.padding_bottom_mobile }}px;
+--as-heading-d: {{ s.heading_size }}px; --as-heading-m: {{ s.heading_size_mobile }}px;
+--as-radius: {{ s.card_radius }}px;
+{%- if s.columns_desktop %} --as-cols-d: {{ s.columns_desktop }};{% endif -%}
+{%- if s.columns_mobile %} --as-cols-m: {{ s.columns_mobile }};{% endif -%}
